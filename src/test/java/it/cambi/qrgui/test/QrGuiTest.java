@@ -75,6 +75,10 @@ public class QrGuiTest
         assertNotNull(queryRepository.getCriteriaBuilder());
         assertNotNull(userService.findByUsername("fake@gmail.com"));
 
+        /**
+         * Apparently it is not possible to test authentication because mocking security means user already exists (see also @WithUserDetails
+         * or @WithMockUser with which you can test authorization), so we test the authentication service
+         */
         assertEquals(true, securityService.autoLogin("fake@gmail.com", "1234"));
         assertThrows(AuthenticationException.class, () -> {
             securityService.autoLogin("fake@gmail.com", "124");
