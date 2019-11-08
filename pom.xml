@@ -9,98 +9,36 @@
 		<version>2.1.8.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>it.cambi</groupId>
-	<artifactId>qrgui</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>it.cambi.qrgui</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0.0</version>
 	<name>qrgui</name>
 	<description>Dynamic Queries Gui</description>
+	<packaging>pom</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
 
-	<dependencies>
+	<modules>
+		<module>qrgui-rest</module>
+		<module>qrgui-security</module>
+		<module>qrgui-services</module>
+	</modules>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+	<dependencyManagement>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>5.4.2</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.17</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-		</dependency>
-
-
-		<!-- Test -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.4.2</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.4.2</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-commons</artifactId>
-			<version>1.4.2</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-	</dependencies>
-
+	</dependencyManagement>
 
 	<profiles>
 		<profile>
@@ -112,18 +50,6 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.bsc.maven</groupId>
-						<artifactId>maven-processor-plugin</artifactId>
-						<version>3.1.0</version>
-						<dependencies>
-							<dependency>
-								<groupId>org.hibernate</groupId>
-								<artifactId>hibernate-jpamodelgen</artifactId>
-								<version>5.0.7.Final</version>
-							</dependency>
-						</dependencies>
-					</plugin>
-					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
 						<version>3.7.0</version>
@@ -131,8 +57,6 @@
 							<source>1.8</source>
 							<target>1.8</target>
 							<encoding>UTF-8</encoding>
-							<!-- <compilerArguments> <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor> 
-								</compilerArguments> -->
 						</configuration>
 					</plugin>
 					<plugin>
