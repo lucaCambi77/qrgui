@@ -6,6 +6,7 @@ package it.cambi.qrgui.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,7 @@ import it.cambi.qrgui.security.services.GuiUserDetailService;
  */
 @Configuration
 @EnableWebSecurity
+@Import(SecurityDbAppConf.class)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
 
@@ -51,4 +53,5 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter
         http.authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER").antMatchers("/").permitAll().anyRequest().authenticated();// .and().formLogin();
     }
+
 }
