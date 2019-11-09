@@ -8,7 +8,7 @@
 		<artifactId>parent</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<artifactId>qrgui-rest</artifactId>
 	<name>${project.artifactId}</name>
 	<description>Rest for qrgui</description>
@@ -28,14 +28,14 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>qrgui-security</artifactId>
 			<version>${project.version}</version>
-			<classifier>app-to-import</classifier>
+			<!-- <classifier>app-to-import</classifier> -->
 		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>qrgui-services</artifactId>
 			<version>${project.version}</version>
-			<classifier>app-to-import</classifier>
+			<!-- <classifier>app-to-import</classifier> -->
 		</dependency>
 
 		<dependency>

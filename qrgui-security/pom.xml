@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>qrgui-security</artifactId>
-	<name>qrgui-security</name>
+	<name>${project.artifactId}</name>
 	<description>Spring Security Module for Qrgui</description>
 
 	<properties>
@@ -70,13 +70,5 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
