@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceController
 {
 
-    @RolesAllowed("ROLE_ADMIN")
+    @RolesAllowed("ADMIN")
     @GetMapping("/admin")
     public String admin()
     {
         return "Hello Admin!";
     }
 
-    @RolesAllowed({ "ROLE_ADMIN", "ROLE_USER" })
+    @RolesAllowed({ "ADMIN", "USER" })
     @GetMapping("/user")
     public String user()
     {
