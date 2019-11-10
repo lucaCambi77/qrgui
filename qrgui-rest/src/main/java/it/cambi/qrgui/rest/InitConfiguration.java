@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
-import it.cambi.qrgui.security.SpringSecurityConfiguration;
+import it.cambi.qrgui.security.SpringSecurityConfig;
 import it.cambi.qrgui.security.db.model.GuiUser;
 import it.cambi.qrgui.security.db.model.Role;
 import it.cambi.qrgui.security.db.model.UserRole;
@@ -27,7 +27,7 @@ import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
  *         Db init and Security import
  */
 @Configuration
-@Import({ SpringSecurityConfiguration.class, EmiaDbAppConf.class })
+@Import({ SpringSecurityConfig.class, EmiaDbAppConf.class })
 public class InitConfiguration
 {
 

@@ -3,6 +3,8 @@
  */
 package it.cambi.qrgui.security;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceController
 {
 
+    @RolesAllowed("ROLE_ADMIN")
     @GetMapping("/admin")
     public String admin()
     {
         return "Hello Admin!";
     }
 
+    @RolesAllowed({ "ROLE_ADMIN", "ROLE_USER" })
     @GetMapping("/user")
     public String user()
     {
