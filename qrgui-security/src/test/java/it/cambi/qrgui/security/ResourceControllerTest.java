@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin(origins = { "*" })
 @RestController
-public class ResourceController
+public class ResourceControllerTest
 {
 
     @RolesAllowed("ADMIN")
