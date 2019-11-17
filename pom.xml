@@ -74,6 +74,11 @@
 							<artifactId>maven-surefire-plugin</artifactId>
 							<version>3.0.0-M3</version>
 						</plugin>
+						<plugin>
+							<groupId>com.spotify</groupId>
+							<artifactId>dockerfile-maven-plugin</artifactId>
+							<version>1.4.13</version>
+						</plugin>
 					</plugins>
 				</pluginManagement>
 
