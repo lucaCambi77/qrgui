@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services;
+package it.cambi.qrgui.services.application;
 
 import java.util.Properties;
 

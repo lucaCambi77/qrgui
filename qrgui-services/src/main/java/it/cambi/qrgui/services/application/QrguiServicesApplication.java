@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services;
+package it.cambi.qrgui.services.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

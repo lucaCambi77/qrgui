@@ -17,7 +17,7 @@ import it.cambi.qrgui.security.db.model.UserRoleId;
 import it.cambi.qrgui.security.jpa.repository.RoleRepository;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.UserServiceImpl;
-import it.cambi.qrgui.services.EmiaDbAppConf;
+import it.cambi.qrgui.services.application.EmiaDbAppConf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
 
