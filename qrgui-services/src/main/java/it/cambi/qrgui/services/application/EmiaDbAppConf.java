@@ -69,6 +69,9 @@ public class EmiaDbAppConf
         jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
+        if (null != env.getProperty("load.test.sql") && env.getProperty("load.test.sql").equals("true")) {}
+            jpaProperties.put("hibernate.hbm2ddl.import_files", "init.sql");
+
         factory.setJpaProperties(jpaProperties);
 
         return factory;
