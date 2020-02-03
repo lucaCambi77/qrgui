@@ -12,12 +12,12 @@ import org.springframework.test.context.TestPropertySource;
 import it.cambi.qrgui.services.application.EmiaDbAppConf;
 import it.cambi.qrgui.services.application.QrguiServicesApplication;
 
-@SpringBootTest(classes = { QrguiServicesApplication.class, EmiaDbAppConf.class })
+@SpringBootTest(classes = { QrguiServicesApplication.class, EmiaDbAppConf.class, TestDbAppConf.class })
 @TestPropertySource("/test.properties")
 class ServicesApplicationTest
 {
 
-    @PersistenceContext
+    @PersistenceContext(name = "emiaTransactionManager")
     private EntityManager em;
 
     @Test

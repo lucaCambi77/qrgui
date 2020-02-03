@@ -1,1 +1,1 @@
-CREATE TABLE TEST (C_KEY integer NOT NULL, primary key (C_KEY));
+CREATE TABLE TEST.TABLE1 (C_KEY integer NOT NULL, primary key (C_KEY));
