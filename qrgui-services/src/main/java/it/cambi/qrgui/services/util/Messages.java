@@ -3,12 +3,12 @@
  */
 package it.cambi.qrgui.services.util;
 
+import it.cambi.qrgui.services.util.messages.UTF8Control;
+
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
-import it.cambi.qrgui.services.util.messages.UTF8Control;
 
 /**
  * @author luca

@@ -1,18 +1,19 @@
 package it.cambi.qrgui.services;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import it.cambi.qrgui.services.application.EmiaDbAppConf;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import it.cambi.qrgui.services.application.EmiaDbAppConf;
-import it.cambi.qrgui.services.application.QrguiServicesApplication;
-
-@SpringBootTest(classes = { QrguiServicesApplication.class, EmiaDbAppConf.class, TestDbAppConf.class })
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = { EmiaDbAppConf.class })
 @TestPropertySource("/test.properties")
 class ServicesApplicationTest
 {

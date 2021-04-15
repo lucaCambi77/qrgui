@@ -1,12 +1,12 @@
 package it.cambi.qrgui.test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
+import it.cambi.qrgui.jpa.repository.QueryRepositoryImpl;
+import it.cambi.qrgui.rest.RestApplication;
+import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
+import it.cambi.qrgui.security.services.SecurityService;
+import it.cambi.qrgui.security.services.UserService;
+import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -26,13 +26,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
-import it.cambi.qrgui.jpa.repository.QueryRepositoryImpl;
-import it.cambi.qrgui.rest.RestApplication;
-import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
-import it.cambi.qrgui.security.services.SecurityService;
-import it.cambi.qrgui.security.services.UserService;
-import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = { RestApplication.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)

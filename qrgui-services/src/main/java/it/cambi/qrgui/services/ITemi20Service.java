@@ -1,10 +1,9 @@
 package it.cambi.qrgui.services;
 
-import java.util.List;
+import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
 
 import javax.servlet.http.HttpServletRequest;
-
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import java.util.List;
 
 public interface ITemi20Service<T>
 {

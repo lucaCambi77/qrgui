@@ -15,7 +15,6 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<docker.repository.prefix>${env.DOCKER_USER}</docker.repository.prefix>
 	</properties>
 
 	<dependencies>
@@ -91,23 +90,6 @@
 					<execution>
 						<goals>
 							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<configuration>
-					<repository>${docker.repository.prefix}/${project.artifactId}</repository>
-				</configuration>
-				<executions>
-					<execution>
-						<id>default</id>
-						<phase>install</phase>
-						<goals>
-							<goal>build</goal>
-							<goal>push</goal>
 						</goals>
 					</execution>
 				</executions>

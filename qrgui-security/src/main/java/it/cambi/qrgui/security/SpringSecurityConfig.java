@@ -1,8 +1,9 @@
 /**
- * 
+ *
  */
 package it.cambi.qrgui.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,9 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import it.cambi.qrgui.security.services.GuiUserDetailService;
 
 /**
  * @author luca
@@ -21,28 +21,25 @@ import it.cambi.qrgui.security.services.GuiUserDetailService;
  */
 @Configuration
 @EnableWebSecurity
-@Import(SecurityDbAppConf.class)
-public class SpringSecurityConfig extends WebSecurityConfigurerAdapter
-{
+@Import({SecurityDbAppConf.class, MethodSecurityConfig.class})
+@RequiredArgsConstructor
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private @Autowired GuiUserDetailService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Bean
-    public AuthenticationManager customAuthenticationManager() throws Exception
-    {
+    public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
     }
 
     @Override
-    protected void configure(@Autowired AuthenticationManagerBuilder auth) throws Exception
-    {
+    protected void configure(@Autowired AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder()
-    {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

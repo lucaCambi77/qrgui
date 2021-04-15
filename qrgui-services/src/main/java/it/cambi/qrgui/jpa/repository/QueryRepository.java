@@ -3,10 +3,9 @@
  */
 package it.cambi.qrgui.jpa.repository;
 
-import org.springframework.data.repository.Repository;
-
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.services.db.model.Temi15UteQueId;
+import org.springframework.data.repository.Repository;
 
 /**
  * @author luca

@@ -1,33 +1,24 @@
 package it.cambi.qrgui.services.util.wrappedResponse;
 
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-/*
- * Classe utlizzata per serializzare gli oggetti che transitano da server verso la parte rest.
- * Contiene le informazioni delle entity estratte da db e info associate.
- * In particolare il metodo setResponse() serializza questa stessa classe, oggetto finale verso i servizi rest.
- * 
- * */
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
 import it.cambi.qrgui.response.model.ErtaGuiUser;
 import it.cambi.qrgui.services.util.Errors;
 import it.cambi.qrgui.services.util.IConstants;
 import it.cambi.qrgui.services.util.Messages;
 import it.cambi.qrgui.services.util.objectMapper.ObjectMapperFactory;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class WrappedResponse<T> implements IConstants
 {

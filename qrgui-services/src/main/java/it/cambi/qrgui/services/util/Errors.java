@@ -3,15 +3,13 @@
  */
 package it.cambi.qrgui.services.util;
 
+import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLSyntaxErrorException;
-
-import javax.persistence.NoResultException;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
 
 /**
  * @author luca

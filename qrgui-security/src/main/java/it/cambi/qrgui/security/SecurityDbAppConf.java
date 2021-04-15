@@ -1,12 +1,9 @@
 package it.cambi.qrgui.security;
 
-import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.jpa.repository.UserRepository;
+import it.cambi.qrgui.security.services.GuiUserDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,43 +16,39 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
-import it.cambi.qrgui.security.jpa.repository.UserRepository;
-import it.cambi.qrgui.security.services.GuiUserDetailService;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
- * 
  * @author luca
- *
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = { GuiUser.class, GuiUserDetailService.class })
+@ComponentScan(basePackageClasses = {GuiUser.class, GuiUserDetailService.class})
 @EnableJpaRepositories(basePackageClasses = UserRepository.class, entityManagerFactoryRef = "securityEntityManagerFactory", transactionManagerRef = "securityTransactionManager")
-public class SecurityDbAppConf
-{
+@RequiredArgsConstructor
+public class SecurityDbAppConf {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
     @Bean
-    @ConfigurationProperties(prefix = "datasource.security")
-    public DataSource securityDataSource()
-    {
+    public DataSource securityDataSource() {
         return DataSourceBuilder.create()
+                .url(env.getProperty("datasource.security.jdbcUrl"))
+                .username(env.getProperty("datasource.security.username"))
+                .password(env.getProperty("datasource.security.password"))
                 .build();
     }
 
     @Bean
-    public PlatformTransactionManager securityTransactionManager()
-    {
+    public PlatformTransactionManager securityTransactionManager() {
         EntityManagerFactory factory = securityEntityManagerFactory().getObject();
         return new JpaTransactionManager(factory);
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean securityEntityManagerFactory()
-    {
+    public LocalContainerEntityManagerFactoryBean securityEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(securityDataSource());
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());

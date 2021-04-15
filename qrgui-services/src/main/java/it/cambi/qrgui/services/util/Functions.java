@@ -3,13 +3,12 @@
  */
 package it.cambi.qrgui.services.util;
 
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
-
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 /**
  * Classe di utilità. TODO I metodi per stabilire la differenza possono essere riunificati in un unico modo che prende in input il tipo di dato.

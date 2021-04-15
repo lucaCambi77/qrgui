@@ -3,12 +3,11 @@
  */
 package it.cambi.qrgui.security.services;
 
+import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import it.cambi.qrgui.security.db.model.GuiUser;
-import it.cambi.qrgui.security.jpa.repository.UserRepository;
 
 /**
  * @author luca

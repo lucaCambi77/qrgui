@@ -3,11 +3,6 @@
  */
 package it.cambi.qrgui.rest;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.security.SpringSecurityConfig;
 import it.cambi.qrgui.security.db.model.GuiUser;
@@ -20,6 +15,10 @@ import it.cambi.qrgui.security.services.UserServiceImpl;
 import it.cambi.qrgui.services.application.EmiaDbAppConf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author luca

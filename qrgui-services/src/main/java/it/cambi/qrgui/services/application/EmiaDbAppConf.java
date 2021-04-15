@@ -1,12 +1,8 @@
 package it.cambi.qrgui.services.application;
 
-import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import it.cambi.qrgui.jpa.repository.QueryRepository;
+import it.cambi.qrgui.services.db.model.Temi13DtbInf;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,45 +16,41 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import it.cambi.qrgui.jpa.repository.QueryRepository;
-import it.cambi.qrgui.services.db.model.Temi13DtbInf;
+import javax.sql.DataSource;
+import java.util.Objects;
+import java.util.Properties;
 
 /**
- * 
  * @author luca
- *
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = { Temi13DtbInf.class })
+@ComponentScan(basePackageClasses = {Temi13DtbInf.class})
 @EnableJpaRepositories(basePackageClasses = QueryRepository.class, entityManagerFactoryRef = "emiaEntityManagerFactory", transactionManagerRef = "emiaTransactionManager")
-public class EmiaDbAppConf
-{
+@RequiredArgsConstructor
+public class EmiaDbAppConf {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
     @Primary
     @Bean
-    @ConfigurationProperties(prefix = "datasource.emia")
-    public DataSource emiaDataSource()
-    {
+    public DataSource emiaDataSource() {
         return DataSourceBuilder.create()
+                .url(env.getProperty("datasource.emia.jdbcUrl"))
+                .username(env.getProperty("datasource.emia.username"))
+                .password(env.getProperty("datasource.emia.password"))
                 .build();
     }
 
     @Primary
     @Bean
-    public PlatformTransactionManager emiaTransactionManager()
-    {
-        EntityManagerFactory factory = emiaEntityManagerFactory().getObject();
-        return new JpaTransactionManager(factory);
+    public PlatformTransactionManager emiaTransactionManager() {
+        return new JpaTransactionManager(Objects.requireNonNull(emiaEntityManagerFactory().getObject()));
     }
 
     @Primary
     @Bean
-    public LocalContainerEntityManagerFactoryBean emiaEntityManagerFactory()
-    {
+    public LocalContainerEntityManagerFactoryBean emiaEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(emiaDataSource());
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
@@ -69,7 +61,7 @@ public class EmiaDbAppConf
         jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
-        if (null != env.getProperty("load.test.sql") && env.getProperty("load.test.sql").equals("true"))
+        if (null != env.getProperty("load.test.sql") && Objects.equals(env.getProperty("load.test.sql"), "true"))
             jpaProperties.put("hibernate.hbm2ddl.import_files", "init.sql");
 
         factory.setJpaProperties(jpaProperties);

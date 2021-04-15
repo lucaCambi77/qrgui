@@ -1,12 +1,11 @@
 package it.cambi.qrgui.services;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.services.db.model.Temi15UteQueId;
 import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface ITemi15Service<T>
 {

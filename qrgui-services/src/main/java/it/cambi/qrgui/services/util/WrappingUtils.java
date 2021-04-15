@@ -3,27 +3,20 @@
  */
 package it.cambi.qrgui.services.util;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import it.cambi.qrgui.enums.JavaTypes;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import org.apache.poi.ss.usermodel.*;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @author luca
