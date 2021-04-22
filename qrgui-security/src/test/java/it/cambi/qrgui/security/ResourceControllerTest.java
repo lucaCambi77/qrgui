@@ -3,9 +3,10 @@
  */
 package it.cambi.qrgui.security;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import it.cambi.qrgui.security.db.model.GuiUser;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -15,6 +16,7 @@ import javax.annotation.security.RolesAllowed;
  */
 @CrossOrigin(origins = { "*" })
 @RestController
+@Slf4j
 public class ResourceControllerTest
 {
 
@@ -32,9 +34,10 @@ public class ResourceControllerTest
         return "Hello User!";
     }
 
-    @GetMapping("/")
-    public String hello()
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String login(@RequestBody GuiUser user)
     {
-        return "Hello QrGui!";
+        log.info("Logged user -> " + user.getUsername());
+        return "Login";
     }
 }

@@ -3,6 +3,11 @@
  */
 package it.cambi.qrgui.security.db.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 
 /**
@@ -11,16 +16,15 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "USER_ROLE", schema = "SECURITY")
-public class UserRole implements java.io.Serializable
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserRole implements java.io.Serializable, GrantedAuthority
 {
 
     private Role role;
     private GuiUser user;
     private UserRoleId id;
-
-    public UserRole()
-    {
-    }
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
@@ -62,4 +66,9 @@ public class UserRole implements java.io.Serializable
         this.id = id;
     }
 
+    @Override
+    @Transient
+    public String getAuthority() {
+        return role.getName();
+    }
 }

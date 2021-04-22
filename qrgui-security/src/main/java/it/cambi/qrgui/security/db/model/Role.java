@@ -3,6 +3,10 @@
  */
 package it.cambi.qrgui.security.db.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +17,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "ROLE", schema = "SECURITY")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role implements java.io.Serializable
 {
     private Long roleId;
@@ -20,10 +27,6 @@ public class Role implements java.io.Serializable
     private String name;
 
     private Set<UserRole> userRoles = new HashSet<UserRole>(0);
-
-    public Role()
-    {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

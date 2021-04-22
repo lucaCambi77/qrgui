@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
+
 /**
  * @author luca
  *
@@ -15,10 +17,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ResourceController
 {
-
-    @GetMapping("/")
-    public String hello()
+    @GetMapping("/login")
+    public String login()
     {
-        return "Hello QrGui!";
+        return "Login!";
+    }
+
+    @GetMapping("/secured")
+    @RolesAllowed("ADMIN")
+    public String secured()
+    {
+        return "Secured!";
+    }
+
+    @GetMapping("/all")
+    @RolesAllowed({"USER", "ADMIN"})
+    public String user()
+    {
+        return "User!";
     }
 }

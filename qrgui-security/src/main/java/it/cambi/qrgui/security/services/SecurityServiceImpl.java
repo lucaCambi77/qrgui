@@ -4,8 +4,7 @@
 package it.cambi.qrgui.security.services;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,28 +12,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author luca
  *
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class SecurityServiceImpl implements SecurityService {
 
     private final AuthenticationManager authenticationManager;
 
     private final UserDetailsService userDetailsService;
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
-
     @Override
     public String findLoggedInUsername() {
         Object userDetails = SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
-        }
 
-        return null;
+        return Optional.of(userDetails).filter(ud -> ud instanceof UserDetails)
+                .map(ud -> ((UserDetails) ud).getUsername())
+                .orElse(null);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SecurityServiceImpl implements SecurityService {
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            logger.debug(String.format("Auto login %s successfully!", username));
+            log.debug(String.format("Auto login %s successfully!", username));
 
             return true;
         }

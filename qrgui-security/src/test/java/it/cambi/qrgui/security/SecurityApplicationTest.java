@@ -1,10 +1,11 @@
 package it.cambi.qrgui.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cambi.qrgui.security.db.model.GuiUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -20,10 +21,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {SpringSecurityConfig.class, ResourceControllerTest.class})
+@ContextConfiguration(classes = {SpringSecurityConfig.class, ResourceControllerTest.class, SecurityConfigurationTest.class})
 @WebAppConfiguration
 @TestPropertySource("/test.properties")
 @Sql(value = "/user_test.sql")
@@ -56,7 +58,6 @@ class SecurityApplicationTest {
     @WithMockUser(roles = "ADMIN")
     public void adminShouldSucceedWithAdminRole() throws Exception {
         mvc.perform(get("/admin").contentType(MediaType.APPLICATION_JSON))
-
                 .andExpect(status().isOk());
     }
 
@@ -86,5 +87,14 @@ class SecurityApplicationTest {
     public void userShouldNotSucceedWithWrongRole() throws Exception {
         mvc.perform(get("/admin")
                 .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void publicUrlTest() throws Exception {
+        String content = new ObjectMapper().writeValueAsString(
+                GuiUser.builder().userId(1).username("user").build());
+
+        mvc.perform(post("/login").content(content)
+                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
     }
 }

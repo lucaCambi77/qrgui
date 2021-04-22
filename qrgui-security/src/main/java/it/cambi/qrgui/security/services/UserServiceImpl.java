@@ -5,7 +5,7 @@ package it.cambi.qrgui.security.services;
 
 import it.cambi.qrgui.security.db.model.GuiUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,13 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService
 {
 
-    private @Autowired UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private @Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public GuiUser save(GuiUser user)
@@ -31,6 +32,6 @@ public class UserServiceImpl implements UserService
     @Override
     public GuiUser findByUsername(String username)
     {
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

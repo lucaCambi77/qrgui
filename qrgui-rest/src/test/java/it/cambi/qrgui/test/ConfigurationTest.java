@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.cambi.qrgui.rest;
+package it.cambi.qrgui.test;
 
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.security.SpringSecurityConfig;
@@ -28,9 +28,10 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Import({ SpringSecurityConfig.class, EmiaDbAppConf.class })
-@Profile("!test")
-public class InitConfiguration
+@Profile("test")
+public class ConfigurationTest
 {
+
     @Bean
     CommandLineRunner initializeApplication(DbInfoJpaRepository dbInfoRepository, UserServiceImpl userService, RoleRepository roleRespository,
             UserRoleRepository userRoleRepository)
