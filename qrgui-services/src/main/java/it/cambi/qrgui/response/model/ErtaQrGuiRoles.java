@@ -1,8 +1,8 @@
 package it.cambi.qrgui.response.model;
 
-import it.cambi.qrgui.services.util.IConstants;
+import static it.cambi.qrgui.services.util.IConstants.*;
 
-public enum ErtaQrGuiRoles implements IConstants
+public enum ErtaQrGuiRoles
 {
 
     FEPQRA(R_FEPQRA), FEPQR1(R_FEPQR1), FEPQR2(R_FEPQR2);

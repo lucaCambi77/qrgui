@@ -1,6 +1,6 @@
 package it.cambi.qrgui.services;
 
-import it.cambi.qrgui.services.application.EmiaDbAppConf;
+import it.cambi.qrgui.config.EmiaDbAppConf;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.ContextConfiguration;

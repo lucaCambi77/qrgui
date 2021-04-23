@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.cambi.qrgui.test;
+package it.cambi.qrgui.config;
 
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.security.SpringSecurityConfig;
@@ -12,7 +12,6 @@ import it.cambi.qrgui.security.db.model.UserRoleId;
 import it.cambi.qrgui.security.jpa.repository.RoleRepository;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.UserServiceImpl;
-import it.cambi.qrgui.config.EmiaDbAppConf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInf;
 import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
 import org.springframework.boot.CommandLineRunner;
@@ -28,10 +27,9 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Import({ SpringSecurityConfig.class, EmiaDbAppConf.class })
-@Profile("test")
-public class ConfigurationTest
+@Profile("!test")
+public class InitConfiguration
 {
-
     @Bean
     CommandLineRunner initializeApplication(DbInfoJpaRepository dbInfoRepository, UserServiceImpl userService, RoleRepository roleRespository,
             UserRoleRepository userRoleRepository)

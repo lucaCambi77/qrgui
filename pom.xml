@@ -11,9 +11,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<arquillian.version>1.1.14.Final</arquillian.version>
 	</properties>
 
 	<modules>
@@ -23,7 +24,6 @@
 	</modules>
 
 	<dependencyManagement>
-
 		<dependencies>
 			<dependency>
 				<groupId>org.junit</groupId>

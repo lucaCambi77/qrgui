@@ -18,11 +18,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD;
+import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+
 /**
  * @author luca
  *
  */
-public class WrappingUtils implements IConstants
+public class WrappingUtils
 {
 
     public static String cleanQueryString(String statement)

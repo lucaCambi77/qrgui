@@ -12,6 +12,8 @@ import it.cambi.qrgui.services.util.objectMapper.ObjectMapperFactory;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -20,17 +22,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class WrappedResponse<T> implements IConstants
+import static it.cambi.qrgui.services.util.IConstants.*;
+
+public class WrappedResponse<T>
 {
 
     @JsonIgnore
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     @JsonIgnore
     private String response;
-    /*
-     * @JsonIgnore private UriInfo uriInfo;
-     */
-
     @JsonIgnore
     private Throwable exception;
     @JsonIgnore
@@ -45,7 +45,7 @@ public class WrappedResponse<T> implements IConstants
              * questi campi vengono aggiunti sempre da hibernate nella serializzazione, li metto come ignorabili di default. Eclipse link non sembra
              * aggiunga niente all'oggetto da serializzare
              */
-            add(KA);
+            add(IConstants.KA);
             add(HANDLER);
             add(HIBERNATELAZYINITIALIZER);
         }
@@ -57,7 +57,6 @@ public class WrappedResponse<T> implements IConstants
     private boolean success = true;
     private T entity;
     private Integer count;
-    // private Status statusType;
     private Integer errorCode;
     private List<String> errorMessage;
     private List<String> succededMessage;
@@ -66,14 +65,14 @@ public class WrappedResponse<T> implements IConstants
     private String queryFilePath;
 
     /**
-     * 
+     *
      */
     public WrappedResponse()
     {
     }
 
     /**
-     * 
+     *
      */
     public WrappedResponse(T entity)
     {
@@ -87,7 +86,7 @@ public class WrappedResponse<T> implements IConstants
 
     /**
      * Metodo usato per la ricerca della root cause dell'eccezione (nel caso esista). La parte web mostra il messaggio di errore se success è false
-     * 
+     *
      */
     public WrappedResponse<T> processException()
     {
@@ -104,7 +103,7 @@ public class WrappedResponse<T> implements IConstants
 
     /**
      * Metodo usato per la ricerca della root cause dell'eccezione (nel caso esista). La parte web mostra il messaggio di errore se success è false
-     * 
+     *
      */
     public WrappedResponse<T> processException(String additionalComment)
     {
@@ -127,24 +126,21 @@ public class WrappedResponse<T> implements IConstants
         return getObjectMapper().writeValueAsString(getEntity());
     }
 
-    /*
-     * public Response getResponse(HttpServletRequest sr) {
-     * 
-     * if (isSuccess()) { logRequestInfo(sr); return Response.ok(response).type(MediaType.APPLICATION_JSON).build(); }
-     * 
-     * setStatusType(Status.INTERNAL_SERVER_ERROR).logRequestInfo(sr);
-     * 
-     * 
-     * Response with errors
-     * 
-     * return Response.serverError() .entity(response) .type(MediaType.APPLICATION_JSON).build();
-     * 
-     * }
-     */
+    public ResponseEntity<String> getResponse(HttpServletRequest sr)
+    {
+
+        if (isSuccess())
+        {
+            logRequestInfo(sr);
+            return ResponseEntity.ok(response);
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 
     /**
      * Metodo per serializzare questo stesso oggetto (escluso gli @Ignore) che poi verrà restituito alla parte web come entity della response
-     * 
+     *
      * @return
      */
     public WrappedResponse<T> setResponse()
@@ -200,35 +196,6 @@ public class WrappedResponse<T> implements IConstants
     }
 
     /**
-     * 
-     * @param uriInfo
-     * @return
-     */
-    /*
-     * @Deprecated public String toString(UriInfo uriInfo) {
-     * 
-     * StringBuilder queryParamBuilder = uriInfo.getQueryParameters().entrySet().size() > 0 ? new StringBuilder() : null;
-     * 
-     * for (Entry<String, List<String>> string : uriInfo.getQueryParameters().entrySet()) { queryParamBuilder.append(string.getKey() + "--> " +
-     * Arrays.toString(string.getValue().toArray())).append(", "); }
-     * 
-     * String queryParameters = setParameterString(queryParamBuilder);
-     * 
-     * StringBuilder pathParamBuilder = uriInfo.getPathParameters().entrySet().size() > 0 ? new StringBuilder() : null;
-     * 
-     * for (Entry<String, List<String>> string : uriInfo.getPathParameters().entrySet()) {
-     * 
-     * pathParamBuilder.append(string.getKey() + "--> " + Arrays.toString(string.getValue().toArray())).append(", "); }
-     * 
-     * String pathParameters = setParameterString(pathParamBuilder);
-     * 
-     * return new StringBuilder() .append("Response uri Info --> " + (null == uriInfo ? "N.A." : uriInfo.getAbsolutePath())).append("\n") .append(new
-     * Date().toString()).append("\n") .append("query Parameters --> ").append(queryParameters.isEmpty() ? "\n" : queryParameters)
-     * .append("path Parameters --> ").append(pathParameters.isEmpty() ? "\n" : pathParameters) .append("success --> " + isSuccess()).append("\n")
-     * .append("count --> " + getCount()).append("\n").toString(); }
-     */
-
-    /**
      * @param paramBuilder
      * @return
      */
@@ -263,12 +230,6 @@ public class WrappedResponse<T> implements IConstants
         this.entity = entity;
         return this;
     }
-
-    /*
-     * public Status getStatusType() { return statusType; }
-     * 
-     * public WrappedResponse<T> setStatusType(Status errorType) { this.statusType = errorType; return this; }
-     */
 
     public Integer getCount()
     {

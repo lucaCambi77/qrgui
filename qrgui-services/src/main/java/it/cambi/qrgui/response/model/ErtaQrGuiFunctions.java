@@ -1,8 +1,8 @@
 package it.cambi.qrgui.response.model;
 
-import it.cambi.qrgui.services.util.IConstants;
+import static it.cambi.qrgui.services.util.IConstants.*;
 
-public enum ErtaQrGuiFunctions implements IConstants
+public enum ErtaQrGuiFunctions
 {
 
     QRCG00(F_QRCG00), QRCG01(F_QRCG01), QRCINS(F_QRCINS), QRCMOD(

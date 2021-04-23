@@ -3,14 +3,15 @@
  */
 package it.cambi.qrgui.services.exception;
 
-import it.cambi.qrgui.services.util.IConstants;
 import it.cambi.qrgui.services.util.Messages;
+
+import static it.cambi.qrgui.services.util.IConstants.ERROR_MISSING_PROPERTIES_FILE;
 
 /**
  * @author luca
  *
  */
-public class PropertiesFileNotFoundException extends RuntimeException implements IConstants
+public class PropertiesFileNotFoundException extends RuntimeException
 {
 
     /**

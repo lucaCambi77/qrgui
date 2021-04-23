@@ -84,7 +84,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>it.cambi.qrgui.rest.RestApplication</mainClass>
+					<mainClass>it.cambi.qrgui.RestApplication</mainClass>
 				</configuration>
 				<executions>
 					<execution>

@@ -10,11 +10,14 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import static it.cambi.qrgui.services.util.IConstants.DEFAULT_LOCALE;
+import static it.cambi.qrgui.services.util.IConstants.TRANSLATIONS_FILE_NAME;
+
 /**
  * @author luca
  *
  */
-public class Messages implements IConstants
+public class Messages
 {
 
     private ResourceBundle bundle;

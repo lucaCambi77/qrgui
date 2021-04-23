@@ -11,11 +11,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLSyntaxErrorException;
 
+import static it.cambi.qrgui.services.util.IConstants.NO_RESULT_EXCEPTION;
+import static it.cambi.qrgui.services.util.IConstants.NULL_POINTER_EXCEPTION;
+
 /**
  * @author luca
  *
  */
-public class Errors implements IConstants
+public class Errors
 {
 
     /**
@@ -65,7 +68,7 @@ public class Errors implements IConstants
 
             if (SQLSyntaxErrorException.class.isAssignableFrom(inException.getClass()))
             {
-                finalMaessage.append(SYNTAXERROR + ". " + comment);
+                finalMaessage.append(IConstants.SYNTAXERROR + ". " + comment);
             }
             else if (NullPointerException.class.isAssignableFrom(inException.getClass()))
             {

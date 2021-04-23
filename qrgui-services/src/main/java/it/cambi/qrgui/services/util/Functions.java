@@ -17,7 +17,7 @@ import java.util.Date;
  * @author luca
  *
  */
-public class Functions implements IConstants
+public class Functions
 {
 
     /**

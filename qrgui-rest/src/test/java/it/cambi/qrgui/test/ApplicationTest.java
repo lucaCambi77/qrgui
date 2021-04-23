@@ -1,8 +1,8 @@
 package it.cambi.qrgui.test;
 
+import it.cambi.qrgui.RestApplication;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.jpa.repository.QueryRepositoryImpl;
-import it.cambi.qrgui.rest.RestApplication;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.SecurityService;
 import it.cambi.qrgui.security.services.UserService;
@@ -28,7 +28,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = {RestApplication.class, ConfigurationTest.class}, webEnvironment = WebEnvironment.RANDOM_PORT, properties = {"server.servlet.contextPath=/api"})
+@SpringBootTest(classes = {RestApplication.class, ConfigurationTest.class, ResourceControllerTest.class}, webEnvironment = WebEnvironment.RANDOM_PORT, properties = {"server.servlet.contextPath=/api"})
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class ApplicationTest {
