@@ -14,8 +14,7 @@ public class QrfepuGenericDao extends AbstractDao
     {
     }
 
-    // TODO settare altre PU
-    @PersistenceContext()
+    @PersistenceContext(name = "testTransactionManager")
     private EntityManager entityManager;
 
     public EntityManager getEntityManager()
