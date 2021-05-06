@@ -1,0 +1,80 @@
+
+<div ng-repeat="item in item.childrens">
+	<div style="margin: 1em;" class="panel panel-default"
+		id="categ-{{item.root.ccat}}">
+		<div class="panel-heading"
+			ui-on-Drop="category.createSubCategory(item, $data)">
+			<div class="row">
+				<div class="col-sm-8" ui-draggable="true" drag="item">
+					<i style="margin: 0.3em" class="fa fa-book" aria-hidden="true"></i><b
+						style="color: {{colorYellow}}">{{item.root.des}} </b> <br> <b>
+						{{item.root.temi20AnaTipCat.des}} </b>
+				</div>
+				<div class="col-sm-1">
+					<button title="{{category.addQueryTitle}}"
+						ng-if="ertaQrGuiUser.admin" class="btn btn-sm"
+						ng-click="category.addQuery(item)">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+					</button>
+
+				</div>
+
+				<div class="col-sm-1">
+					<button title="{{category.deleteCategoryTitle}}"
+						ng-if="ertaQrGuiUser.admin" class="btn btn-sm"
+						ng-click="category.deleteCategory(item)">
+						<i class="fa fa-trash-o" aria-hidden="true"></i>
+					</button>
+
+				</div>
+
+				<div class="col-sm-1">
+					<button title="{{category.modifyCategoryTitle}}"
+						ng-if="ertaQrGuiUser.admin" class="btn btn-sm"
+						ng-click="category.modifyCategory(item)">
+						<i class="fa fa-edit" aria-hidden="true"></i>
+					</button>
+
+				</div>
+			</div>
+		</div>
+
+		<div style="height: 10em; overflow-y: scroll; margin: 0.5em">
+			<ul>
+				<li style="margin: 0.3em; list-style-type: none;"
+					ng-repeat="query in item.queries | orderBy:'nam'">
+					<div class="row">
+						<div class="col-sm-2">
+							<button class="btn btn-sm" title="{{category.executeQueryTitle}}"
+								ng-click="category.executeQueryFromCat(query)">
+								<i class="fa fa-play-circle-o" aria-hidden="true"></i>
+							</button>
+
+						</div>
+						<div style="color: {{colorBlu}}" class="col-sm-7">{{query.nam}}</div>
+						<div class="col-sm-1">
+							<button ng-if="ertaQrGuiUser.admin" title="{{category.deleteQueryTitle}}" class="btn btn-sm"
+								ng-click="category.deleteQuery(query, item)">
+								<i class="fa fa-trash-o" aria-hidden="true"></i>
+							</button>
+						</div>
+						<div class="col-sm-1">
+							<button title="{{category.modifyQueryTitle}}"
+								ng-if="ertaQrGuiUser.admin" class="btn btn-sm"
+								ng-click="category.updateCategoryQuery(query, categ)">
+								<i class="fa fa-edit" aria-hidden="true"></i>
+							</button>
+						</div>
+
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div ng-switch on="item.childrens.length > 0">
+			<div ng-switch-when="true">
+				<div ng-init="childrens = item.childrens;"
+					ng-include="'views/partial/subCategoriesPartial.html?v1.2.1'"></div>
+			</div>
+		</div>
+	</div>
+</div>

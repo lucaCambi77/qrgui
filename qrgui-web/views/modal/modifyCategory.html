@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-cog" style="display: inline-block;"
+					aria-hidden="true"></span>
+				<h3 style="display: inline-block; padding: 10px;">Modifica
+					Categoria</h3>
+				<div style="border-bottom: 1px #32c24d solid;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-body">
+
+		<div uib-alert type="danger"
+			ng-if="modifyCategoryModal.errors.length > 0">
+			<div>
+				<span class="glyphicon glyphicon-exclamation-sign"
+					aria-hidden="true"></span><br> <span
+					ng-repeat="error in modifyCategoryModal.errors">{{error}}<br></span>
+			</div>
+
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4 style="padding: 10px;">Aggiungi queries a categoria</h4>
+			</div>
+			<div class="panel-body">
+
+				<div ng-repeat="element in modifyCategoryModal.queries">
+					<div class="row" style="padding-left: 1em;">
+						<label class="col-sm-5">{{element.query.nam}}</label> <input
+							name="addQueryCheck" ng-checked="element.checked"
+							class="col-sm-3"
+							ng-click="modifyCategoryModal.queryCheck(element.query)"
+							type="checkbox" />
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="modal-footer">
+		<button id="modifyCategorySaveButton" class="btn btn-xs btn-primary"
+			type="button" ng-click="modifyCategoryModal.save()">{{
+			'BUTTONS.CREATE' | translate }}</button>
+		<button id="modifyCategoryCancelButton" class="btn btn-xs btn-warning"
+			type="button" ng-click="modifyCategoryModal.cancel()">{{
+			'BUTTONS.CANCEL' | translate }}</button>
+	</div>
+</div>
+</html>

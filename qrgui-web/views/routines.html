@@ -1,0 +1,26 @@
+<div uib-alert type="danger" ng-if="routine.errors.length > 0">
+	<div>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><br>
+		<span ng-repeat="error in routine.errors">{{error}}<br></span>
+
+	</div>
+</div>
+
+<div uib-alert type="success" ng-if="routine.messageSuccess.length > 0"
+	dismiss-on-timeout=5000 close="routine.closeAlert($index)">
+	<div>
+		<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+		<span ng-repeat="success in routine.messageSuccess">{{success}}<br></span>
+	</div>
+</div>
+
+<div class="row">
+	<div ng-if="ertaQrGuiUser.admin" class="col-xs-6 col-sm-3"
+		routine-categories style="height: 100%; overflow: auto;"></div>
+
+	<div
+		ng-class="ertaQrGuiUser.admin ? 'col-sm-9 col-xs-6' : 'col-sm-12 col-xs-12'"
+		style="margin-top: 1.5em;">
+		<div id="routineList"></div>
+	</div>
+</div>

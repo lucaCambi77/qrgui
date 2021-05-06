@@ -1,0 +1,69 @@
+<!-- <div uib-alert type="danger" ng-if="index.errors.length > 0">
+	<div>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><br>
+		<span ng-repeat="error in index.errors">{{error}}<br></span>
+
+	</div>
+</div>
+<div class="row">
+
+	<div id="content"></div>
+
+</div>
+<script type="text/javascript">
+class Content extends React.Component {
+	  render() {
+	    return React.createElement(
+			    'div',
+			    this.props,
+			    React.createElement('h2', null, this.props.type)
+				  ,React.createElement(
+						    "p",
+						    null,
+						    this.props.description)
+			  )
+	     }
+	}
+
+ReactDOM.render(React.createElement(
+	      'div',
+	      null,
+		  React.createElement(Content, {
+			  	class : "col-xs-6 col-lg-4",
+		        type: 'Cateogories',
+		        description: 'Crea una categoria, aggiungi o modifica una o più query delle categorie esistenti. Quando crei una query, copia e incolla la tua	query nell area di testo e definisci i parametri nella query preceduti da &. Per ogni parametro specifica un alias ed un tipo.	Puoi eseguire una query da una categoria'
+		        }),
+		  React.createElement(Content, {
+			  	class : "col-xs-6 col-lg-4",
+			    type: 'Routine',
+			    description: 'Associa una o più query ad una routine. Puoi eseguire una	routine e tutte le query in essa contenute saranno lanciate in una sola volta'
+			    })
+		  ),
+		  document.getElementById('content')	
+		)
+</script> -->
+
+<div uib-alert type="danger" ng-if="index.errors.length > 0">
+	<div>
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><br>
+		<span ng-repeat="error in index.errors">{{error}}<br></span>
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-6 col-lg-4">
+		<h2>Categories</h2>
+		<p>Crea una categoria, aggiungi o modifica una o più query delle
+			categorie esistenti. Quando crei una query, copia e incolla la tua
+			query nell'area di testo e definisci i parametri nella query
+			preceduti da &. Per ogni parametro specifica un alias ed un tipo.
+			Puoi eseguire una query da una categoria</p>
+	</div>
+	<!--/.col-xs-6.col-lg-4-->
+	<div class="col-xs-6 col-lg-4">
+		<h2>Routine</h2>
+		<p>Associa una o più query ad una routine. Puoi eseguire una
+			routine e tutte le query in essa contenute saranno lanciate in una
+			sola volta</p>
+	</div>
+</div>

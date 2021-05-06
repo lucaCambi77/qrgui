@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="qrGuiApp">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="modal-header">
+		<h3>{{ 'SESSION.EXPIRING' | translate }}</h3>
+	</div>
+	<div idle-countdown="countdown" ng-init="countdown=5"
+		class="modal-body">
+		<uib-progressbar max="5" value="5" animate="false"
+			class="progress-striped active">{{
+		'SESSION.LOGGINGOUT' | translate }} {{countdown}} {{ 'SECONDS' |
+		translate }} .</uib-progressbar>
+	</div>
+</body>
+</html>

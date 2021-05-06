@@ -1,0 +1,30 @@
+
+<div ng-repeat="item in item.childrens">
+	<div style="margin: 1em;" class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion"
+					data-target="#collapse-{{$index}}" href><i
+					style="margin: 0.3em" class="fa fa-book" aria-hidden="true"></i><b
+					style="color: {{colorYellow}}"> {{item.root.des}} </b> <br> <b>
+						{{item.root.temi20AnaTipCat.des}} </b></a>
+			</h4>
+		</div>
+
+		<div style="height: 10em; overflow-y: scroll; margin: 0.5em">
+			<ul>
+				<li ui-draggable="true" drag="query"
+					style="margin: 0.3em;"
+					ng-repeat="query in item.queries | orderBy:'nam'"><div
+						style="color: {{colorBlu}}" class="col-sm-12">{{query.nam}}</div></li>
+			</ul>
+		
+		<div ng-switch on="item.childrens.length > 0">
+			<div ng-switch-when="true">
+				<div ng-init="childrens = item.childrens;"
+					ng-include="'views/partial/subCategoriesRouPartial.html?v1.2.1'"></div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

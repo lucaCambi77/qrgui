@@ -1,0 +1,20 @@
+{
+  "name": "ng-caps-lock",
+  "version": "1.0.0",
+  "description": "node module for ng-caps-lock by  FabioMR\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b\u001b[3~\u001b[3~\u001b[3~\u001b[3~\u001b[C\u001b",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thearavind/ng-caps-lock.git"
+  },
+  "keywords": [
+    "ng-caps-lock"
+  ],
+  "authors": [
+    "Fábio Rodrigues <fabio.info@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/FabioMR/ng-caps-lock",
+  "dependencies": {
+    "angular": ">=1.1"
+  }
+}

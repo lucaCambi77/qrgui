@@ -1,0 +1,17 @@
+<ul ng-if="item.childrens && item.childrens.length > 0">
+
+	<li ng-repeat="item in item.childrens">
+		<div style="margin: 0.3em">
+			{{item.root.des}}<input
+				ng-click="deleteCategoryModal.addQueryToCategory(item, query)"
+				type="checkbox" />
+		</div>
+
+		<div ng-switch on="item.childrens.length > 0">
+			<div ng-switch-when="true">
+				<div ng-init="childrens = item.childrens;"
+					ng-include="'views/partial/subCategoriesDropDownPartial.html?v1.2.1'"></div>
+			</div>
+		</div>
+	</li>
+</ul>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<div class="modal-content">
+	<div class="modal-header">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="glyphicon glyphicon-cog" style="display: inline-block;"
+					aria-hidden="true"></span>
+				<h3 style="display: inline-block; padding: 10px;">{{deleteCategoryModal.entity.action}}
+					- {{deleteCategoryModal.entity.category.root.des}}</h3>
+				<div style="border-bottom: 1px #32c24d solid;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-body">
+		<div uib-alert type="danger"
+			ng-if="deleteCategoryModal.errors.length > 0">
+			<div>
+				<span class="glyphicon glyphicon-exclamation-sign"
+					aria-hidden="true"></span><br> <span
+					ng-repeat="error in deleteCategoryModal.errors">{{error}}<br></span>
+			</div>
+
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div ng-if=" deleteCategoryModal.entity.queries.length > 0"
+					style="margin: 2em;">{{deleteCategoryModal.entity.description}}</div>
+
+				<div style="margin: 2.5em;"
+					ng-repeat="query in deleteCategoryModal.entity.queries">
+					<div class="form-group row">
+						<label class="col-sm-2 control-label">{{query[1]}}</label>
+						<div class="col-sm-6">
+							<button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-th" aria-hidden="true"></i>
+							</button>
+							<ul class="dropdown-menu" style="min-width: 20em !important;">
+								<li ng-repeat="item in deleteCategoryModal.categories ">
+									<div style="margin: 0.3em">
+										{{item.root.des}} <input
+											ng-click="deleteCategoryModal.addQueryToCategory(item, query)"
+											type="checkbox" />
+									</div>
+									<div ng-switch on="item.childrens.length > 0">
+										<div ng-switch-when="true">
+											<div ng-init="childrens = item.childrens;"
+												ng-include="'views/partial/subCategoriesDropDownPartial.html?v1.2.1'">
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+
+				<div style="margin: 2em; color: red">{{deleteCategoryModal.entity.descriptionDelete}}</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="modal-footer">
+		<button id="deleteCategoryModalCreateButton"
+			class="btn btn-xs btn-primary" type="button"
+			ng-click="deleteCategoryModal.deleteEntity()">{{
+			'BUTTONS.OK' | translate }}</button>
+		<button id="deleteCategoryModalCancelButton"
+			class="btn btn-xs btn-warning" type="button"
+			ng-click="deleteCategoryModal.cancel()">{{ 'BUTTONS.CANCEL'
+			| translate }}</button>
+	</div>
+</div>
+</html>
