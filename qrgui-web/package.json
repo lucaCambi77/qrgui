@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"scripts": {
 		"build": "npm run clean && rimraf src/dist && webpack --bail --progress --profile --env prod=true",
-		"server": "webpack serve --env prod=false",
+		"server": "webpack serve --env prod=false --mode development",
 		"start": "npm run server",
 		"clean": "rm ./dist -rf"
 	},

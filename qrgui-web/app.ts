@@ -61,6 +61,8 @@ angular.module(
 
 							console.log("sono nell'applicazione... ");
 
+							$rootScope.ertaQrGuiUser = JSON.parse($window.sessionStorage.getItem('qruiUser'));
+
 							$rootScope.restdev = process.env.NODE_ENV;
 
 							var index = this;

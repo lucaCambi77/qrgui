@@ -51,9 +51,6 @@ import angular from 'angular';
 
 						$rootScope.columnOffSet = "col-md-offset-1";
 
-						var user = response[1].entity;
-						$rootScope.ertaQrGuiUser = user;
-
 						$rootScope.lastLogInDay = DateUtilityFactory
 							.GetStringDateDay(new Date());
 
@@ -68,7 +65,12 @@ import angular from 'angular';
 							'userData', JSON.stringify(userData)
 						);
 			
-						$rootScope.isUserLogged = true;
+						var user = response[1].entity;
+						$rootScope.ertaQrGuiUser = user;
+
+						$window.sessionStorage.setItem(
+							'qruiUser', JSON.stringify(user)
+						);
 
 						$location.path('/overview');
 					}, function (response) {
