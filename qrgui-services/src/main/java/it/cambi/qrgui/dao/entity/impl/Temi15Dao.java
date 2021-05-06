@@ -5,7 +5,7 @@ import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
 import it.cambi.qrgui.services.db.model.*;
-import it.cambi.qrgui.services.util.QueryUtils;
+import it.cambi.qrgui.util.QueryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;

@@ -1,6 +1,7 @@
 package it.cambi.qrgui.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cambi.qrgui.security.config.SecurityConfigurationTest;
 import it.cambi.qrgui.security.db.model.GuiUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -4,11 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cambi.qrgui.services.db.model.Temi18RouQue;
 import it.cambi.qrgui.services.db.model.Temi18RouQueId;
 import it.cambi.qrgui.services.emia.api.ITemi18Service;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,10 +17,9 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
-import static it.cambi.qrgui.services.util.IConstants.F_QRRINS;
-import static it.cambi.qrgui.services.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.IConstants.F_QRRINS;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
-@Scope("request")
 @RequestMapping("/emia/routQuery")
 @Component
 public class Temi18Resource extends BasicResource

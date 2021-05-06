@@ -2,11 +2,10 @@ package it.cambi.qrgui.rest;
 
 import it.cambi.qrgui.services.db.model.Temi13DtbInf;
 import it.cambi.qrgui.services.emia.api.ITemi13Service;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +15,8 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
-@Scope("request")
 @RequestMapping("/emia/dbInfo")
 @Component
 public class Temi13Resource extends BasicResource

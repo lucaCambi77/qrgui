@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package it.cambi.qrgui.services.emia.impl;
 
@@ -11,9 +11,9 @@ import it.cambi.qrgui.services.db.model.*;
 import it.cambi.qrgui.services.emia.api.ITemi14Service;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
 import it.cambi.qrgui.services.exception.NoCategoriesAllowedException;
-import it.cambi.qrgui.services.util.Functions;
-import it.cambi.qrgui.services.util.TreeNode;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.Functions;
+import it.cambi.qrgui.util.TreeNode;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author luca
  *
  */
 @Component
-public class Temi14Service implements ITemi14Service<Temi14UteCat>
-{
+public class Temi14Service implements ITemi14Service<Temi14UteCat> {
     private static final Logger log = LoggerFactory.getLogger(Temi14Service.class);
 
     @Autowired
@@ -52,34 +52,31 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
     private ITemi20Service<Temi20AnaTipCat> temi20Service;
 
     /**
-     * 
+     *
      */
-    public Temi14Service()
-    {
+    public Temi14Service() {
     }
 
     /**
      * Creo una nuova categoria
-     * 
+     *
      * @param cTipCateg
-     * 
+     *
      * @param request
-     * 
+     *
      * @param ccat2
-     * 
+     *
      * @return
      */
     @Override
     @Transactional
     public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> saveCategory(HttpServletRequest sr, Temi14UteCat temi14)
-            throws NoCategoriesAllowedException
-    {
+            throws NoCategoriesAllowedException {
 
         /**
          * Se esiste il parent allora la associo come sottocategoria modificando il parent e la data del parent
          */
-        if (null != temi14.getPar() && null != temi14.getId() && temi14.getId().getCat() > 0)
-        {
+        if (null != temi14.getPar() && null != temi14.getId() && temi14.getId().getCat() > 0) {
             Temi14UteCat temi14Child = categoryDao.getEntityByPrimaryKey(temi14.getId());
             temi14Child.setPar(temi14.getPar());
             temi14Child.setInsPar(temi14.getInsPar());
@@ -88,7 +85,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
         }
 
-        if (null == temi14.getId().getInsCat())
+        if (Optional.ofNullable(temi14.getId()).stream().anyMatch(id -> id.getInsCat() == null))
             temi14.getId().setInsCat(new Date());
 
         categoryDao.merge(temi14);
@@ -99,14 +96,13 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
     /**
      * Cancello categoria
-     * 
+     *
      * @return
      */
     @Override
     @Transactional
     public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> deleteCategory(HttpServletRequest sr, Temi14UteCat cat)
-            throws NoCategoriesAllowedException
-    {
+            throws NoCategoriesAllowedException {
 
         log.info("Cancello la categoria " + cat.getId().getCat());
 
@@ -116,22 +112,19 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
         boolean reAssociated;
 
         for (Object object : queryDao.getAlreadyAssociatedQuery(cat.getId().getCat(), cat.getId().getInsCat().getTime(),
-                cat.getTemi20AnaTipCat().getTipCat()))
-        {
+                cat.getTemi20AnaTipCat().getTipCat())) {
             Object[] temi16 = (Object[]) object;
             Temi15UteQueId id = (Temi15UteQueId) temi16[0];
             reAssociated = false;
-            for (Temi16QueCatAss temi16QueCatAss : cat.getTemi16QueCatAsses())
-            {
+            for (Temi16QueCatAss temi16QueCatAss : cat.getTemi16QueCatAsses()) {
                 if (!Functions.areDifferentLong(id.getQue(), temi16QueCatAss.getId().getQue())
                         && !Functions.areDifferentLong(id.getInsQue().getTime(),
-                                temi16QueCatAss.getId().getInsQue().getTime()))
+                        temi16QueCatAss.getId().getInsQue().getTime()))
                     reAssociated = true;
 
             }
 
-            if (!reAssociated)
-            {
+            if (!reAssociated) {
                 Temi15UteQue temi15 = queryDao.getEntityByPrimaryKey(id);
 
                 queCatAssDao.delete(queCatAssDao.getEntityByPrimaryKey(
@@ -150,8 +143,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
          * Creo le nuove associazioni se ci sono. Dalla gui un utente può associare query che non avrebbero più associazioni a categorie esistenti
          */
         if (null != cat.getTemi16QueCatAsses())
-            for (Temi16QueCatAss temi16QueCatAss : cat.getTemi16QueCatAsses())
-            {
+            for (Temi16QueCatAss temi16QueCatAss : cat.getTemi16QueCatAsses()) {
                 queCatAssDao.merge(temi16QueCatAss);
             }
 
@@ -159,11 +151,10 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
     }
 
     /**
-     * 
+     *
      * @param id
      */
-    private void deleteCategAndChildrens(Temi14UteCat id)
-    {
+    private void deleteCategAndChildrens(Temi14UteCat id) {
         /**
          * Cancello i parent
          */
@@ -189,12 +180,11 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
     }
 
     /**
-     * 
+     *
      * @param id
      * @return
      */
-    private List<Temi16QueCatAss> deleteQueriesCategory(Temi14UteCat id)
-    {
+    private List<Temi16QueCatAss> deleteQueriesCategory(Temi14UteCat id) {
         /**
          * Cancello le associazioni alle query e le sotto categorie
          */
@@ -224,24 +214,23 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
     /**
      * Creo un alberatura delle categorie con l'oggetto generico {@link #TreeNode}
-     * 
+     *
      * @param request
-     * 
+     *
      * @return
      * @throws Exception
      */
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> findAll(HttpServletRequest sr, Temi14UteCatId id)
-            throws NoCategoriesAllowedException
-    {
+            throws NoCategoriesAllowedException {
 
         /**
          * Controllo ed aggiungo i tipi categorie per cui l'utente è abilitato
          */
         List<String> functions = temi20Service.getFunctionsByRequest(sr);
 
-        if (functions == null || (null != functions && functions.size() == 0))
+        if (functions == null || functions.size() == 0)
             throw new NoCategoriesAllowedException();
 
         CriteriaQuery<Temi14UteCat> criteriaQuery = categoryDao.getEntityManager().getCriteriaBuilder()
@@ -253,8 +242,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
         Expression<?> cTipCat = root.get("temi20AnaTipCat").get("tipCat");
 
-        if (null != id)
-        {
+        if (null != id) {
             Expression<?> cat = root.get("id").get("cat");
 
             Predicate predicateCat = categoryDao.getEntityManager().getCriteriaBuilder().equal(cat, id.getCat());
@@ -278,14 +266,8 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
         List<TreeNode<Temi14UteCat, Long>> listTreeNode = new ArrayList<TreeNode<Temi14UteCat, Long>>();
 
-        for (Temi14UteCat temi14 : listTemi14)
-        {
-            if (isChild(listTreeNode, temi14))
-            {
-                continue;
-            }
-            else
-            {
+        for (Temi14UteCat temi14 : listTemi14) {
+            if (!isChild(listTreeNode, temi14)) {
 
                 TreeNode<Temi14UteCat, Long> treeNode = new TreeNode<Temi14UteCat, Long>(temi14, temi14.getId().getCat());
 
@@ -300,19 +282,16 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
     /**
      * Verifico se il nodo è già stato aggiunto al parent
-     * 
+     *
      * @param listTreeNode
      * @param children
      * @return
      */
-    private boolean isChild(List<TreeNode<Temi14UteCat, Long>> listTreeNode, Temi14UteCat children)
-    {
+    private boolean isChild(List<TreeNode<Temi14UteCat, Long>> listTreeNode, Temi14UteCat children) {
         boolean isChild = false;
 
-        for (TreeNode<Temi14UteCat, Long> treeNode : listTreeNode)
-        {
-            for (TreeNode<Temi14UteCat, Long> child : treeNode.getChildrens())
-            {
+        for (TreeNode<Temi14UteCat, Long> treeNode : listTreeNode) {
+            for (TreeNode<Temi14UteCat, Long> child : treeNode.getChildrens()) {
                 /**
                  * Se è un child oppure il suo parent è lo stesso del nodo che sto esaminando, è un child e l'ho già aggiunto all'alberatura del
                  * parent
@@ -330,20 +309,17 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat>
 
     /**
      * Aggiungo tutto i childs del nodo parent
-     * 
+     *
      * @param listTemi14
      * @param temi14
      * @param treeNode
      */
-    private void addChilds(List<Temi14UteCat> listTemi14, Temi14UteCat temi14, TreeNode<Temi14UteCat, Long> treeNode)
-    {
+    private void addChilds(List<Temi14UteCat> listTemi14, Temi14UteCat temi14, TreeNode<Temi14UteCat, Long> treeNode) {
 
-        for (Temi14UteCat temi14In : listTemi14)
-        {
+        for (Temi14UteCat temi14In : listTemi14) {
             if (!Functions.areDifferentLong(temi14.getId().getCat(), temi14In.getPar() == null ? 0 : temi14In.getPar().longValue())
                     && !Functions.areDifferentLong(temi14.getId().getInsCat().getTime(),
-                            temi14In.getInsPar() == null ? 0 : temi14In.getInsPar().getTime()))
-            {
+                    temi14In.getInsPar() == null ? 0 : temi14In.getInsPar().getTime())) {
                 TreeNode<Temi14UteCat, Long> treeNodeSub = treeNode.addChild(temi14In.getId().getCat(), temi14In);
 
                 addChilds(listTemi14, temi14In, treeNodeSub);

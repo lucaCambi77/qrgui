@@ -7,11 +7,11 @@ import it.cambi.qrgui.query.model.Attribute;
 import it.cambi.qrgui.query.model.Constraint;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.util.DateUtils;
-import it.cambi.qrgui.services.util.WhereConditionOperator;
-import it.cambi.qrgui.services.util.WrappingUtils;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.DateUtils;
+import it.cambi.qrgui.util.WhereConditionOperator;
+import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -27,8 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD;
-import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
 
 /**
  * Classe che implementa Callable e permette di eseguire un task di esecuzione di una query. N.B. Poichè è un task asincrono, nel contesto spring è

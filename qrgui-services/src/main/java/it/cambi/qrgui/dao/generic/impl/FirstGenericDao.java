@@ -7,14 +7,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Component
-public class QrfepuGenericDao extends AbstractDao
+public class FirstGenericDao extends AbstractDao
 {
 
-    public QrfepuGenericDao()
+    public FirstGenericDao()
     {
     }
 
-    @PersistenceContext(name = "testTransactionManager")
+    @PersistenceContext(name = "firstTransactionManager")
     private EntityManager entityManager;
 
     public EntityManager getEntityManager()

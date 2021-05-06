@@ -1,7 +1,7 @@
 /**
  * Class for application Constants
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
 /**
  * @author luca
@@ -9,10 +9,6 @@ package it.cambi.qrgui.services.util;
  */
 public class IConstants
 {
-
-    public static final String GMT = "GMT";
-    public static final String APPLICATION_CONF_DIR = "application.conf.dir";
-    public static final String CONFIG_PROPERTIES_PATH = "/erta-qr-gui/erta.qr.gui.properties";
 
     // Locales
     public static final String DEFAULT_LOCALE = "en";
@@ -61,28 +57,19 @@ public class IConstants
     public static final String HANDLER = "handler";
     public static final String HIBERNATELAZYINITIALIZER = "hibernateLazyInitializer";
 
-    /**
-     * Sequences
-     * 
-     */
-
-    public final static String SEMI14_ANA_CAT = "SELECT EMIA.SEMI14_ANA_CAT.nextval from dual";
-    public final static String SEMI15_ANA_QUE = "SELECT EMIA.SEMI15_ANA_QUE.nextval from dual";
-    public final static String SEMI17_ANA_ROU = "SELECT EMIA.SEMI17_ANA_ROU.nextval from dual";
-
     // Roles Functions
-    public static final String R_FEPQRA = "FEP.QRA";
-    public static final String R_FEPQR1 = "FEP.QR1";
-    public static final String R_FEPQR2 = "FEP.QR2";
+    public static final String R_FEPQRA = "QRA";
+    public static final String R_FEPQR1 = "QR1";
+    public static final String R_FEPQR2 = "QR2";
 
-    public static final String F_QRCG00 = "F.FEP.QRCG00";
-    public static final String F_QRCG01 = "F.FEP.QRCG01";
-    public static final String F_QRCINS = "F.FEP.QRCINS";
-    public static final String F_QRCMOD = "F.FEP.QRCMOD";
-    public static final String F_QRRE00 = "F.FEP.QRRE00";
-    public static final String F_QRRINS = "F.FEP.QRRINS";
-    public static final String F_QRRMOD = "F.FEP.QRRMOD";
-    public static final String F_QRQMOD = "F.FEP.QRQMOD";
-    public static final String F_QRQE00 = "F.FEP.QRQE00";
-    public static final String F_QRQINS = "F.FEP.QRQINS";
+    public static final String F_QRCG00 = "QRCG00";
+    public static final String F_QRCG01 = "QRCG01";
+    public static final String F_QRCINS = "QRCINS";
+    public static final String F_QRCMOD = "QRCMOD";
+    public static final String F_QRRE00 = "QRRE00";
+    public static final String F_QRRINS = "QRRINS";
+    public static final String F_QRRMOD = "QRRMOD";
+    public static final String F_QRQMOD = "QRQMOD";
+    public static final String F_QRQE00 = "QRQE00";
+    public static final String F_QRQINS = "QRQINS";
 }

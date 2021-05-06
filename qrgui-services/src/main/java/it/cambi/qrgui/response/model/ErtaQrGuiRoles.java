@@ -1,6 +1,6 @@
 package it.cambi.qrgui.response.model;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
 public enum ErtaQrGuiRoles
 {

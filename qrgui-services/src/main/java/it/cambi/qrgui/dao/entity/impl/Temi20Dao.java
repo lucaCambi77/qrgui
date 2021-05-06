@@ -3,7 +3,7 @@ package it.cambi.qrgui.dao.entity.impl;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
 import it.cambi.qrgui.services.db.model.Temi20AnaTipCat;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @param <T>
@@ -62,19 +63,10 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String> implement
     public List<String> getFunctionsByRequest(HttpServletRequest request)
     {
 
-        if (null == request)
-            return null;
-        /**
-         * Controllo ed aggiungo i tipi categorie per cui l'utente è abilitato
-         */
-
-        /* Se sono senza la sicurezza abilitata posso valorizzare allowed.categories nel file di properties */
-        String allowedCategories = temi13dao.getApplicationProperties().getProperty("allowed.categories");
-
-        if (null != allowedCategories)
-            return Arrays.asList(allowedCategories.split(","));
-
         List<Temi20AnaTipCat> ttps20List = findAll(null);
+
+        if(null == request)
+            return ttps20List.stream().map(Temi20AnaTipCat::getTipCat).collect(Collectors.toList());
 
         List<String> functions = new ArrayList<String>();
 

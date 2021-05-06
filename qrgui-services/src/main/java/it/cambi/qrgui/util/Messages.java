@@ -1,17 +1,17 @@
 /**
  * 
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
-import it.cambi.qrgui.services.util.messages.UTF8Control;
+import it.cambi.qrgui.util.messages.UTF8Control;
 
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import static it.cambi.qrgui.services.util.IConstants.DEFAULT_LOCALE;
-import static it.cambi.qrgui.services.util.IConstants.TRANSLATIONS_FILE_NAME;
+import static it.cambi.qrgui.util.IConstants.DEFAULT_LOCALE;
+import static it.cambi.qrgui.util.IConstants.TRANSLATIONS_FILE_NAME;
 
 /**
  * @author luca

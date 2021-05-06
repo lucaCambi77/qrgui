@@ -8,10 +8,10 @@ import it.cambi.qrgui.query.model.Constraint;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.query.model.SelectColumns;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.util.IConstants;
-import it.cambi.qrgui.services.util.WhereConditionOperator;
-import it.cambi.qrgui.services.util.WrappingUtils;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.WhereConditionOperator;
+import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

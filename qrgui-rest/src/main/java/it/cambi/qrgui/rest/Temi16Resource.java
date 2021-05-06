@@ -3,11 +3,10 @@ package it.cambi.qrgui.rest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cambi.qrgui.services.db.model.Temi16QueCatAss;
 import it.cambi.qrgui.services.emia.api.ITemi16Service;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
-@Scope("request")
 @RequestMapping("/emia/queCatAssoc")
 @Component
 public class Temi16Resource extends BasicResource

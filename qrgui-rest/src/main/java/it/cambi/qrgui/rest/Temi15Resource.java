@@ -4,26 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.services.db.model.Temi15UteQueId;
 import it.cambi.qrgui.services.emia.api.ITemi15Service;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
-@Scope("request")
 @RequestMapping("/emia/query")
 @Component
 public class Temi15Resource extends BasicResource
@@ -79,7 +74,7 @@ public class Temi15Resource extends BasicResource
     @PostMapping
     @RequestMapping("tipCateg")
     @RolesAllowed({ F_QRQE00, R_FEPQRA })
-    public ResponseEntity<String> getByTipCateg(@RequestParam("tipCat") List<String> listAllowedCat, List<Temi15UteQue> queries, HttpServletRequest sr)
+    public ResponseEntity<String> getByTipCateg(@RequestParam(value = "tipCat", required = false) List<String> listAllowedCat, @RequestBody(required = false) List<Temi15UteQue> queries, HttpServletRequest sr)
             throws JsonProcessingException
     {
 

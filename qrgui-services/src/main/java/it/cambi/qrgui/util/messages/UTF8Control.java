@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.util.messages;
+package it.cambi.qrgui.util.messages;
 
 import java.io.IOException;
 import java.io.InputStream;

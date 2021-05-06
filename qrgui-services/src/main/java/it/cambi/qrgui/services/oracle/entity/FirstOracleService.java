@@ -21,7 +21,7 @@ import java.io.IOException;
  *
  */
 @Component
-public class QrfepuOracleService {
+public class FirstOracleService {
 
     @Autowired
     private FirstGenericDao genericDao;

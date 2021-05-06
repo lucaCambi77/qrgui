@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;

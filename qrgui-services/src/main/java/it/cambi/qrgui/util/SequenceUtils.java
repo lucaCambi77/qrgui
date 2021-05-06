@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
 import java.math.BigDecimal;
 

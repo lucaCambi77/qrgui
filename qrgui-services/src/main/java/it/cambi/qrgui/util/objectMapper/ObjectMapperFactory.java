@@ -1,5 +1,5 @@
 
-package it.cambi.qrgui.services.util.objectMapper;
+package it.cambi.qrgui.util.objectMapper;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;

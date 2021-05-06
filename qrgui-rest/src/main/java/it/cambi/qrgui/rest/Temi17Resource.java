@@ -4,12 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import it.cambi.qrgui.services.db.model.Temi17UteRou;
 import it.cambi.qrgui.services.db.model.Temi17UteRouId;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
-import it.cambi.qrgui.services.util.IConstants;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -21,9 +20,8 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
-@Scope("request")
 @RequestMapping("/emia/routine")
 @Component
 public class Temi17Resource extends BasicResource

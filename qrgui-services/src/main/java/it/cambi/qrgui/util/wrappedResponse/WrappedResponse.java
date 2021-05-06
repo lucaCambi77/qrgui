@@ -1,14 +1,14 @@
-package it.cambi.qrgui.services.util.wrappedResponse;
+package it.cambi.qrgui.util.wrappedResponse;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import it.cambi.qrgui.response.model.ErtaGuiUser;
-import it.cambi.qrgui.services.util.Errors;
-import it.cambi.qrgui.services.util.IConstants;
-import it.cambi.qrgui.services.util.Messages;
-import it.cambi.qrgui.services.util.objectMapper.ObjectMapperFactory;
+import it.cambi.qrgui.util.Errors;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.Messages;
+import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static it.cambi.qrgui.services.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.*;
 
 public class WrappedResponse<T>
 {

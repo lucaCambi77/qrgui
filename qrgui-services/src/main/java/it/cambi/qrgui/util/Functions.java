@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;

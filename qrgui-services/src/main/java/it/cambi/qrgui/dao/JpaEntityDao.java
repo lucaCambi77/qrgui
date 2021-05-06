@@ -1,7 +1,7 @@
 package it.cambi.qrgui.dao;
 
 import it.cambi.qrgui.dao.api.IEntityDao;
-import it.cambi.qrgui.services.util.QueryUtils;
+import it.cambi.qrgui.util.QueryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

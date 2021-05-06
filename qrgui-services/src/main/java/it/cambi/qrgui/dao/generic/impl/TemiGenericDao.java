@@ -25,7 +25,7 @@ public class TemiGenericDao<T, I> extends JpaEntityDao<T, I>
         super(clazz);
     }
 
-    @PersistenceContext()
+    @PersistenceContext(name = "emiaTransactionManager")
     private EntityManager entityManager;
 
     public EntityManager getEntityManager()

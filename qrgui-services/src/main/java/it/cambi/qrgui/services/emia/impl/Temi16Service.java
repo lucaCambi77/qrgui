@@ -7,7 +7,7 @@ import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.services.db.model.Temi16QueCatAss;
 import it.cambi.qrgui.services.db.model.Temi16QueCatAssId;
 import it.cambi.qrgui.services.emia.api.ITemi16Service;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;

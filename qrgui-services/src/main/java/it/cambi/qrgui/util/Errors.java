@@ -1,9 +1,9 @@
 /**
  * 
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.persistence.NoResultException;
@@ -11,8 +11,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLSyntaxErrorException;
 
-import static it.cambi.qrgui.services.util.IConstants.NO_RESULT_EXCEPTION;
-import static it.cambi.qrgui.services.util.IConstants.NULL_POINTER_EXCEPTION;
+import static it.cambi.qrgui.util.IConstants.NO_RESULT_EXCEPTION;
+import static it.cambi.qrgui.util.IConstants.NULL_POINTER_EXCEPTION;
 
 /**
  * @author luca

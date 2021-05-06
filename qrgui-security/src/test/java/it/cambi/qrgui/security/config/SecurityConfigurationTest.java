@@ -1,4 +1,4 @@
-package it.cambi.qrgui.security;
+package it.cambi.qrgui.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

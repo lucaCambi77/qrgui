@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

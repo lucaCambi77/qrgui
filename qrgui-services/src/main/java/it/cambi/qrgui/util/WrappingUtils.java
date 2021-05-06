@@ -1,7 +1,7 @@
 /**
  * 
  */
-package it.cambi.qrgui.services.util;
+package it.cambi.qrgui.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,15 +11,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.enums.JavaTypes;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.apache.poi.ss.usermodel.*;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD;
-import static it.cambi.qrgui.services.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
 
 /**
  * @author luca

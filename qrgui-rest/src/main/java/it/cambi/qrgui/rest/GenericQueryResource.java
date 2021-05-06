@@ -2,13 +2,13 @@ package it.cambi.qrgui.rest;
 
 import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.oracle.entity.QrfepuOracleService;
+import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
 import it.cambi.qrgui.services.oracle.entity.QrtcpuOracleService;
 import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
-import it.cambi.qrgui.services.util.IConstants;
-import it.cambi.qrgui.services.util.WrappingUtils;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -31,7 +30,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-@Scope("request")
 @RequestMapping("/query")
 @Component
 public class GenericQueryResource extends BasicResource {
@@ -41,7 +39,7 @@ public class GenericQueryResource extends BasicResource {
     private GenericQueryTaskExecutorService genericTaskExecutor;
 
     @Autowired
-    private QrfepuOracleService qrfepuOracleService;
+    private FirstOracleService qrfepuOracleService;
 
     @Autowired
     private QrtcpuOracleService qrtcpuOracleService;

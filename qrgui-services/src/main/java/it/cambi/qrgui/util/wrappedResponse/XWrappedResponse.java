@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.util.wrappedResponse;
+package it.cambi.qrgui.util.wrappedResponse;
 
 import java.util.List;
 

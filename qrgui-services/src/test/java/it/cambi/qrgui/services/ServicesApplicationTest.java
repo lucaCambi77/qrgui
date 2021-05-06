@@ -13,17 +13,15 @@ import javax.persistence.PersistenceContext;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { EmiaDbAppConf.class })
+@ContextConfiguration(classes = {EmiaDbAppConf.class})
 @TestPropertySource("/test.properties")
-class ServicesApplicationTest
-{
+class ServicesApplicationTest {
 
     @PersistenceContext(name = "emiaTransactionManager")
     private EntityManager em;
 
     @Test
-    void contextLoads()
-    {
+    void contextLoads() {
         assertNotNull(em);
     }
 

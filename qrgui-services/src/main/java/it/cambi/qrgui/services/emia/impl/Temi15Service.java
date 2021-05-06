@@ -9,8 +9,8 @@ import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.services.db.model.*;
 import it.cambi.qrgui.services.emia.api.ITemi15Service;
-import it.cambi.qrgui.services.util.Messages;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.Messages;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -21,7 +21,7 @@ import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-import static it.cambi.qrgui.services.util.IConstants.ERROR_NO_QUERY_ASSOCIATION;
+import static it.cambi.qrgui.util.IConstants.ERROR_NO_QUERY_ASSOCIATION;
 
 /**
  * @author luca
@@ -250,7 +250,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
 
         for (Object object : listTemi15)
         {
-            queries.add(new Long(((Object[]) object)[0].toString()));
+            queries.add(Long.valueOf(((Object[]) object)[0].toString()));
         }
 
         CriteriaQuery<Temi15UteQue> criteriaTemi15 = queryDao.getEntityManager().getCriteriaBuilder()

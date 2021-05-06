@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.services.util.wrappedResponse.XWrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * 
  * 
  */
-
+@CrossOrigin(origins = "*")
 public abstract class BasicResource
 {
 
