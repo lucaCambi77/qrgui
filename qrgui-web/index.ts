@@ -25,7 +25,7 @@ import './scripts/controllers/overview'
 import './scripts/controllers/category'
 import './scripts/controllers/routines'
 
-// import './scripts/app-directive'
+import './scripts/app-directive'
 
 // import './scripts/controllers/about'
 // import './scripts/controllers/addQueryToCategory'

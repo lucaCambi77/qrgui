@@ -12,9 +12,9 @@ import angular from 'angular';
 angular
 		.module('qrGuiApp')
 		.directive(
-				'routineCategories',
+				'routineCategories', 
 				function($compile, $rootScope) {
-					var controller;
+
 					return {
 						restrict : 'A',
 						link : function(scope, element, attrs) {
