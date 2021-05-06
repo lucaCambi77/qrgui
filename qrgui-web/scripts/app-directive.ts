@@ -12,7 +12,7 @@ import angular from 'angular';
 angular
 		.module('qrGuiApp')
 		.directive(
-				'routineCategories', 
+				'routineCategories', 	
 				function($compile, $rootScope) {
 
 					return {
