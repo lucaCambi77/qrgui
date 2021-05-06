@@ -32,3 +32,4 @@ target/
 *.iml
 
 **/dist
+**/node_modules
