@@ -110,7 +110,7 @@ public class Temi15Resource extends BasicResource
 
     @PostMapping
     @RolesAllowed({ F_QRQINS, R_FEPQRA })
-    public ResponseEntity<String> postQuery(@NotNull Temi15UteQue que, HttpServletRequest sr)
+    public ResponseEntity<String> postQuery(@NotNull @RequestBody Temi15UteQue que, HttpServletRequest sr)
             throws JsonProcessingException
     {
 
@@ -130,7 +130,7 @@ public class Temi15Resource extends BasicResource
     @PostMapping
     @RolesAllowed({ R_FEPQRA, F_QRQMOD, F_QRCMOD, R_FEPQRA })
     @RequestMapping("delete")
-    public ResponseEntity<String> deleteQuery(@NotNull Temi15UteQueId key, HttpServletRequest sr)
+    public ResponseEntity<String> deleteQuery(@NotNull @RequestBody Temi15UteQueId key, HttpServletRequest sr)
             throws JsonProcessingException
     {
 

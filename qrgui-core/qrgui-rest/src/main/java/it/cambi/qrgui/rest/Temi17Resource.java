@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
@@ -52,7 +53,7 @@ public class Temi17Resource extends BasicResource
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RolesAllowed({ F_QRRINS, R_FEPQRA })
-    public ResponseEntity<String> postRoutine(@NotNull Temi17UteRou temi17, HttpServletRequest sr)
+    public ResponseEntity<String> postRoutine(@NotNull @RequestBody Temi17UteRou temi17, HttpServletRequest sr)
             throws JsonProcessingException
     {
 

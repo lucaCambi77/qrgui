@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
@@ -49,7 +50,7 @@ public class Temi14Resource extends BasicResource
 
     @PostMapping
     @RolesAllowed({ F_QRCINS, R_FEPQRA })
-    public ResponseEntity<String> postCategory(@NotNull Temi14UteCat temi14, HttpServletRequest sr)
+    public ResponseEntity<String> postCategory(@NotNull @RequestBody Temi14UteCat temi14, HttpServletRequest sr)
             throws JsonProcessingException
     {
 
@@ -70,7 +71,7 @@ public class Temi14Resource extends BasicResource
     @PostMapping
     @RequestMapping("delete")
     @RolesAllowed({ F_QRCMOD, R_FEPQRA })
-    public ResponseEntity<String> deleteCategory(@NotNull Temi14UteCat id, HttpServletRequest sr)
+    public ResponseEntity<String> deleteCategory(@NotNull @RequestBody Temi14UteCat id, HttpServletRequest sr)
             throws JsonProcessingException
     {
 
