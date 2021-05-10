@@ -9,7 +9,8 @@ import angular from 'angular';
 angular
 		.module('qrGuiApp')
 		.controller(
-				'DeleteCategoryModalCtrl',
+				'DeleteCategoryModalCtrl', [ 'entity', '$uibModalInstance', '$rootScope',
+					'UtilErrorsFactory', 'EmiaRestUtilityFactory',
 				function(entity, $uibModalInstance, $rootScope,
 						UtilErrorsFactory, EmiaRestUtilityFactory) {
 
@@ -107,4 +108,4 @@ angular
 						$uibModalInstance.dismiss('cancel');
 
 					};
-				})
+				}])

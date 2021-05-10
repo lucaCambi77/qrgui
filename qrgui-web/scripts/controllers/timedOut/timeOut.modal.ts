@@ -9,12 +9,12 @@ import angular from 'angular';
  * 
  * Main module of the application.
  */
-angular.module('qrGuiApp').controller('TimedOutCtrl',
-		function TimedOutCtrl($uibModalInstance) {
+angular.module('qrGuiApp').controller('TimedOutCtrl', ['$uibModalInstance',
+	function TimedOutCtrl($uibModalInstance) {
 
-			var timedOut = this;
+		var timedOut = this;
 
-			timedOut.loginOutOk = function() {
-				$uibModalInstance.close();
-			};
-		})
+		timedOut.loginOutOk = function () {
+			$uibModalInstance.close();
+		};
+	}])

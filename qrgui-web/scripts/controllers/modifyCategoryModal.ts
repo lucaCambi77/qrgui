@@ -9,7 +9,8 @@ import angular from 'angular';
 angular
 		.module('qrGuiApp')
 		.controller(
-				'ModifyCategory',
+				'ModifyCategory', ['categ', '$uibModalInstance', 'EmiaRestUtilityFactory',
+					'UtilErrorsFactory',
 				function(categ, $uibModalInstance, EmiaRestUtilityFactory,
 						UtilErrorsFactory) {
 
@@ -107,4 +108,4 @@ angular
 
 						queryToCheck.checked = !queryToCheck.checked;
 					}
-				})
+				}])

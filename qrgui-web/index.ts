@@ -28,12 +28,12 @@ import './scripts/controllers/routines'
 import './scripts/app-directive'
 
 // import './scripts/controllers/about'
-// import './scripts/controllers/addQueryToCategory'
-// import './scripts/controllers/deleteCategoryModal'
-// import './scripts/controllers/deleteModal'
-// import './scripts/controllers/modifyCategoryModal'
-// import './scripts/controllers/routinesResultModal'
-// import './scripts/controllers/timedOut/timeOut.modal'
+import './scripts/controllers/addQueryToCategory'
+import './scripts/controllers/deleteCategoryModal'
+import './scripts/controllers/deleteModal'
+import './scripts/controllers/modifyCategoryModal'
+import './scripts/controllers/routinesResultModal'
+import './scripts/controllers/timedOut/timeOut.modal'
 
 
 

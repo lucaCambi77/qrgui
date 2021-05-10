@@ -7,10 +7,10 @@ import angular from 'angular';
 
 	LoginFactory.$inject = ['$rootScope', 'RestFactory', 'DateUtilityFactory',
 		'$location', 'EmiaRestUtilityFactory', '$q', 'UtilErrorsFactory',
-		'ListUtilityFactory', 'constant', '$window', '$http']
+		'ListUtilityFactory', '$window', '$http']
 	function LoginFactory($rootScope, RestFactory, DateUtilityFactory,
 		$location, EmiaRestUtilityFactory, $q, UtilErrorsFactory,
-		ListUtilityFactory, constant, $window, $http) {
+		ListUtilityFactory, $window, $http) {
 
 		var service: any = {};
 

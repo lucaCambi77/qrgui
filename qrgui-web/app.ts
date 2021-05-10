@@ -56,8 +56,8 @@ angular.module(
 						 * modo da poterle utilizzare nelle pagine Html
 						 */
 						$rootScope.CONSTANT = constant;
-					}]).controller('IndexController', ['$location', '$window', '$rootScope', 'constant', 'LoginFactory', '$uibModal', '$http',
-						function IndexController($location, $window, $rootScope, constant, LoginFactory, $uibModal, $http) {
+					}]).controller('IndexController', ['$location', '$window', '$rootScope', 'constant', 'LoginFactory', '$uibModal', '$http', 'ListUtilityFactory',
+						function IndexController($location, $window, $rootScope, constant, LoginFactory, $uibModal, $http, ListUtilityFactory) {
 
 							console.log("sono nell'applicazione... ");
 
@@ -88,6 +88,7 @@ angular.module(
 							if (userData) {
 								$http.defaults.headers.common['Authorization']
 									= 'Basic ' + JSON.parse(userData).authData;
+									ListUtilityFactory.LoadCategoriesState(index);
 							} else {
 								LoginFactory.GetUserProperties(index);
 							}

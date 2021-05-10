@@ -54,7 +54,7 @@ angular
 					EmiaRestUtilityFactory.GetQueCatAssoc()];
 
 				$q
-					.allSettled(list)
+					.all(list)
 					.then(
 						function (response) {
 							if (UtilErrorsFactory
@@ -319,7 +319,7 @@ angular
 				var modalInstance = $uibModal
 					.open({
 						animation: true,
-						templateUrl: 'views/modal/addQueryToCategories.html?v1.2.1',
+						templateUrl: 'views/modal/addQueryToCategories.html',
 						controller: 'AddQueryToCategory as addQueryToCategory',
 						size: 'lg',
 						resolve: {

@@ -7,7 +7,7 @@ import angular from 'angular';
  * @description # MainCtrl Controller of the qrGuiApp
  */
 angular.module('qrGuiApp').controller(
-		'DeleteModalCtrl',
+		'DeleteModalCtrl', [ 'entity', '$uibModalInstance',
 		function(entity, $uibModalInstance) {
 
 			var deleteModal = this;
@@ -24,4 +24,4 @@ angular.module('qrGuiApp').controller(
 				$uibModalInstance.dismiss('cancel');
 
 			};
-		})
+		}])

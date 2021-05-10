@@ -166,11 +166,8 @@ import angular from 'angular';
 					+ '						</div>'
 					+ '						</div>'
 					/* Categoria su db */
-					+ '						<div ng-if="!category.CheckLast($index, '
-					+ (i + 1)
-					+ ', '
-					+ factor
-					+ ')"> <div class="row"> <div class="col-sm-8" ui-draggable="true" drag="categ"> <h3 class="panel-title">'
+					+ '						<div ng-if="!category.CheckLast($index, ' + (i + 1) + ', ' 	+ factor + ')"> '
+					+ ' <div class="row"> <div class="col-sm-8" ui-draggable="true" drag="categ"> <h3 class="panel-title">'
 					+ ' <a data-toggle="collapse" data-parent="#accordion" data-target="#collapse-{{categ.root.cat}}"'
 					+ ' 		href><i style="margin-right: 0.3em" class="fa fa-book" aria-hidden="true"></i><b style="color : {{colorYellow}}">{{categ.root.des}}</b> <br> <b> {{categ.root.temi20AnaTipCat.des}} </b> </a></h3></div>'
 					+ '						<div class="col-sm-1"> <button title="{{category.addQueryTitle}}" ng-if="ertaQrGuiUser.admin" class="btn btn-sm" ng-click="category.addQuery(categ)"> <i class="fa fa-plus" aria-hidden="true"></i>'
