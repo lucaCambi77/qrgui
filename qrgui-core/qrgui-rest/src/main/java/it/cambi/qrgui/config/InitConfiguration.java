@@ -3,6 +3,7 @@
  */
 package it.cambi.qrgui.config;
 
+import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.security.SpringSecurityConfig;
 import it.cambi.qrgui.security.db.model.GuiUser;
@@ -33,13 +34,14 @@ import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 @Import({SpringSecurityConfig.class, EmiaDbAppConf.class})
 @Profile("!test")
 public class InitConfiguration {
+
     @Bean
     CommandLineRunner initializeApplication(DbInfoJpaRepository dbInfoRepository, UserServiceImpl userService, RoleRepository roleRespository,
                                             UserRoleRepository userRoleRepository, Temi20Service temi20Service) {
         return args -> {
 
             Temi13DtbInf temi13 = new Temi13DtbInf();
-            Temi13DtbInfId id = new Temi13DtbInfId("ORACLE", "TEST");
+            Temi13DtbInfId id = new Temi13DtbInfId("ORACLE", Schema.TEST.name());
             temi13.setId(id);
 
             dbInfoRepository.save(temi13);

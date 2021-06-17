@@ -1,15 +1,15 @@
 package it.cambi.qrgui.db.test;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 
 /**
  */
 @Entity
-@Table(name = "GENERIC_TABLE", schema = "TEST")
-public class GenericTable implements Serializable
+@Table(name = "GENERIC_TABLE")
+public class GenericTable implements java.io.Serializable
 {
 
     private int id;
@@ -30,6 +30,13 @@ public class GenericTable implements Serializable
         this.name = name;
     }
 
+    @Id
+    @Column(name = "id", unique = true, nullable = false, length = 32)
+    public int getId() {
+        return id;
+    }
+
+    @Column(name = "name", nullable = false, length = 32)
     public String getName()
     {
         return this.name;
@@ -42,10 +49,5 @@ public class GenericTable implements Serializable
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Id
-    public int getId() {
-        return id;
     }
 }

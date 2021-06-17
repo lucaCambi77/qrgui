@@ -1,10 +1,13 @@
 package it.cambi.qrgui.dao.generic.impl;
 
 import it.cambi.qrgui.dao.JpaEntityDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 /**
  * @param <T>
@@ -12,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @param <I>
  *            Type of the Primary Key.
  */
-@Component
+@Service
 public class TemiGenericDao<T, I> extends JpaEntityDao<T, I>
 {
 
@@ -25,7 +28,8 @@ public class TemiGenericDao<T, I> extends JpaEntityDao<T, I>
         super(clazz);
     }
 
-    @PersistenceContext(name = "emiaTransactionManager")
+    @PersistenceContext(unitName = "emiaPU")
+    @Qualifier(value = "emiaEntityManagerFactory")
     private EntityManager entityManager;
 
     public EntityManager getEntityManager()

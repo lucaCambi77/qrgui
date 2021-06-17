@@ -31,7 +31,7 @@ public class GuiUserDetailService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional(value = "securityTransactionManager", readOnly = true)
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         log.info("... attempting to authenticate user " + userName);
 

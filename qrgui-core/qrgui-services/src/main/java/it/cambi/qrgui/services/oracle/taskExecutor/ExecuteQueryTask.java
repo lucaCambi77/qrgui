@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
@@ -41,11 +42,8 @@ import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
 @Scope("prototype")
 public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue, List<Object>>> {
 
-    @PersistenceUnit(unitName = "qrfepuPU")
-    private EntityManagerFactory entityManagerFactoryFepu;
-
-    @PersistenceUnit(unitName = "qrtcpuPU")
-    private EntityManagerFactory entityManagerFactoryTcpu;
+    @PersistenceUnit(unitName = "firstTransactionManager")
+    private EntityManagerFactory factory;
 
     private Temi15UteQue query;
     private Integer pageSize;
@@ -77,14 +75,9 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
 
         switch (Schema.valueOf(query.getTemi13DtbInf().getId().getSch())) {
 
-            case QRFEPU:
+            case TEST:
 
-                entityManager = entityManagerFactoryFepu.createEntityManager();
-
-                break;
-            case QRTCPU:
-
-                entityManager = entityManagerFactoryTcpu.createEntityManager();
+                entityManager = factory.createEntityManager();
 
                 break;
 
@@ -147,15 +140,12 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
     @SuppressWarnings("unchecked")
     public List<Object> getByNativeQuery(String nativeQuery, Integer page, EntityManager entityManager) {
 
-        if (null == page)
-            return entityManager.createNativeQuery(nativeQuery)
-                    .getResultList();
-
-        return entityManager.createNativeQuery(nativeQuery)
+        return Optional.ofNullable(page).map(p -> entityManager.createNativeQuery(nativeQuery)
                 .setMaxResults(getPageSize())
-                .setFirstResult((page - 1) * getPageSize())
-                .getResultList();
-
+                .setFirstResult((p - 1) * getPageSize())
+                .getResultList()).orElse(
+                entityManager.createNativeQuery(nativeQuery)
+                        .getResultList());
     }
 
     /**

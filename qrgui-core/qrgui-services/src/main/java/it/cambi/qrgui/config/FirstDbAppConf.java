@@ -31,15 +31,6 @@ public class FirstDbAppConf {
     private final Environment env;
 
     @Bean
-    public DataSource testDataSource() {
-        return DataSourceBuilder.create()
-                .url(env.getProperty("datasource.test.jdbcUrl"))
-                .username(env.getProperty("datasource.test.username"))
-                .password(env.getProperty("datasource.test.password"))
-                .build();
-    }
-
-    @Bean
     public PlatformTransactionManager firstTransactionManager() {
         return new JpaTransactionManager(Objects.requireNonNull(firstEntityManagerFactory().getObject()));
     }
@@ -50,18 +41,28 @@ public class FirstDbAppConf {
         factory.setDataSource(testDataSource());
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         factory.setPackagesToScan(GenericTable.class.getPackage().getName());
+        factory.setPersistenceUnitName("firstPU");
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
         jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        jpaProperties.put("hibernate.dialect", env.getProperty("datasource.test.driver-class-name"));
 
-        if (null != env.getProperty("load.test.sql") && Objects.equals(env.getProperty("load.test.sql"), "true"))
-            jpaProperties.put("hibernate.hbm2ddl.import_files", "init.sql");
+        //if (null != env.getProperty("load.test.sql") && Objects.equals(env.getProperty("load.test.sql"), "true"))
+        jpaProperties.put("hibernate.hbm2ddl.import_files", "init.sql");
 
         factory.setJpaProperties(jpaProperties);
 
         return factory;
+    }
+
+    @Bean
+    public DataSource testDataSource() {
+        return DataSourceBuilder.create()
+                .url(env.getProperty("datasource.test.jdbcUrl"))
+                .username(env.getProperty("datasource.test.username"))
+                .password(env.getProperty("datasource.test.password"))
+                .build();
     }
 
 }

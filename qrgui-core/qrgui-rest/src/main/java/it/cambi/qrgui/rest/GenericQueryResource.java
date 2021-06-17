@@ -3,23 +3,23 @@ package it.cambi.qrgui.rest;
 import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
-import it.cambi.qrgui.services.oracle.entity.QrtcpuOracleService;
 import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
 import it.cambi.qrgui.util.IConstants;
 import it.cambi.qrgui.util.WrappingUtils;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,17 +32,13 @@ import java.util.List;
 
 @RequestMapping("/query")
 @Component
+@RequiredArgsConstructor
 public class GenericQueryResource extends BasicResource {
     private static final Logger log = LoggerFactory.getLogger(GenericQueryResource.class);
 
-    @Autowired
-    private GenericQueryTaskExecutorService genericTaskExecutor;
+    private final GenericQueryTaskExecutorService genericTaskExecutor;
 
-    @Autowired
-    private FirstOracleService qrfepuOracleService;
-
-    @Autowired
-    private QrtcpuOracleService qrtcpuOracleService;
+    private final FirstOracleService firstOracleService;
 
     /**
      * Metodo per estrarre il path della root della parte web , in modo da creare l'excel nel percorso /files
@@ -75,9 +71,9 @@ public class GenericQueryResource extends BasicResource {
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("execute_query")
-    public ResponseEntity executeQuery(@NotNull List<Temi15UteQue> queries, @RequestParam("page") Integer page,
-                                       @RequestParam("pageSize") @DefaultValue(IConstants.TEN) int pageSize, @DefaultValue("false") @RequestParam("createFile") Boolean createFile,
-                                       HttpServletRequest sr) {
+    public ResponseEntity<String> executeQuery(@NotNull @RequestBody List<Temi15UteQue> queries, @RequestParam("page") Integer page,
+                                               @RequestParam("pageSize") @DefaultValue(IConstants.TEN) int pageSize, @DefaultValue("false") @RequestParam("createFile") Boolean createFile,
+                                               HttpServletRequest sr) {
 
         log.info("Eseguo query ...");
 
@@ -122,7 +118,7 @@ public class GenericQueryResource extends BasicResource {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("checkQuery")
     @RolesAllowed({IConstants.F_QRQINS, IConstants.R_FEPQRA})
-    public ResponseEntity<String> checkQuery(@NotNull Temi15UteQue query, HttpServletRequest sr) {
+    public ResponseEntity<String> checkQuery(@NotNull @RequestBody Temi15UteQue query, HttpServletRequest sr) {
 
         if (null == query.getTemi13DtbInf() || null == query.getTemi13DtbInf().getId()
                 || null == query.getTemi13DtbInf().getId().getSch())
@@ -134,13 +130,9 @@ public class GenericQueryResource extends BasicResource {
 
         try {
             switch (Schema.valueOf(query.getTemi13DtbInf().getId().getSch())) {
-                case QRFEPU:
+                case TEST:
 
-                    return qrfepuOracleService.checkQuery(query).getResponse(sr);
-
-                case QRTCPU:
-
-                    return qrtcpuOracleService.checkQuery(query).getResponse(sr);
+                    return firstOracleService.checkQuery(query).getResponse(sr);
 
                 default:
                     return null;

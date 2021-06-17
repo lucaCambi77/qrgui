@@ -4,6 +4,7 @@
 package it.cambi.qrgui.jpa.repository;
 
 import it.cambi.qrgui.services.db.model.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,9 @@ import java.util.List;
 @Repository
 public class QueryRepositoryImpl implements QueryRepository
 {
-    @PersistenceContext
+
+    @PersistenceContext(unitName = "emiaPU")
+    @Qualifier(value = "emiaEntityManagerFactory")
     private EntityManager em;
 
     public CriteriaBuilder getCriteriaBuilder()

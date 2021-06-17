@@ -57,7 +57,7 @@ public class Temi20Service implements ITemi20Service<Temi20AnaTipCat>
     }
 
     @Override
-    @Transactional
+    @Transactional()
     public void merge(Temi20AnaTipCat temi20AnaTipCat) {
         anaTipCatDao.merge(temi20AnaTipCat);
     }

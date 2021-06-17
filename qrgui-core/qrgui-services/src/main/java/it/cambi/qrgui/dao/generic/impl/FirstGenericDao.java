@@ -1,12 +1,15 @@
 package it.cambi.qrgui.dao.generic.impl;
 
 import it.cambi.qrgui.dao.AbstractDao;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
-@Component
+@Service
 public class FirstGenericDao extends AbstractDao
 {
 
@@ -14,7 +17,8 @@ public class FirstGenericDao extends AbstractDao
     {
     }
 
-    @PersistenceContext(name = "firstTransactionManager")
+    @PersistenceContext(unitName = "firstPU")
+    @Qualifier(value = "firstEntityManagerFactory")
     private EntityManager entityManager;
 
     public EntityManager getEntityManager()

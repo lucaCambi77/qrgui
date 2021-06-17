@@ -55,6 +55,7 @@ public class EmiaDbAppConf {
         factory.setDataSource(emiaDataSource());
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         factory.setPackagesToScan(Temi13DtbInf.class.getPackage().getName());
+        factory.setPersistenceUnitName("emiaPU");
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
