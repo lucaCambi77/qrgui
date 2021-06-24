@@ -99,7 +99,7 @@ import angular from 'angular';
 
 		function GetCategory(category, id) {
 
-			if (null == category.root.id.cat)
+			if (null == category.root.cat)
 				return null;
 
 			var item;

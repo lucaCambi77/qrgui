@@ -91,18 +91,18 @@
 
 			listTemi16.push({
 				id : {
-					que : null == query.id ? null : query.id.que,
-					insQue : null == query.id ? null : query.id.insQue,
-					cat : categ.id.cat,
-					insCat : categ.id.insCat
+					que : null == query.que ? null : query.que,
+					insQue : null == query.insQue ? null : query.insQue,
+					cat : categ.cat,
+					insCat : categ.insCat
 				},
 				temi15UteQue : null
 			})
 
 			return {
 				id : {
-					que : null == query.id ? null : query.id.que,
-					insQue : null == query.id ? null : query.id.insQue
+					que : null == query.que ? null : query.que,
+					insQue : null == query.insQue ? null : query.insQue
 				},
 				json : JSON.stringify(queryRest, replacer),
 				nam : query.nam,

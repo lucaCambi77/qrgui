@@ -49,6 +49,8 @@ import angular from 'angular';
 
 						console.log("l'utente è autenticato... ");
 
+						$rootScope.databaseInfoList = response[0].entity;
+
 						$rootScope.columnOffSet = "col-md-offset-1";
 
 						$rootScope.lastLogInDay = DateUtilityFactory
