@@ -2,9 +2,9 @@ package it.cambi.qrgui.dao.entity.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
-import it.cambi.qrgui.services.db.model.Temi15UteQueId;
-import it.cambi.qrgui.services.db.model.Temi18RouQue;
-import it.cambi.qrgui.services.db.model.Temi18RouQueId;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

@@ -9,8 +9,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.enums.JavaTypes;
+import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.services.db.model.Temi15UteQue;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.apache.poi.ss.usermodel.*;
 

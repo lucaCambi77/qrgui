@@ -1,6 +1,6 @@
 package it.cambi.qrgui.rest;
 
-import it.cambi.qrgui.services.db.model.Temi13DtbInf;
+import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.services.emia.api.ITemi13Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;

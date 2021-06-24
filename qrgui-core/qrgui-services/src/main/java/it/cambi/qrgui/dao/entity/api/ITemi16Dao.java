@@ -1,7 +1,7 @@
 package it.cambi.qrgui.dao.entity.api;
 
 import it.cambi.qrgui.dao.api.IEntityDao;
-import it.cambi.qrgui.services.db.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 import javax.servlet.http.HttpServletRequest;

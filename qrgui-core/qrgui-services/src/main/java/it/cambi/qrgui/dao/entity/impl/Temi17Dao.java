@@ -2,8 +2,8 @@ package it.cambi.qrgui.dao.entity.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi17Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
-import it.cambi.qrgui.services.db.model.Temi17UteRou;
-import it.cambi.qrgui.services.db.model.Temi17UteRouId;
+import it.cambi.qrgui.model.Temi17UteRou;
+import it.cambi.qrgui.model.Temi17UteRouId;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;

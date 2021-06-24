@@ -1,7 +1,7 @@
 package it.cambi.qrgui.services.emia.api;
 
-import it.cambi.qrgui.services.db.model.Temi14UteCat;
-import it.cambi.qrgui.services.db.model.Temi14UteCatId;
+import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCatId;
 import it.cambi.qrgui.services.exception.NoCategoriesAllowedException;
 import it.cambi.qrgui.util.TreeNode;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;

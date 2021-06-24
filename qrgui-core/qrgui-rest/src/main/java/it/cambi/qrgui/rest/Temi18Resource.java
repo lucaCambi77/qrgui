@@ -1,8 +1,8 @@
 package it.cambi.qrgui.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.cambi.qrgui.services.db.model.Temi18RouQue;
-import it.cambi.qrgui.services.db.model.Temi18RouQueId;
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.services.emia.api.ITemi18Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;

@@ -4,8 +4,8 @@
 package it.cambi.qrgui.services.emia.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi13Dao;
-import it.cambi.qrgui.services.db.model.Temi13DtbInf;
-import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
+import it.cambi.qrgui.model.Temi13DtbInf;
+import it.cambi.qrgui.model.Temi13DtbInfId;
 import it.cambi.qrgui.services.emia.api.ITemi13Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,7 +4,7 @@
 package it.cambi.qrgui.services.emia.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.services.db.model.Temi20AnaTipCat;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;

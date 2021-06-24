@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package it.cambi.qrgui.services.emia.impl;
 
@@ -7,7 +7,7 @@ import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.services.db.model.*;
+import it.cambi.qrgui.model.*;
 import it.cambi.qrgui.services.emia.api.ITemi15Service;
 import it.cambi.qrgui.util.Messages;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
@@ -28,8 +28,7 @@ import static it.cambi.qrgui.util.IConstants.ERROR_NO_QUERY_ASSOCIATION;
  *
  */
 @Component
-public class Temi15Service implements ITemi15Service<Temi15UteQue>
-{
+public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     @Autowired
     private ITemi15Dao<Temi15UteQue, Temi15UteQueId> queryDao;
@@ -44,21 +43,19 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
     private ITemi20Dao<Temi20AnaTipCat, String> tipCatDao;
 
     /**
-     * 
+     *
      */
-    public Temi15Service()
-    {
+    public Temi15Service() {
     }
 
     /**
-     * 
+     *
      * @param key
      * @return
      */
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public WrappedResponse<Temi15UteQue> getByPk(Long cQue, Long dateIns)
-    {
+    public WrappedResponse<Temi15UteQue> getByPk(Long cQue, Long dateIns) {
 
         Temi15UteQueId key = new Temi15UteQueId();
         key.setQue(cQue);
@@ -72,15 +69,14 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
     }
 
     /**
-     * 
+     *
      * @param schema
      * @param type
      * @return
      */
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<Temi15UteQue> getByDb(String schema, String type)
-    {
+    public List<Temi15UteQue> getByDb(String schema, String type) {
         return queryDao.getByDb(schema, type);
 
     }
@@ -88,54 +84,48 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
     @SuppressWarnings("serial")
     @Transactional
     @Override
-    public WrappedResponse<Temi15UteQue> postQuery(Temi15UteQue que, String locale)
-    {
+    public WrappedResponse<Temi15UteQue> postQuery(Temi15UteQue que, String locale) {
 
         if (null == que.getTemi16QueCatAsses())
-            return new WrappedResponse<Temi15UteQue>().setCount(0).setSuccess(false).setErrorMessages(new ArrayList<String>()
-            {
+            return new WrappedResponse<Temi15UteQue>().setCount(0).setSuccess(false).setErrorMessages(new ArrayList<String>() {
                 {
                     add(new Messages(locale).getString(ERROR_NO_QUERY_ASSOCIATION));
                 }
             }).setResponse();
 
-        if (null == que.getId().getInsQue())
-            que.getId().setInsQue(new Date());
+        if (null == que.getInsQue())
+            que.setInsQue(new Date());
 
-        Set<Temi16QueCatAss> temi16Copy = new HashSet<Temi16QueCatAss>()
-        {
+        Set<Temi16QueCatAss> temi16Copy = new HashSet<Temi16QueCatAss>() {
             {
                 addAll(que.getTemi16QueCatAsses());
             }
         };
 
         que.setTemi16QueCatAsses(null);
-        queryDao.merge(que);
+        Temi15UteQue newQuery = queryDao.merge(que);
 
-        if (null != que.getTemi16QueCatAsses())
-            for (Temi16QueCatAss temi16 : temi16Copy)
-            {
-                temi16.getId().setQue(que.getId().getQue());
-                temi16.getId().setInsQue(que.getId().getInsQue());
+        for (Temi16QueCatAss temi16 : temi16Copy) {
+            temi16.getId().setQue(newQuery.getQue());
+            temi16.getId().setInsQue(newQuery.getInsQue());
 
-                queCatAssDao.merge(temi16);
-            }
+            queCatAssDao.merge(temi16);
+        }
 
-        return new WrappedResponse<Temi15UteQue>().setEntity(que).setCount(1).setResponse();
+        return new WrappedResponse<Temi15UteQue>().setEntity(newQuery).setCount(1).setResponse();
 
     }
 
     /**
      * Cancello tutte le associazioni e la query
-     * 
+     *
      * @param cque
      * @param ccat
      * @return
      */
     @Transactional
     @Override
-    public WrappedResponse<Temi15UteQue> deleteQuery(Temi15UteQueId cque)
-    {
+    public WrappedResponse<Temi15UteQue> deleteQuery(Temi15UteQueId cque) {
         List<Temi16QueCatAss> assocList = getQueCatByQueryId(cque);
 
         assocList.forEach((temi16) -> queCatAssDao.delete(temi16));
@@ -147,12 +137,11 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
     }
 
     /**
-     * 
+     *
      * @param cque
      * @return
      */
-    public List<Temi16QueCatAss> getQueCatByQueryId(Temi15UteQueId cque)
-    {
+    public List<Temi16QueCatAss> getQueCatByQueryId(Temi15UteQueId cque) {
         CriteriaQuery<Temi16QueCatAss> criteriaQuery = queCatAssDao.getEntityManager().getCriteriaBuilder()
                 .createQuery(Temi16QueCatAss.class);
         Root<Temi16QueCatAss> root = criteriaQuery.from(Temi16QueCatAss.class);
@@ -163,8 +152,8 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
         ParameterExpression<Date> cInsParam = queCatAssDao.getEntityManager().getCriteriaBuilder()
                 .parameter(Date.class, "insQue");
 
-        Expression<?> cqueExpr = root.get("id").get("que");
-        Expression<?> cinsExpr = root.get("id").get("insQue");
+        Expression<?> cqueExpr = root.get("que");
+        Expression<?> cinsExpr = root.get("insQue");
 
         Predicate predicateCQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cqueExpr, cQueParam);
         Predicate predicateIns = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cinsExpr, cInsParam);
@@ -178,8 +167,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
     @Override
     @SuppressWarnings("serial")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public WrappedResponse<List<Temi15UteQue>> getByTipCateg(List<String> listAllowedCat, List<Temi15UteQue> queriesIn, HttpServletRequest request)
-    {
+    public WrappedResponse<List<Temi15UteQue>> getByTipCateg(List<String> listAllowedCat, List<Temi15UteQue> queriesIn, HttpServletRequest request) {
 
         CriteriaQuery<Tuple> criteriaQueryPar = queCatAssDao.getEntityManager().getCriteriaBuilder()
                 .createQuery(Tuple.class);
@@ -191,18 +179,17 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
         /**
          * Cerco le query per quel tipo di categoria, escluso quelle che sono già associate alla categoria corrente
          */
-        List<Predicate> predicateList = new ArrayList<Predicate>()
-        {
+        List<Predicate> predicateList = new ArrayList<Predicate>() {
             {
                 if (null != queriesIn && queriesIn.size() > 0)
                     queriesIn.forEach((temi15) -> {
-                        Expression<?> que = rootPar.get("id").get("que");
+                        Expression<?> que = rootPar.get("que");
 
-                        Predicate predicateQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(que, temi15.getId().getQue());
+                        Predicate predicateQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(que, temi15.getQue());
 
-                        Expression<?> insQue = rootPar.get("id").get("insQue");
+                        Expression<?> insQue = rootPar.get("insQue");
 
-                        Predicate predicateinsQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insQue, temi15.getId().getInsQue());
+                        Predicate predicateinsQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insQue, temi15.getInsQue());
 
                         add(queCatAssDao.getEntityManager().getCriteriaBuilder()
                                 .not(queCatAssDao.getEntityManager().getCriteriaBuilder().and(predicateQue, predicateinsQue)));
@@ -214,13 +201,10 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
                 /**
                  * Se non cerco una categoria in particolare, metto tutte quelle visibili
                  */
-                if (null == listAllowedCat || (null != listAllowedCat && listAllowedCat.size() == 0))
-                {
+                if (null == listAllowedCat || (null != listAllowedCat && listAllowedCat.size() == 0)) {
                     add(nPar.in(tipCatDao.getFunctionsByRequest(request)));
 
-                }
-                else
-                {
+                } else {
 
                     add(nPar.in(listAllowedCat));
                 }
@@ -248,8 +232,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
 
         List<Long> queries = new ArrayList<Long>();
 
-        for (Object object : listTemi15)
-        {
+        for (Object object : listTemi15) {
             queries.add(Long.valueOf(((Object[]) object)[0].toString()));
         }
 
@@ -257,16 +240,15 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
                 .createQuery(Temi15UteQue.class);
         Root<Temi15UteQue> rootTemi15 = criteriaTemi15.from(Temi15UteQue.class);
 
-        predicateList = new ArrayList<Predicate>()
-        {
+        predicateList = new ArrayList<Predicate>() {
             {
                 listTemi15.forEach((query) -> {
-                    Expression<?> que = rootTemi15.get("id").get("que");
+                    Expression<?> que = rootTemi15.get("que");
 
                     Predicate predicateQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(que,
                             (Long) ((Object[]) query)[0]);
 
-                    Expression<?> insQue = rootTemi15.get("id").get("insQue");
+                    Expression<?> insQue = rootTemi15.get("insQue");
 
                     Predicate predicateinsQue = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insQue,
                             (Date) ((Object[]) query)[1]);
@@ -291,8 +273,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue>
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public WrappedResponse<List<Object>> getAlreadyAssociatedQuery(Long cat, Long insCat, String tipCat)
-    {
+    public WrappedResponse<List<Object>> getAlreadyAssociatedQuery(Long cat, Long insCat, String tipCat) {
         List<Object> listTemi15 = queryDao.getAlreadyAssociatedQuery(cat, insCat, tipCat);
         return new WrappedResponse<List<Object>>()
                 .setEntity(listTemi15 == null ? new ArrayList<Object>() : listTemi15).setResponse();

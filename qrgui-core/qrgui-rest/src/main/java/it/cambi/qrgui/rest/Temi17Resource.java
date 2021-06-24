@@ -1,8 +1,8 @@
 package it.cambi.qrgui.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.cambi.qrgui.services.db.model.Temi17UteRou;
-import it.cambi.qrgui.services.db.model.Temi17UteRouId;
+import it.cambi.qrgui.model.Temi17UteRou;
+import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
 import it.cambi.qrgui.util.IConstants;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;

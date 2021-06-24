@@ -1,7 +1,7 @@
 package it.cambi.qrgui.rest;
 
 import it.cambi.qrgui.enums.Schema;
-import it.cambi.qrgui.services.db.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
 import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
 import it.cambi.qrgui.util.IConstants;

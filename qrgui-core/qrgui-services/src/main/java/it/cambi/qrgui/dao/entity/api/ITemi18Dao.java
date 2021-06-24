@@ -1,7 +1,7 @@
 package it.cambi.qrgui.dao.entity.api;
 
 import it.cambi.qrgui.dao.api.IEntityDao;
-import it.cambi.qrgui.services.db.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi15UteQueId;
 
 import java.util.List;
 

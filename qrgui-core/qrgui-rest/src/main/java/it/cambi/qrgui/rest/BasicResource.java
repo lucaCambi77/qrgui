@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import it.cambi.qrgui.services.db.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import org.springframework.http.ResponseEntity;

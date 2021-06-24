@@ -1,7 +1,7 @@
 package it.cambi.qrgui.services.emia.api;
 
-import it.cambi.qrgui.services.db.model.Temi15UteQue;
-import it.cambi.qrgui.services.db.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 import javax.servlet.http.HttpServletRequest;

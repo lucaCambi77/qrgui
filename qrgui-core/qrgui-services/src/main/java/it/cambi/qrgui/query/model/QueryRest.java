@@ -1,6 +1,6 @@
 package it.cambi.qrgui.query.model;
 
-import it.cambi.qrgui.services.db.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQue;
 
 public class QueryRest
 {

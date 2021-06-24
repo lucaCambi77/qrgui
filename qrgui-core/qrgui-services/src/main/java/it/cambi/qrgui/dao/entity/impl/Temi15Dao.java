@@ -4,7 +4,7 @@ import it.cambi.qrgui.dao.entity.api.ITemi14Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
-import it.cambi.qrgui.services.db.model.*;
+import it.cambi.qrgui.model.*;
 import it.cambi.qrgui.util.QueryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -91,7 +91,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
         id.setCat(cat);
         id.setInsCat(new Date(insCat));
 
-        List<Temi16QueCatAss> associatedQuery = getQueryCategList(id, new ArrayList<Temi16QueCatAss>());
+        List<Temi16QueCatAss> associatedQuery = getQueryCategList(cat, new Date(insCat), new ArrayList<Temi16QueCatAss>());
 
         List<Tuple> listTemi15 = null;
 
@@ -156,7 +156,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
      * @param queryList
      * @return
      */
-    private List<Temi16QueCatAss> getQueryCategList(Temi14UteCatId ccat, List<Temi16QueCatAss> queryList)
+    private List<Temi16QueCatAss> getQueryCategList(Long ccat, Date insCat, List<Temi16QueCatAss> queryList)
     {
         CriteriaQuery<Temi16QueCatAss> criteria = queCatAssDao.getEntityManager().getCriteriaBuilder()
                 .createQuery(Temi16QueCatAss.class);
@@ -166,7 +166,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
 
         List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        predicateList.add(queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression, ccat.getCat()));
+        predicateList.add(queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression, ccat));
 
         Predicate[] finalPredicateList = new Predicate[predicateList.size()];
         predicateList.toArray(finalPredicateList);
@@ -189,11 +189,11 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
 
         Expression<Integer> cCatExpression14 = rootTemi14.get("par");
 
-        Predicate predicate = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression14, ccat.getCat());
+        Predicate predicate = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression14, ccat);
 
         Expression<Date> insCarExpression14 = rootTemi14.get("insPar");
 
-        Predicate predicateInsCat = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insCarExpression14, ccat.getInsCat());
+        Predicate predicateInsCat = queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insCarExpression14, insCat);
 
         criteria14.where(predicate, predicateInsCat);
 
@@ -201,7 +201,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
 
         for (Temi14UteCat temi14AnaCat : temi14List)
         {
-            getQueryCategList(temi14AnaCat.getId(), queryList);
+            getQueryCategList(temi14AnaCat.getCat(), insCat, queryList);
 
         }
 

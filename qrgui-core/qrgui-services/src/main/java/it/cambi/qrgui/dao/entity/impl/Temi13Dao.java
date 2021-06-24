@@ -2,8 +2,8 @@ package it.cambi.qrgui.dao.entity.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi13Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
-import it.cambi.qrgui.services.db.model.Temi13DtbInf;
-import it.cambi.qrgui.services.db.model.Temi13DtbInfId;
+import it.cambi.qrgui.model.Temi13DtbInf;
+import it.cambi.qrgui.model.Temi13DtbInfId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package it.cambi.qrgui.dao.entity.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
-import it.cambi.qrgui.services.db.model.Temi20AnaTipCat;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

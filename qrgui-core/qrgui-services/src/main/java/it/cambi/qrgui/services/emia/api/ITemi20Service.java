@@ -1,6 +1,6 @@
 package it.cambi.qrgui.services.emia.api;
 
-import it.cambi.qrgui.services.db.model.Temi20AnaTipCat;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 import javax.servlet.http.HttpServletRequest;

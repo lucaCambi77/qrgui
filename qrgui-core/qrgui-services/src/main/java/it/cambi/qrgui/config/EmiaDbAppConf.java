@@ -1,7 +1,7 @@
 package it.cambi.qrgui.config;
 
 import it.cambi.qrgui.jpa.repository.QueryRepository;
-import it.cambi.qrgui.services.db.model.Temi13DtbInf;
+import it.cambi.qrgui.model.Temi13DtbInf;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;

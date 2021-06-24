@@ -37,6 +37,15 @@ public class IConstants
     public final String PERCENTAGE = "%";
 
     /**
+     * Sequences
+     *
+     */
+
+    public final static String SEMI14_ANA_CAT = "SELECT EMIA.SEMI14_ANA_CAT.nextval from dual";
+    public final static String SEMI15_ANA_QUE = "SELECT EMIA.SEMI15_ANA_QUE.nextval from dual";
+    public final static String SEMI17_ANA_ROU = "SELECT EMIA.SEMI17_ANA_ROU.nextval from dual";
+
+    /**
      * Errors
      */
     public static final String ERRORPARSE = "PARSEJSONERROR";

@@ -6,7 +6,7 @@ package it.cambi.qrgui.services.emia.impl;
 import it.cambi.qrgui.dao.entity.api.ITemi17Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.services.db.model.*;
+import it.cambi.qrgui.model.*;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +53,8 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou>
     @Override
     public WrappedResponse<Temi17UteRou> merge(Temi17UteRou temi17)
     {
-        if (null == temi17.getId().getInsRou())
-            temi17.getId().setInsRou(new Date());
+        if (null == temi17.getInsRou())
+            temi17.setInsRou(new Date());
 
         Temi17UteRou temi17Out = routineDao.merge(temi17);
 
@@ -74,10 +74,10 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou>
                 .createQuery(Temi17UteRou.class);
         Root<Temi17UteRou> rootPk = criteriaQueryPk.from(Temi17UteRou.class);
 
-        Predicate predicateRouPk = routineDao.getEntityManager().getCriteriaBuilder().equal(rootPk.get("id").get("rou"),
+        Predicate predicateRouPk = routineDao.getEntityManager().getCriteriaBuilder().equal(rootPk.get("rou"),
                 routineDao.getEntityManager().getCriteriaBuilder().parameter(Long.class, "crou"));
 
-        Predicate predicateInsPk = routineDao.getEntityManager().getCriteriaBuilder().equal(rootPk.get("id").get("insRou"),
+        Predicate predicateInsPk = routineDao.getEntityManager().getCriteriaBuilder().equal(rootPk.get("insRou"),
                 routineDao.getEntityManager().getCriteriaBuilder().parameter(Date.class, "insRou"));
 
         Temi17UteRou temi17 = routineDao.getEntityManager().createQuery(criteriaQueryPk.where(predicateRouPk, predicateInsPk))
@@ -92,13 +92,13 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou>
 
         ParameterExpression<Long> cRouParam = queRoutineDao.getEntityManager().getCriteriaBuilder().parameter(Long.class, "crou");
 
-        Expression<?> cRouExpr = root.get("id").get("rou");
+        Expression<?> cRouExpr = root.get("rou");
 
         Predicate predicate = queRoutineDao.getEntityManager().getCriteriaBuilder().equal(cRouExpr, cRouParam);
 
         ParameterExpression<Date> cRouInsParam = queRoutineDao.getEntityManager().getCriteriaBuilder().parameter(Date.class, "insRou");
 
-        Expression<?> cInsExpr = root.get("id").get("insRou");
+        Expression<?> cInsExpr = root.get("insRou");
 
         Predicate predicateIns = queRoutineDao.getEntityManager().getCriteriaBuilder().equal(cInsExpr, cRouInsParam);
 
@@ -131,7 +131,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou>
                     .createQuery(Temi17UteRou.class);
             Root<Temi17UteRou> root = criteriaQuery.from(Temi17UteRou.class);
 
-            criteriaQuery.orderBy(routineDao.getEntityManager().getCriteriaBuilder().asc(root.get("id").get("rou")));
+            criteriaQuery.orderBy(routineDao.getEntityManager().getCriteriaBuilder().asc(root.get("rou")));
 
             List<Temi17UteRou> temi17List = routineDao.getEntityListByCriteriaQuery(criteriaQuery, null);
 

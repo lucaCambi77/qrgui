@@ -3,7 +3,7 @@
  */
 package it.cambi.qrgui.jpa.repository;
 
-import it.cambi.qrgui.services.db.model.*;
+import it.cambi.qrgui.model.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package it.cambi.qrgui.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import it.cambi.qrgui.services.db.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.services.emia.api.ITemi14Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
