@@ -126,12 +126,13 @@ angular
 				EmiaRestUtilityFactory.PostRoutine(routine).then(
 					function (response) {
 
+						routine.rou = response.entity.rou;
+						routine.insRou = response.entity.insRou;
+
 						ListUtilityFactory.NewPanel($scope,
 							$rootScope.routines,
 							constant.NEW_ROUTINE,
 							templateSetFunction);
-
-						routine.id = response.entity.id;
 
 						routineController.messageSuccess = [];
 
@@ -183,7 +184,7 @@ angular
 						function (message) {
 
 							EmiaRestUtilityFactory
-								.DeleteRoutine(routine.id)
+								.DeleteRoutine({ rou: routine.rou, insRou: routine.insRou })
 								.then(
 									function (value) {
 
