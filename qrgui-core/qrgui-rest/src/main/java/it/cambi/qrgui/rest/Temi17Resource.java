@@ -73,7 +73,7 @@ public class Temi17Resource extends BasicResource
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("delete")
     @RolesAllowed({IConstants.F_QRRMOD, R_FEPQRA })
-    public ResponseEntity<String> deleteRoutine(@NotNull Temi17UteRouId crou, HttpServletRequest sr)
+    public ResponseEntity<String> deleteRoutine(@NotNull @RequestBody Temi17UteRouId crou, HttpServletRequest sr)
             throws JsonProcessingException
     {
 

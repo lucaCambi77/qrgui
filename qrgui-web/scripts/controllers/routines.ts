@@ -306,7 +306,7 @@ angular
 				}
 
 				/*
-				 * Modale per cancellare una entityà
+				 * Modale per cancellare una entity
 				 */
 
 				var modalInstance = $uibModal.open({
