@@ -92,13 +92,13 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou>
 
         ParameterExpression<Long> cRouParam = queRoutineDao.getEntityManager().getCriteriaBuilder().parameter(Long.class, "crou");
 
-        Expression<?> cRouExpr = root.get("rou");
+        Expression<?> cRouExpr = root.get("id").get("rou");
 
         Predicate predicate = queRoutineDao.getEntityManager().getCriteriaBuilder().equal(cRouExpr, cRouParam);
 
         ParameterExpression<Date> cRouInsParam = queRoutineDao.getEntityManager().getCriteriaBuilder().parameter(Date.class, "insRou");
 
-        Expression<?> cInsExpr = root.get("insRou");
+        Expression<?> cInsExpr = root.get("id").get("insRou");
 
         Predicate predicateIns = queRoutineDao.getEntityManager().getCriteriaBuilder().equal(cInsExpr, cRouInsParam);
 
