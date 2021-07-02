@@ -2,7 +2,7 @@
  * 
  */
 import angular from 'angular';
-import * as _ from 'ng-lodash';
+import _ from "lodash";
 
 (function() {
 	'use strict';
