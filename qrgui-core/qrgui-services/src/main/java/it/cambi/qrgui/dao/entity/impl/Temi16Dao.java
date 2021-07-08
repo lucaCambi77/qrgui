@@ -3,7 +3,7 @@ package it.cambi.qrgui.dao.entity.impl;
 import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
+import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.*;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.springframework.beans.factory.annotation.Autowired;

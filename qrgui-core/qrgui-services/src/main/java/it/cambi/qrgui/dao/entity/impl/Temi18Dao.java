@@ -1,7 +1,7 @@
 package it.cambi.qrgui.dao.entity.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
-import it.cambi.qrgui.dao.generic.impl.TemiGenericDao;
+import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.Temi15UteQueId;
 import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;

@@ -2,7 +2,6 @@ package it.cambi.qrgui.test;
 
 import it.cambi.qrgui.RestApplication;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
-import it.cambi.qrgui.jpa.repository.QueryRepositoryImpl;
 import it.cambi.qrgui.model.Temi13DtbInfId;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.SecurityService;
@@ -37,9 +36,6 @@ public class ApplicationTest {
     DbInfoJpaRepository dbInforRepository;
 
     private @Autowired
-    QueryRepositoryImpl queryRepository;
-
-    private @Autowired
     UserRoleRepository userRoleRepository;
 
     private @Autowired
@@ -68,7 +64,6 @@ public class ApplicationTest {
     public void securityServiceTest() {
         assertNotNull(dbInforRepository.getOne(new Temi13DtbInfId("ORACLE", "TEST")));
 
-        assertNotNull(queryRepository.getCriteriaBuilder());
         assertNotNull(userService.findByUsername("user@gmail.com"));
         assertNotNull(userService.findByUsername("admin@gmail.com"));
         assertEquals(2,
