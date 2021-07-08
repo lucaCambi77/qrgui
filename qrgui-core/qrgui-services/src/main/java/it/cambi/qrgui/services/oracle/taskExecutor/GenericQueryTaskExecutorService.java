@@ -27,11 +27,11 @@ import java.util.concurrent.*;
 @Component
 public class GenericQueryTaskExecutorService
 {
-
     @Autowired
     private IQueryExecutorFactory queryExecutorFactory;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    private ObjectMapper objectMapper;
 
     /**
      * 
@@ -48,7 +48,6 @@ public class GenericQueryTaskExecutorService
      * @param queryAttributes
      * @param page
      * @param pageSize
-     * @param fileName
      * @return
      * @throws InterruptedException
      * @throws ExecutionException
@@ -59,7 +58,7 @@ public class GenericQueryTaskExecutorService
     @SuppressWarnings("serial")
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<XWrappedResponse<Temi15UteQue, List<Object>>> executeQuery(List<Temi15UteQue> queryAttributes, Integer page, Integer pageSize)
-            throws InterruptedException, ExecutionException, JsonParseException, JsonMappingException, IOException
+            throws InterruptedException, ExecutionException, JsonMappingException, IOException
     {
 
         List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut = new ArrayList<>();

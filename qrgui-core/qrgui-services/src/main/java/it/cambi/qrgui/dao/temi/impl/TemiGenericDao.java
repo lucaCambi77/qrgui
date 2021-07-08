@@ -1,4 +1,4 @@
-package it.cambi.qrgui.dao.generic.impl;
+package it.cambi.qrgui.dao.temi.impl;
 
 import it.cambi.qrgui.dao.JpaEntityDao;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
 @Service
 public class TemiGenericDao<T, I> extends JpaEntityDao<T, I>
 {
-
     public TemiGenericDao()
     {
     }
