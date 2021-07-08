@@ -1,96 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.cambi.qrgui</groupId>
-	<artifactId>parent</artifactId>
-	<version>1.0.0</version>
-	<name>qrgui</name>
-	<description>Dynamic Queries Gui</description>
-	<packaging>pom</packaging>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>it.cambi.qrgui</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0.0</version>
+    <name>qrgui</name>
+    <description>Dynamic Queries Gui</description>
+    <packaging>pom</packaging>
 
-	<properties>
-		<java.version>11</java.version>
-		<spring.boot.version>2.2.1.RELEASE</spring.boot.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<arquillian.version>1.1.14.Final</arquillian.version>
-	</properties>
+    <properties>
+        <java.version>11</java.version>
+        <spring.boot.version>2.2.1.RELEASE</spring.boot.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <arquillian.version>1.1.14.Final</arquillian.version>
+    </properties>
 
-	<modules>
-		<module>qrgui-rest</module>
-		<module>qrgui-security</module>
-		<module>qrgui-services</module>
-	</modules>
+    <modules>
+        <module>qrgui-rest</module>
+        <module>qrgui-security</module>
+        <module>qrgui-services</module>
+    </modules>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.junit</groupId>
-				<artifactId>junit-bom</artifactId>
-				<version>5.4.2</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>5.4.2</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
 
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-parent</artifactId>
-				<version>${spring.boot.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
-		</dependencies>
+        </dependencies>
 
-	</dependencyManagement>
+    </dependencyManagement>
 
-	<profiles>
-		<profile>
-			<id>def</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+    <dependencies>
 
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-compiler-plugin</artifactId>
-							<version>3.7.0</version>
-							<configuration>
-								<source>11</source>
-								<target>11</target>
-								<encoding>UTF-8</encoding>
-								<annotationProcessorPaths>
-									<path>
-										<groupId>org.projectlombok</groupId>
-										<artifactId>lombok</artifactId>
-										<version>1.18.20</version>
-									</path>
-									<path>
-										<groupId>org.hibernate</groupId>
-										<artifactId>hibernate-jpamodelgen</artifactId>
-										<version>5.3.20.Final</version>
-									</path>
-								</annotationProcessorPaths>
-							</configuration>
-						</plugin>
-						<plugin>
-							<groupId>org.springframework.boot</groupId>
-							<artifactId>spring-boot-maven-plugin</artifactId>
-							<version>${spring.boot.version}</version>
-						</plugin>
-						<plugin>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<version>3.0.0-M3</version>
-						</plugin>
-					</plugins>
-				</pluginManagement>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
 
-			</build>
-		</profile>
-	</profiles>
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <version>1.2-groovy-2.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-spring</artifactId>
+            <version>1.2-groovy-2.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>def</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>3.7.0</version>
+                            <configuration>
+                                <source>11</source>
+                                <target>11</target>
+                                <encoding>UTF-8</encoding>
+                                <annotationProcessorPaths>
+                                    <path>
+                                        <groupId>org.projectlombok</groupId>
+                                        <artifactId>lombok</artifactId>
+                                        <version>1.18.20</version>
+                                    </path>
+                                    <path>
+                                        <groupId>org.hibernate</groupId>
+                                        <artifactId>hibernate-jpamodelgen</artifactId>
+                                        <version>5.3.20.Final</version>
+                                    </path>
+                                </annotationProcessorPaths>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <version>${spring.boot.version}</version>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>3.0.0-M3</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.gmavenplus</groupId>
+                            <artifactId>gmavenplus-plugin</artifactId>
+                            <version>1.5</version>
+                            <executions>
+                                <execution>
+                                    <goals>
+                                        <goal>compileTests</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+
+            </build>
+        </profile>
+    </profiles>
 
 </project>

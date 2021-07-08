@@ -13,10 +13,6 @@
 	<name>${project.artifactId}</name>
 	<description>Rest for qrgui</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-	</properties>
-
 	<dependencies>
 
 		<dependency>
