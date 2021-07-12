@@ -12,7 +12,7 @@ angular.module(
 	'qrGuiApp',
 	['translations', // module for translations, see
 		// translations.js
-		'ngCookies', 'ngResource', 'ngRoute', 'ngIdle', 'ui.bootstrap']).config(['$routeProvider',
+		'ngCookies', 'ngResource', 'ngRoute', 'ngIdle', 'ui.bootstrap', 'ang-drag-drop']).config(['$routeProvider',
 			'IdleProvider',
 			function ($routeProvider, IdleProvider) {
 

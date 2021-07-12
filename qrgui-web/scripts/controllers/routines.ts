@@ -227,8 +227,8 @@ angular
 			routineController.onQueryDrop = function (rout, $data,
 				$index) {
 
-				EmiaRestUtilityFactory.PostRoutineQuery(rout.id.rou,
-					rout.id.insRou, $data.id.que, $data.id.insQue)
+				EmiaRestUtilityFactory.PostRoutineQuery(rout.rou,
+					rout.insRou, $data.que, $data.insQue)
 					.then(
 						function (response) {
 
