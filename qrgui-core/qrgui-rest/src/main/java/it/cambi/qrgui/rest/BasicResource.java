@@ -15,43 +15,41 @@ import java.util.List;
 
 /**
  * @author luca Abstract Class for Basic Resource attributes
- * 
- * 
- *         All class extending BasicResource implements a @Path Interface for rest easy services that is used as an @Inject
- * 
- * 
+ *     <p>All class extending BasicResource implements a @Path Interface for rest easy services that
+ *     is used as an @Inject
  */
 @CrossOrigin(origins = "*")
-public abstract class BasicResource
-{
+public abstract class BasicResource {
 
-    /* In realtà viene usato l'object mapper dentro la wrapped Response, questo è in caso se ne voglia utilizzare uno custom */
-    protected ObjectWriter getObjectMapper()
-    {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+  /* In realtà viene usato l'object mapper dentro la wrapped Response, questo è in caso se ne voglia utilizzare uno custom */
+  protected ObjectWriter getObjectMapper() {
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 
-        return mapper.writer();
+    return mapper.writer();
+  }
+
+  protected <T> ResponseEntity<String> getObjectMapperXResponseList(
+      List<XWrappedResponse<Temi15UteQue, List<Object>>> wrappedResponses, HttpServletRequest sr)
+      throws JsonProcessingException {
+
+    for (XWrappedResponse<Temi15UteQue, List<Object>> wrappedResponse : wrappedResponses) {
+      if (wrappedResponse.isSuccess()) continue;
+
+      /*
+       * Response with errors
+       */
+      return WrappedResponse.<XWrappedResponse<Temi15UteQue, List<Object>>>baseBuilder()
+          .entity(wrappedResponse)
+          .build()
+          .setResponse()
+          .getResponse(sr);
     }
 
-    protected <T> ResponseEntity<String> getObjectMapperXResponseList(List<XWrappedResponse<Temi15UteQue, List<Object>>> wrappedResponses,
-                                                                      HttpServletRequest sr)
-            throws JsonProcessingException
-    {
-
-        for (XWrappedResponse<Temi15UteQue, List<Object>> wrappedResponse : wrappedResponses)
-        {
-            if (wrappedResponse.isSuccess())
-                continue;
-
-            /*
-             * Response with errors
-             */
-            return new WrappedResponse<XWrappedResponse<Temi15UteQue, List<Object>>>().setEntity(wrappedResponse).setResponse().getResponse(sr);
-        }
-
-        return new WrappedResponse<List<XWrappedResponse<Temi15UteQue, List<Object>>>>().setEntity(wrappedResponses).setResponse().getResponse(sr);
-
-    }
-
+    return WrappedResponse.<List<XWrappedResponse<Temi15UteQue, List<Object>>>>baseBuilder()
+        .entity(wrappedResponses)
+        .build()
+        .setResponse()
+        .getResponse(sr);
+  }
 }

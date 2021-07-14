@@ -10,7 +10,6 @@ import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -35,8 +34,7 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
   private Integer pageSize;
   private Integer page;
 
-  public void ExecuteQueryTask(){
-  }
+  public void ExecuteQueryTask() {}
 
   @Override
   public XWrappedResponse<Temi15UteQue, List<Object>> call() throws Exception {
@@ -44,7 +42,7 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
     setPageSize(pageSize == null ? getPageSize() : pageSize);
 
     XWrappedResponse<Temi15UteQue, List<Object>> response =
-        new XWrappedResponse<Temi15UteQue, List<Object>>();
+        XWrappedResponse.<Temi15UteQue, List<Object>>builder().build();
 
     WrappedResponse<String> queryStringResponse = queryService.getFinalQueryString(query);
 
@@ -89,5 +87,4 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
     this.page = page;
     return this;
   }
-
 }

@@ -1,5 +1,7 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
+import lombok.experimental.SuperBuilder;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
  * @param <T>
  * @param <X>
  */
+@SuperBuilder
 public class XWrappedResponse<T, X> extends WrappedResponse<X>
 {
     private T xentity;

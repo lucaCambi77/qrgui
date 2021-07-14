@@ -114,11 +114,14 @@ public class GenericQueryResource extends BasicResource {
       return getObjectMapperXResponseList(listOut, sr);
 
     } catch (Exception exception) {
-      return new WrappedResponse<Long>(exception).processException().getResponse(sr);
+      return WrappedResponse.<Long>baseBuilder()
+          .exception(exception)
+          .build()
+          .processException()
+          .getResponse(sr);
     }
   }
 
-  @SuppressWarnings("serial")
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
@@ -130,8 +133,9 @@ public class GenericQueryResource extends BasicResource {
     if (null == query.getTemi13DtbInf()
         || null == query.getTemi13DtbInf().getId()
         || null == query.getTemi13DtbInf().getId().getSch())
-      return new WrappedResponse<>()
-          .setSuccess(false)
+      return WrappedResponse.<Long>baseBuilder()
+          .success(false)
+          .build()
           .setErrorMessages(
               new ArrayList<String>() {
                 {
@@ -150,7 +154,11 @@ public class GenericQueryResource extends BasicResource {
           return null;
       }
     } catch (Exception exception) {
-      return new WrappedResponse<Long>(exception).processException().getResponse(sr);
+      return WrappedResponse.<Long>baseBuilder()
+          .exception(exception)
+          .build()
+          .processException()
+          .getResponse(sr);
     }
   }
 }

@@ -48,9 +48,10 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     Temi15UteQue query = queryDao.getEntityByPrimaryKey(key);
 
-    return new WrappedResponse<Temi15UteQue>()
-        .setEntity(query == null ? new Temi15UteQue() : query)
-        .setCount(query == null ? 0 : 1)
+    return WrappedResponse.<Temi15UteQue>baseBuilder()
+        .entity(query == null ? new Temi15UteQue() : query)
+        .count(query == null ? 0 : 1)
+        .build()
         .setResponse();
   }
 
@@ -71,15 +72,16 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
   public WrappedResponse<Temi15UteQue> postQuery(Temi15UteQue que, String locale) {
 
     if (null == que.getTemi16QueCatAsses())
-      return new WrappedResponse<Temi15UteQue>()
-          .setCount(0)
-          .setSuccess(false)
-          .setErrorMessages(
+      return WrappedResponse.<Temi15UteQue>baseBuilder()
+          .count(0)
+          .success(false)
+          .errorMessage(
               new ArrayList<String>() {
                 {
                   add(new Messages(locale).getString(ERROR_NO_QUERY_ASSOCIATION));
                 }
               })
+          .build()
           .setResponse();
 
     que.setInsQue(new Date());
@@ -102,7 +104,11 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
           queCatAssDao.merge(temi16);
         });
 
-    return new WrappedResponse<Temi15UteQue>().setEntity(newQuery).setCount(1).setResponse();
+    return WrappedResponse.<Temi15UteQue>baseBuilder()
+        .entity(newQuery)
+        .count(1)
+        .build()
+        .setResponse();
   }
 
   /**
@@ -122,8 +128,9 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     /* Cancello le associazioni con le routine */
     queRouAssDao.getQueRoutineByQueryId(cque).forEach((temi18) -> queRouAssDao.delete(temi18));
 
-    return new WrappedResponse<Temi15UteQue>()
-        .setEntity(queryDao.delete(queryDao.getEntityByPrimaryKey(cque)))
+    return WrappedResponse.<Temi15UteQue>baseBuilder()
+        .entity(queryDao.delete(queryDao.getEntityByPrimaryKey(cque)))
+        .build()
         .setResponse();
   }
 
@@ -150,15 +157,12 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     Predicate predicateIns =
         queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cinsExpr, cInsParam);
 
-    List<Temi16QueCatAss> temi16List =
-        queCatAssDao
-            .getEntityManager()
-            .createQuery(criteriaQuery.where(predicateCQue, predicateIns))
-            .setParameter("cQue", cque.getQue())
-            .setParameter("insQue", cque.getInsQue())
-            .getResultList();
-
-    return temi16List;
+    return queCatAssDao
+        .getEntityManager()
+        .createQuery(criteriaQuery.where(predicateCQue, predicateIns))
+        .setParameter("cQue", cque.getQue())
+        .setParameter("insQue", cque.getInsQue())
+        .getResultList();
   }
 
   @Override
@@ -249,9 +253,10 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     List<Object> listTemi15 = queCatAssDao.getTupleListByCriteriaQuery(criteriaQueryPar, null);
 
     if (null != listTemi15 && listTemi15.size() == 0)
-      return new WrappedResponse<List<Temi15UteQue>>()
-          .setEntity(new ArrayList<>())
-          .setCount(0)
+      return WrappedResponse.<List<Temi15UteQue>>baseBuilder()
+          .entity(new ArrayList<>())
+          .count(0)
+          .build()
           .setResponse();
 
     List<Long> queries = new ArrayList<Long>();
@@ -301,9 +306,10 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     List<Temi15UteQue> listTemi15Out = queryDao.getEntityListByCriteriaQuery(criteriaTemi15, null);
 
-    return new WrappedResponse<List<Temi15UteQue>>()
-        .setEntity(listTemi15Out)
-        .setCount(listTemi15Out.size())
+    return WrappedResponse.<List<Temi15UteQue>>baseBuilder()
+        .entity(listTemi15Out)
+        .count(listTemi15Out.size())
+        .build()
         .setResponse();
   }
 
@@ -314,8 +320,9 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     List<Object> listTemi15 = queryDao.getAlreadyAssociatedQuery(cat, insCat, tipCat);
 
-    return new WrappedResponse<List<Object>>()
-        .setEntity(listTemi15 == null ? new ArrayList<Object>() : listTemi15)
+    return WrappedResponse.<List<Object>>baseBuilder()
+        .entity(listTemi15 == null ? new ArrayList<Object>() : listTemi15)
+        .build()
         .setResponse();
   }
 }

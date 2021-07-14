@@ -20,70 +20,68 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @param <T>
- *            Type of the Entity.
- * @param <I>
- *            Type of the Primary Key.
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
  */
 @Component
-public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String> implements ITemi20Dao<Temi20AnaTipCat, String>
-{
-    private static final Logger log = LoggerFactory.getLogger(Temi20Dao.class);
+public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
+    implements ITemi20Dao<Temi20AnaTipCat, String> {
+  private static final Logger log = LoggerFactory.getLogger(Temi20Dao.class);
 
-    @Autowired
-    private Temi13Dao temi13dao;
+  @Autowired private Temi13Dao temi13dao;
 
-    public Temi20Dao()
-    {
-        super(Temi20AnaTipCat.class);
+  public Temi20Dao() {
+    super(Temi20AnaTipCat.class);
+  }
+
+  @Override
+  public WrappedResponse<List<Temi20AnaTipCat>> findByAllowedCategories(
+      HttpServletRequest request) {
+
+    List<String> functions = getFunctionsByRequest(request);
+
+    CriteriaQuery<Temi20AnaTipCat> criteriaTemi20 =
+        getEntityManager().getCriteriaBuilder().createQuery(Temi20AnaTipCat.class);
+
+    Root<Temi20AnaTipCat> root = criteriaTemi20.from(Temi20AnaTipCat.class);
+
+    Path<String> anaTipCatPath = root.get("tipCat");
+
+    Predicate predicateAnaTipCat = anaTipCatPath.in(functions);
+
+    if (null != functions && functions.size() > 0) criteriaTemi20.where(predicateAnaTipCat);
+
+    List<Temi20AnaTipCat> listTemi20 = getEntityListByCriteriaQuery(criteriaTemi20, null);
+
+    return WrappedResponse.<List<Temi20AnaTipCat>>baseBuilder()
+        .entity(listTemi20)
+        .build()
+        .setResponse();
+  }
+
+  public List<String> getFunctionsByRequest(HttpServletRequest request) {
+
+    List<Temi20AnaTipCat> ttps20List = findAll(null);
+
+    if (null == request)
+      return ttps20List.stream().map(Temi20AnaTipCat::getTipCat).collect(Collectors.toList());
+
+    List<String> functions = new ArrayList<String>();
+
+    for (Temi20AnaTipCat atc : ttps20List) {
+      String cTipCat = atc.getTipCat();
+      if (request.isUserInRole(cTipCat)) functions.add(atc.getTipCat());
     }
 
-    @Override
-    public WrappedResponse<List<Temi20AnaTipCat>> findByAllowedCategories(HttpServletRequest request)
-    {
+    String user =
+        request.getUserPrincipal() == null ? "LocalHost" : request.getUserPrincipal().getName();
 
-        List<String> functions = getFunctionsByRequest(request);
+    log.info(
+        "L'utente "
+            + user
+            + " ha visibilità delle seguenti categorie: "
+            + Arrays.toString(functions.toArray()));
 
-        CriteriaQuery<Temi20AnaTipCat> criteriaTemi20 = getEntityManager().getCriteriaBuilder().createQuery(Temi20AnaTipCat.class);
-
-        Root<Temi20AnaTipCat> root = criteriaTemi20.from(Temi20AnaTipCat.class);
-
-        Path<String> anaTipCatPath = root.get("tipCat");
-
-        Predicate predicateAnaTipCat = anaTipCatPath.in(functions);
-
-        if (null != functions && functions.size() > 0)
-            criteriaTemi20.where(predicateAnaTipCat);
-
-        List<Temi20AnaTipCat> listTemi20 = getEntityListByCriteriaQuery(criteriaTemi20, null);
-
-        return new WrappedResponse<List<Temi20AnaTipCat>>().setEntity(listTemi20).setResponse();
-    }
-
-    public List<String> getFunctionsByRequest(HttpServletRequest request)
-    {
-
-        List<Temi20AnaTipCat> ttps20List = findAll(null);
-
-        if(null == request)
-            return ttps20List.stream().map(Temi20AnaTipCat::getTipCat).collect(Collectors.toList());
-
-        List<String> functions = new ArrayList<String>();
-
-        for (Temi20AnaTipCat atc : ttps20List)
-        {
-            String cTipCat = atc.getTipCat();
-            if (request.isUserInRole(cTipCat))
-                functions.add(atc.getTipCat());
-
-        }
-
-        String user = request.getUserPrincipal() == null ? "LocalHost"
-                : request.getUserPrincipal().getName();
-
-        log.info("L'utente " + user + " ha visibilità delle seguenti categorie: "
-                + Arrays.toString(functions.toArray()));
-
-        return functions;
-    }
+    return functions;
+  }
 }
