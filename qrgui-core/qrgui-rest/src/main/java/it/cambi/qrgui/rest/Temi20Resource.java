@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRRE00;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/anaTipCat")
 @Component

@@ -57,7 +57,6 @@ public class ObjectMapperFactory
         objectMapper.addMixIn(Temi17UteRou.class, Temi17UteRouMixIn.class);
         objectMapper.addMixIn(Temi18RouQue.class, Temi18RouQueMixIn.class);
         objectMapper.addMixIn(Temi20AnaTipCat.class, Temi20AnaTipCatMixIn.class);
-
     }
 
     private ObjectMapper objectMapper;

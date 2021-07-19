@@ -1,7 +1,5 @@
 package it.cambi.qrgui.services;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.dao.AbstractDao;
 import it.cambi.qrgui.model.Temi15UteQue;
@@ -14,6 +12,7 @@ import it.cambi.qrgui.util.IConstants;
 import it.cambi.qrgui.util.WhereConditionOperator;
 import it.cambi.qrgui.util.WrappingUtils;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -31,26 +30,18 @@ import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
 
 @Service
 @Setter
+@RequiredArgsConstructor
 public class QueryService {
 
-  /**
-   * Metodo per controllare l'oggetto query in fase di associazione della stessa ad una categoria,
-   * in particolare il {@link #QueryToJson} , nel quale al suo interno sono presenti tutti le varie
-   * sezioni del form della query
-   *
-   * @param query
-   * @return
-   * @throws IOException
-   * @throws JsonMappingException
-   * @throws JsonParseException
-   */
-  @SuppressWarnings("serial")
+  private final ObjectMapper objectMapper;
+
   public <T extends AbstractDao> WrappedResponse<QueryToJson> checkQuery(
-      Temi15UteQue query, boolean execQuery, T dao) throws JsonMappingException, IOException {
+      Temi15UteQue query, boolean execQuery, T dao) throws IOException {
 
-    QueryToJson json = new ObjectMapper().readValue(query.getJson(), QueryToJson.class);
+    QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
-    WrappedResponse<QueryToJson> wrappedResponse = WrappedResponse.<QueryToJson>baseBuilder().build();
+    WrappedResponse<QueryToJson> wrappedResponse =
+        WrappedResponse.<QueryToJson>baseBuilder().build();
 
     if (null == json.getStatement())
       return wrappedResponse
@@ -428,7 +419,7 @@ public class QueryService {
     // }
     // });
 
-    QueryToJson json = new ObjectMapper().readValue(query.getJson(), QueryToJson.class);
+    QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
     /** Controllo i valori */
     List<String> requireParamError = new ArrayList<>();

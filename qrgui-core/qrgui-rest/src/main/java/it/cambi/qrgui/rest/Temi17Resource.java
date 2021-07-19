@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRRE00;
+import static it.cambi.qrgui.util.IConstants.F_QRRINS;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/routine")
 @Component
@@ -48,7 +51,7 @@ public class Temi17Resource extends BasicResource {
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   @RolesAllowed({F_QRRINS, R_FEPQRA})
   public ResponseEntity<String> postRoutine(
-      @NotNull @RequestBody Temi17UteRou temi17, HttpServletRequest sr) {
+       @RequestBody Temi17UteRou temi17, HttpServletRequest sr) {
 
     log.info("... creo una nuova routine");
 
@@ -67,7 +70,7 @@ public class Temi17Resource extends BasicResource {
   @RequestMapping("delete")
   @RolesAllowed({IConstants.F_QRRMOD, R_FEPQRA})
   public ResponseEntity<String> deleteRoutine(
-      @NotNull @RequestBody Temi17UteRouId crou, HttpServletRequest sr) {
+       @RequestBody Temi17UteRouId crou, HttpServletRequest sr) {
 
     log.info("... cancella la routine " + crou);
 

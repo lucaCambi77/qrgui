@@ -29,6 +29,7 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
 
   private final FirstGenericDao firstGenericDao;
   private final QueryService queryService;
+  private final ObjectMapper objectMapper;
 
   private Temi15UteQue query;
   private Integer pageSize;
@@ -53,7 +54,7 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
 
     Long count;
 
-    QueryToJson json = new ObjectMapper().readValue(query.getJson(), QueryToJson.class);
+    QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
     if (json.getQueryType() == QueryType.COUNT) {
 

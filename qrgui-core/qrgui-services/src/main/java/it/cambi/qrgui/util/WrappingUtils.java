@@ -48,7 +48,7 @@ public class WrappingUtils
     @SuppressWarnings("unchecked")
     public static int setWorkBookSheet(int pageSize, Workbook wb, XWrappedResponse<Temi15UteQue, List<Object>> response, String fileName, Sheet sheet,
             int rowToStart)
-            throws JsonParseException, JsonMappingException, JsonProcessingException, IOException
+            throws JsonMappingException, JsonProcessingException, IOException
     {
 
         /**

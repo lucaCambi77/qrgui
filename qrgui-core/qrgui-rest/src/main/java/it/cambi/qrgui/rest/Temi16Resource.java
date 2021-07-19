@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
+import static it.cambi.qrgui.util.IConstants.F_QRQE00;
+import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/queCatAssoc")
 @Component
@@ -47,7 +51,7 @@ public class Temi16Resource extends BasicResource {
   @RequestMapping("post")
   @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD})
   public ResponseEntity<String> addQueriesToCateg(
-      @NotNull @RequestBody List<Temi16QueCatAss> temi16, HttpServletRequest sr) {
+       @RequestBody List<Temi16QueCatAss> temi16, HttpServletRequest sr) {
 
     log.info("... aggiungo le queries alla categoria ");
 

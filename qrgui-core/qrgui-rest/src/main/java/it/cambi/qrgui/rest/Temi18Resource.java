@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
 import static it.cambi.qrgui.util.IConstants.F_QRRINS;
 import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
@@ -29,7 +28,7 @@ public class Temi18Resource extends BasicResource {
   @PostMapping
   @RolesAllowed({F_QRRINS, R_FEPQRA})
   public ResponseEntity<String> postQueRoutine(
-      @NotNull @RequestBody Temi18RouQueId temi18Pk, HttpServletRequest sr) {
+       @RequestBody Temi18RouQueId temi18Pk, HttpServletRequest sr) {
 
     log.info("... creo una nuova routine");
 
@@ -48,7 +47,7 @@ public class Temi18Resource extends BasicResource {
   @RequestMapping("delete")
   @RolesAllowed({F_QRRINS, R_FEPQRA})
   public ResponseEntity<String> deleteQueRoutineAssoc(
-      @NotNull @RequestBody Temi18RouQueId temi18Pk, HttpServletRequest sr) {
+       @RequestBody Temi18RouQueId temi18Pk, HttpServletRequest sr) {
 
     log.info("... elimino assciazione routine della query " + temi18Pk.getQue());
 

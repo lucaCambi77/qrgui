@@ -16,7 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
 
 /** @author luca */
 @Component
@@ -64,8 +69,8 @@ public class GenericQueryTaskExecutorService {
       String aQuery = objectMapper.writeValueAsString(query);
 
       /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
-      Temi15UteQue aCopy = new ObjectMapper().readValue(aQuery, Temi15UteQue.class);
-      Temi15UteQue anotherCopy = new ObjectMapper().readValue(aQuery, Temi15UteQue.class);
+      Temi15UteQue aCopy = objectMapper.readValue(aQuery, Temi15UteQue.class);
+      Temi15UteQue anotherCopy = objectMapper.readValue(aQuery, Temi15UteQue.class);
 
       /** Count */
       QueryToJson json = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);

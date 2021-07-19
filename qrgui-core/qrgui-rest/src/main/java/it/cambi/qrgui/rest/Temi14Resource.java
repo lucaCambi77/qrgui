@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRCINS;
+import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/category")
 @Component
@@ -45,7 +48,7 @@ public class Temi14Resource extends BasicResource {
   @PostMapping
   @RolesAllowed({F_QRCINS, R_FEPQRA})
   public ResponseEntity<String> postCategory(
-      @NotNull @RequestBody Temi14UteCat temi14, HttpServletRequest sr) {
+       @RequestBody Temi14UteCat temi14, HttpServletRequest sr) {
 
     log.info("... creo una nuova categoria");
 
@@ -65,7 +68,7 @@ public class Temi14Resource extends BasicResource {
   @RequestMapping("delete")
   @RolesAllowed({F_QRCMOD, R_FEPQRA})
   public ResponseEntity<String> deleteCategory(
-      @NotNull @RequestBody Temi14UteCat id, HttpServletRequest sr) {
+       @RequestBody Temi14UteCat id, HttpServletRequest sr) {
 
     log.info("... cancello categoria");
 

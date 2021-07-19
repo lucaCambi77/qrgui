@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.R_FEPQR1;
+import static it.cambi.qrgui.util.IConstants.R_FEPQR2;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @Component
 @RequestMapping("/userProperties")
@@ -22,7 +23,7 @@ import static it.cambi.qrgui.util.IConstants.*;
 public class UserPropertiesResource extends BasicResource {
   @PostMapping
   @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
-  public ResponseEntity<String> getUserPrincipal(@NotNull ErtaGuiUser user, HttpServletRequest sr) {
+  public ResponseEntity<String> getUserPrincipal( ErtaGuiUser user, HttpServletRequest sr) {
 
     if (null != user.getUrl() && user.getUrl().contains("localhost")) {
       user.setUserName("Localhost");

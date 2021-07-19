@@ -8,14 +8,21 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
+import static it.cambi.qrgui.util.IConstants.F_QRQE00;
+import static it.cambi.qrgui.util.IConstants.F_QRQINS;
+import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/query")
 @Component
@@ -27,8 +34,8 @@ public class Temi15Resource extends BasicResource {
   @GetMapping
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getById(
-      @NotNull @RequestParam("cQue") Long cQue,
-      @NotNull @RequestParam("dateIns") Long dateIns,
+       @RequestParam("cQue") Long cQue,
+       @RequestParam("dateIns") Long dateIns,
       HttpServletRequest sr) {
 
     log.info("... cerco la query per id");
@@ -48,8 +55,8 @@ public class Temi15Resource extends BasicResource {
   @RequestMapping("db")
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getByDb(
-      @NotNull @RequestParam("schema") String schema,
-      @NotNull @RequestParam("type") String type,
+       @RequestParam("schema") String schema,
+       @RequestParam("type") String type,
       HttpServletRequest sr) {
 
     log.info("... cerco la query per db");
@@ -96,9 +103,9 @@ public class Temi15Resource extends BasicResource {
   @RequestMapping("associatedQuery")
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getAlreadyAssociatedQuery(
-      @NotNull @RequestParam("tipCat") String tipCat,
-      @NotNull @RequestParam("cat") Long ccat,
-      @NotNull @RequestParam("insCat") Long insCat,
+       @RequestParam("tipCat") String tipCat,
+       @RequestParam("cat") Long ccat,
+       @RequestParam("insCat") Long insCat,
       HttpServletRequest sr) {
 
     try {
@@ -115,7 +122,7 @@ public class Temi15Resource extends BasicResource {
   @PostMapping
   @RolesAllowed({F_QRQINS, R_FEPQRA})
   public ResponseEntity<String> postQuery(
-      @NotNull @RequestBody Temi15UteQue que, HttpServletRequest sr) {
+       @RequestBody Temi15UteQue que, HttpServletRequest sr) {
 
     log.info("... salvo una nuova query");
 
@@ -134,7 +141,7 @@ public class Temi15Resource extends BasicResource {
   @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD, R_FEPQRA})
   @RequestMapping("delete")
   public ResponseEntity<String> deleteQuery(
-      @NotNull @RequestBody Temi15UteQueId key, HttpServletRequest sr) {
+       @RequestBody Temi15UteQueId key, HttpServletRequest sr) {
 
     log.info("... cancello associazione categorie - query");
 

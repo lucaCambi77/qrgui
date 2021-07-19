@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +74,7 @@ public class GenericQueryResource extends BasicResource {
       produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("execute_query")
   public ResponseEntity<String> executeQuery(
-      @NotNull @RequestBody List<Temi15UteQue> queries,
+       @RequestBody List<Temi15UteQue> queries,
       @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
       @RequestParam(value = "pageSize", required = false, defaultValue = IConstants.TEN)
           Integer pageSize,
@@ -128,7 +127,7 @@ public class GenericQueryResource extends BasicResource {
   @RequestMapping("checkQuery")
   @RolesAllowed({IConstants.F_QRQINS, IConstants.R_FEPQRA})
   public ResponseEntity<String> checkQuery(
-      @NotNull @RequestBody Temi15UteQue query, HttpServletRequest sr) {
+       @RequestBody Temi15UteQue query, HttpServletRequest sr) {
 
     if (null == query.getTemi13DtbInf()
         || null == query.getTemi13DtbInf().getId()

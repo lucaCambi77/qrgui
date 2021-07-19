@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.R_FEPQR1;
+import static it.cambi.qrgui.util.IConstants.R_FEPQR2;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 @RequestMapping("/emia/dbInfo")
 @Component
