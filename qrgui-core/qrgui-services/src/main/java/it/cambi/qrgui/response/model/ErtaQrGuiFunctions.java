@@ -1,6 +1,15 @@
 package it.cambi.qrgui.response.model;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRCINS;
+import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
+import static it.cambi.qrgui.util.IConstants.F_QRQE00;
+import static it.cambi.qrgui.util.IConstants.F_QRQINS;
+import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
+import static it.cambi.qrgui.util.IConstants.F_QRRE00;
+import static it.cambi.qrgui.util.IConstants.F_QRRINS;
+import static it.cambi.qrgui.util.IConstants.F_QRRMOD;
 
 public enum ErtaQrGuiFunctions
 {

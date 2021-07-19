@@ -25,7 +25,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static it.cambi.qrgui.util.IConstants.*;
+import static it.cambi.qrgui.util.IConstants.ERRORPARSE;
+import static it.cambi.qrgui.util.IConstants.HANDLER;
+import static it.cambi.qrgui.util.IConstants.HIBERNATELAZYINITIALIZER;
 
 @SuperBuilder(builderMethodName = "baseBuilder")
 @Data

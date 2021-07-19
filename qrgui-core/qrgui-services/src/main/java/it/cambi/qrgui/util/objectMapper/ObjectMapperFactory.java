@@ -1,14 +1,29 @@
 
 package it.cambi.qrgui.util.objectMapper;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import it.cambi.qrgui.model.*;
+import it.cambi.qrgui.model.Temi13DtbInf;
+import it.cambi.qrgui.model.Temi13DtbInfId;
+import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAssId;
+import it.cambi.qrgui.model.Temi17UteRou;
+import it.cambi.qrgui.model.Temi17UteRouId;
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 
 import java.util.List;
 import java.util.Set;
