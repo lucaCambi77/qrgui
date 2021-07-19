@@ -7,6 +7,7 @@ import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,18 +21,10 @@ import java.util.List;
  *
  */
 @Component
+@RequiredArgsConstructor
 public class Temi20Service implements ITemi20Service<Temi20AnaTipCat>
 {
-
-    @Autowired
-    private ITemi20Dao<Temi20AnaTipCat, String> anaTipCatDao;
-
-    /**
-     * 
-     */
-    public Temi20Service()
-    {
-    }
+    private final ITemi20Dao<Temi20AnaTipCat, String> anaTipCatDao;
 
     @Override
     public List<Temi20AnaTipCat> findAll()

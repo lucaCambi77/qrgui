@@ -1,8 +1,6 @@
 package it.cambi.qrgui.services.oracle.taskExecutor;
 
-public interface IQueryExecutorFactory
-{
+public interface IQueryExecutorFactory {
 
-    ExecuteQueryTask getExecuteQueryTask();
-
+  ExecuteQueryTask getExecuteQueryTask();
 }

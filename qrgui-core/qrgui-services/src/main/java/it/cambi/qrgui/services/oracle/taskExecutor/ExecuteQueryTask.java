@@ -39,8 +39,6 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
   @Override
   public XWrappedResponse<Temi15UteQue, List<Object>> call() throws Exception {
 
-    setPageSize(pageSize == null ? getPageSize() : pageSize);
-
     XWrappedResponse<Temi15UteQue, List<Object>> response =
         XWrappedResponse.<Temi15UteQue, List<Object>>builder().build();
 

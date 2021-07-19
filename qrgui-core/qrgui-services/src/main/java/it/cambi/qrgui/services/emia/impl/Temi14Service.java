@@ -5,21 +5,32 @@ import it.cambi.qrgui.dao.entity.api.ITemi14Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
-import it.cambi.qrgui.model.*;
+import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCatId;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAssId;
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi14Service;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
 import it.cambi.qrgui.services.exception.NoCategoriesAllowedException;
 import it.cambi.qrgui.util.Functions;
 import it.cambi.qrgui.util.TreeNode;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,21 +38,19 @@ import java.util.List;
 
 /** @author luca */
 @Component
+@RequiredArgsConstructor
+@Slf4j
 public class Temi14Service implements ITemi14Service<Temi14UteCat> {
-  private static final Logger log = LoggerFactory.getLogger(Temi14Service.class);
 
-  @Autowired private ITemi14Dao<Temi14UteCat, Temi14UteCatId> categoryDao;
+  private final ITemi14Dao<Temi14UteCat, Temi14UteCatId> categoryDao;
 
-  @Autowired private ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao;
+  private final ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao;
 
-  @Autowired private ITemi15Dao<Temi15UteQue, Temi15UteQueId> queryDao;
+  private final ITemi15Dao<Temi15UteQue, Temi15UteQueId> queryDao;
 
-  @Autowired private ITemi18Dao<Temi18RouQue, Temi18RouQueId> queryRouDao;
+  private final ITemi18Dao<Temi18RouQue, Temi18RouQueId> queryRouDao;
 
-  @Autowired private ITemi20Service<Temi20AnaTipCat> temi20Service;
-
-  /** */
-  public Temi14Service() {}
+  private final ITemi20Service<Temi20AnaTipCat> temi20Service;
 
   /**
    * Creo una nuova categoria
@@ -100,8 +109,10 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
       for (Temi16QueCatAss temi16QueCatAss : cat.getTemi16QueCatAsses()) {
         if (!Functions.areDifferentLong(id.getQue(), temi16QueCatAss.getId().getQue())
             && !Functions.areDifferentLong(
-                id.getInsQue().getTime(), temi16QueCatAss.getId().getInsQue().getTime()))
+                id.getInsQue().getTime(), temi16QueCatAss.getId().getInsQue().getTime())) {
           reAssociated = true;
+          break;
+        }
       }
 
       if (!reAssociated) {
@@ -113,7 +124,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
 
         queryRouDao
             .getQueRoutineByQueryId(new Temi15UteQueId(id.getQue(), id.getInsQue()))
-            .forEach((temi18) -> queryRouDao.delete(temi18));
+            .forEach(queryRouDao::delete);
 
         queryDao.delete(temi15);
       }
@@ -197,7 +208,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
             .setParameter("insCat", id.getInsCat())
             .getResultList();
 
-    listTemi16.forEach((temi16) -> queCatAssDao.delete(temi16));
+    listTemi16.forEach(queCatAssDao::delete);
   }
 
   /**
