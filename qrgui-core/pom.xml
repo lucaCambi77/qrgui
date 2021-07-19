@@ -12,9 +12,8 @@
 
     <properties>
         <java.version>11</java.version>
-        <spring.boot.version>2.2.1.RELEASE</spring.boot.version>
+        <spring.boot.version>2.5.2</spring.boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <arquillian.version>1.1.14.Final</arquillian.version>
     </properties>
 
     <modules>
@@ -28,7 +27,7 @@
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
-                <version>5.4.2</version>
+                <version>5.7.0</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -57,14 +56,14 @@
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
-            <version>1.2-groovy-2.4</version>
+            <version>2.0-groovy-3.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.spockframework</groupId>
             <artifactId>spock-spring</artifactId>
-            <version>1.2-groovy-2.4</version>
+            <version>2.0-groovy-3.0</version>
             <scope>test</scope>
         </dependency>
 
