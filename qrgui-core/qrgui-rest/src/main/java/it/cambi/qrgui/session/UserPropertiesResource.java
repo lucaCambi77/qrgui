@@ -21,6 +21,7 @@ import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 @RequestMapping("/userProperties")
 @Slf4j
 public class UserPropertiesResource extends BasicResource {
+
   @PostMapping
   @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
   public ResponseEntity<String> getUserPrincipal( ErtaGuiUser user, HttpServletRequest sr) {

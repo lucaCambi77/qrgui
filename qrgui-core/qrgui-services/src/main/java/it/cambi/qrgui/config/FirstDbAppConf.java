@@ -23,7 +23,7 @@ import java.util.Properties;
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = {GenericTable.class})
+//@ComponentScan(basePackageClasses = {GenericTable.class})
 @EnableJpaRepositories(entityManagerFactoryRef = "firstEntityManagerFactory", transactionManagerRef = "firstTransactionManager")
 @RequiredArgsConstructor
 public class FirstDbAppConf {

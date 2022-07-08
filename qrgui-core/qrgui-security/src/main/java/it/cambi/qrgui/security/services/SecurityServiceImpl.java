@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,9 +24,8 @@ import java.util.Optional;
 @Slf4j
 public class SecurityServiceImpl implements SecurityService {
 
-    private final AuthenticationManager authenticationManager;
-
     private final UserDetailsService userDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public String findLoggedInUsername() {
@@ -40,13 +40,9 @@ public class SecurityServiceImpl implements SecurityService {
     public boolean autoLogin(String username, String password) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password,
-                userDetails.getAuthorities());
-
-        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        if (bCryptPasswordEncoder.matches(password, userDetails.getPassword())) {
+            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, password,
+              userDetails.getAuthorities()));
             log.debug(String.format("Auto login %s successfully!", username));
 
             return true;

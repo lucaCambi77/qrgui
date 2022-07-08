@@ -27,7 +27,7 @@ import java.util.Set;
  *
  */
 @Entity
-@Table(name = "USER", schema = "SECURITY")
+@Table(name = "GUI_USER", schema = "SECURITY")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

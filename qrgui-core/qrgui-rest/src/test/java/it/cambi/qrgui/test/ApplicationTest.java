@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,83 +31,74 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(classes = {RestApplication.class, ConfigurationTest.class, ResourceControllerTest.class}, webEnvironment = WebEnvironment.RANDOM_PORT, properties = {"server.servlet.contextPath=/api"})
+@SpringBootTest(
+    classes = {RestApplication.class, ConfigurationTest.class, ResourceControllerTest.class},
+    webEnvironment = WebEnvironment.RANDOM_PORT,
+    properties = {"server.servlet.contextPath=/api"})
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
 public class ApplicationTest {
 
-    private @Autowired
-    DbInfoJpaRepository dbInforRepository;
+  private @Autowired DbInfoJpaRepository dbInforRepository;
 
-    private @Autowired
-    UserRoleRepository userRoleRepository;
+  private @Autowired UserRoleRepository userRoleRepository;
 
-    private @Autowired
-    UserService userService;
+  private @Autowired UserService userService;
 
-    private @Autowired
-    SecurityService securityService;
+  private @Autowired SecurityService securityService;
 
-    @Autowired
-    private WebApplicationContext context;
+  @Autowired private WebApplicationContext context;
 
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
+  @Autowired private FilterChainProxy filterChain;
 
-    private MockMvc mvc;
+  private MockMvc mvc;
 
-    @BeforeEach
-    public void setup() {
-        mvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity(springSecurityFilterChain))
-                .build();
-    }
+  @BeforeEach
+  public void setup() {
+    mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity(filterChain)).build();
+  }
 
-    @Test
-    public void securityServiceTest() {
-        assertNotNull(dbInforRepository.getOne(new Temi13DtbInfId("ORACLE", "TEST")));
+  @Test
+  public void securityServiceTest() {
+    assertNotNull(dbInforRepository.getReferenceById(new Temi13DtbInfId("ORACLE", "TEST")));
 
-        assertNotNull(userService.findByUsername("user@gmail.com"));
-        assertNotNull(userService.findByUsername("admin@gmail.com"));
-        assertEquals(2,
-                userRoleRepository.findAll().size());
+    assertNotNull(userService.findByUsername("user@gmail.com"));
+    assertNotNull(userService.findByUsername("admin@gmail.com"));
+    assertEquals(2, userRoleRepository.findAll().size());
 
-        /**
-         * Apparently it is not possible to test authentication (at least with custom userDetailService) because mocking security means user already
-         * exists (see also @WithUserDetails or @WithMockUser with which you can test authorization), so we test the authentication service
-         */
-        assertTrue(securityService.autoLogin("user@gmail.com", "1234"));
+    /**
+     * Apparently it is not possible to test authentication (at least with custom userDetailService)
+     * because mocking security means user already exists (see also @WithUserDetails
+     * or @WithMockUser with which you can test authorization), so we test the authentication
+     * service
+     */
+    assertTrue(securityService.autoLogin("user@gmail.com", "1234"));
 
-        // This is actually 401 case
-        assertThrows(AuthenticationException.class, () ->
-                securityService.autoLogin("user@gmail.com", "124")
-        );
-    }
+    // This is actually 401 case
+    assertFalse(securityService.autoLogin("user@gmail.com", "124"));
+  }
 
-    @Test
-    public void publicUrl() throws Exception {
-        mvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+  @Test
+  public void publicUrl() throws Exception {
+    mvc.perform(get("/login").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+  }
 
-    @Test
-    @WithUserDetails(value = "user@gmail.com")
-    public void securedUrlForbidden() throws Exception {
-        mvc.perform(get("/secured").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isForbidden());
-    }
+  @Test
+  @WithUserDetails(value = "user@gmail.com")
+  public void securedUrlForbidden() throws Exception {
+    mvc.perform(get("/secured").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isForbidden());
+  }
 
-    @Test
-    public void unauthorized() throws Exception {
-        mvc.perform(get("/all").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isUnauthorized());
-    }
+  @Test
+  public void unauthorized() throws Exception {
+    mvc.perform(get("/all").contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized());
+  }
 
-    @Test
-    @WithUserDetails(value = "admin@gmail.com")
-    public void securedUrlOk() throws Exception {
-        mvc.perform(get("/secured").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+  @Test
+  @WithUserDetails(value = "admin@gmail.com")
+  public void securedUrlOk() throws Exception {
+    mvc.perform(get("/secured").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+  }
 }

@@ -6,7 +6,6 @@ import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,7 +13,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,8 +25,6 @@ import java.util.stream.Collectors;
 public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
     implements ITemi20Dao<Temi20AnaTipCat, String> {
   private static final Logger log = LoggerFactory.getLogger(Temi20Dao.class);
-
-  @Autowired private Temi13Dao temi13dao;
 
   public Temi20Dao() {
     super(Temi20AnaTipCat.class);
@@ -66,12 +62,11 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
     if (null == request)
       return ttps20List.stream().map(Temi20AnaTipCat::getTipCat).collect(Collectors.toList());
 
-    List<String> functions = new ArrayList<String>();
-
-    for (Temi20AnaTipCat atc : ttps20List) {
-      String cTipCat = atc.getTipCat();
-      if (request.isUserInRole(cTipCat)) functions.add(atc.getTipCat());
-    }
+    List<String> functions =
+        ttps20List.stream()
+            .filter(tc -> request.isUserInRole(tc.getTipCat()))
+            .map(Temi20AnaTipCat::getTipCat)
+            .collect(Collectors.toList());
 
     String user =
         request.getUserPrincipal() == null ? "LocalHost" : request.getUserPrincipal().getName();

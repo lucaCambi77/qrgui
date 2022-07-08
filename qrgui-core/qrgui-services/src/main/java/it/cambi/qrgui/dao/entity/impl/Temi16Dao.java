@@ -30,8 +30,6 @@ public class Temi16Dao extends TemiGenericDao<Temi16QueCatAss, Temi16QueCatAssId
 
   @Autowired ITemi20Dao<Temi20AnaTipCat, String> temi20Dao;
 
-  @Autowired ITemi15Dao<Temi15UteQue, Temi15UteQueId> temi15Dao;
-
   public Temi16Dao() {
     super(Temi16QueCatAss.class);
   }

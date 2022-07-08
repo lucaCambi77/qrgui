@@ -17,6 +17,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class Temi13Service implements ITemi13Service<Temi13DtbInf> {
+
   private final ITemi13Dao<Temi13DtbInf, Temi13DtbInfId> databaseInfoDao;
 
   @Override
