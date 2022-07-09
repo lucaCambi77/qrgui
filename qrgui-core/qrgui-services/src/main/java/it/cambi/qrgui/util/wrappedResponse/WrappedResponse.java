@@ -1,23 +1,9 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import it.cambi.qrgui.response.model.ErtaGuiUser;
-import it.cambi.qrgui.util.Errors;
-import it.cambi.qrgui.util.IConstants;
-import it.cambi.qrgui.util.Messages;
-import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
-import lombok.Data;
-import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import static it.cambi.qrgui.util.IConstants.ERRORPARSE;
+import static it.cambi.qrgui.util.IConstants.HANDLER;
+import static it.cambi.qrgui.util.IConstants.HIBERNATELAZYINITIALIZER;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,9 +11,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static it.cambi.qrgui.util.IConstants.ERRORPARSE;
-import static it.cambi.qrgui.util.IConstants.HANDLER;
-import static it.cambi.qrgui.util.IConstants.HIBERNATELAZYINITIALIZER;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+import it.cambi.qrgui.response.model.ErtaGuiUser;
+import it.cambi.qrgui.util.Errors;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.Messages;
+import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
+import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @SuperBuilder(builderMethodName = "baseBuilder")
 @Data

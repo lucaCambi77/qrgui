@@ -3,8 +3,9 @@
  */
 package it.cambi.qrgui.security.jpa.repository;
 
-import it.cambi.qrgui.security.db.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import it.cambi.qrgui.security.db.model.Role;
 
 /**
  * @author luca

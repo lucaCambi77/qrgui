@@ -1,6 +1,9 @@
 
 package it.cambi.qrgui.util.objectMapper;
 
+import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +15,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi13DtbInfId;
 import it.cambi.qrgui.model.Temi14UteCat;
@@ -24,9 +28,6 @@ import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * Classe per la creazione dell'object mapper che serve per la serializzazione degli oggetti verso il web. Mentre hibernate, tramite l'

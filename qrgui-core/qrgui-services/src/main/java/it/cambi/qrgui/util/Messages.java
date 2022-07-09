@@ -3,15 +3,15 @@
  */
 package it.cambi.qrgui.util;
 
-import it.cambi.qrgui.util.messages.UTF8Control;
+import static it.cambi.qrgui.util.IConstants.DEFAULT_LOCALE;
+import static it.cambi.qrgui.util.IConstants.TRANSLATIONS_FILE_NAME;
 
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import static it.cambi.qrgui.util.IConstants.DEFAULT_LOCALE;
-import static it.cambi.qrgui.util.IConstants.TRANSLATIONS_FILE_NAME;
+import it.cambi.qrgui.util.messages.UTF8Control;
 
 /**
  * @author luca

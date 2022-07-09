@@ -1,24 +1,23 @@
 package it.cambi.qrgui.dao.entity.impl;
 
-import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
-import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
-import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.model.Temi15UteQueId;
-import it.cambi.qrgui.model.Temi16QueCatAss;
-import it.cambi.qrgui.model.Temi16QueCatAssId;
-import it.cambi.qrgui.model.Temi20AnaTipCat;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
+import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
+import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAssId;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 /**
  * @param <T> Type of the Entity.

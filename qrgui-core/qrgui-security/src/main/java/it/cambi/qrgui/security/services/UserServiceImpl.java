@@ -3,11 +3,12 @@
  */
 package it.cambi.qrgui.security.services;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import it.cambi.qrgui.security.db.model.GuiUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 /**
  * @author luca

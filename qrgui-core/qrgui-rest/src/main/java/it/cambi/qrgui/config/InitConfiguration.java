@@ -3,6 +3,14 @@
  */
 package it.cambi.qrgui.config;
 
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
+
 import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.model.Temi13DtbInf;
@@ -17,13 +25,6 @@ import it.cambi.qrgui.security.jpa.repository.RoleRepository;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.UserServiceImpl;
 import it.cambi.qrgui.services.emia.impl.Temi20Service;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
-
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
 
 /**
  * @author luca

@@ -1,14 +1,12 @@
 package it.cambi.qrgui.rest;
 
-import it.cambi.qrgui.enums.Schema;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
-import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
-import it.cambi.qrgui.util.IConstants;
-import it.cambi.qrgui.util.WrappingUtils;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
-import lombok.RequiredArgsConstructor;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -23,11 +21,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import it.cambi.qrgui.enums.Schema;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
+import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
+import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/query")
 @Component

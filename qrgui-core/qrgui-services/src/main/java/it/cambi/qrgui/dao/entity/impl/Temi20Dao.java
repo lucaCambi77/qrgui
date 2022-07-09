@@ -1,21 +1,23 @@
 package it.cambi.qrgui.dao.entity.impl;
 
-import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
-import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
-import it.cambi.qrgui.model.Temi20AnaTipCat;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
+import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 /**
  * @param <T> Type of the Entity.

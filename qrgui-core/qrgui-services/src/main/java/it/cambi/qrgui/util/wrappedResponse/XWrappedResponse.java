@@ -1,8 +1,8 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
-import lombok.experimental.SuperBuilder;
-
 import java.util.List;
+
+import lombok.experimental.SuperBuilder;
 
 /**
  * Classe utilizzata nel caso che oltre alla entity della WrappedResponse si voglia utilizzare un'ulteriore entity da wrappare come nel caso del task

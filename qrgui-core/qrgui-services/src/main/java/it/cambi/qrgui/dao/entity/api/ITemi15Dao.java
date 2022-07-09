@@ -1,8 +1,8 @@
 package it.cambi.qrgui.dao.entity.api;
 
-import it.cambi.qrgui.dao.api.IEntityDao;
-
 import java.util.List;
+
+import it.cambi.qrgui.dao.api.IEntityDao;
 
 public interface ITemi15Dao<T, K> extends IEntityDao<T, K>
 {

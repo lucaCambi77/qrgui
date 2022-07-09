@@ -3,12 +3,12 @@
  */
 package it.cambi.qrgui.security.db.model;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
 /**
  * @author luca

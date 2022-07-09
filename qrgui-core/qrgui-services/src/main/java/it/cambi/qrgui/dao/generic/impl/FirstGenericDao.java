@@ -1,11 +1,12 @@
 package it.cambi.qrgui.dao.generic.impl;
 
-import it.cambi.qrgui.dao.AbstractDao;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import it.cambi.qrgui.dao.AbstractDao;
 
 @Service
 public class FirstGenericDao extends AbstractDao

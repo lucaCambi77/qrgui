@@ -3,15 +3,13 @@
  */
 package it.cambi.qrgui.util;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cambi.qrgui.enums.JavaTypes;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -19,12 +17,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+import it.cambi.qrgui.enums.JavaTypes;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.QueryToJson;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 
 /**
  * @author luca

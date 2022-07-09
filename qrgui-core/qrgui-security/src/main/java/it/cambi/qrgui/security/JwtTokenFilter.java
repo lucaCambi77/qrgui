@@ -1,6 +1,15 @@
 package it.cambi.qrgui.security;
 
-import it.cambi.qrgui.security.jpa.repository.UserRepository;
+import static org.springframework.util.StringUtils.isEmpty;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,14 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
-
-import static org.springframework.util.StringUtils.isEmpty;
+import it.cambi.qrgui.security.jpa.repository.UserRepository;
 
 //@Component
 public class JwtTokenFilter extends OncePerRequestFilter {

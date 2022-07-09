@@ -3,6 +3,12 @@
  */
 package it.cambi.qrgui.test;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
+
 import it.cambi.qrgui.config.EmiaDbAppConf;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.model.Temi13DtbInf;
@@ -15,11 +21,6 @@ import it.cambi.qrgui.security.db.model.UserRoleId;
 import it.cambi.qrgui.security.jpa.repository.RoleRepository;
 import it.cambi.qrgui.security.jpa.repository.UserRoleRepository;
 import it.cambi.qrgui.security.services.UserServiceImpl;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Profile;
 
 /**
  * @author luca

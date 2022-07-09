@@ -1,10 +1,11 @@
 package it.cambi.qrgui.dao.entity.impl;
 
+import org.springframework.stereotype.Component;
+
 import it.cambi.qrgui.dao.entity.api.ITemi14Dao;
 import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.model.Temi14UteCatId;
-import org.springframework.stereotype.Component;
 
 /**
  * @param <T>

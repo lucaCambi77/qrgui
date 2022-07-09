@@ -1,10 +1,17 @@
 package it.cambi.qrgui.rest;
 
-import it.cambi.qrgui.model.Temi16QueCatAss;
-import it.cambi.qrgui.services.emia.api.ITemi16Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static it.cambi.qrgui.util.IConstants.F_QRCG00;
+import static it.cambi.qrgui.util.IConstants.F_QRCG01;
+import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
+import static it.cambi.qrgui.util.IConstants.F_QRQE00;
+import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
+import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+
+import java.util.List;
+
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,16 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-
-import static it.cambi.qrgui.util.IConstants.F_QRCG00;
-import static it.cambi.qrgui.util.IConstants.F_QRCG01;
-import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
-import static it.cambi.qrgui.util.IConstants.F_QRQE00;
-import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.services.emia.api.ITemi16Service;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/queCatAssoc")
 @Component

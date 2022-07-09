@@ -3,10 +3,11 @@
  */
 package it.cambi.qrgui.jpa.repository;
 
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.model.Temi15UteQueId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
 
 /**
  * @author luca

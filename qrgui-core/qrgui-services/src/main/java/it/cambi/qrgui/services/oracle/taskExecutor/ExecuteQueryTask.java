@@ -1,6 +1,13 @@
 package it.cambi.qrgui.services.oracle.taskExecutor;
 
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import it.cambi.qrgui.dao.generic.impl.FirstGenericDao;
 import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.model.Temi15UteQue;
@@ -10,11 +17,6 @@ import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.concurrent.Callable;
 
 /**
  * Classe che implementa Callable e permette di eseguire un task di esecuzione di una query.

@@ -1,10 +1,11 @@
 package it.cambi.qrgui.services.emia.api;
 
-import it.cambi.qrgui.model.Temi16QueCatAss;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 public interface ITemi16Service<T>
 {

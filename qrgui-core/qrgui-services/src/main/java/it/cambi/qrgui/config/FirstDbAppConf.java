@@ -1,10 +1,12 @@
 package it.cambi.qrgui.config;
 
-import it.cambi.qrgui.db.test.GenericTable;
-import lombok.RequiredArgsConstructor;
+import java.util.Objects;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -14,9 +16,8 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
-import java.util.Objects;
-import java.util.Properties;
+import it.cambi.qrgui.db.test.GenericTable;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author luca
