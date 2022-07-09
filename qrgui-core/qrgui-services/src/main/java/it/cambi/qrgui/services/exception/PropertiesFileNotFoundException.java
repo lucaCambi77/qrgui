@@ -3,9 +3,9 @@
  */
 package it.cambi.qrgui.services.exception;
 
-import static it.cambi.qrgui.util.IConstants.ERROR_MISSING_PROPERTIES_FILE;
-
 import it.cambi.qrgui.util.Messages;
+
+import static it.cambi.qrgui.util.IConstants.ERROR_MISSING_PROPERTIES_FILE;
 
 /**
  * @author luca

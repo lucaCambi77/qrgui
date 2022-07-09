@@ -1,6 +1,18 @@
 /** */
 package it.cambi.qrgui.services.oracle.taskExecutor;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cambi.qrgui.enums.QueryType;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.QueryToJson;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,20 +22,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import it.cambi.qrgui.enums.QueryType;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 
 /** @author luca */
 @Component

@@ -1,8 +1,8 @@
 package it.cambi.qrgui.services.emia.api;
 
-import java.util.List;
-
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+
+import java.util.List;
 
 public interface ITemi13Service<T>
 {

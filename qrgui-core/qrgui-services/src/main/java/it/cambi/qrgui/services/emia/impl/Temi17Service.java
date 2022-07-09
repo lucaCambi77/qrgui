@@ -1,21 +1,6 @@
 /** */
 package it.cambi.qrgui.services.emia.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import it.cambi.qrgui.dao.entity.api.ITemi17Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
@@ -27,6 +12,19 @@ import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /** @author luca */
 @Component
