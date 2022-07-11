@@ -48,13 +48,11 @@ public class ApplicationTest {
 
   @Autowired private WebApplicationContext context;
 
-  @Autowired private FilterChainProxy filterChain;
-
   private MockMvc mvc;
 
   @BeforeEach
   public void setup() {
-    mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity(filterChain)).build();
+    mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
   }
 
   @Test

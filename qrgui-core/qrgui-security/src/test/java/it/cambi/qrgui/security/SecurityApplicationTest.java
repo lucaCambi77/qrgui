@@ -37,16 +37,13 @@ class SecurityApplicationTest {
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired
-    private FilterChainProxy springSecurityFilterChain;
-
     private MockMvc mvc;
 
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
-                .apply(springSecurity(springSecurityFilterChain))
+                .apply(springSecurity())
                 .build();
     }
 
