@@ -3,13 +3,7 @@
  */
 import angular from 'angular';
 
-(function() {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('UtilErrorsFactory',
-			UtilErrorsFactory);
-
-	UtilErrorsFactory.$inject = [ '$rootScope' ];
+angular.module('qrGuiApp').factory('UtilErrorsFactory',[ '$rootScope' ,
 	function UtilErrorsFactory($rootScope) {
 
 		var errors : any = {};
@@ -123,6 +117,5 @@ import angular from 'angular';
 			return checkedResponse;
 		}
 
-	}
 
-})();
+}])

@@ -1,11 +1,6 @@
 ﻿import angular from 'angular';
 
-(function() {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('RestFactory', RestFactory);
-
-	RestFactory.$inject = [ 'constant', 'RestUtilityFactory' ];
+angular.module('qrGuiApp').factory('RestFactory', [ 'constant', 'RestUtilityFactory',
 	function RestFactory(constant, RestUtilityFactory) {
 		var restService : any =  {};
 
@@ -53,6 +48,4 @@
 			return RestUtilityFactory.DeferredPromisePost(path, data);
 		}
 
-	}
-
-})();
+}])

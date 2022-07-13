@@ -21,12 +21,11 @@ angular
 									.useMissingTranslationHandlerLog();
 
 							$translateProvider
-									.determinePreferredLanguage(function(
-											$window) {
+									.determinePreferredLanguage(function() {
 										// define a function to determine the
 										// language
 										// and return a language key
-										var userLang = navigator.language
+										const userLang = navigator.language;
 
 										sessionStorage.setItem("locale", "it");
 

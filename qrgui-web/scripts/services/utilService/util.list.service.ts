@@ -3,13 +3,7 @@
  */
 import angular from 'angular';
 
-(function () {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('ListUtilityFactory',
-		ListUtilityFactory);
-
-	ListUtilityFactory.$inject = ['constant', '$rootScope', 'UtilErrorsFactory', '$q', 'HtmlUtilityFactory', 'EmiaRestUtilityFactory'];
+angular.module('qrGuiApp').factory('ListUtilityFactory', ['constant', '$rootScope', 'UtilErrorsFactory', '$q', 'HtmlUtilityFactory', 'EmiaRestUtilityFactory',
 	function ListUtilityFactory(constant, $rootScope, UtilErrorsFactory, $q, HtmlUtilityFactory, EmiaRestUtilityFactory) {
 
 		var listUtil: any = {};
@@ -171,6 +165,5 @@ import angular from 'angular';
 			}
 		}
 
-	}
 
-})();
+}]);

@@ -3,12 +3,7 @@
  */
 import angular from 'angular';
 
-(function () {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('RestUtilityFactory', RestUtilityFactory);
-
-	RestUtilityFactory.$inject = ['$rootScope', '$q', '$http', 'constant'];
+angular.module('qrGuiApp').factory('RestUtilityFactory', ['$rootScope', '$q', '$http', 'constant',
 	function RestUtilityFactory($rootScope, $q, $http, constant) {
 
 		var restUtilService: any = {};
@@ -97,6 +92,4 @@ import angular from 'angular';
 			return defer.promise;
 
 		}
-	}
-
-})();
+}])

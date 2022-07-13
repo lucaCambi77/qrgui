@@ -5,13 +5,7 @@
  */
 import angular from 'angular';
 
-(function () {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('HtmlUtilityFactory',
-		HtmlUtilityFactory);
-
-	HtmlUtilityFactory.$inject = ['$compile', '$rootScope', 'DateUtilityFactory', 'constant'];
+angular.module('qrGuiApp').factory('HtmlUtilityFactory',['$compile', '$rootScope', 'DateUtilityFactory', 'constant',
 
 	function HtmlUtilityFactory($compile, $rootScope, DateUtilityFactory, constant) {
 
@@ -408,6 +402,4 @@ import angular from 'angular';
 			return errorUl;
 		}
 
-	}
-
-})();
+	}])

@@ -6,41 +6,36 @@ import angular from 'angular';
  * @description # LoginCtrl Controller of the qrGuiApp
  */
 
-(function () {
-	'use strict';
 
-	angular.module('qrGuiApp').controller('LoginCtrl', LoginCtrl);
+angular.module('qrGuiApp').controller('LoginCtrl', ['$rootScope', 'LoginFactory',
 
-	LoginCtrl.$inject = ['$rootScope', 'LoginFactory'];
+    function LoginCtrl($rootScope, LoginFactory) {
 
-	function LoginCtrl($rootScope, LoginFactory) {
+        var auth = this;
+        auth.login = Login;
 
-		var auth = this;
-		auth.login = Login;
+        /*
+         * Login e Logout functions
+         */
+        $rootScope.logOut = function () {
 
-		/*
-		 * Login e Logout functions
-		 */
-		$rootScope.logOut = function () {
+            sessionStorage.removeItem("isUserLogged");
+            sessionStorage.removeItem("ertaQrGuiUser");
+            $rootScope.isUserLogged = false;
+            $rootScope.userName = null;
+            $rootScope.password = null;
 
-			sessionStorage.removeItem("isUserLogged");
-			sessionStorage.removeItem("ertaQrGuiUser");
-			$rootScope.isUserLogged = false;
-			$rootScope.userName = null;
-			$rootScope.password = null;
+        };
 
-		}
+        function Login() {
 
-		function Login() {
+            LoginFactory.GetUserProperties({
+                username: auth.username,
+                password: auth.password,
+                locale: auth.locale,
+                url: auth.absUrl
+            });
 
-			LoginFactory.GetUserProperties({
-				username: auth.username,
-				password: auth.password,
-				locale: auth.locale,
-				url: auth.absUrl
-			});
+        }
 
-		}
-	}
-
-})();
+    }]);

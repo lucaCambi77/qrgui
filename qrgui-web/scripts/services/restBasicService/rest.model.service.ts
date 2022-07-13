@@ -3,15 +3,9 @@
  */
  import angular from 'angular';
 
-(function() {
-	'use strict';
-
-	angular.module('qrGuiApp').factory('EmiaRestUtilityFactory',
-			EmiaRestUtilityFactory);
-
-	EmiaRestUtilityFactory.$inject = ['constant',
+ angular.module('qrGuiApp').factory('EmiaRestUtilityFactory', ['constant',
 			'RestUtilityFactory', 'ModelFactory', 'UtilErrorsFactory',
-			'$rootScope', '$q' ];
+			'$rootScope', '$q',
 	function EmiaRestUtilityFactory(constant, RestUtilityFactory,
 			ModelFactory, UtilErrorsFactory, $rootScope, $q) {
 
@@ -238,6 +232,5 @@
 				insQue : insQue
 			});
 		}
-	}
 
-})();
+}])

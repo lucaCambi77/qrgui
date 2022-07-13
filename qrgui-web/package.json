@@ -2,7 +2,7 @@
 	"name": "qrgui",
 	"version": "0.0.0",
 	"scripts": {
-		"build": "npm run clean && rimraf src/dist && webpack --bail --progress --profile --env prod=true",
+		"build": "npm run clean && rimraf src/dist && webpack --bail --progress --profile --env prod=true --mode=production",
 		"server": "webpack serve --env prod=false --mode development",
 		"start": "npm run server",
 		"clean": "rm ./dist -rf",
@@ -60,6 +60,7 @@
 		"eslint-plugin-import": "^2.23.2",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.3.1",
+		"expose-loader": "^4.0.0",
 		"husky": "^4.2.5",
 		"jest": "^26.0.1",
 		"jquery-ui": "^1.12.1",
