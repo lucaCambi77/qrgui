@@ -18,7 +18,7 @@ public interface ITemi15Service<T>
 
     List<T> getByDb(String schema, String type);
 
-    WrappedResponse<List<Object>> getAlreadyAssociatedQuery(Long ccat, Long insCat, String tipCat);
+    WrappedResponse<List<Object>> getAlreadyAssociatedQuery(int ccat, Long insCat, String tipCat);
 
     WrappedResponse<T> deleteQuery(Temi15UteQueId cque);
 

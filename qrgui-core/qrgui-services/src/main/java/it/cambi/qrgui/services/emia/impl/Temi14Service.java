@@ -62,7 +62,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
    */
   @Override
   @Transactional
-  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> saveCategory(
+  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>> saveCategory(
       HttpServletRequest sr, Temi14UteCat temi14) throws NoCategoriesAllowedException {
 
     /**
@@ -92,7 +92,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
    */
   @Override
   @Transactional
-  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> deleteCategory(
+  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>> deleteCategory(
       HttpServletRequest sr, Temi14UteCat cat) throws NoCategoriesAllowedException {
 
     log.info("Cancello la categoria " + cat.getCat());
@@ -151,13 +151,16 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
         categoryDao.getEntityManager().getCriteriaBuilder().createQuery(Temi14UteCat.class);
     Root<Temi14UteCat> rootPar = criteriaQueryPar.from(Temi14UteCat.class);
 
-    ParameterExpression<Integer> nParParam =
-        categoryDao.getEntityManager().getCriteriaBuilder().parameter(Integer.class, "nPar");
-
-    Expression<?> nPar = rootPar.get("par");
-
     Predicate predicate14 =
-        categoryDao.getEntityManager().getCriteriaBuilder().equal(nPar, nParParam);
+        categoryDao
+            .getEntityManager()
+            .getCriteriaBuilder()
+            .equal(
+                rootPar.get("par"),
+                categoryDao
+                    .getEntityManager()
+                    .getCriteriaBuilder()
+                    .parameter(Integer.class, "nPar"));
 
     List<Temi14UteCat> listTemi14 =
         categoryDao
@@ -184,21 +187,27 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
         queCatAssDao.getEntityManager().getCriteriaBuilder().createQuery(Temi16QueCatAss.class);
     Root<Temi16QueCatAss> root = criteriaQuery.from(Temi16QueCatAss.class);
 
-    ParameterExpression<Long> cCatParam =
-        queCatAssDao.getEntityManager().getCriteriaBuilder().parameter(Long.class, "cCat");
-
-    Expression<?> cCat = root.get("cat");
-
     Predicate predicate =
-        queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCat, cCatParam);
-
-    ParameterExpression<Date> insCatParam =
-        queCatAssDao.getEntityManager().getCriteriaBuilder().parameter(Date.class, "insCat");
-
-    Expression<?> insCat = root.get("insCat");
+        queCatAssDao
+            .getEntityManager()
+            .getCriteriaBuilder()
+            .equal(
+                root.get("temi14UteCat").get("cat"),
+                queCatAssDao
+                    .getEntityManager()
+                    .getCriteriaBuilder()
+                    .parameter(Integer.class, "cCat"));
 
     Predicate predicateIns =
-        queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insCat, insCatParam);
+        queCatAssDao
+            .getEntityManager()
+            .getCriteriaBuilder()
+            .equal(
+                root.get("temi14UteCat").get("insCat"),
+                queCatAssDao
+                    .getEntityManager()
+                    .getCriteriaBuilder()
+                    .parameter(Date.class, "insCat"));
 
     List<Temi16QueCatAss> listTemi16 =
         queCatAssDao
@@ -220,7 +229,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
    */
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>> findAll(
+  public XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>> findAll(
       HttpServletRequest sr, Temi14UteCatId id) throws NoCategoriesAllowedException {
 
     /** Controllo ed aggiungo i tipi categorie per cui l'utente è abilitato */
@@ -238,13 +247,13 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
     Expression<?> cTipCat = root.get("temi20AnaTipCat").get("tipCat");
 
     if (null != id) {
-      Expression<?> cat = root.get("cat");
-
       Predicate predicateCat =
-          categoryDao.getEntityManager().getCriteriaBuilder().equal(cat, id.getCat());
-      Expression<?> insCat = root.get("insCat");
+          categoryDao.getEntityManager().getCriteriaBuilder().equal(root.get("cat"), id.getCat());
       Predicate predicateInsCat =
-          categoryDao.getEntityManager().getCriteriaBuilder().equal(insCat, id.getInsCat());
+          categoryDao
+              .getEntityManager()
+              .getCriteriaBuilder()
+              .equal(root.get("insCat"), id.getInsCat());
 
       predicateList.add(predicateInsCat);
       predicateList.add(predicateCat);
@@ -260,13 +269,13 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
 
     List<Temi14UteCat> listTemi14 = categoryDao.getEntityListByCriteriaQuery(criteriaQuery, null);
 
-    List<TreeNode<Temi14UteCat, Long>> listTreeNode = new ArrayList<TreeNode<Temi14UteCat, Long>>();
+    List<TreeNode<Temi14UteCat, Integer>> listTreeNode = new ArrayList<>();
 
     for (Temi14UteCat temi14 : listTemi14) {
       if (!isChild(listTreeNode, temi14)) {
 
-        TreeNode<Temi14UteCat, Long> treeNode =
-            new TreeNode<Temi14UteCat, Long>(temi14, temi14.getCat());
+        TreeNode<Temi14UteCat, Integer> treeNode =
+            new TreeNode<>(temi14, temi14.getCat());
 
         addChilds(listTemi14, temi14, treeNode);
 
@@ -274,7 +283,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
       }
     }
 
-    return XWrappedResponse.<Temi14UteCat, List<TreeNode<Temi14UteCat, Long>>>builder()
+    return XWrappedResponse.<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>>builder()
         .entity(listTreeNode)
         .build()
         .setResponse();
@@ -287,19 +296,19 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
    * @param children
    * @return
    */
-  private boolean isChild(List<TreeNode<Temi14UteCat, Long>> listTreeNode, Temi14UteCat children) {
+  private boolean isChild(
+      List<TreeNode<Temi14UteCat, Integer>> listTreeNode, Temi14UteCat children) {
     boolean isChild = false;
 
-    for (TreeNode<Temi14UteCat, Long> treeNode : listTreeNode) {
-      for (TreeNode<Temi14UteCat, Long> child : treeNode.getChildrens()) {
+    for (TreeNode<Temi14UteCat, Integer> treeNode : listTreeNode) {
+      for (TreeNode<Temi14UteCat, Integer> child : treeNode.getChildrens()) {
         /**
          * Se è un child oppure il suo parent è lo stesso del nodo che sto esaminando, è un child e
          * l'ho già aggiunto all'alberatura del parent
          */
-        if (!Functions.areDifferentLong(child.getData(), children.getCat())
-            || !Functions.areDifferentLong(
-                child.getData(), children.getPar() == null ? 0 : children.getPar().longValue()))
-          return true;
+        if (!Functions.areDifferentInt(child.getData(), children.getCat())
+            || !Functions.areDifferentInt(
+                child.getData(), children.getPar() == null ? 0 : children.getPar())) return true;
 
         isChild = isChild(child.getChildrens(), children);
       }
@@ -316,15 +325,18 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
    * @param treeNode
    */
   private void addChilds(
-      List<Temi14UteCat> listTemi14, Temi14UteCat temi14, TreeNode<Temi14UteCat, Long> treeNode) {
+      List<Temi14UteCat> listTemi14,
+      Temi14UteCat temi14,
+      TreeNode<Temi14UteCat, Integer> treeNode) {
 
     for (Temi14UteCat temi14In : listTemi14) {
-      if (!Functions.areDifferentLong(
-              temi14.getCat(), temi14In.getPar() == null ? 0 : temi14In.getPar().longValue())
+      if (!Functions.areDifferentInt(
+              temi14.getCat(), temi14In.getPar() == null ? 0 : temi14In.getPar())
           && !Functions.areDifferentLong(
               temi14.getInsCat().getTime(),
               temi14In.getInsPar() == null ? 0 : temi14In.getInsPar().getTime())) {
-        TreeNode<Temi14UteCat, Long> treeNodeSub = treeNode.addChild(temi14In.getCat(), temi14In);
+        TreeNode<Temi14UteCat, Integer> treeNodeSub =
+            treeNode.addChild(temi14In.getCat(), temi14In);
 
         addChilds(listTemi14, temi14In, treeNodeSub);
       }

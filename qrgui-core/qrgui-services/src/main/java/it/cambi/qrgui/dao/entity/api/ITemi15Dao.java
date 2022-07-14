@@ -22,7 +22,7 @@ public interface ITemi15Dao<T, K> extends IEntityDao<T, K>
      * @param tipCat
      * @return
      */
-    List<Object> getAlreadyAssociatedQuery(Long ccat, Long insCat, String tipCat);
+    List<Object> getAlreadyAssociatedQuery(int ccat, Long insCat, String tipCat);
 
     /**
      * 

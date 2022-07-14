@@ -178,8 +178,8 @@ angular
 			 */
 			category.deleteCategory = function (cat) {
 				EmiaRestUtilityFactory
-					.GetAlreadyAssociatedQuery(cat.root.id.cat,
-						cat.root.id.insCat,
+					.GetAlreadyAssociatedQuery(cat.root.cat,
+						cat.root.insCat,
 						cat.root.temi20AnaTipCat.tipCat)
 					.then(
 						function (response) {

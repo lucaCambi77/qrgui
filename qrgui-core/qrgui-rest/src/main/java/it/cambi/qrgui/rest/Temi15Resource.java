@@ -106,7 +106,7 @@ public class Temi15Resource extends BasicResource {
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getAlreadyAssociatedQuery(
        @RequestParam("tipCat") String tipCat,
-       @RequestParam("cat") Long ccat,
+       @RequestParam("cat") Integer ccat,
        @RequestParam("insCat") Long insCat,
       HttpServletRequest sr) {
 

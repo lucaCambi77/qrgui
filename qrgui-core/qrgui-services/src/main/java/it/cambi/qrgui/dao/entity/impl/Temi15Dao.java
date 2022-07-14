@@ -97,7 +97,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
     }
 
     @Override
-    public List<Object> getAlreadyAssociatedQuery(Long cat, Long insCat, String tipCat)
+    public List<Object> getAlreadyAssociatedQuery(int cat, Long insCat, String tipCat)
     {
         Temi14UteCatId id = new Temi14UteCatId();
         id.setCat(cat);
@@ -168,7 +168,7 @@ public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId> impl
      * @param queryList
      * @return
      */
-    private List<Temi16QueCatAss> getQueryCategList(Long ccat, Date insCat, List<Temi16QueCatAss> queryList)
+    private List<Temi16QueCatAss> getQueryCategList(int ccat, Date insCat, List<Temi16QueCatAss> queryList)
     {
         CriteriaQuery<Temi16QueCatAss> criteria = queCatAssDao.getEntityManager().getCriteriaBuilder()
                 .createQuery(Temi16QueCatAss.class);

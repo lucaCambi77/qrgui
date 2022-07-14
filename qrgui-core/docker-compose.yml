@@ -1,0 +1,11 @@
+services:
+  qrgui-web:
+  image: qrgui-core:latest
+  ports:
+    - 8080:8080
+  networks:
+    - qrgui-network
+
+networks:
+  qrgui-network:
+    driver: bridge

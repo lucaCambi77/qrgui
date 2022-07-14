@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi13DtbInfId;
 import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCatId;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.model.Temi15UteQueId;
 import it.cambi.qrgui.model.Temi16QueCatAss;
@@ -112,7 +113,7 @@ public class ObjectMapperFactory
     public interface Temi14UteCatMixIn
     {
         @JsonProperty("id")
-        public Temi15UteQueId getId();
+        public Temi14UteCatId getId();
 
         @JsonProperty("npar")
         public Long getNPar();

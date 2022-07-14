@@ -29,6 +29,7 @@ import it.cambi.qrgui.util.Errors;
 import it.cambi.qrgui.util.IConstants;
 import it.cambi.qrgui.util.Messages;
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
+import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -47,6 +48,7 @@ public class WrappedResponse<T> {
   /*
    * Proprietà serializzate nel json verso la parte rest
    */
+  @Builder.Default
   private boolean success = true;
   private T entity;
   private Integer count;
@@ -118,6 +120,7 @@ public class WrappedResponse<T> {
     try {
 
       response = getObjectMapper().writeValueAsString(this);
+
     } catch (JsonProcessingException e) {
       log.error(e.getMessage(), e);
 

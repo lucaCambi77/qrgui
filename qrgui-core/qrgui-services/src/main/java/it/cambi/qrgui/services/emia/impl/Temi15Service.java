@@ -332,7 +332,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
   public WrappedResponse<List<Object>> getAlreadyAssociatedQuery(
-      Long cat, Long insCat, String tipCat) {
+      int cat, Long insCat, String tipCat) {
 
     List<Object> listTemi15 = queryDao.getAlreadyAssociatedQuery(cat, insCat, tipCat);
 

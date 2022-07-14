@@ -9,25 +9,25 @@ import java.util.Date;
 public class Temi14UteCatId implements java.io.Serializable
 {
 
-    private long cat;
+    private int cat;
     private Date insCat;
 
     public Temi14UteCatId()
     {
     }
 
-    public Temi14UteCatId(long cat, Date insCat)
+    public Temi14UteCatId(int cat, Date insCat)
     {
         this.cat = cat;
         this.insCat = insCat;
     }
 
-    public long getCat()
+    public int getCat()
     {
         return this.cat;
     }
 
-    public void setCat(long cat)
+    public void setCat(int cat)
     {
         this.cat = cat;
     }

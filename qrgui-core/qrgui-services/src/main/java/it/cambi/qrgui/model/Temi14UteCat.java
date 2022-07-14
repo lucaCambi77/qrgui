@@ -33,19 +33,19 @@ public class Temi14UteCat implements java.io.Serializable
     private Date insPar;
     private String des;
     private Set<Temi16QueCatAss> Temi16QueCatAsses = new HashSet<Temi16QueCatAss>(0);
-    private long cat;
+    private int cat;
     private Date insCat;
 
     public Temi14UteCat()
     {
     }
 
-    public Temi14UteCat(Long cat)
+    public Temi14UteCat(Integer cat)
     {
         this.cat= cat;
     }
 
-    public Temi14UteCat(long cat,  Date insCat, Temi20AnaTipCat TEMI20AnaTipCat, String des)
+    public Temi14UteCat(int cat,  Date insCat, Temi20AnaTipCat TEMI20AnaTipCat, String des)
     {
         this.cat = cat;
         this.insCat = insCat;
@@ -53,7 +53,7 @@ public class Temi14UteCat implements java.io.Serializable
         this.des = des;
     }
 
-    public Temi14UteCat(long cat,  Date insCat, Temi20AnaTipCat Temi20AnaTipCat, Integer par, String des, Set<Temi16QueCatAss> Temi16QueCatAsses)
+    public Temi14UteCat(int cat,  Date insCat, Temi20AnaTipCat Temi20AnaTipCat, Integer par, String des, Set<Temi16QueCatAss> Temi16QueCatAsses)
     {
         this.cat = cat;
         this.insCat = insCat;
@@ -67,12 +67,12 @@ public class Temi14UteCat implements java.io.Serializable
     @GeneratedValue(strategy = SEQUENCE, generator = "ttps14generator")
     @Column(name = "C_CAT", nullable = false, precision = 10, scale = 0)
     @Id
-    public Long getCat()
+    public int getCat()
     {
         return this.cat;
     }
 
-    public void setCat(Long cat)
+    public void setCat(Integer cat)
     {
         this.cat = cat;
     }
