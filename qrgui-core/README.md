@@ -3,16 +3,24 @@
 
 Application for upload and execution of user queries 
 
+## Requirements :
 
-## Install and run the application
-To use the application you need java 8 installed in your machine. This is a spring boot application with embedded tomcat
+* Git
+* Java11
+* Maven
+* Docker
 
-There is a default profiles with which you can run the application
+## Getting Started
 
-To install 
+* Build the project
 
-	- mvn clean install
+```bash
+ - mvn clean install
+```
 
-To run  
+## Run application
 
-	- java -jar target/*.jar
+* Build Docker image
+```bash
+docker build -t dhis2 .
+```
