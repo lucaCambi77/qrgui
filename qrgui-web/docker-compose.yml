@@ -1,0 +1,12 @@
+services:
+  qrgui-web:
+    image: qrgui-web:latest
+    ports:
+      - 8081:8080
+    networks:
+      - qrgui
+
+networks:
+  qrgui:
+    name: qrgui-core_network
+    external: true

@@ -82,6 +82,8 @@ angular.module(
 
         index.locale = sessionStorage.getItem("locale");
 
+        $rootScope.databaseInfoList = JSON.parse(sessionStorage.getItem("databaseInfoList"));
+
         const userData = $window.sessionStorage.getItem('userData');
 
         if (userData) {

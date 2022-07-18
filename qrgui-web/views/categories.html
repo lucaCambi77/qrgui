@@ -1,4 +1,4 @@
-<div uib-alert type="danger" ng-if="category.errors.length > 0">
+<div uib-alert ng-class="'alert-danger'" ng-if="category.errors.length > 0">
 	<div>
 		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><br>
 		<span ng-repeat="error in category.errors">{{error}}<br></span>
@@ -6,7 +6,7 @@
 	</div>
 </div>
 
-<div uib-alert type="success" ng-if="category.messageSuccess.length > 0"
+<div uib-alert ng-class="'alert-success'" ng-if="category.messageSuccess.length > 0" ng-repeat="success in category.messageSuccess"
 	dismiss-on-timeout=5000 close="category.closeAlert($index)">
 	<div>
 		<span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>

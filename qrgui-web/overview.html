@@ -43,7 +43,7 @@ ReactDOM.render(React.createElement(
 		)
 </script> -->
 
-<div uib-alert type="danger" ng-if="index.errors.length > 0">
+<div uib-alert ng-class="'alert-danger'" ng-if="index.errors.length > 0">
 	<div>
 		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><br>
 		<span ng-repeat="error in index.errors">{{error}}<br></span>

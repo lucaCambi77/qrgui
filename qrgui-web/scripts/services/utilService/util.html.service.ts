@@ -124,7 +124,7 @@ angular.module('qrGuiApp').factory('HtmlUtilityFactory',['$compile', '$rootScope
 			 */
 			var rowDim = 12 / factor;
 
-			var categoryLenght = categories.length;
+			var categoryLenght = $rootScope.categories.length;
 
 			var parts = categoryLenght / factor, rows, start = 0, template = "";
 

@@ -143,7 +143,7 @@ angular.module('qrGuiApp').constant('constant', (function() {
 
 		'NEW_ROUTINE' : {
 			rou : null,
-  			insRou : null,
+			insRou : null,
 			des : null,
 			temi18RouQues : []
 		},
