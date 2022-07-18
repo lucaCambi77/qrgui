@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.services.emia.api.ITemi13Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,25 +21,13 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class Temi13Resource extends BasicResource {
+public class DbInfoResource extends BasicResource {
   private final ITemi13Service<Temi13DtbInf> databaseInfoService;
 
   @GetMapping
   @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
   public ResponseEntity<String> getDatabaseInfoList(HttpServletRequest sr) {
-
     log.info("Recupero informazioni degli schema utilizzati dall'applicazione ...");
-
-    try {
-
-      return databaseInfoService.findAll().getResponse(sr);
-
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return databaseInfoService.findAll().getResponse(sr);
   }
 }

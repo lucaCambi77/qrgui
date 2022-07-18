@@ -1,8 +1,11 @@
 package it.cambi.qrgui.rest;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -76,51 +79,42 @@ public class GenericQueryResource extends BasicResource {
       produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("execute_query")
   public ResponseEntity<String> executeQuery(
-       @RequestBody List<Temi15UteQue> queries,
+      @RequestBody List<Temi15UteQue> queries,
       @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
       @RequestParam(value = "pageSize", required = false, defaultValue = IConstants.TEN)
           Integer pageSize,
       @DefaultValue("false") @RequestParam("createFile") Boolean createFile,
-      HttpServletRequest sr) {
+      HttpServletRequest sr)
+      throws IOException, ExecutionException, InterruptedException {
 
     log.info("Eseguo query ...");
 
     String fileName = "workbook.xls";
     String filePath = getFilePath() + fileName;
 
-    try {
+    List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut =
+        genericTaskExecutor.executeQuery(queries, page, pageSize);
 
-      List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut =
-          genericTaskExecutor.executeQuery(queries, page, pageSize);
+    /** Creo un file con i result set nel percorso files/ */
+    if (createFile) {
 
-      /** Creo un file con i result set nel percorso files/ */
-      if (createFile) {
+      int rowToStart = 0;
+      Workbook wb = new HSSFWorkbook();
 
-        int rowToStart = 0;
-        Workbook wb = new HSSFWorkbook();
-
-        Sheet sheet = wb.createSheet();
-        for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
-          rowToStart =
-              WrappingUtils.setWorkBookSheet(pageSize, wb, response, fileName, sheet, rowToStart);
-        }
-
-        FileOutputStream fileOut = new FileOutputStream(filePath);
-        wb.write(fileOut);
-        fileOut.close();
-
-        wb.close();
+      Sheet sheet = wb.createSheet();
+      for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
+        rowToStart =
+            WrappingUtils.setWorkBookSheet(pageSize, wb, response, fileName, sheet, rowToStart);
       }
 
-      return getObjectMapperXResponseList(listOut, sr);
+      FileOutputStream fileOut = new FileOutputStream(filePath);
+      wb.write(fileOut);
+      fileOut.close();
 
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
+      wb.close();
     }
+
+    return getObjectMapperXResponseList(listOut, sr);
   }
 
   @PostMapping(
@@ -128,8 +122,8 @@ public class GenericQueryResource extends BasicResource {
       produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("checkQuery")
   @RolesAllowed({IConstants.F_QRQINS, IConstants.R_FEPQRA})
-  public ResponseEntity<String> checkQuery(
-       @RequestBody Temi15UteQue query, HttpServletRequest sr) {
+  public ResponseEntity<String> checkQuery(@RequestBody Temi15UteQue query, HttpServletRequest sr)
+      throws IOException {
 
     if (null == query.getTemi13DtbInf()
         || null == query.getTemi13DtbInf().getId()
@@ -146,20 +140,12 @@ public class GenericQueryResource extends BasicResource {
           .setResponse()
           .getResponse(sr);
 
-    try {
-      switch (Schema.valueOf(query.getTemi13DtbInf().getId().getSch())) {
-        case TEST:
-          return firstOracleService.checkQuery(query).getResponse(sr);
+    switch (Schema.valueOf(query.getTemi13DtbInf().getId().getSch())) {
+      case TEST:
+        return firstOracleService.checkQuery(query).getResponse(sr);
 
-        default:
-          return null;
-      }
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
+      default:
+        return null;
     }
   }
 }

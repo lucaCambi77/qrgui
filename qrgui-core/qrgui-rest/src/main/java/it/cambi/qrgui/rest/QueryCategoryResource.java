@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.services.emia.api.ITemi16Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,42 +28,22 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class Temi16Resource extends BasicResource {
+public class QueryCategoryResource extends BasicResource {
   private final ITemi16Service<Temi16QueCatAss> temi16Service;
 
   @GetMapping
   @RolesAllowed({F_QRCG00, F_QRCG01, F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getQueCatAssoc(HttpServletRequest request, HttpServletRequest sr) {
-
     log.info("... cerco tutte le associazioni categorie - query");
-
-    try {
-      return temi16Service.findByCategory(request).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi16Service.findByCategory(request).getResponse(sr);
   }
 
   @PostMapping
   @RequestMapping("post")
   @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD})
-  public ResponseEntity<String> addQueriesToCateg(
-       @RequestBody List<Temi16QueCatAss> temi16, HttpServletRequest sr) {
-
+  public ResponseEntity<String> addQueriesToCategory(
+      @RequestBody List<Temi16QueCatAss> temi16, HttpServletRequest sr) {
     log.info("... aggiungo le queries alla categoria ");
-
-    try {
-      return temi16Service.addQueriesToCateg(temi16).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi16Service.addQueriesToCateg(temi16).getResponse(sr);
   }
 }

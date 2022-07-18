@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class Temi20Resource extends BasicResource {
+public class TipCategoryResource extends BasicResource {
   private final ITemi20Service<Temi20AnaTipCat> temi20Service;
 
   @GetMapping
@@ -33,18 +32,7 @@ public class Temi20Resource extends BasicResource {
       @RequestParam(value = "cque", required = false) Long cque,
       @RequestParam(value = "crou", required = false) Long crou,
       HttpServletRequest sr) {
-
     log.info("... cerco tutti i tipi categoria");
-
-    try {
-
-      return temi20Service.getByCategory(sr).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi20Service.getByCategory(sr).getResponse(sr);
   }
 }

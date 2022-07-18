@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.services.emia.api.ITemi14Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.services.exception.NoCategoriesAllowedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,56 +31,26 @@ public class CategoryResource extends BasicResource {
 
   @GetMapping
   @RolesAllowed({F_QRCG00, F_QRCG01, R_FEPQRA})
-  public ResponseEntity<String> getCategories(HttpServletRequest sr) {
-
+  public ResponseEntity<String> getCategories(HttpServletRequest sr)
+      throws NoCategoriesAllowedException {
     log.info("... cerco tutte le categorie");
-
-    try {
-      return temi14Service.findAll(sr, null).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi14Service.findAll(sr, null).getResponse(sr);
   }
 
   @PostMapping
   @RolesAllowed({F_QRCINS, R_FEPQRA})
   public ResponseEntity<String> postCategory(
-       @RequestBody Temi14UteCat temi14, HttpServletRequest sr) {
-
+      @RequestBody Temi14UteCat temi14, HttpServletRequest sr) throws NoCategoriesAllowedException {
     log.info("... creo una nuova categoria");
-
-    try {
-
-      return temi14Service.saveCategory(sr, temi14).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi14Service.saveCategory(sr, temi14).getResponse(sr);
   }
 
   @PostMapping
   @RequestMapping("delete")
   @RolesAllowed({F_QRCMOD, R_FEPQRA})
-  public ResponseEntity<String> deleteCategory(
-       @RequestBody Temi14UteCat id, HttpServletRequest sr) {
-
+  public ResponseEntity<String> deleteCategory(@RequestBody Temi14UteCat id, HttpServletRequest sr)
+      throws NoCategoriesAllowedException {
     log.info("... cancello categoria");
-
-    try {
-      return temi14Service.deleteCategory(sr, id).getResponse(sr);
-    } catch (Exception exception) {
-      return WrappedResponse.<Long>baseBuilder()
-          .exception(exception)
-          .build()
-          .processException()
-          .getResponse(sr);
-    }
+    return temi14Service.deleteCategory(sr, id).getResponse(sr);
   }
 }
