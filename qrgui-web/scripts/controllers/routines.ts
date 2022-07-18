@@ -325,7 +325,7 @@ angular
 				modalInstance.result.then(function (message) {
 
 					EmiaRestUtilityFactory.DeleteRoutineQuery(
-						rout.id.rou, rout.id.insRou, query.id.que,
+						rout.rou, rout.insRou, query.id.que,
 						query.id.insQue).then(
 							function (value) {
 
