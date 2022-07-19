@@ -15,8 +15,7 @@ class QueryServiceTest extends Specification {
 
     def "fail validation when statement is null"() {
         given:
-        QueryToJson queryToJson = new QueryToJson();
-        objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> queryToJson
+        objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> new QueryToJson()
 
         when:
         def wrapperResponse = queryService.checkQuery(temi15UteQue, false, firstGenericDao)

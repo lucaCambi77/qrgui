@@ -1,11 +1,11 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.IConstants.F_QRCG00;
-import static it.cambi.qrgui.util.IConstants.F_QRCG01;
-import static it.cambi.qrgui.util.IConstants.F_QRCMOD;
-import static it.cambi.qrgui.util.IConstants.F_QRQE00;
-import static it.cambi.qrgui.util.IConstants.F_QRQMOD;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.F_QRCG00;
+import static it.cambi.qrgui.util.Constants.F_QRCG01;
+import static it.cambi.qrgui.util.Constants.F_QRCMOD;
+import static it.cambi.qrgui.util.Constants.F_QRQE00;
+import static it.cambi.qrgui.util.Constants.F_QRQMOD;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import java.util.List;
 

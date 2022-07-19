@@ -1,21 +1,7 @@
 package it.cambi.qrgui.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cambi.qrgui.dao.AbstractDao;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.query.model.Attribute;
-import it.cambi.qrgui.query.model.Constraint;
-import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.query.model.SelectColumns;
-import it.cambi.qrgui.util.DateUtils;
-import it.cambi.qrgui.util.IConstants;
-import it.cambi.qrgui.util.WhereConditionOperator;
-import it.cambi.qrgui.util.WrappingUtils;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -25,8 +11,24 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.IConstants.YYYY_MM_DD_HH_MI_SS;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import it.cambi.qrgui.dao.AbstractDao;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.Attribute;
+import it.cambi.qrgui.query.model.Constraint;
+import it.cambi.qrgui.query.model.QueryToJson;
+import it.cambi.qrgui.query.model.SelectColumns;
+import it.cambi.qrgui.util.Constants;
+import it.cambi.qrgui.util.DateUtils;
+import it.cambi.qrgui.util.WhereConditionOperator;
+import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Service
 @Setter
@@ -341,14 +343,14 @@ public class QueryService {
           finaleReplace =
               finaleReplace.replace(
                   attr.getParameter().getName(),
-                  "to_date('" + IConstants.FAKE_DATE + "', 'YYYY/MM/DD HH24:MI:SS')");
+                  "to_date('" + Constants.FAKE_DATE + "', 'YYYY/MM/DD HH24:MI:SS')");
           break;
 
         case DATE_TRUNC:
           finaleReplace =
               finaleReplace.replace(
                   attr.getParameter().getName(),
-                  "to_date('" + IConstants.FAKE_DATE_TRUNC + "', 'YYYY/MM/DD')");
+                  "to_date('" + Constants.FAKE_DATE_TRUNC + "', 'YYYY/MM/DD')");
 
           break;
 

@@ -3,7 +3,7 @@
  */
 package it.cambi.qrgui.config;
 
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;

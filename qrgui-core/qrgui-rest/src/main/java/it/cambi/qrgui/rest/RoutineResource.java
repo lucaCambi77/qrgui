@@ -1,10 +1,10 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.IConstants.F_QRCG00;
-import static it.cambi.qrgui.util.IConstants.F_QRCG01;
-import static it.cambi.qrgui.util.IConstants.F_QRRE00;
-import static it.cambi.qrgui.util.IConstants.F_QRRINS;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.F_QRCG00;
+import static it.cambi.qrgui.util.Constants.F_QRCG01;
+import static it.cambi.qrgui.util.Constants.F_QRRE00;
+import static it.cambi.qrgui.util.Constants.F_QRRINS;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
-import it.cambi.qrgui.util.IConstants;
+import it.cambi.qrgui.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,7 +48,7 @@ public class RoutineResource extends BasicResource {
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("delete")
-  @RolesAllowed({IConstants.F_QRRMOD, R_FEPQRA})
+  @RolesAllowed({ Constants.F_QRRMOD, R_FEPQRA})
   public ResponseEntity<String> deleteRoutine(
       @RequestBody Temi17UteRouId crou, HttpServletRequest sr) {
     log.info("... cancella la routine " + crou);

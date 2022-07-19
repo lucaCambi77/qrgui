@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.security;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,50 +18,59 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 
-/**
- * @author luca
- *
- */
+/** @author luca */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-  prePostEnabled = true,
-  securedEnabled = true,
-  jsr250Enabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 @RequiredArgsConstructor
 @Import({SecurityDbAppConf.class})
 public class SpringSecurityConfig {
 
-    private final UserDetailsService userDetailsService;
+  private final UserDetailsService userDetailsService;
 
-    @Value("${spring.security.debug:false}")
-    boolean securityDebug;
+  @Value("${spring.security.debug:false}")
+  boolean securityDebug;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+    AuthenticationManagerBuilder authenticationManagerBuilder =
+        http.getSharedObject(AuthenticationManagerBuilder.class);
 
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+    authenticationManagerBuilder
+        .userDetailsService(userDetailsService)
+        .passwordEncoder(bCryptPasswordEncoder());
 
-        http.csrf().disable()
-                .authorizeRequests().antMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-                .and().httpBasic()
-                .and().authorizeRequests().antMatchers("/api/login/**").anonymous()
-                .and().authorizeRequests().anyRequest().permitAll().and().authenticationManager(authenticationManager)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
-      return http.build();
-    }
+    http.csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers(HttpMethod.DELETE)
+        .hasRole("ADMIN")
+        .and()
+        .httpBasic()
+        .and()
+        .authorizeRequests()
+        .antMatchers("/api/login/**")
+        .anonymous()
+        .and()
+        .authenticationManager(authenticationManager)
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    return http.build();
+  }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.debug(securityDebug).ignoring().antMatchers(
-          "/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico");
-    }
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) ->
+        web.debug(securityDebug)
+            .ignoring()
+            .antMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/favicon.ico");
+  }
 }

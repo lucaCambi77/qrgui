@@ -1,7 +1,10 @@
 package it.cambi.qrgui.config;
 
-import it.cambi.qrgui.db.test.GenericTable;
-import lombok.RequiredArgsConstructor;
+import java.util.Objects;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,16 +17,15 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
-import java.util.Objects;
-import java.util.Properties;
+import it.cambi.qrgui.db.test.GenericTable;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author luca
  */
 @EnableTransactionManagement
 @Configuration
-//@ComponentScan(basePackageClasses = {GenericTable.class})
+@ComponentScan(basePackageClasses = {GenericTable.class})
 @EnableJpaRepositories(entityManagerFactoryRef = "firstEntityManagerFactory", transactionManagerRef = "firstTransactionManager")
 @RequiredArgsConstructor
 public class FirstDbAppConf {

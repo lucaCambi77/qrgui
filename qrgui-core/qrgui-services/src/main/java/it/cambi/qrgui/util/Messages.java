@@ -3,8 +3,8 @@
  */
 package it.cambi.qrgui.util;
 
-import static it.cambi.qrgui.util.IConstants.DEFAULT_LOCALE;
-import static it.cambi.qrgui.util.IConstants.TRANSLATIONS_FILE_NAME;
+import static it.cambi.qrgui.util.Constants.DEFAULT_LOCALE;
+import static it.cambi.qrgui.util.Constants.TRANSLATIONS_FILE_NAME;
 
 import java.text.MessageFormat;
 import java.util.Locale;

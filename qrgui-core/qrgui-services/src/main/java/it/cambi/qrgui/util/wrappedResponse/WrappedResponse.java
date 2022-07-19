@@ -1,8 +1,8 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
-import static it.cambi.qrgui.util.IConstants.ERRORPARSE;
-import static it.cambi.qrgui.util.IConstants.HANDLER;
-import static it.cambi.qrgui.util.IConstants.HIBERNATELAZYINITIALIZER;
+import static it.cambi.qrgui.util.Constants.ERRORPARSE;
+import static it.cambi.qrgui.util.Constants.HANDLER;
+import static it.cambi.qrgui.util.Constants.HIBERNATELAZYINITIALIZER;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
@@ -25,8 +25,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.cambi.qrgui.response.model.ErtaGuiUser;
+import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.Errors;
-import it.cambi.qrgui.util.IConstants;
 import it.cambi.qrgui.util.Messages;
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import lombok.Builder;
@@ -41,15 +41,14 @@ public class WrappedResponse<T> {
   @JsonIgnore private Throwable exception;
   @JsonIgnore private ObjectMapper objectMapper;
 
-  @JsonIgnore
-  private List<String> ignorableFields =
-      Arrays.asList(IConstants.KA, HANDLER, HIBERNATELAZYINITIALIZER);
+  @Builder.Default @JsonIgnore
+  private ArrayList<String> ignorableFields =
+      new ArrayList<>(Arrays.asList(Constants.KA, HANDLER, HIBERNATELAZYINITIALIZER));
 
   /*
    * Proprietà serializzate nel json verso la parte rest
    */
-  @Builder.Default
-  private boolean success = true;
+  @Builder.Default private boolean success = true;
   private T entity;
   private Integer count;
   private Integer errorCode;
@@ -107,6 +106,16 @@ public class WrappedResponse<T> {
     }
 
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+  }
+
+  public ResponseEntity<String> getResponse(HttpServletRequest sr, HttpStatus httpStatus) {
+
+    if (isSuccess()) {
+      logRequestInfo(sr);
+      return ResponseEntity.ok(response);
+    }
+
+    return ResponseEntity.status(httpStatus).body(response);
   }
 
   /**

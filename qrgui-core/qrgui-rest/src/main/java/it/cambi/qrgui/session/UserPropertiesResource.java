@@ -1,8 +1,8 @@
 package it.cambi.qrgui.session;
 
-import static it.cambi.qrgui.util.IConstants.R_FEPQR1;
-import static it.cambi.qrgui.util.IConstants.R_FEPQR2;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.R_FEPQR1;
+import static it.cambi.qrgui.util.Constants.R_FEPQR2;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;

@@ -1,8 +1,8 @@
 package it.cambi.qrgui.response.model;
 
-import static it.cambi.qrgui.util.IConstants.R_FEPQR1;
-import static it.cambi.qrgui.util.IConstants.R_FEPQR2;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.R_FEPQR1;
+import static it.cambi.qrgui.util.Constants.R_FEPQR2;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 public enum ErtaQrGuiRoles
 {

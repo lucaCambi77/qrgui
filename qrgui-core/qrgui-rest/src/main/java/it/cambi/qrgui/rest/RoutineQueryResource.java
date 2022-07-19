@@ -1,7 +1,7 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.IConstants.F_QRRINS;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.F_QRRINS;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;

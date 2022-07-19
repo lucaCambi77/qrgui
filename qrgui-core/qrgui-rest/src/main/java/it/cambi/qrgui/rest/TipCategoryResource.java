@@ -1,9 +1,9 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.IConstants.F_QRCG00;
-import static it.cambi.qrgui.util.IConstants.F_QRCG01;
-import static it.cambi.qrgui.util.IConstants.F_QRRE00;
-import static it.cambi.qrgui.util.IConstants.R_FEPQRA;
+import static it.cambi.qrgui.util.Constants.F_QRCG00;
+import static it.cambi.qrgui.util.Constants.F_QRCG01;
+import static it.cambi.qrgui.util.Constants.F_QRRE00;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;

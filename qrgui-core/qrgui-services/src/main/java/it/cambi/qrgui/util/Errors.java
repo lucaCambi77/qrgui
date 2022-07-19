@@ -3,8 +3,8 @@
  */
 package it.cambi.qrgui.util;
 
-import static it.cambi.qrgui.util.IConstants.NO_RESULT_EXCEPTION;
-import static it.cambi.qrgui.util.IConstants.NULL_POINTER_EXCEPTION;
+import static it.cambi.qrgui.util.Constants.NO_RESULT_EXCEPTION;
+import static it.cambi.qrgui.util.Constants.NULL_POINTER_EXCEPTION;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -70,7 +70,7 @@ public class Errors
 
             if (SQLSyntaxErrorException.class.isAssignableFrom(inException.getClass()))
             {
-                finalMaessage.append(IConstants.SYNTAXERROR + ". " + comment);
+                finalMaessage.append(Constants.SYNTAXERROR + ". " + comment);
             }
             else if (NullPointerException.class.isAssignableFrom(inException.getClass()))
             {

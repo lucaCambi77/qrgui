@@ -1,6 +1,5 @@
 package it.cambi.qrgui.rest;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +14,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.services.WorkBookService;
 import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
 import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
-import it.cambi.qrgui.util.IConstants;
-import it.cambi.qrgui.util.WrappingUtils;
+import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
@@ -44,22 +44,18 @@ public class GenericQueryResource extends BasicResource {
 
   private final FirstOracleService firstOracleService;
 
-  /**
-   * Metodo per estrarre il path della root della parte web , in modo da creare l'excel nel percorso
-   * /files
-   *
-   * @return
-   */
-  private String getFilePath() {
+  private final WorkBookService workBookService;
 
-    String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+  @Value("${excel.path}")
+  private String excelPath;
 
-    int index = path.indexOf("WEB-INF");
+  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
+  public String host;
 
-    if (index == -1) return path;
+  @Value("${amazon.aws.s3.bucket.name:bucket}")
+  public String bucketName;
 
-    return path.substring(0, index) + "files/";
-  }
+  private static final String fileName = "workbook.xls";
 
   /**
    * Esegue le query e crea un excel nella directory /files. Per ogni query viene creato uno sheet
@@ -81,7 +77,7 @@ public class GenericQueryResource extends BasicResource {
   public ResponseEntity<String> executeQuery(
       @RequestBody List<Temi15UteQue> queries,
       @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
-      @RequestParam(value = "pageSize", required = false, defaultValue = IConstants.TEN)
+      @RequestParam(value = "pageSize", required = false, defaultValue = Constants.TEN)
           Integer pageSize,
       @DefaultValue("false") @RequestParam("createFile") Boolean createFile,
       HttpServletRequest sr)
@@ -89,8 +85,7 @@ public class GenericQueryResource extends BasicResource {
 
     log.info("Eseguo query ...");
 
-    String fileName = "workbook.xls";
-    String filePath = getFilePath() + fileName;
+    String localFilePath = excelPath + fileName;
 
     List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut =
         genericTaskExecutor.executeQuery(queries, page, pageSize);
@@ -104,14 +99,16 @@ public class GenericQueryResource extends BasicResource {
       Sheet sheet = wb.createSheet();
       for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
         rowToStart =
-            WrappingUtils.setWorkBookSheet(pageSize, wb, response, fileName, sheet, rowToStart);
+            workBookService.setWorkBookSheet(
+                pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
       }
 
-      FileOutputStream fileOut = new FileOutputStream(filePath);
+      FileOutputStream fileOut = new FileOutputStream(localFilePath);
       wb.write(fileOut);
       fileOut.close();
-
       wb.close();
+
+      workBookService.uploadToS3Bucket(bucketName, fileName, localFilePath);
     }
 
     return getObjectMapperXResponseList(listOut, sr);
@@ -121,7 +118,7 @@ public class GenericQueryResource extends BasicResource {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("checkQuery")
-  @RolesAllowed({IConstants.F_QRQINS, IConstants.R_FEPQRA})
+  @RolesAllowed({Constants.F_QRQINS, Constants.R_FEPQRA})
   public ResponseEntity<String> checkQuery(@RequestBody Temi15UteQue query, HttpServletRequest sr)
       throws IOException {
 
