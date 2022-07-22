@@ -4,6 +4,8 @@ import static it.cambi.qrgui.util.Constants.R_FEPQR1;
 import static it.cambi.qrgui.util.Constants.R_FEPQR2;
 import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
+import java.util.List;
+
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,16 +14,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.response.model.ErtaGuiUser;
 import it.cambi.qrgui.response.model.ErtaQrGuiRoles;
 import it.cambi.qrgui.rest.BasicResource;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @RequestMapping("/userProperties")
 @Slf4j
+@RequiredArgsConstructor
 public class UserPropertiesResource extends BasicResource {
+
+  private final WrappedResponse<ErtaGuiUser> response;
 
   @PostMapping
   @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
@@ -30,12 +38,7 @@ public class UserPropertiesResource extends BasicResource {
     if (null != user.getUrl() && user.getUrl().contains("localhost")) {
       user.setUserName("Localhost");
       user.addToErtaQrGuiRoles(ErtaQrGuiRoles.FEPQRA);
-      return WrappedResponse.<ErtaGuiUser>baseBuilder()
-          .entity(user)
-          .count(1)
-          .build()
-          .setResponse()
-          .getResponse(sr);
+      return response.toBuilder().entity(user).count(1).build().setResponse().getResponse(sr);
     }
 
     user.setUserName(null == sr.getUserPrincipal() ? "" : sr.getUserPrincipal().getName());
@@ -47,13 +50,11 @@ public class UserPropertiesResource extends BasicResource {
       }
     }
 
-    String[] ignorableFieldNames = {"password"};
-
-    return WrappedResponse.<ErtaGuiUser>baseBuilder()
+    return response.toBuilder()
         .entity(user)
         .count(1)
         .build()
-        .setIgnorableFields(ignorableFieldNames)
+        .setIgnorableFields(new String[] {"password"})
         .setResponse()
         .getResponse(sr);
   }
@@ -64,12 +65,7 @@ public class UserPropertiesResource extends BasicResource {
 
     if (null != user.getUrl() && user.getUrl().contains("localhost")) {
       user.setGuiVersion("Development");
-      return WrappedResponse.<ErtaGuiUser>baseBuilder()
-          .entity(user)
-          .count(1)
-          .build()
-          .setResponse()
-          .getResponse(sr);
+      return response.toBuilder().entity(user).count(1).build().setResponse().getResponse(sr);
     }
 
     for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
@@ -79,7 +75,7 @@ public class UserPropertiesResource extends BasicResource {
 
     String[] ignorableFieldNames = {"password"};
 
-    return WrappedResponse.<ErtaGuiUser>baseBuilder()
+    return response.toBuilder()
         .entity(user)
         .count(1)
         .build()
