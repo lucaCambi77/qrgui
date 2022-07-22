@@ -7,6 +7,7 @@ import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/dbInfo")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class DbInfoResource extends BasicResource {
   private final ITemi13Service<Temi13DtbInf> databaseInfoService;
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
   public ResponseEntity<String> getDatabaseInfoList(HttpServletRequest sr) {
     log.info("Recupero informazioni degli schema utilizzati dall'applicazione ...");

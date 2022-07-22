@@ -4,22 +4,22 @@ import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
 import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Value;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.cambi.qrgui.enums.JavaTypes;
@@ -34,18 +34,43 @@ public class WorkBookService {
 
   private final AmazonS3 s3;
 
-  /**
-   * Creo il work book che contiene tutte le query eseguite
-   *
-   * @param pageSize
-   * @param wb
-   * @param response
-   * @param fileName
-   * @throws IOException
-   * @throws JsonParseException
-   * @throws JsonMappingException
-   * @throws JsonProcessingException
-   */
+  @Value("${excel.path}")
+  private String excelPath;
+
+  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
+  public String host;
+
+  @Value("${amazon.aws.s3.bucket.name:bucket}")
+  public String bucketName;
+
+  private static final String fileName = "workbook.xls";
+
+  public void createWorkBook(
+      int pageSize, List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut) throws IOException {
+
+    String localFilePath = excelPath + fileName;
+
+    int rowToStart = 0;
+    Workbook wb = new HSSFWorkbook();
+
+    Sheet sheet = wb.createSheet();
+    for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
+      rowToStart =
+          setWorkBookSheet(
+              pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
+    }
+
+    FileOutputStream fileOut = new FileOutputStream(localFilePath);
+    wb.write(fileOut);
+    fileOut.close();
+    wb.close();
+
+    uploadToS3Bucket(bucketName, fileName, localFilePath);
+
+    new File(localFilePath).delete();
+  }
+
+  /** Creo il work book che contiene tutte le query eseguite */
   public int setWorkBookSheet(
       int pageSize,
       Workbook wb,
@@ -53,7 +78,7 @@ public class WorkBookService {
       String fileName,
       Sheet sheet,
       int rowToStart)
-      throws JsonMappingException, JsonProcessingException, IOException {
+      throws IOException {
 
     /** Assegno il nome del file che poi viene recuperato dal front end */
     response.setQueryFilePath(fileName);

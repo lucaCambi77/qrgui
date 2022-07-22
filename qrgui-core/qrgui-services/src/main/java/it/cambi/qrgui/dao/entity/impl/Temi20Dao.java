@@ -10,31 +10,28 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @param <T> Type of the Entity.
  * @param <I> Type of the Primary Key.
  */
 @Component
+@Slf4j
 public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
     implements ITemi20Dao<Temi20AnaTipCat, String> {
-  private static final Logger log = LoggerFactory.getLogger(Temi20Dao.class);
 
   public Temi20Dao() {
     super(Temi20AnaTipCat.class);
   }
 
   @Override
-  public WrappedResponse<List<Temi20AnaTipCat>> findByAllowedCategories(
-      HttpServletRequest request) {
+  public List<Temi20AnaTipCat> findByAllowedCategories(HttpServletRequest request) {
 
     List<String> functions = getFunctionsByRequest(request);
 
@@ -49,12 +46,7 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
 
     if (null != functions && functions.size() > 0) criteriaTemi20.where(predicateAnaTipCat);
 
-    List<Temi20AnaTipCat> listTemi20 = getEntityListByCriteriaQuery(criteriaTemi20, null);
-
-    return WrappedResponse.<List<Temi20AnaTipCat>>baseBuilder()
-        .entity(listTemi20)
-        .build()
-        .setResponse();
+    return getEntityListByCriteriaQuery(criteriaTemi20, null);
   }
 
   public List<String> getFunctionsByRequest(HttpServletRequest request) {
@@ -66,8 +58,8 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
 
     List<String> functions =
         ttps20List.stream()
-            .filter(tc -> request.isUserInRole(tc.getTipCat()))
             .map(Temi20AnaTipCat::getTipCat)
+            .filter(request::isUserInRole)
             .collect(Collectors.toList());
 
     String user =

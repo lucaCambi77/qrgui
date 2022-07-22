@@ -52,6 +52,11 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
   private final ITemi20Dao<Temi20AnaTipCat, String> tipCatDao;
 
+  private final WrappedResponse<Temi15UteQue> wrappedResponse;
+  private final WrappedResponse<List<Temi15UteQue>> wrappedResponseList;
+
+  private final WrappedResponse<List<Object>> wrappedResponseListObject;
+
   /**
    * @param key
    * @return
@@ -66,7 +71,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     Temi15UteQue query = queryDao.getEntityByPrimaryKey(key);
 
-    return WrappedResponse.<Temi15UteQue>baseBuilder()
+    return wrappedResponse.toBuilder()
         .entity(query == null ? new Temi15UteQue() : query)
         .count(query == null ? 0 : 1)
         .build()
@@ -80,8 +85,11 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
    */
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public List<Temi15UteQue> getByDb(String schema, String type) {
-    return queryDao.getByDb(schema, type);
+  public WrappedResponse<List<Temi15UteQue>> getByDb(String schema, String type) {
+    return wrappedResponseList.toBuilder()
+        .entity(queryDao.getByDb(schema, type))
+        .build()
+        .setResponse();
   }
 
   @SuppressWarnings("serial")
@@ -90,7 +98,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
   public WrappedResponse<Temi15UteQue> postQuery(Temi15UteQue que, String locale) {
 
     if (null == que.getTemi16QueCatAsses())
-      return WrappedResponse.<Temi15UteQue>baseBuilder()
+      return wrappedResponse.toBuilder()
           .count(0)
           .success(false)
           .errorMessage(
@@ -122,11 +130,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
           queCatAssDao.merge(temi16);
         });
 
-    return WrappedResponse.<Temi15UteQue>baseBuilder()
-        .entity(newQuery)
-        .count(1)
-        .build()
-        .setResponse();
+    return wrappedResponse.toBuilder().entity(newQuery).count(1).build().setResponse();
   }
 
   /**
@@ -146,7 +150,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     /* Cancello le associazioni con le routine */
     queRouAssDao.getQueRoutineByQueryId(cque).forEach((temi18) -> queRouAssDao.delete(temi18));
 
-    return WrappedResponse.<Temi15UteQue>baseBuilder()
+    return wrappedResponse.toBuilder()
         .entity(queryDao.delete(queryDao.getEntityByPrimaryKey(cque)))
         .build()
         .setResponse();
@@ -271,7 +275,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     List<Object> listTemi15 = queCatAssDao.getTupleListByCriteriaQuery(criteriaQueryPar, null);
 
     if (null != listTemi15 && listTemi15.size() == 0)
-      return WrappedResponse.<List<Temi15UteQue>>baseBuilder()
+      return wrappedResponseList.toBuilder()
           .entity(new ArrayList<>())
           .count(0)
           .build()
@@ -324,7 +328,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     List<Temi15UteQue> listTemi15Out = queryDao.getEntityListByCriteriaQuery(criteriaTemi15, null);
 
-    return WrappedResponse.<List<Temi15UteQue>>baseBuilder()
+    return wrappedResponseList.toBuilder()
         .entity(listTemi15Out)
         .count(listTemi15Out.size())
         .build()
@@ -338,7 +342,7 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     List<Object> listTemi15 = queryDao.getAlreadyAssociatedQuery(cat, insCat, tipCat);
 
-    return WrappedResponse.<List<Object>>baseBuilder()
+    return wrappedResponseListObject.toBuilder()
         .entity(listTemi15 == null ? new ArrayList<Object>() : listTemi15)
         .build()
         .setResponse();

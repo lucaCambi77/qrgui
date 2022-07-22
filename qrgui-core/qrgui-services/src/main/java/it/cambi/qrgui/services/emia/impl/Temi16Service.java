@@ -22,15 +22,28 @@ import lombok.RequiredArgsConstructor;
 public class Temi16Service implements ITemi16Service<Temi16QueCatAss> {
   private final ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao;
 
+  private final WrappedResponse<List<Temi16QueCatAss>> responseList;
+  private final WrappedResponse<Integer> responseInteger;
+
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
   public WrappedResponse<List<Temi16QueCatAss>> findByCategory(HttpServletRequest request) {
-    return queCatAssDao.findByCategory(request);
+
+    List<Temi16QueCatAss> temi16QueCatAss = queCatAssDao.findByCategory(request);
+
+    return responseList.toBuilder()
+        .entity(temi16QueCatAss)
+        .count(temi16QueCatAss.size())
+        .build()
+        .setResponse();
   }
 
   @Transactional
   @Override
   public WrappedResponse<Integer> addQueriesToCateg(List<Temi16QueCatAss> temi16) {
-    return queCatAssDao.addQueriesToCateg(temi16);
+    return responseInteger.toBuilder()
+        .count(queCatAssDao.addQueriesToCateg(temi16))
+        .build()
+        .setResponse();
   }
 }

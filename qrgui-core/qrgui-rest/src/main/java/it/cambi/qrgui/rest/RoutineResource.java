@@ -26,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/routine")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class RoutineResource extends BasicResource {
   private final ITemi17Service<Temi17UteRou> temi17Service;
 
@@ -48,7 +48,7 @@ public class RoutineResource extends BasicResource {
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("delete")
-  @RolesAllowed({ Constants.F_QRRMOD, R_FEPQRA})
+  @RolesAllowed({Constants.F_QRRMOD, R_FEPQRA})
   public ResponseEntity<String> deleteRoutine(
       @RequestBody Temi17UteRouId crou, HttpServletRequest sr) {
     log.info("... cancella la routine " + crou);

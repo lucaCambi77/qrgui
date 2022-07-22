@@ -37,16 +37,16 @@ public class QueryService {
 
   private final ObjectMapper objectMapper;
 
+  private final WrappedResponse<QueryToJson> responseQueryToJson;
+  private final WrappedResponse<String> responseString;
+
   public <T extends AbstractDao> WrappedResponse<QueryToJson> checkQuery(
       Temi15UteQue query, boolean execQuery, T dao) throws IOException {
 
     QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
-    WrappedResponse<QueryToJson> wrappedResponse =
-        WrappedResponse.<QueryToJson>baseBuilder().build();
-
     if (null == json.getStatement())
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -60,7 +60,7 @@ public class QueryService {
         || json.getStatement().toLowerCase().contains("update")
         || json.getStatement().toLowerCase().contains("create")
         || json.getStatement().toLowerCase().contains("delete"))
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -73,7 +73,7 @@ public class QueryService {
     int indexSelect = json.getStatement().toLowerCase().indexOf("select");
 
     if (indexSelectAll - indexSelect == 0 && (indexSelectAll != -1 && indexSelect != -1))
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -85,7 +85,7 @@ public class QueryService {
 
     if (json.getStatement().toLowerCase().contains("--")
         || json.getStatement().toLowerCase().contains("/*"))
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -96,7 +96,7 @@ public class QueryService {
               });
 
     if (null == query.getNam())
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -106,7 +106,7 @@ public class QueryService {
               });
 
     if (null == json.getQuerySelectColumns() || json.getQuerySelectColumns().size() == 0)
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -121,7 +121,7 @@ public class QueryService {
     for (SelectColumns column : json.getQuerySelectColumns()) {
       if (null == column.getAs() || null == column.getType()) {
         String message = "Tipo od alias non definito per colonna " + j;
-        return wrappedResponse
+        return responseQueryToJson
             .setSuccess(false)
             .setErrorMessages(
                 new ArrayList<String>() {
@@ -149,7 +149,7 @@ public class QueryService {
     }
 
     if (json.getAttrs().size() != count)
-      return wrappedResponse
+      return responseQueryToJson
           .setSuccess(false)
           .setErrorMessages(
               new ArrayList<String>() {
@@ -164,7 +164,7 @@ public class QueryService {
               .filter((param) -> param.equalsIgnoreCase(attr.getParameter().getName()))
               .findFirst()
               .orElse(null))
-        return wrappedResponse
+        return responseQueryToJson
             .setSuccess(false)
             .setErrorMessages(
                 new ArrayList<String>() {
@@ -179,7 +179,7 @@ public class QueryService {
           || attr.getOperator() == null
           || attr.getAlias() == null
           || attr.getParameter().getType() == null)
-        return wrappedResponse
+        return responseQueryToJson
             .setSuccess(false)
             .setErrorMessages(
                 new ArrayList<String>() {
@@ -195,7 +195,7 @@ public class QueryService {
     if (null != json.getConstr())
       for (Constraint constr : json.getConstr()) {
         if (constr.getParameters() == null || constr.getConstrType() == null)
-          return wrappedResponse
+          return responseQueryToJson
               .setSuccess(false)
               .setErrorMessages(
                   new ArrayList<String>() {
@@ -209,7 +209,7 @@ public class QueryService {
         switch (constr.getConstrType()) {
           case IN_SIZE:
             if (constr.getParameters().split(",").length != 1)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -221,7 +221,7 @@ public class QueryService {
                       });
 
             if (constr.getMaxInSize() == null)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -244,7 +244,7 @@ public class QueryService {
 
           case TEMPORAL_INTERVAL:
             if (constr.getParameters().split(",").length != 2)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -259,7 +259,7 @@ public class QueryService {
                 && constr.getMaxIntervalHours() == null
                 && constr.getMaxIntervalMin() == null
                 && constr.getMaxIntervalSec() == null)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -288,7 +288,7 @@ public class QueryService {
 
           case NUMERIC_INTERVAL:
             if (constr.getParameters().split(",").length != 2)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -300,7 +300,7 @@ public class QueryService {
                       });
 
             if (constr.getMaxIntervalNumber() == null)
-              return wrappedResponse
+              return responseQueryToJson
                   .setSuccess(false)
                   .setErrorMessages(
                       new ArrayList<String>() {
@@ -329,7 +329,7 @@ public class QueryService {
 
     for (Attribute attr : json.getAttrs()) {
       if (null == attr.getParameter().getType())
-        return wrappedResponse
+        return responseQueryToJson
             .setSuccess(false)
             .setErrorMessages(
                 new ArrayList<String>() {
@@ -382,7 +382,7 @@ public class QueryService {
     /** Provo ad eseguire la query con valori fittizi quando la inserisco */
     if (execQuery) dao.getByNativeQuery(finaleReplace, 1);
 
-    return wrappedResponse.setEntity(json).setResponse();
+    return responseQueryToJson.setEntity(json).setResponse();
   }
 
   private String getParameterList(QueryToJson query, Constraint constr) {
@@ -411,16 +411,6 @@ public class QueryService {
   @SuppressWarnings("serial")
   public WrappedResponse<String> getFinalQueryString(Temi15UteQue query) throws IOException {
 
-    WrappedResponse<String> wrappedResponse = WrappedResponse.<String>baseBuilder().build();
-
-    // if (!checkQuery(query, false).isSuccess())
-    // return wrappedResponse.setSuccess(false).setErrorMessages(new ArrayList<String>()
-    // {
-    // {
-    // add("La query non è stata definita nel formato corretto. Si prega di verificare");
-    // }
-    // });
-
     QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
     /** Controllo i valori */
@@ -434,7 +424,7 @@ public class QueryService {
     }
 
     if (requireParamError.size() > 0)
-      return wrappedResponse.setSuccess(false).setErrorMessages(requireParamError);
+      return responseString.setSuccess(false).setErrorMessages(requireParamError);
     /** Controllo dei vincoli */
     for (Constraint constraint : json.getConstr()) {
 
@@ -447,7 +437,7 @@ public class QueryService {
               String[] splittedValues = attr.getParameter().getValue().split(",");
 
               if (splittedValues.length > constraint.getMaxInSize())
-                return wrappedResponse
+                return responseString
                     .setSuccess(false)
                     .setErrorMessages(
                         new ArrayList<String>() {
@@ -476,7 +466,7 @@ public class QueryService {
 
                 fistParamValue = new Date(Long.parseLong(attribute.getParameter().getValue()));
               } catch (Exception e) {
-                return wrappedResponse
+                return responseString
                     .setSuccess(false)
                     .setErrorMessages(
                         new ArrayList<String>() {
@@ -492,7 +482,7 @@ public class QueryService {
 
                 secondParamValue = new Date(Long.parseLong(attribute.getParameter().getValue()));
               } catch (Exception e) {
-                return wrappedResponse
+                return responseString
                     .setSuccess(false)
                     .setErrorMessages(
                         new ArrayList<String>() {
@@ -523,7 +513,7 @@ public class QueryService {
 
           /** Verifico la differenza tra le due date */
           if ((secondParamValue.getTime() - fistParamValue.getTime()) > maxInterval)
-            return wrappedResponse
+            return responseString
                 .setSuccess(false)
                 .setErrorMessages(
                     new ArrayList<String>() {
@@ -581,7 +571,7 @@ public class QueryService {
             for (int i = 0; i < split.length; i++) {
 
               if (!StringUtils.isNumeric(split[i]))
-                return wrappedResponse
+                return responseString
                     .setSuccess(false)
                     .setErrorMessages(
                         new ArrayList<String>() {
@@ -600,7 +590,7 @@ public class QueryService {
           }
 
           if (!StringUtils.isNumeric(attr.getParameter().getValue()))
-            return wrappedResponse
+            return responseString
                 .setSuccess(false)
                 .setErrorMessages(
                     new ArrayList<String>() {
@@ -646,7 +636,7 @@ public class QueryService {
       }
     }
 
-    return wrappedResponse.setEntity(finaleReplace);
+    return responseString.setEntity(finaleReplace);
   }
 
   /**

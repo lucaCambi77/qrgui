@@ -1,7 +1,6 @@
 package it.cambi.qrgui.exception;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +30,7 @@ public class AppControllerAdvice {
   @ExceptionHandler(AccessDeniedException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
   public @ResponseBody ResponseEntity<String> accessDeniedException(
-      AccessDeniedException ex, HttpServletRequest sr, HttpServletResponse response) {
+      AccessDeniedException ex, HttpServletRequest sr) {
 
     return WrappedResponse.<String>baseBuilder()
         .exception(ex)

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,18 +23,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.model.Temi15UteQueId;
 import it.cambi.qrgui.services.emia.api.ITemi15Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/query")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class QueryResource extends BasicResource {
   private final ITemi15Service<Temi15UteQue> temi15Service;
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getById(
       @RequestParam("cQue") Long cQue,
@@ -43,7 +43,7 @@ public class QueryResource extends BasicResource {
     return temi15Service.getByPk(cQue, dateIns).getResponse(sr);
   }
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("db")
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getByDb(
@@ -53,12 +53,7 @@ public class QueryResource extends BasicResource {
     log.info("... cerco la query per db");
     String[] ignorableFieldNames = {"tjson"};
 
-    return WrappedResponse.<List<Temi15UteQue>>baseBuilder()
-        .entity(temi15Service.getByDb(schema, type))
-        .build()
-        .setIgnorableFields(ignorableFieldNames)
-        .setResponse()
-        .getResponse(sr);
+    return temi15Service.getByDb(schema, type).getResponse(sr);
   }
 
   @PostMapping
@@ -71,7 +66,7 @@ public class QueryResource extends BasicResource {
     return temi15Service.getByTipCateg(listAllowedCat, queries, sr).getResponse(sr);
   }
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @RequestMapping("associatedQuery")
   @RolesAllowed({F_QRQE00, R_FEPQRA})
   public ResponseEntity<String> getAlreadyAssociatedQuery(

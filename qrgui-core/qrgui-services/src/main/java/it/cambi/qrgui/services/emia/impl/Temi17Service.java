@@ -39,6 +39,10 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
   private final ITemi20Dao<Temi20AnaTipCat, String> tipCatDao;
 
+  private final WrappedResponse<Temi17UteRou> response;
+
+  private final WrappedResponse<List<Temi17UteRou>> responseList;
+
   /**
    * @param temi17
    * @return
@@ -50,7 +54,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
     Temi17UteRou temi17Out = routineDao.merge(temi17);
 
-    return WrappedResponse.<Temi17UteRou>baseBuilder().entity(temi17Out).count(1).build().setResponse();
+    return response.toBuilder().entity(temi17Out).count(1).build().setResponse();
   }
 
   /**
@@ -119,11 +123,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
     listTemi18.forEach(temi18RouQue -> queRoutineDao.delete(temi18RouQue));
 
-    return WrappedResponse.<Temi17UteRou>baseBuilder()
-        .entity(routineDao.delete(temi17))
-        .count(1)
-        .build()
-        .setResponse();
+    return response.toBuilder().entity(routineDao.delete(temi17)).count(1).build().setResponse();
   }
 
   /**
@@ -152,7 +152,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
           .setResponse();
     }
 
-    return WrappedResponse.<List<Temi17UteRou>>baseBuilder()
+    return responseList.toBuilder()
         .entity(new ArrayList<Temi17UteRou>())
         .count(0)
         .build()

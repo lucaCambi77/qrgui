@@ -1,6 +1,5 @@
 package it.cambi.qrgui.rest;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,12 +8,6 @@ import java.util.concurrent.ExecutionException;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +26,13 @@ import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/query")
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class GenericQueryResource extends BasicResource {
-  private static final Logger log = LoggerFactory.getLogger(GenericQueryResource.class);
 
   private final GenericQueryTaskExecutorService genericTaskExecutor;
 
@@ -46,16 +40,8 @@ public class GenericQueryResource extends BasicResource {
 
   private final WorkBookService workBookService;
 
-  @Value("${excel.path}")
-  private String excelPath;
-
-  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
-  public String host;
-
-  @Value("${amazon.aws.s3.bucket.name:bucket}")
-  public String bucketName;
-
-  private static final String fileName = "workbook.xls";
+  protected final WrappedResponse<XWrappedResponse<Temi15UteQue, List<Object>>> response;
+  protected final WrappedResponse<List<XWrappedResponse<Temi15UteQue, List<Object>>>> responseList;
 
   /**
    * Esegue le query e crea un excel nella directory /files. Per ogni query viene creato uno sheet
@@ -85,31 +71,11 @@ public class GenericQueryResource extends BasicResource {
 
     log.info("Eseguo query ...");
 
-    String localFilePath = excelPath + fileName;
-
     List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut =
         genericTaskExecutor.executeQuery(queries, page, pageSize);
 
     /** Creo un file con i result set nel percorso files/ */
-    if (createFile) {
-
-      int rowToStart = 0;
-      Workbook wb = new HSSFWorkbook();
-
-      Sheet sheet = wb.createSheet();
-      for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
-        rowToStart =
-            workBookService.setWorkBookSheet(
-                pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
-      }
-
-      FileOutputStream fileOut = new FileOutputStream(localFilePath);
-      wb.write(fileOut);
-      fileOut.close();
-      wb.close();
-
-      workBookService.uploadToS3Bucket(bucketName, fileName, localFilePath);
-    }
+    if (createFile) workBookService.createWorkBook(pageSize, listOut);
 
     return getObjectMapperXResponseList(listOut, sr);
   }
@@ -125,11 +91,11 @@ public class GenericQueryResource extends BasicResource {
     if (null == query.getTemi13DtbInf()
         || null == query.getTemi13DtbInf().getId()
         || null == query.getTemi13DtbInf().getId().getSch())
-      return WrappedResponse.<Long>baseBuilder()
+      return response.toBuilder()
           .success(false)
           .build()
           .setErrorMessages(
-              new ArrayList<String>() {
+              new ArrayList<>() {
                 {
                   add("E' necessario indicare uno schema su cui eseguire la query");
                 }
@@ -144,5 +110,20 @@ public class GenericQueryResource extends BasicResource {
       default:
         return null;
     }
+  }
+
+  private <T> ResponseEntity<String> getObjectMapperXResponseList(
+      List<XWrappedResponse<Temi15UteQue, List<Object>>> wrappedResponses, HttpServletRequest sr) {
+
+    for (XWrappedResponse<Temi15UteQue, List<Object>> wrappedResponse : wrappedResponses) {
+      if (wrappedResponse.isSuccess()) continue;
+
+      /*
+       * Response with errors
+       */
+      return response.toBuilder().entity(wrappedResponse).build().setResponse().getResponse(sr);
+    }
+
+    return responseList.toBuilder().entity(wrappedResponses).build().setResponse().getResponse(sr);
   }
 }

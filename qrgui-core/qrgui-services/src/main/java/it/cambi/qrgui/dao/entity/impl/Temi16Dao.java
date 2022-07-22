@@ -8,7 +8,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
@@ -17,7 +16,6 @@ import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.model.Temi16QueCatAssId;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 /**
  * @param <T> Type of the Entity.
@@ -27,14 +25,15 @@ import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 public class Temi16Dao extends TemiGenericDao<Temi16QueCatAss, Temi16QueCatAssId>
     implements ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> {
 
-  @Autowired ITemi20Dao<Temi20AnaTipCat, String> temi20Dao;
+  private final ITemi20Dao<Temi20AnaTipCat, String> temi20Dao;
 
-  public Temi16Dao() {
+  public Temi16Dao(ITemi20Dao<Temi20AnaTipCat, String> temi20Dao) {
     super(Temi16QueCatAss.class);
+    this.temi20Dao = temi20Dao;
   }
 
   @Override
-  public WrappedResponse<List<Temi16QueCatAss>> findByCategory(HttpServletRequest request) {
+  public List<Temi16QueCatAss> findByCategory(HttpServletRequest request) {
     CriteriaQuery<Temi16QueCatAss> criteriaTemi16 =
         getEntityManager().getCriteriaBuilder().createQuery(Temi16QueCatAss.class);
 
@@ -49,19 +48,12 @@ public class Temi16Dao extends TemiGenericDao<Temi16QueCatAss, Temi16QueCatAssId
 
     if (null != functions && functions.size() > 0) criteriaTemi16.where(predicateAnaTipCat);
 
-    List<Temi16QueCatAss> listTemi16 = getEntityListByCriteriaQuery(criteriaTemi16, null);
-
-    return WrappedResponse.<List<Temi16QueCatAss>>baseBuilder()
-        .entity(listTemi16)
-        .count(listTemi16.size())
-        .build()
-        .setResponse();
+    return getEntityListByCriteriaQuery(criteriaTemi16, null);
   }
 
   @Override
-  public WrappedResponse<Integer> addQueriesToCateg(List<Temi16QueCatAss> temi16) {
+  public Integer addQueriesToCateg(List<Temi16QueCatAss> temi16) {
     temi16.forEach(this::merge);
-
-    return WrappedResponse.<Integer>baseBuilder().count(temi16.size()).build().setResponse();
+    return temi16.size();
   }
 }

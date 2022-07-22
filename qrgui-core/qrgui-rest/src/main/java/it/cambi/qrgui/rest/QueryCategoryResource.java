@@ -26,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/queCatAssoc")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class QueryCategoryResource extends BasicResource {
   private final ITemi16Service<Temi16QueCatAss> temi16Service;
 

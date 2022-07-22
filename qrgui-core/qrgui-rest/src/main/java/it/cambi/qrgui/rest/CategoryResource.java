@@ -24,8 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/category")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class CategoryResource extends BasicResource {
   private final ITemi14Service<Temi14UteCat> temi14Service;
 

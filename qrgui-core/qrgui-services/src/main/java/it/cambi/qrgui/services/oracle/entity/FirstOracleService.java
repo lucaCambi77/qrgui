@@ -33,8 +33,7 @@ public class FirstOracleService {
    * @throws IOException
    */
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public WrappedResponse<QueryToJson> checkQuery(Temi15UteQue que)
-      throws JsonMappingException, IOException {
+  public WrappedResponse<QueryToJson> checkQuery(Temi15UteQue que) throws IOException {
     return checkQueryService.checkQuery(que, true, firstGenericDao);
   }
 }

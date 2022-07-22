@@ -11,7 +11,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +23,15 @@ import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import lombok.RequiredArgsConstructor;
 
 /** @author luca */
 @Component
+@RequiredArgsConstructor
 public class GenericQueryTaskExecutorService {
-  @Autowired private IQueryExecutorFactory queryExecutorFactory;
+  private final IQueryExecutorFactory queryExecutorFactory;
 
-  @Autowired private ObjectMapper objectMapper;
-
-  /** */
-  public GenericQueryTaskExecutorService() {}
+  private final ObjectMapper objectMapper;
 
   /**
    * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N

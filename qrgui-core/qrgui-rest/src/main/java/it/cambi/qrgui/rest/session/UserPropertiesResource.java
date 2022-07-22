@@ -1,10 +1,8 @@
-package it.cambi.qrgui.session;
+package it.cambi.qrgui.rest.session;
 
 import static it.cambi.qrgui.util.Constants.R_FEPQR1;
 import static it.cambi.qrgui.util.Constants.R_FEPQR2;
 import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.response.model.ErtaGuiUser;
 import it.cambi.qrgui.response.model.ErtaQrGuiRoles;
 import it.cambi.qrgui.rest.BasicResource;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

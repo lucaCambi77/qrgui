@@ -37,14 +37,6 @@ class AwsS3Test extends Specification {
         workBookService = new WorkBookService(s3);
     }
 
-    def "should create bucket"() {
-        when:
-        def bucketExist = s3.doesBucketExistV2(bucketName)
-
-        then:
-        bucketExist
-    }
-
     def "should add file to bucket"() {
         given:
         def fileName = "filename.txt"
@@ -55,8 +47,7 @@ class AwsS3Test extends Specification {
 
         when:
         workBookService.uploadToS3Bucket(bucketName, "/documents/" + fileName, fileName)
-        File file = new File(fileName)
-        file.delete()
+        new File(fileName).delete()
 
         then:
         s3.getObject(bucketName, "/documents/" + fileName) != null

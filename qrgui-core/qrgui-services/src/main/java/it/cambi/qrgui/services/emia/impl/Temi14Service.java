@@ -53,6 +53,8 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
 
   private final ITemi20Service<Temi20AnaTipCat> temi20Service;
 
+  private final XWrappedResponse<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>> response;
+
   /**
    * Creo una nuova categoria
    *
@@ -284,7 +286,7 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
       }
     }
 
-    return XWrappedResponse.<Temi14UteCat, List<TreeNode<Temi14UteCat, Integer>>>builder()
+    return response.toBuilder()
         .entity(listTreeNode)
         .build()
         .setResponse();

@@ -20,8 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/routQuery")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class RoutineQueryResource extends BasicResource {
   private final ITemi18Service<Temi18RouQue> temi18Service;
 

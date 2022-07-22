@@ -21,12 +21,15 @@ public class Temi13Service implements ITemi13Service<Temi13DtbInf> {
 
   private final ITemi13Dao<Temi13DtbInf, Temi13DtbInfId> databaseInfoDao;
 
+  private final WrappedResponse<List<Temi13DtbInf>> response;
+
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
   public WrappedResponse<List<Temi13DtbInf>> findAll() {
-    return WrappedResponse.<List<Temi13DtbInf>>baseBuilder()
+    return response.toBuilder()
         .entity(databaseInfoDao.findAll(null))
         .build()
+        .setErrorMessages(List.of("topa"))
         .setResponse();
   }
 }

@@ -18,6 +18,8 @@ public class Temi18Service implements ITemi18Service<Temi18RouQue> {
 
   private final ITemi18Dao<Temi18RouQue, Temi18RouQueId> routineQueryDao;
 
+  private final WrappedResponse<Temi18RouQue> response;
+
   @Transactional
   @Override
   public WrappedResponse<Temi18RouQue> merge(Temi18RouQueId temi18Pk) {
@@ -26,7 +28,7 @@ public class Temi18Service implements ITemi18Service<Temi18RouQue> {
 
     Temi18RouQue temi18Out = routineQueryDao.merge(temi18);
 
-    return WrappedResponse.<Temi18RouQue>baseBuilder().entity(temi18Out).count(1).build().setResponse();
+    return response.toBuilder().entity(temi18Out).count(1).build().setResponse();
   }
 
   @Transactional
@@ -34,7 +36,7 @@ public class Temi18Service implements ITemi18Service<Temi18RouQue> {
   public WrappedResponse<Temi18RouQue> deleteQueRoutineAssoc(Temi18RouQueId temi18Pk) {
     Temi18RouQue temi18 = routineQueryDao.getEntityByPrimaryKey(temi18Pk);
 
-    return WrappedResponse.<Temi18RouQue>baseBuilder()
+    return response.toBuilder()
         .entity(routineQueryDao.delete(temi18))
         .count(1)
         .build()

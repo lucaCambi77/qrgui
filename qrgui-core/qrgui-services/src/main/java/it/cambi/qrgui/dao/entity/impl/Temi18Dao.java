@@ -20,49 +20,45 @@ import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 
 /**
- * @param <T>
- *            Type of the Entity.
- * @param <I>
- *            Type of the Primary Key.
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
  */
 @Component
-public class Temi18Dao extends TemiGenericDao<Temi18RouQue, Temi18RouQueId> implements ITemi18Dao<Temi18RouQue, Temi18RouQueId>
-{
+public class Temi18Dao extends TemiGenericDao<Temi18RouQue, Temi18RouQueId>
+    implements ITemi18Dao<Temi18RouQue, Temi18RouQueId> {
 
-    public Temi18Dao()
-    {
-        super(Temi18RouQue.class);
-    }
+  public Temi18Dao() {
+    super(Temi18RouQue.class);
+  }
 
-    @Override
-    public List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque)
-    {
-        CriteriaQuery<Temi18RouQue> criteriaQuery = getEntityManager().getCriteriaBuilder()
-                .createQuery(Temi18RouQue.class);
-        Root<Temi18RouQue> root = criteriaQuery.from(Temi18RouQue.class);
+  @Override
+  public List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque) {
+    CriteriaQuery<Temi18RouQue> criteriaQuery =
+        getEntityManager().getCriteriaBuilder().createQuery(Temi18RouQue.class);
+    Root<Temi18RouQue> root = criteriaQuery.from(Temi18RouQue.class);
 
-        ParameterExpression<Long> cQueParam = getEntityManager().getCriteriaBuilder()
-                .parameter(Long.class, "cQue");
+    ParameterExpression<Long> cQueParam =
+        getEntityManager().getCriteriaBuilder().parameter(Long.class, "cQue");
 
-        ParameterExpression<Date> cInsParam = getEntityManager().getCriteriaBuilder()
-                .parameter(Date.class, "insQue");
+    ParameterExpression<Date> cInsParam =
+        getEntityManager().getCriteriaBuilder().parameter(Date.class, "insQue");
 
-        Expression<?> cqueExpr = root.get("id").get("que");
-        Expression<?> cinsExpr = root.get("id").get("insQue");
+    Expression<?> cqueExpr = root.get("id").get("que");
+    Expression<?> cinsExpr = root.get("id").get("insQue");
 
-        Predicate predicateCQue = getEntityManager().getCriteriaBuilder().equal(cqueExpr, cQueParam);
-        Predicate predicateIns = getEntityManager().getCriteriaBuilder().equal(cinsExpr, cInsParam);
+    Predicate predicateCQue = getEntityManager().getCriteriaBuilder().equal(cqueExpr, cQueParam);
+    Predicate predicateIns = getEntityManager().getCriteriaBuilder().equal(cinsExpr, cInsParam);
 
-        List<Temi18RouQue> temi18List = getEntityManager().createQuery(criteriaQuery.where(predicateCQue, predicateIns))
-                .setParameter("cQue", cque.getQue()).setParameter("insQue", cque.getInsQue()).getResultList();
+    return getEntityManager()
+        .createQuery(criteriaQuery.where(predicateCQue, predicateIns))
+        .setParameter("cQue", cque.getQue())
+        .setParameter("insQue", cque.getInsQue())
+        .getResultList();
+  }
 
-        return temi18List;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @Override
-    public Temi18RouQue merge(Temi18RouQue entity)
-    {
-        return super.merge(entity);
-    }
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  @Override
+  public Temi18RouQue merge(Temi18RouQue entity) {
+    return super.merge(entity);
+  }
 }

@@ -21,8 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequestMapping("/emia/anaTipCat")
 @Component
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class TipCategoryResource extends BasicResource {
   private final ITemi20Service<Temi20AnaTipCat> temi20Service;
 

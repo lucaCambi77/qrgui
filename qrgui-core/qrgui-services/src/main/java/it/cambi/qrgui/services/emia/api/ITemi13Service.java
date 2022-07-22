@@ -6,7 +6,6 @@ import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
 public interface ITemi13Service<T>
 {
-
     WrappedResponse<List<T>> findAll();
 
 }

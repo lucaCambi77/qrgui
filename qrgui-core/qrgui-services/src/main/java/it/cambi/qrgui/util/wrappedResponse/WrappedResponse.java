@@ -14,8 +14,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -31,15 +29,20 @@ import it.cambi.qrgui.util.Messages;
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
-@SuperBuilder(builderMethodName = "baseBuilder")
+@SuperBuilder(builderMethodName = "baseBuilder", toBuilder = true)
 @Data
+@RequiredArgsConstructor
+@Slf4j
 public class WrappedResponse<T> {
-  @JsonIgnore private final Logger log = LoggerFactory.getLogger(this.getClass());
   @JsonIgnore private String response;
   @JsonIgnore private Throwable exception;
   @JsonIgnore private ObjectMapper objectMapper;
+
+  @JsonIgnore private final ObjectMapperFactory objectMapperFactory;
 
   @Builder.Default @JsonIgnore
   private ArrayList<String> ignorableFields =
@@ -53,7 +56,7 @@ public class WrappedResponse<T> {
   private Integer count;
   private Integer errorCode;
   private List<String> errorMessage;
-  private List<String> succededMessage;
+  private List<String> succeededMessage;
   private String developerMessage;
   private String locale;
   private String queryFilePath;
@@ -159,14 +162,17 @@ public class WrappedResponse<T> {
 
     String builder =
         new StringBuilder()
-            .append("Request  ----> " + new ErtaGuiUser(sr).toString())
+            .append("Request  ----> ")
+            .append(new ErtaGuiUser(sr))
             .append("\n")
             .append("Response ----> ")
             .append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()))
             .append(", ")
-            .append("success --> " + isSuccess())
+            .append("success --> ")
+            .append(isSuccess())
             .append(", ")
-            .append("count --> " + getCount())
+            .append("count --> ")
+            .append(getCount())
             .append("\n")
             .toString();
 
@@ -188,9 +194,8 @@ public class WrappedResponse<T> {
 
   public ObjectWriter getObjectMapper() {
     return objectMapper == null
-        ? new ObjectMapperFactory()
-            .createWriter(getIgnorableFields().stream().toArray(String[]::new))
-        : new ObjectMapper().writer();
+        ? objectMapperFactory.createWriter(getIgnorableFields().stream().toArray(String[]::new))
+        : objectMapperFactory.getObjectMapper().writer();
   }
 
   public WrappedResponse<T> setSuccess(boolean success) {
