@@ -16,31 +16,30 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import lombok.RequiredArgsConstructor;
-
 /** @author luca */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
-@RequiredArgsConstructor
 @Import({SecurityDbAppConf.class})
-public class SpringSecurityConfig {
-
-  private final UserDetailsService userDetailsService;
+public class SecurityConfig {
 
   @Value("${spring.security.debug:false}")
   boolean securityDebug;
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-    AuthenticationManagerBuilder authenticationManagerBuilder =
-        http.getSharedObject(AuthenticationManagerBuilder.class);
-
-    authenticationManagerBuilder
+  public AuthenticationManager authenticationManager(
+      HttpSecurity http,
+      BCryptPasswordEncoder bCryptPasswordEncoder,
+      UserDetailsService userDetailsService)
+      throws Exception {
+    return http.getSharedObject(AuthenticationManagerBuilder.class)
         .userDetailsService(userDetailsService)
-        .passwordEncoder(bCryptPasswordEncoder());
+        .passwordEncoder(bCryptPasswordEncoder)
+        .and()
+        .build();
+  }
 
-    AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
     http.csrf()
         .disable()
@@ -54,7 +53,6 @@ public class SpringSecurityConfig {
         .antMatchers("/api/login/**")
         .anonymous()
         .and()
-        .authenticationManager(authenticationManager)
         .sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 /**
  */
 @Entity
-@Table(name = "GENERIC_TABLE")
+@Table(name = "GENERIC_TABLE", schema = "TEST")
 public class GenericTable implements java.io.Serializable
 {
 

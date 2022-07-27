@@ -27,7 +27,7 @@ import it.cambi.qrgui.security.config.SecurityConfigurationTest;
 import it.cambi.qrgui.security.db.model.GuiUser;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {SpringSecurityConfig.class, ResourceControllerTest.class, SecurityConfigurationTest.class})
+@ContextConfiguration(classes = { SecurityConfig.class, ResourceControllerTest.class, SecurityConfigurationTest.class})
 @WebAppConfiguration
 @TestPropertySource("/test.properties")
 @Sql(value = "/user_test.sql")

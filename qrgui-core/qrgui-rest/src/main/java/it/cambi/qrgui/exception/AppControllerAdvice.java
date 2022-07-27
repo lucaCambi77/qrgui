@@ -11,16 +11,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class AppControllerAdvice {
+
+  private final WrappedResponse<String> response;
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public @ResponseBody ResponseEntity<String> runtimeException(
       Exception ex, HttpServletRequest sr) {
 
-    return WrappedResponse.<String>baseBuilder()
+    return response.toBuilder()
         .exception(ex)
         .build()
         .processException()
@@ -32,7 +36,7 @@ public class AppControllerAdvice {
   public @ResponseBody ResponseEntity<String> accessDeniedException(
       AccessDeniedException ex, HttpServletRequest sr) {
 
-    return WrappedResponse.<String>baseBuilder()
+    return response.toBuilder()
         .exception(ex)
         .build()
         .processException()

@@ -13,7 +13,7 @@ import it.cambi.qrgui.config.EmiaDbAppConf;
 import it.cambi.qrgui.jpa.repository.DbInfoJpaRepository;
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi13DtbInfId;
-import it.cambi.qrgui.security.SpringSecurityConfig;
+import it.cambi.qrgui.security.SecurityConfig;
 import it.cambi.qrgui.security.db.model.GuiUser;
 import it.cambi.qrgui.security.db.model.Role;
 import it.cambi.qrgui.security.db.model.UserRole;
@@ -28,7 +28,7 @@ import it.cambi.qrgui.security.services.UserServiceImpl;
  *         Db init and Security import
  */
 @Configuration
-@Import({ SpringSecurityConfig.class, EmiaDbAppConf.class })
+@Import({ SecurityConfig.class, EmiaDbAppConf.class })
 @Profile("test")
 public class ConfigurationTest
 {

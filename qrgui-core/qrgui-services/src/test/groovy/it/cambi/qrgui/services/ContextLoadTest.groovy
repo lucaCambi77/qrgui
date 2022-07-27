@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext
 
 @ContextConfiguration(classes = FirstDbAppConf.class)
 @TestPropertySource("/test.properties")
-class   ContextLoadTest extends Specification {
+class ContextLoadTest extends Specification {
 
     @PersistenceContext(unitName = "firstPU")
     @Qualifier(value = "firstEntityManagerFactory")

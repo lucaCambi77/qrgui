@@ -29,7 +29,6 @@ public class Temi13Service implements ITemi13Service<Temi13DtbInf> {
     return response.toBuilder()
         .entity(databaseInfoDao.findAll(null))
         .build()
-        .setErrorMessages(List.of("topa"))
         .setResponse();
   }
 }
