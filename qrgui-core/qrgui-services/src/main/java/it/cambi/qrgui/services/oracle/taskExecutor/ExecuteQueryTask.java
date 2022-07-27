@@ -32,7 +32,7 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
   private final FirstGenericDao firstGenericDao;
   private final QueryService queryService;
   private final ObjectMapper objectMapper;
-
+  private final XWrappedResponse<Temi15UteQue, List<Object>> response;
   private Temi15UteQue query;
   private Integer pageSize;
   private Integer page;
@@ -41,9 +41,6 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
 
   @Override
   public XWrappedResponse<Temi15UteQue, List<Object>> call() throws Exception {
-
-    XWrappedResponse<Temi15UteQue, List<Object>> response =
-        XWrappedResponse.<Temi15UteQue, List<Object>>builder().build();
 
     WrappedResponse<String> queryStringResponse = queryService.getFinalQueryString(query);
 

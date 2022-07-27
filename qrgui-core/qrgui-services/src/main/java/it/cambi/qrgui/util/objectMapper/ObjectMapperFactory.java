@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 
@@ -56,6 +55,8 @@ public class ObjectMapperFactory
     {
     }
 
+    private ObjectWriter defaultWriter;
+
     public ObjectMapperFactory()
     {
         this.objectMapper = new ObjectMapper();
@@ -74,9 +75,16 @@ public class ObjectMapperFactory
         objectMapper.addMixIn(Temi17UteRou.class, Temi17UteRouMixIn.class);
         objectMapper.addMixIn(Temi18RouQue.class, Temi18RouQueMixIn.class);
         objectMapper.addMixIn(Temi20AnaTipCat.class, Temi20AnaTipCatMixIn.class);
+
+        objectMapper.addMixIn(
+          Object.class, PropertyFilterMixIn.class);
+
+        defaultWriter = objectMapper.writer(new SimpleFilterProvider()
+          .addFilter("Filter",
+            SimpleBeanPropertyFilter.serializeAllExcept()));
     }
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public ObjectMapper getObjectMapper()
     {
@@ -85,48 +93,48 @@ public class ObjectMapperFactory
 
     public ObjectWriter createWriter(String[] ignorableFields)
     {
-
-        objectMapper.addMixIn(
-                Object.class, PropertyFilterMixIn.class);
-
-        FilterProvider filter = new SimpleFilterProvider()
-                .addFilter("Filter",
-                        SimpleBeanPropertyFilter.serializeAllExcept(
-                                ignorableFields));
-
-        return objectMapper.writer(filter);
+        return objectMapper.writer(new SimpleFilterProvider()
+          .addFilter("Filter",
+            SimpleBeanPropertyFilter.serializeAllExcept(
+              ignorableFields)));
     }
+
+    public ObjectWriter getDefaultWriter()
+    {
+        return defaultWriter;
+    }
+
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi13DtbInf.class)
     public interface Temi13DtbInfMixIn
     {
 
         @JsonProperty("id")
-        public Temi13DtbInfId getId();
+        Temi13DtbInfId getId();
 
         @JsonIgnore
         @JsonProperty("temi15UteQues")
-        public List<Temi15UteQue> getTemi15UteQues();
+        List<Temi15UteQue> getTemi15UteQues();
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi14UteCat.class)
     public interface Temi14UteCatMixIn
     {
         @JsonProperty("id")
-        public Temi14UteCatId getId();
+        Temi14UteCatId getId();
 
         @JsonProperty("npar")
-        public Long getNPar();
+        Long getNPar();
 
         @JsonProperty("tdes")
-        public String getTDes();
+        String getTDes();
 
         @JsonProperty("temi20AnaTipCat")
-        public Temi20AnaTipCat getTemi20AnaTipCat();
+        Temi20AnaTipCat getTemi20AnaTipCat();
 
         @JsonIgnore
         @JsonProperty("temi16QueCatAsses")
-        public Set<Temi16QueCatAss> getTemi16QueCatAsses();
+        Set<Temi16QueCatAss> getTemi16QueCatAsses();
 
     }
 
@@ -134,78 +142,77 @@ public class ObjectMapperFactory
     public interface Temi15UteQueMixIn
     {
         @JsonProperty("id")
-        public Temi15UteQueId getId();
+        Temi15UteQueId getId();
 
         @JsonProperty("tjson")
-        public String getTJson();
+        String getTJson();
 
         @JsonProperty("tNam")
-        public String getTNam();
+        String getTNam();
 
         @JsonProperty("temi13DtbInf")
-        public Temi13DtbInf getTemi13DtbInf();
+        Temi13DtbInf getTemi13DtbInf();
 
         @JsonIgnore
         @JsonProperty("temi16QueCatAsses")
-        public List<Temi16QueCatAss> getTemi16QueCatAsses();
+        List<Temi16QueCatAss> getTemi16QueCatAsses();
 
         @JsonProperty("temi18RouQues")
-        public List<Temi18RouQue> getTemi18RouQues();
+        List<Temi18RouQue> getTemi18RouQues();
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi16QueCatAss.class)
     public interface Temi16QueCatAssMixIn
     {
         @JsonProperty("id")
-        public Temi16QueCatAssId getId();
+        Temi16QueCatAssId getId();
 
         @JsonProperty("temi14UteCat")
-        public Temi14UteCat getTemi14UteCat();
+        Temi14UteCat getTemi14UteCat();
 
         @JsonProperty("temi15UteQue")
-        public Temi15UteQue getTemi15UteQue();
+        Temi15UteQue getTemi15UteQue();
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi17UteRou.class)
     public interface Temi17UteRouMixIn
     {
         @JsonProperty("id")
-        public Temi17UteRouId getId();
+        Temi17UteRouId getId();
 
         @JsonProperty("tdes")
-        public String getTDes();
+        String getTDes();
 
         @JsonProperty("temi18RouQues")
-        public List<Temi18RouQue> getTemi18RouQues();
+        List<Temi18RouQue> getTemi18RouQues();
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi18RouQue.class)
     public interface Temi18RouQueMixIn
     {
         @JsonProperty("id")
-        public Temi18RouQueId getId();
+        Temi18RouQueId getId();
 
         @JsonIgnore
         @JsonProperty("temi15UteQue")
-        public Temi15UteQue getTemi15UteQue();
+        Temi15UteQue getTemi15UteQue();
 
         @JsonIgnore
         @JsonProperty("temi17UteRou")
-        public Temi17UteRou getTemi17UteRou();
+        Temi17UteRou getTemi17UteRou();
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "cTipCat", scope = Temi20AnaTipCat.class)
     public interface Temi20AnaTipCatMixIn
     {
         @JsonProperty("cTipCat")
-        public String getCTipCat();
+        String getCTipCat();
 
         @JsonProperty("tDes")
-        public String getTDes();
+        String getTDes();
 
         @JsonIgnore
         @JsonProperty("temi14UteCats")
-        public List<Temi14UteCat> getTemi14UteCats();
-
+        List<Temi14UteCat> getTemi14UteCats();
     }
 }

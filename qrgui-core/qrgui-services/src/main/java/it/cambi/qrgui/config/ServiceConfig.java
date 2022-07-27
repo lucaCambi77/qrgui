@@ -126,11 +126,16 @@ public class ServiceConfig {
       ObjectMapperFactory objectMapperFactory) {
     return new XWrappedResponse<>(objectMapperFactory);
   }
+  @Bean
+  public XWrappedResponse<Temi15UteQue, List<Object>> responseExecutor(
+      ObjectMapperFactory objectMapperFactory) {
+    return new XWrappedResponse<>(objectMapperFactory);
+  }
 
   @Bean
   public WrappedResponse<XWrappedResponse<Temi15UteQue, List<Object>>> responseTemi15ListObject(
       ObjectMapperFactory objectMapperFactory) {
-    return new XWrappedResponse<>(objectMapperFactory);
+    return new WrappedResponse<>(objectMapperFactory);
   }
 
   @Bean
@@ -156,11 +161,6 @@ public class ServiceConfig {
 
   @Bean
   public WrappedResponse<Integer> responseInteger(ObjectMapperFactory objectMapperFactory) {
-    return new WrappedResponse<>(objectMapperFactory);
-  }
-
-  @Bean
-  public WrappedResponse<List<Object>> responseListObject(ObjectMapperFactory objectMapperFactory) {
     return new WrappedResponse<>(objectMapperFactory);
   }
 }

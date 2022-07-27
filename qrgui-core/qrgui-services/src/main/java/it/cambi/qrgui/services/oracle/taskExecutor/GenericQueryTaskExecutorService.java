@@ -17,11 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.query.model.QueryToJson;
+import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class GenericQueryTaskExecutorService {
   private final IQueryExecutorFactory queryExecutorFactory;
 
-  private final ObjectMapper objectMapper;
+  private final ObjectMapperFactory objectMapper;
 
   /**
    * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
@@ -59,26 +60,28 @@ public class GenericQueryTaskExecutorService {
     ExecutorService executor = Executors.newFixedThreadPool(queryAttributes.size() * 2);
 
     List<Future<XWrappedResponse<Temi15UteQue, List<Object>>>> taskList =
-        new ArrayList<Future<XWrappedResponse<Temi15UteQue, List<Object>>>>();
+        new ArrayList<>();
 
     int position = 0;
+
+    ObjectWriter objectWriter = objectMapper.getDefaultWriter();
 
     /** Creo una query per il result set ed una per la count, e lancio un thread per ognuna */
     for (Temi15UteQue query : queryAttributes) {
 
-      String aQuery = objectMapper.writeValueAsString(query);
+      String aQuery = objectWriter.writeValueAsString(query);
 
       /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
-      Temi15UteQue aCopy = objectMapper.readValue(aQuery, Temi15UteQue.class);
-      Temi15UteQue anotherCopy = objectMapper.readValue(aQuery, Temi15UteQue.class);
+      Temi15UteQue aCopy = objectMapper.getObjectMapper().readValue(aQuery, Temi15UteQue.class);
+      Temi15UteQue anotherCopy = objectMapper.getObjectMapper().readValue(aQuery, Temi15UteQue.class);
 
       /** Count */
-      QueryToJson json = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
+      QueryToJson json = objectMapper.getObjectMapper().readValue(anotherCopy.getJson(), QueryToJson.class);
 
       json.setPosition(position);
       json.setQueryType(QueryType.COUNT);
 
-      aCopy.setJson(objectMapper.writeValueAsString(json));
+      aCopy.setJson(objectWriter.writeValueAsString(json));
 
       FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>> myTask =
           new FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>>(
@@ -89,12 +92,12 @@ public class GenericQueryTaskExecutorService {
                   .setQuery(aCopy));
 
       /** Result Set */
-      QueryToJson anotherJson = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
+      QueryToJson anotherJson = objectMapper.getObjectMapper().readValue(anotherCopy.getJson(), QueryToJson.class);
 
       anotherJson.setQueryType(QueryType.RESULT_SET);
       anotherJson.setPosition(position);
 
-      anotherCopy.setJson(objectMapper.writeValueAsString(anotherJson));
+      anotherCopy.setJson(objectWriter.writeValueAsString(anotherJson));
 
       /** Task Executor */
       FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>> myTaskCount =
@@ -137,13 +140,13 @@ public class GenericQueryTaskExecutorService {
 
     /** Una volta raccolto tutti i risultati, assegno alla query col result set la sua count */
     for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
-      QueryToJson json = objectMapper.readValue(response.getXentity().getJson(), QueryToJson.class);
+      QueryToJson json = objectMapper.getObjectMapper().readValue(response.getXentity().getJson(), QueryToJson.class);
 
       if (json.getPosition() - position == 0 && json.getQueryType() == QueryType.COUNT) {
 
         for (XWrappedResponse<Temi15UteQue, List<Object>> response1 : listOut) {
           QueryToJson json1 =
-              objectMapper.readValue(response1.getXentity().getJson(), QueryToJson.class);
+            objectMapper.getObjectMapper().readValue(response1.getXentity().getJson(), QueryToJson.class);
           if (json1.getPosition() - position == 0 && json1.getQueryType() == QueryType.RESULT_SET) {
             response1.setCount(response.getCount());
             listOut1.add(response1);

@@ -145,7 +145,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
       List<Temi17UteRou> temi17List = routineDao.getEntityListByCriteriaQuery(criteriaQuery, null);
 
-      return WrappedResponse.<List<Temi17UteRou>>baseBuilder()
+      return responseList.toBuilder()
           .entity(temi17List)
           .count(temi17List.size())
           .build()

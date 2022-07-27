@@ -194,7 +194,7 @@ public class WrappedResponse<T> {
 
   public ObjectWriter getObjectMapper() {
     return objectMapper == null
-        ? objectMapperFactory.createWriter(getIgnorableFields().stream().toArray(String[]::new))
+        ? objectMapperFactory.createWriter(getIgnorableFields().toArray(String[]::new))
         : objectMapperFactory.getObjectMapper().writer();
   }
 
@@ -208,7 +208,7 @@ public class WrappedResponse<T> {
   }
 
   public List<String> getErrorMessage() {
-    if (null == errorMessage) errorMessage = new ArrayList<String>();
+    if (null == errorMessage) errorMessage = new ArrayList<>();
 
     return errorMessage;
   }
