@@ -138,11 +138,11 @@
 			return RestUtilityFactory.DeferredPromisePost(path, category);
 		}
 
-		function DeleteQuery(queId) {
+		function DeleteQuery(que, insQue) {
 			var path = constant.contextRoot + constant.restBasicPath
 					+ '/emia/query/delete/';
 
-			return RestUtilityFactory.DeferredPromisePost(path, queId, {});
+			return RestUtilityFactory.DeferredPromisePost(path, { que : que, insQue : insQue});
 
 		}
 

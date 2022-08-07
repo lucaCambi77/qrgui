@@ -139,7 +139,7 @@ angular
 						function (message) {
 
 							EmiaRestUtilityFactory
-								.DeleteQuery(query.id)
+								.DeleteQuery(query.que, query.insQue)
 								.then(
 									function (value) {
 

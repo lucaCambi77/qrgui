@@ -2,112 +2,116 @@
 <head>
 </head>
 <div class="modal-content">
-	<div class="modal-header">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+    <div class="modal-header">
+        <div class="panel panel-default">
+            <div class="panel-heading">
 				<span class="glyphicon glyphicon-cog" style="display: inline-block;"
-					aria-hidden="true"></span>
-				<h3 style="display: inline-block; padding: 10px;">Query Results</h3>
-				<div style="border-bottom: 1px #32c24d solid;"></div>
-			</div>
-		</div>
+                      aria-hidden="true"></span>
+                <h3 style="display: inline-block; padding: 10px;">Query Results</h3>
+                <div style="border-bottom: 1px #32c24d solid;"></div>
+            </div>
+        </div>
 
-	</div>
-	<div class="modal-body">
+    </div>
+    <div class="modal-body">
 
-		<div uib-alert ng-class="'alert-danger'"
-			ng-if="routineModalResults.errors.length > 0">
-			<div>
+        <div uib-alert ng-class="'alert-danger'"
+             ng-if="routineModalResults.errors.length > 0">
+            <div>
 				<span class="glyphicon glyphicon-exclamation-sign"
-					aria-hidden="true"></span><br> <span
-					ng-repeat="error in routineModalResults.errors">{{error}}<br></span>
-			</div>
-		</div>
+                      aria-hidden="true"></span><br> <span
+                    ng-repeat="error in routineModalResults.errors">{{error}}<br></span>
+            </div>
+        </div>
 
-		<!--  #######-->
-		<!--  Queries -->
-		<!--  ####### -->
-		<div ng-repeat="queryObject in routineModalResults.queries"
-			ng-if="!routineModalResults.areResultsVisibile">
+        <!--  #######-->
+        <!--  Queries -->
+        <!--  ####### -->
+        <div ng-repeat="queryObject in routineModalResults.queries | orderBy:'query.nam'"
+             ng-if="!routineModalResults.areResultsVisibile">
 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 style="display: inline-block; padding: 10px;">{{queryObject.query.nam}}</h4>
-				</div>
-				<div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 style="display: inline-block; padding: 10px;">{{queryObject.query.nam}}</h4>
+                </div>
+                <div class="panel-body">
 
-					<div ng-if="queryObject.json.constr.length == 0">Nessun
-						vincolo definito per la query</div>
-					<br></br>
-					<div style="margin: 1em"
-						ng-repeat="constr in queryObject.json.constr">
-						<b>{{constr.message}}</b>
-					</div>
+                    <div ng-if="queryObject.json.constr.length == 0">Nessun
+                        vincolo definito per la query
+                    </div>
+                    <br></br>
+                    <div style="margin: 1em"
+                         ng-repeat="constr in queryObject.json.constr">
+                        <b>{{constr.message}}</b>
+                    </div>
 
-					<div ng-repeat="attr in queryObject.json.attrs">
-						<div
-							ng-if="attr.parameter.type == 'STRING' || attr.parameter.type == 'NUMBER'">
-							<label>{{ attr.alias}}</label>
-							<textarea style="height: 3%; width: 30%;"
-								ng-model="attr.parameter.value"></textarea>
-							<label ng-if="attr.operator == 'IN' || attr.operator == 'in'">Se
-								più di un valore, usare la virgola come separatore ed allargare
-								l'area se necessario</label>
-						</div>
+                    <div ng-repeat="attr in queryObject.json.attrs">
+                        <div
+                                ng-if="attr.parameter.type == 'STRING' || attr.parameter.type == 'NUMBER'">
+                            <label>{{ attr.alias}}</label>
+                            <textarea style="height: 3%; width: 30%;"
+                                      ng-model="attr.parameter.value"></textarea>
+                            <label ng-if="attr.operator == 'IN' || attr.operator == 'in'">Se
+                                più di un valore, usare la virgola come separatore ed allargare
+                                l'area se necessario</label>
+                        </div>
 
 
-						<form class="form-inline"
-							ng-if="attr.parameter.type == 'DATE' || attr.parameter.type == 'DATE_TRUNC'">
-							<div class="form-group">
-								<label>{{ attr.alias}}</label>
+                        <form class="form-inline"
+                              ng-if="attr.parameter.type == 'DATE' || attr.parameter.type == 'DATE_TRUNC'">
+                            <div class="form-group">
+                                <label>{{ attr.alias}}</label>
 
-								<div class="input-group date">
-									<input datetime-picker="{{attr.parameter.datePopup.format}}"
-										datepicker-Timezone type="text" class="form-control"
-										show-button-bar="false"
-										timepicker-options="attr.parameter.datePopup.timePickerOptions"
-										ng-model="attr.parameter.value"
-										ng-value="attr.parameter.value"
-										is-open="attr.parameter.datePopup.isOpen"
-										datepicker-options="attr.parameter.datePopup.dateOptions"
-										alt-input-formats="attr.parameter.datePopup.altInputFormats" />
-									<span class="input-group-btn">
+                                <div class="input-group date">
+                                    <input datetime-picker="{{attr.parameter.datePopup.format}}"
+                                           datepicker-Timezone type="text" class="form-control"
+                                           show-button-bar="false"
+                                           timepicker-options="attr.parameter.datePopup.timePickerOptions"
+                                           ng-model="attr.parameter.value"
+                                           ng-value="attr.parameter.value"
+                                           is-open="attr.parameter.datePopup.isOpen"
+                                           datepicker-options="attr.parameter.datePopup.dateOptions"
+                                           alt-input-formats="attr.parameter.datePopup.altInputFormats"/>
+                                    <span class="input-group-btn">
 										<button type="button" class="btn btn-default"
-											style="margin-left: 0.5em;"
-											ng-click="attr.parameter.datePopup.openDatePicker($event, attr.parameter.datePopup.isOpen)">
+                                                style="margin-left: 0.5em;"
+                                                ng-click="attr.parameter.datePopup.openDatePicker($event, attr.parameter.datePopup.isOpen)">
 											<i class="fa fa-calendar" aria-hidden="true"></i>&nbsp
 										</button>
 									</span>
-								</div>
+                                </div>
 
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-		<div>
-			<div id="routineResults"></div>
-		</div>
-	</div>
+        <div>
+            <div id="routineResults"></div>
+        </div>
+    </div>
 
-	<div class="modal-footer">
-		<a ng-if="routineModalResults.areResultsVisibile"
-			href="{{routineModalResults.filePath}}" download>
-			<button id="downloadFileButton" class="btn btn-xs btn-success">Excel</button>
-		</a>
-		<button id="executeAllButton" class="btn btn-xs btn-primary"
-			ng-if="!routineModalResults.areResultsVisibile"
-			ng-click="routineModalResults.executeQueries()">{{
-			'BUTTONS.RUNQUERY' | translate }}</button>
-		<button id="backToWhereButton" class="btn btn-xs btn-primary"
-			ng-if="routineModalResults.areResultsVisibile"
-			ng-click="routineModalResults.backToWhere()">{{
-			'BUTTONS.BACKTOQUERY' | translate }}</button>
-		<button id="fwModalCancelButton" class="btn btn-xs btn-warning"
-			ng-click="routineModalResults.cancel()">{{ 'BUTTONS.CANCEL'
-			| translate }}</button>
-	</div>
+    <div class="modal-footer">
+        <a ng-if="routineModalResults.areResultsVisibile"
+           href="{{routineModalResults.filePath}}" download>
+            <button id="downloadFileButton" class="btn btn-xs btn-success">Excel</button>
+        </a>
+        <button id="executeAllButton" class="btn btn-xs btn-primary"
+                ng-if="!routineModalResults.areResultsVisibile"
+                ng-click="routineModalResults.executeQueries()">{{
+            'BUTTONS.RUNQUERY' | translate }}
+        </button>
+        <button id="backToWhereButton" class="btn btn-xs btn-primary"
+                ng-if="routineModalResults.areResultsVisibile"
+                ng-click="routineModalResults.backToWhere()">{{
+            'BUTTONS.BACKTOQUERY' | translate }}
+        </button>
+        <button id="fwModalCancelButton" class="btn btn-xs btn-warning"
+                ng-click="routineModalResults.cancel()">{{ 'BUTTONS.CANCEL'
+        | translate }}
+        </button>
+    </div>
 </div>
 </html>
