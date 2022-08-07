@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.oracle.taskExecutor;
+package it.cambi.qrgui.services.taskExecutor;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -11,10 +11,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.dao.generic.impl.FirstGenericDao;
 import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.QueryExecutionResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.QueryService;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -27,12 +27,14 @@ import lombok.RequiredArgsConstructor;
 @Scope("prototype")
 @RequiredArgsConstructor
 @Getter
-public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue, List<Object>>> {
+public class ExecuteQueryTask implements Callable<WrappedResponse<QueryExecutionResponse>> {
 
   private final FirstGenericDao firstGenericDao;
   private final QueryService queryService;
   private final ObjectMapper objectMapper;
-  private final XWrappedResponse<Temi15UteQue, List<Object>> response;
+
+  private final WrappedResponse<QueryExecutionResponse> response;
+
   private Temi15UteQue query;
   private Integer pageSize;
   private Integer page;
@@ -40,14 +42,15 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
   public void ExecuteQueryTask() {}
 
   @Override
-  public XWrappedResponse<Temi15UteQue, List<Object>> call() throws Exception {
+  public WrappedResponse<QueryExecutionResponse> call() throws Exception {
 
     WrappedResponse<String> queryStringResponse = queryService.getFinalQueryString(query);
 
-    if (!queryStringResponse.isSuccess())
-      return response.setSuccess(false).setErrorMessages(queryStringResponse.getErrorMessage());
+    if (!queryStringResponse.isSuccess()) {
+     return response.toBuilder().success(false).errorMessage(queryStringResponse.getErrorMessage()).build();
+    }
 
-    String finalQuery = queryService.getFinalQueryString(query).getEntity();
+    String finalQuery = queryStringResponse.getEntity();
 
     List<Object> resultSet;
 
@@ -55,20 +58,19 @@ public class ExecuteQueryTask implements Callable<XWrappedResponse<Temi15UteQue,
 
     QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
+    QueryExecutionResponse queryExecutionResponse = new QueryExecutionResponse();
+    queryExecutionResponse.setTemi15UteQue(query);
+    queryExecutionResponse.setJson(json);
+
     if (json.getQueryType() == QueryType.COUNT) {
-
       count = firstGenericDao.executeQueryCount(finalQuery);
-      response.setCount(count.intValue());
-
+      queryExecutionResponse.setCount(count.intValue());
     } else {
       resultSet = firstGenericDao.getByNativeQuery(finalQuery, page);
-      resultSet = queryService.setOneColumnResultSet(json, resultSet);
-      response.setEntity(resultSet);
+      queryExecutionResponse.setResultSet(queryService.setResultSet(json, resultSet));
     }
 
-    response.setXentity(query);
-
-    return response;
+    return response.toBuilder().entity(queryExecutionResponse).build();
   }
 
   public ExecuteQueryTask setQuery(Temi15UteQue query) {

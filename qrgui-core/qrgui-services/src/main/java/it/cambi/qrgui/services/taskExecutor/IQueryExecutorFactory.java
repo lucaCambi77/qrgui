@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.oracle.taskExecutor;
+package it.cambi.qrgui.services.taskExecutor;
 
 public interface IQueryExecutorFactory {
 

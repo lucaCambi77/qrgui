@@ -1,5 +1,5 @@
 /** */
-package it.cambi.qrgui.services.oracle.entity;
+package it.cambi.qrgui.services.database;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 /** @author luca */
 @Component
 @RequiredArgsConstructor
-public class FirstOracleService {
+public class FirstDbService {
 
   private final QueryService checkQueryService;
 

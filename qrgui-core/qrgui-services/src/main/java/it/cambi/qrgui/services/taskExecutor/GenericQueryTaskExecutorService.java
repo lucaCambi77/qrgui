@@ -1,15 +1,19 @@
 /** */
-package it.cambi.qrgui.services.oracle.taskExecutor;
+package it.cambi.qrgui.services.taskExecutor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,12 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.QueryExecutionResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +38,8 @@ public class GenericQueryTaskExecutorService {
   private final IQueryExecutorFactory queryExecutorFactory;
 
   private final ObjectMapperFactory objectMapper;
+
+  private final XWrappedResponse<Temi15UteQue, List<Object>> response;
 
   /**
    * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
@@ -56,20 +63,17 @@ public class GenericQueryTaskExecutorService {
       List<Temi15UteQue> queryAttributes, Integer page, Integer pageSize)
       throws InterruptedException, ExecutionException, JsonMappingException, IOException {
 
-    List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut = new ArrayList<>();
     ExecutorService executor = Executors.newFixedThreadPool(queryAttributes.size() * 2);
 
-    List<Future<XWrappedResponse<Temi15UteQue, List<Object>>>> taskList =
+    List<Future<WrappedResponse<QueryExecutionResponse>>> taskList =
         new ArrayList<>();
 
     int position = 0;
 
-    ObjectWriter objectWriter = objectMapper.getDefaultWriter();
-
     /** Creo una query per il result set ed una per la count, e lancio un thread per ognuna */
     for (Temi15UteQue query : queryAttributes) {
 
-      String aQuery = objectWriter.writeValueAsString(query);
+      String aQuery = objectMapper.getObjectMapper().writeValueAsString(query);
 
       /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
       Temi15UteQue aCopy = objectMapper.getObjectMapper().readValue(aQuery, Temi15UteQue.class);
@@ -81,10 +85,10 @@ public class GenericQueryTaskExecutorService {
       json.setPosition(position);
       json.setQueryType(QueryType.COUNT);
 
-      aCopy.setJson(objectWriter.writeValueAsString(json));
+      aCopy.setJson(objectMapper.getObjectMapper().writeValueAsString(json));
 
-      FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>> myTask =
-          new FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>>(
+      FutureTask<WrappedResponse<QueryExecutionResponse>> myTask =
+          new FutureTask<>(
               queryExecutorFactory
                   .getExecuteQueryTask()
                   .setPage(page)
@@ -97,11 +101,11 @@ public class GenericQueryTaskExecutorService {
       anotherJson.setQueryType(QueryType.RESULT_SET);
       anotherJson.setPosition(position);
 
-      anotherCopy.setJson(objectWriter.writeValueAsString(anotherJson));
+      anotherCopy.setJson(objectMapper.getObjectMapper().writeValueAsString(anotherJson));
 
       /** Task Executor */
-      FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>> myTaskCount =
-          new FutureTask<XWrappedResponse<Temi15UteQue, List<Object>>>(
+      FutureTask<WrappedResponse<QueryExecutionResponse>> myTaskCount =
+          new FutureTask<>(
               queryExecutorFactory
                   .getExecuteQueryTask()
                   .setPage(page)
@@ -121,43 +125,32 @@ public class GenericQueryTaskExecutorService {
     executor.shutdown();
     executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
 
-    for (Future<XWrappedResponse<Temi15UteQue, List<Object>>> task : taskList) {
-      XWrappedResponse<Temi15UteQue, List<Object>> response = task.get();
+    List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut = new ArrayList<>();
+
+    Map<Temi15UteQue, Integer> uteQueCountMap = new HashMap<>();
+
+    for (Future<WrappedResponse<QueryExecutionResponse>> task : taskList) {
+      WrappedResponse<QueryExecutionResponse> response = task.get();
 
       if (!response.isSuccess())
-        return new ArrayList<XWrappedResponse<Temi15UteQue, List<Object>>>() {
-          {
-            add(response);
-          }
-        };
+        return List.of(this.response.toBuilder().errorMessage(response.getErrorMessage()).build());
 
-      listOut.add(response);
-    }
-
-    List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut1 = new ArrayList<>();
-
-    position = 0;
-
-    /** Una volta raccolto tutti i risultati, assegno alla query col result set la sua count */
-    for (XWrappedResponse<Temi15UteQue, List<Object>> response : listOut) {
-      QueryToJson json = objectMapper.getObjectMapper().readValue(response.getXentity().getJson(), QueryToJson.class);
-
-      if (json.getPosition() - position == 0 && json.getQueryType() == QueryType.COUNT) {
-
-        for (XWrappedResponse<Temi15UteQue, List<Object>> response1 : listOut) {
-          QueryToJson json1 =
-            objectMapper.getObjectMapper().readValue(response1.getXentity().getJson(), QueryToJson.class);
-          if (json1.getPosition() - position == 0 && json1.getQueryType() == QueryType.RESULT_SET) {
-            response1.setCount(response.getCount());
-            listOut1.add(response1);
-
-            position++;
-            break;
-          }
-        }
+      if(response.getEntity().getJson().getQueryType() == QueryType.COUNT) {
+        uteQueCountMap.put(response.getEntity().getTemi15UteQue(), response.getEntity().getCount());
+        continue;
       }
+
+      listOut.add(this.response.toBuilder()
+        .xentity(response.getEntity().getTemi15UteQue())
+        .entity(response.getEntity().getResultSet())
+        .build());
     }
 
-    return listOut1;
+    for (XWrappedResponse<Temi15UteQue, List<Object>> wrappedResponse : listOut) {
+      wrappedResponse.setCount(uteQueCountMap.get(wrappedResponse.getXentity()));
+    }
+
+    return listOut.stream().sorted(Comparator.comparing(a -> a.getXentity()
+      .getNam())).collect(Collectors.toList());
   }
 }

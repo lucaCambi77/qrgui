@@ -1,4 +1,4 @@
-package it.cambi.qrgui.services.oracle.taskExecutor;
+package it.cambi.qrgui.services.taskExecutor;
 
 import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Component;

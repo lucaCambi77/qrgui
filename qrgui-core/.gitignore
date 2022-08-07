@@ -32,3 +32,6 @@ build/
 
 ## Localstack
 .localstack/
+
+## H2 ##
+*mv.db
