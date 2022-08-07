@@ -84,8 +84,7 @@ public class WorkBookService {
     response.setQueryFilePath(fileName);
 
     /** Recupero la lista di entity dalla response */
-    List<Object> queryList =
-        new ObjectMapper().readValue(response.getSerializedEntity(), new TypeReference<>() {});
+    List<Object> queryList = response.getEntity();
 
     if (null != queryList && queryList.size() > 0) {
 

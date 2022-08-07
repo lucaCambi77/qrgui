@@ -28,8 +28,6 @@ public class FirstDbService {
   /**
    * @param que
    * @return
-   * @throws JsonParseException
-   * @throws JsonMappingException
    * @throws IOException
    */
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
