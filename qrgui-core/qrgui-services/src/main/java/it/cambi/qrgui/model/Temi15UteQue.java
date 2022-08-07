@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -127,4 +128,18 @@ public class Temi15UteQue implements java.io.Serializable {
         this.Temi18RouQues = Temi18RouQues;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Temi15UteQue that = (Temi15UteQue) o;
+        return que == that.que && insQue.equals(that.insQue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(que, insQue);
+    }
 }

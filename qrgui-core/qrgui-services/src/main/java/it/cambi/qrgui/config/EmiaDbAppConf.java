@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @ComponentScan(basePackageClasses = {Temi13DtbInf.class})
 @EnableJpaRepositories(basePackageClasses = QueryRepository.class, entityManagerFactoryRef = "emiaEntityManagerFactory", transactionManagerRef = "emiaTransactionManager")
 @RequiredArgsConstructor
+@PropertySource("classpath:services.properties")
 public class EmiaDbAppConf {
 
     private final Environment env;

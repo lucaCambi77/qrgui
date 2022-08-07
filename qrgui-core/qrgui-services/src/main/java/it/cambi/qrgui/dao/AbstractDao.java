@@ -39,6 +39,17 @@ public abstract class AbstractDao {
                     .getResultList())
         .orElse(getEntityManager().createNativeQuery(nativeQuery).getResultList());
   }
+  public List<Object> getByNativeQuery(String nativeQuery, Integer page, Integer pageSize) {
+    return Optional.ofNullable(page)
+        .map(
+            p ->
+                getEntityManager()
+                    .createNativeQuery(nativeQuery)
+                    .setMaxResults(pageSize)
+                    .setFirstResult((p - 1) * pageSize)
+                    .getResultList())
+        .orElse(getEntityManager().createNativeQuery(nativeQuery).getResultList());
+  }
 
   public Long executeQueryCount(String sqlQuery) {
     Query nativeQuery =

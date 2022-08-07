@@ -66,7 +66,7 @@ public class ExecuteQueryTask implements Callable<WrappedResponse<QueryExecution
       count = firstGenericDao.executeQueryCount(finalQuery);
       queryExecutionResponse.setCount(count.intValue());
     } else {
-      resultSet = firstGenericDao.getByNativeQuery(finalQuery, page);
+      resultSet = firstGenericDao.getByNativeQuery(finalQuery, page, pageSize);
       queryExecutionResponse.setResultSet(queryService.setResultSet(json, resultSet));
     }
 

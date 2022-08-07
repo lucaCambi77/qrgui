@@ -9,6 +9,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -30,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @ComponentScan(basePackageClasses = {GuiUser.class, GuiUserDetailService.class})
 @EnableJpaRepositories(basePackageClasses = UserRepository.class, entityManagerFactoryRef = "securityEntityManagerFactory", transactionManagerRef = "securityTransactionManager")
 @RequiredArgsConstructor
+@PropertySource("classpath:security.properties")
 public class SecurityDbAppConf {
 
     private final Environment env;

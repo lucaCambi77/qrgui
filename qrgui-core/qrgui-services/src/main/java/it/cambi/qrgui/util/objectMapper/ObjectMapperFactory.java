@@ -79,7 +79,7 @@ public class ObjectMapperFactory
         objectMapper.addMixIn(
           Object.class, PropertyFilterMixIn.class);
 
-        defaultWriter = objectMapper.writer(new SimpleFilterProvider()
+        objectMapper.setFilterProvider(new SimpleFilterProvider()
           .addFilter("Filter",
             SimpleBeanPropertyFilter.serializeAllExcept()));
     }
@@ -135,7 +135,6 @@ public class ObjectMapperFactory
         @JsonIgnore
         @JsonProperty("temi16QueCatAsses")
         Set<Temi16QueCatAss> getTemi16QueCatAsses();
-
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi15UteQue.class)

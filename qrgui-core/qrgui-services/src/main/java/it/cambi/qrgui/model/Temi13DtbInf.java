@@ -2,6 +2,7 @@ package it.cambi.qrgui.model;
 // Generated Apr 10, 2018 11:58:47 AM by Hibernate Tools 3.6.0.Final
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.AttributeOverride;
@@ -65,4 +66,18 @@ public class Temi13DtbInf implements java.io.Serializable
         this.Temi15UteQues = Temi15UteQues;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Temi13DtbInf that = (Temi13DtbInf) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

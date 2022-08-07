@@ -171,8 +171,8 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     ParameterExpression<Date> cInsParam =
         queCatAssDao.getEntityManager().getCriteriaBuilder().parameter(Date.class, "insQue");
 
-    Expression<?> cqueExpr = root.get("que");
-    Expression<?> cinsExpr = root.get("insQue");
+    Expression<?> cqueExpr = root.get("id").get("que");
+    Expression<?> cinsExpr = root.get("id").get("insQue");
 
     Predicate predicateCQue =
         queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cqueExpr, cQueParam);

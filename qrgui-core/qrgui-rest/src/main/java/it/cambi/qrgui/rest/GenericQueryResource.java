@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.services.WorkBookService;
-import it.cambi.qrgui.services.oracle.entity.FirstOracleService;
-import it.cambi.qrgui.services.oracle.taskExecutor.GenericQueryTaskExecutorService;
+import it.cambi.qrgui.services.database.FirstDbService;
+import it.cambi.qrgui.services.taskExecutor.GenericQueryTaskExecutorService;
 import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
@@ -36,7 +36,7 @@ public class GenericQueryResource extends BasicResource {
 
   private final GenericQueryTaskExecutorService genericTaskExecutor;
 
-  private final FirstOracleService firstOracleService;
+  private final FirstDbService firstOracleService;
 
   private final WorkBookService workBookService;
 
@@ -62,7 +62,7 @@ public class GenericQueryResource extends BasicResource {
   @RequestMapping("execute_query")
   public ResponseEntity<String> executeQuery(
       @RequestBody List<Temi15UteQue> queries,
-      @RequestParam(value = "page", required = false, defaultValue = "1") Integer page,
+      @RequestParam(value = "page", required = false) Integer page,
       @RequestParam(value = "pageSize", required = false, defaultValue = Constants.TEN)
           Integer pageSize,
       @DefaultValue("false") @RequestParam("createFile") Boolean createFile,

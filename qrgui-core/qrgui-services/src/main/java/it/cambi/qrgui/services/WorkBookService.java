@@ -160,10 +160,10 @@ public class WorkBookService {
           if (javaType == JavaTypes.DATE && null != value && !value.isEmpty())
             value =
                 DateUtils.getStringFromDate(
-                    new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS), new Long(value));
+                    new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS), Long.parseLong(value));
 
           if (javaType == JavaTypes.DATE_TRUNC && null != value && !value.isEmpty())
-            value = DateUtils.getStringFromDate(new SimpleDateFormat(YYYY_MM_DD), new Long(value));
+            value = DateUtils.getStringFromDate(new SimpleDateFormat(YYYY_MM_DD), Long.parseLong(value));
 
           cell.setCellValue(value);
         }

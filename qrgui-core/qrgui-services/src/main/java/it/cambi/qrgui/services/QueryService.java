@@ -48,12 +48,8 @@ public class QueryService {
     if (null == json.getStatement())
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add("Statement della query non presente");
-                }
-              });
+          .setErrorMessages(List.of("Statement della query non presente"));
+
 
     if (json.getStatement().toLowerCase().contains("insert")
         || json.getStatement().toLowerCase().contains("drop")
@@ -62,38 +58,24 @@ public class QueryService {
         || json.getStatement().toLowerCase().contains("delete"))
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add("E' consentito solo l'uso di Select");
-                }
-              });
+          .setErrorMessages(List.of("E' consentito solo l'uso di Select"));
 
     int indexSelectAll = json.getStatement().toLowerCase().indexOf("select *");
     int indexSelect = json.getStatement().toLowerCase().indexOf("select");
 
-    if (indexSelectAll - indexSelect == 0 && (indexSelectAll != -1 && indexSelect != -1))
+    if (indexSelectAll - indexSelect == 0 && indexSelectAll != -1)
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add(
-                      "Non è possibile eseguire select *, è necessario indicare il nome degli attributi, meglio se con un alias per renderli più espliciti nel risultato");
-                }
-              });
+          .setErrorMessages(List.of(
+                      "Non è possibile eseguire select *, è necessario indicare il nome degli attributi, meglio se con un alias per renderli più espliciti nel risultato"));
+
 
     if (json.getStatement().toLowerCase().contains("--")
         || json.getStatement().toLowerCase().contains("/*"))
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add(
-                      "Non è consentito l'uso dei commenti in quanto potrebbero alterare la formattazione della query");
-                }
-              });
+          .setErrorMessages(List.of(
+                      "Non è consentito l'uso dei commenti in quanto potrebbero alterare la formattazione della query"));
 
     if (null == query.getNam())
       return responseQueryToJson
@@ -108,27 +90,17 @@ public class QueryService {
     if (null == json.getQuerySelectColumns() || json.getQuerySelectColumns().size() == 0)
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add("E' necessario indicare almeno una colonna di output ");
-                }
-              });
+          .setErrorMessages(List.of("E' necessario indicare almeno una colonna di output "));
+
 
     /** Controllo tipo e alias delle colonne */
     int j = 1;
 
     for (SelectColumns column : json.getQuerySelectColumns()) {
       if (null == column.getAs() || null == column.getType()) {
-        String message = "Tipo od alias non definito per colonna " + j;
         return responseQueryToJson
             .setSuccess(false)
-            .setErrorMessages(
-                new ArrayList<String>() {
-                  {
-                    add(message);
-                  }
-                });
+            .setErrorMessages(List.of("Tipo od alias non definito per colonna " + j));
       }
       j++;
     }
@@ -141,7 +113,7 @@ public class QueryService {
     Pattern p = Pattern.compile("&\\w+"); // the pattern to search for
     Matcher m = p.matcher(cleanedStatement);
 
-    List<String> parameters = new ArrayList<String>();
+    List<String> parameters = new ArrayList<>();
 
     while (m.find()) {
       parameters.add(m.group());
@@ -151,12 +123,7 @@ public class QueryService {
     if (json.getAttrs().size() != count)
       return responseQueryToJson
           .setSuccess(false)
-          .setErrorMessages(
-              new ArrayList<String>() {
-                {
-                  add("Non sono stati definiti tutti i parametri della query.getJson()");
-                }
-              });
+          .setErrorMessages(List.of("Non sono stati definiti tutti i parametri della query.getJson()"));
 
     for (Attribute attr : json.getAttrs()) {
       if (null
@@ -166,12 +133,7 @@ public class QueryService {
               .orElse(null))
         return responseQueryToJson
             .setSuccess(false)
-            .setErrorMessages(
-                new ArrayList<String>() {
-                  {
-                    add("Non sono stati definiti tutti i parametri della query");
-                  }
-                });
+            .setErrorMessages(List.of("Non sono stati definiti tutti i parametri della query"));
     }
 
     for (Attribute attr : json.getAttrs()) {
@@ -181,14 +143,9 @@ public class QueryService {
           || attr.getParameter().getType() == null)
         return responseQueryToJson
             .setSuccess(false)
-            .setErrorMessages(
-                new ArrayList<String>() {
-                  {
-                    add(
+            .setErrorMessages(List.of(
                         "Non è presente il parametro, l'operatore, l'alias o il tipo per "
-                            + attr.getAttrName());
-                  }
-                });
+                            + attr.getAttrName()));
     }
 
     /** Controllo i constraint */
@@ -197,40 +154,25 @@ public class QueryService {
         if (constr.getParameters() == null || constr.getConstrType() == null)
           return responseQueryToJson
               .setSuccess(false)
-              .setErrorMessages(
-                  new ArrayList<String>() {
-                    {
-                      add(
+              .setErrorMessages(List.of(
                           "Non è presente il/i parametri per il vincolo dell' attributo "
-                              + constr.getAttrName());
-                    }
-                  });
+                              + constr.getAttrName()));
 
         switch (constr.getConstrType()) {
           case IN_SIZE:
             if (constr.getParameters().split(",").length != 1)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Per il vincoli di In può essere definito un solo parametro per "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             if (constr.getMaxInSize() == null)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Non è presente il valore per il vincolo In dell' attributo "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             String attributesIn = getParameterList(json, constr);
 
@@ -246,14 +188,9 @@ public class QueryService {
             if (constr.getParameters().split(",").length != 2)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Per un vincolo temporale devono essere dichiarati 2 parametri per l' attributo "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             if (constr.getMaxIntervalDays() == null
                 && constr.getMaxIntervalHours() == null
@@ -261,14 +198,9 @@ public class QueryService {
                 && constr.getMaxIntervalSec() == null)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Non è presente il valore per il vincolo Temporale dell' attributo "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             String attributesTempInt = getParameterList(json, constr);
 
@@ -290,26 +222,16 @@ public class QueryService {
             if (constr.getParameters().split(",").length != 2)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Per un vincolo numerico devono essere dichiarati 2 parametri per l' attributo "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             if (constr.getMaxIntervalNumber() == null)
               return responseQueryToJson
                   .setSuccess(false)
-                  .setErrorMessages(
-                      new ArrayList<String>() {
-                        {
-                          add(
+                  .setErrorMessages(List.of(
                               "Non è presente il valore per il vincolo numerico dell' attributo "
-                                  + constr.getAttrName());
-                        }
-                      });
+                                  + constr.getAttrName()));
 
             String attributesTempNum = getParameterList(json, constr);
 
@@ -331,12 +253,7 @@ public class QueryService {
       if (null == attr.getParameter().getType())
         return responseQueryToJson
             .setSuccess(false)
-            .setErrorMessages(
-                new ArrayList<String>() {
-                  {
-                    add("Deve essere dichiarato il tipo per " + attr.getAttrName());
-                  }
-                });
+            .setErrorMessages(List.of("Deve essere dichiarato il tipo per " + attr.getAttrName()));
 
       switch (attr.getParameter().getType()) {
         case DATE:
@@ -355,7 +272,9 @@ public class QueryService {
           break;
 
         case NUMBER:
-          if (attr.getOperator().toUpperCase() == WhereConditionOperator.IN.getName()) {
+          if (attr.getOperator()
+            .toUpperCase()
+            .equals(WhereConditionOperator.IN.getName())) {
             finaleReplace = finaleReplace.replace(attr.getParameter().getName(), "(9, 6)");
 
             break;
@@ -365,7 +284,9 @@ public class QueryService {
           break;
 
         case STRING:
-          if (attr.getOperator().toUpperCase() == WhereConditionOperator.IN.getName()) {
+          if (attr.getOperator()
+            .toUpperCase()
+            .equals(WhereConditionOperator.IN.getName())) {
             finaleReplace = finaleReplace.replace(attr.getParameter().getName(), "('X', 'Z')");
 
             break;
@@ -386,13 +307,14 @@ public class QueryService {
   }
 
   private String getParameterList(QueryToJson query, Constraint constr) {
-    String attributes = "";
+    StringBuilder attributes = new StringBuilder();
 
     for (String param : constr.getParameters().split(",")) {
       for (Attribute attr : query.getAttrs()) {
 
         if (param.equalsIgnoreCase(attr.getParameter().getName()))
-          attributes += attr.getAlias() + " - ";
+          attributes.append(attr.getAlias())
+            .append(" - ");
       }
     }
 
@@ -404,11 +326,9 @@ public class QueryService {
    * sostituiti i parametri
    *
    * @param query
-   * @param pageSize
    * @return
    * @throws IOException
    */
-  @SuppressWarnings("serial")
   public WrappedResponse<String> getFinalQueryString(Temi15UteQue query) throws IOException {
 
     QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
@@ -439,12 +359,7 @@ public class QueryService {
               if (splittedValues.length > constraint.getMaxInSize())
                 return responseString
                     .setSuccess(false)
-                    .setErrorMessages(
-                        new ArrayList<String>() {
-                          {
-                            add(constraint.getMessage());
-                          }
-                        });
+                    .setErrorMessages(List.of(constraint.getMessage()));
             }
           }
 
@@ -468,12 +383,7 @@ public class QueryService {
               } catch (Exception e) {
                 return responseString
                     .setSuccess(false)
-                    .setErrorMessages(
-                        new ArrayList<String>() {
-                          {
-                            add("Il parametro " + attribute.getAlias() + " non è un data valida");
-                          }
-                        });
+                    .setErrorMessages(List.of("Il parametro " + attribute.getAlias() + " non è un data valida"));
               }
             }
 
@@ -484,12 +394,7 @@ public class QueryService {
               } catch (Exception e) {
                 return responseString
                     .setSuccess(false)
-                    .setErrorMessages(
-                        new ArrayList<String>() {
-                          {
-                            add("Il parametro " + attribute.getAlias() + " non è un data valida");
-                          }
-                        });
+                    .setErrorMessages(List.of("Il parametro " + attribute.getAlias() + " non è un data valida"));
               }
             }
           }
@@ -515,19 +420,11 @@ public class QueryService {
           if ((secondParamValue.getTime() - fistParamValue.getTime()) > maxInterval)
             return responseString
                 .setSuccess(false)
-                .setErrorMessages(
-                    new ArrayList<String>() {
-                      {
-                        add(constraint.getMessage());
-                      }
-                    });
+                .setErrorMessages(List.of(constraint.getMessage()));
 
           break;
 
-        case NUMERIC_INTERVAL:
-          break;
-
-        default:
+      default:
           break;
       }
     }
@@ -544,7 +441,7 @@ public class QueryService {
                   "to_date('"
                       + DateUtils.getStringFromDate(
                           new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS),
-                          new Long(attr.getParameter().getValue()))
+                          Long.parseLong(attr.getParameter().getValue()))
                       + "', 'YYYY/MM/DD HH24:MI:SS')");
           break;
 
@@ -555,7 +452,7 @@ public class QueryService {
                   "to_date('"
                       + DateUtils.getStringFromDate(
                           new SimpleDateFormat(YYYY_MM_DD),
-                          new Long(attr.getParameter().getValue()))
+                           Long.parseLong(attr.getParameter().getValue()))
                       + "', 'YYYY/MM/DD')");
 
           break;
@@ -573,12 +470,7 @@ public class QueryService {
               if (!StringUtils.isNumeric(split[i]))
                 return responseString
                     .setSuccess(false)
-                    .setErrorMessages(
-                        new ArrayList<String>() {
-                          {
-                            add("Il parametro " + attr.getAlias() + " non è un numero corretto");
-                          }
-                        });
+                    .setErrorMessages(List.of("Il parametro " + attr.getAlias() + " non è un numero corretto"));
 
               finalString.append(split[i]).append((i == split.length - 1) ? "" : ",");
             }
@@ -592,12 +484,7 @@ public class QueryService {
           if (!StringUtils.isNumeric(attr.getParameter().getValue()))
             return responseString
                 .setSuccess(false)
-                .setErrorMessages(
-                    new ArrayList<String>() {
-                      {
-                        add("Il parametro " + attr.getAlias() + " non è un numero corretto");
-                      }
-                    });
+                .setErrorMessages(List.of("Il parametro " + attr.getAlias() + " non è un numero corretto"));
 
           finaleReplace =
               finaleReplace.replace(attr.getParameter().getName(), attr.getParameter().getValue());
@@ -648,23 +535,15 @@ public class QueryService {
    * @param resultSet
    * @return
    */
-  @SuppressWarnings("serial")
-  public List<Object> setOneColumnResultSet(QueryToJson query, List<Object> resultSet) {
+  public List<Object> setResultSet(QueryToJson query, List<Object> resultSet) {
+
     if (query.getQuerySelectColumns().size() == 1) {
 
-      List<Object> listToReturn = new ArrayList<Object>();
+      List<Object> listToReturn = new ArrayList<>();
 
-      for (Object object : resultSet) {
+      resultSet.forEach(r -> listToReturn.add(List.of(r)) );
 
-        listToReturn.add(
-            new ArrayList<Object>() {
-              {
-                add(object);
-              }
-            });
-      }
-
-      resultSet = listToReturn;
+      return listToReturn;
     }
 
     return resultSet;
