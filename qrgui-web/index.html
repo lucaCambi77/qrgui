@@ -79,20 +79,9 @@
 		<div class="row">
 			<div id="leftSideBar" class="col-sm-2 col-md-1 sidebar">
 				<ul id="sideBarList" class="nav nav-sidebar">
-					<li class="active"><a href="#/overview">Overview</a></li>
-					<!-- 					<li ng-if="ertaQrGuiUser.admin"><a href data-toggle="collapse"
-						data-target="#submenu1">Data Base Info <span
-							class="pull-right"><b class="caret"
-								style="margin-top: 0.5em;"></b></span>
-					</a>
-						<ul class="nav nav-list collapse" id="submenu1">
-							<li ng-repeat="item in index.databaseInfoList"
-								style="margin-left: 2em;"><a type="button"
-								ng-click="index.setDbInfo(item)" href="#!/query">{{item.id.ctyp}}
-									- {{item.id.csch}}</a></li>
-						</ul></li> -->
-					<li><a href="#/categories">Categories</a></li>
-					<li><a href="#/routines">Routines</a></li>
+					<li ng-class="{'active' : activeMenu == 'overview'}"><a href="#/overview">Overview</a></li>
+					<li ng-class="{'active' : activeMenu == 'categories'}"><a href="#/categories">Categories</a></li>
+					<li ng-class="{'active' : activeMenu == 'routines'}"><a href="#/routines">Routines</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-10 col-md-11 {{columnOffSet}} main">
@@ -104,16 +93,6 @@
 	<script src="assets/bundle.js"></script>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<!-- 	<script src="scripts/ie10-viewport-bug-workaround.js?v=1.2.1"></script> -->
-	<script type="text/javascript">
-		$(function () {
-			// Remove all active and mark as active current selection
-			$('#sideBarList').on('click', 'li', function () {
-				$('#sideBarList li.active').removeClass('active');
-				$(this).addClass('active');
-			});
-		});
-	</script>
-
 
 </body>
 

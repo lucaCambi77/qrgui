@@ -16,7 +16,9 @@ angular
 			ListUtilityFactory, $uibModal, EmiaRestUtilityFactory,
 			$q, UtilErrorsFactory) {
 
-			var category = this;
+			$rootScope.activeMenu = 'categories'
+
+			const category = this;
 
 			category.errors = [];
 
@@ -31,7 +33,7 @@ angular
 			category.deleteQueryTitle = 'Cancella Query';
 			category.modifyQueryTitle = 'Modifica Query';
 
-			var templateSetFunction = 'SetCategoriesListTemplate';
+			const templateSetFunction = 'SetCategoriesListTemplate';
 
 			HtmlUtilityFactory[templateSetFunction]($scope,
 				$rootScope.categories);

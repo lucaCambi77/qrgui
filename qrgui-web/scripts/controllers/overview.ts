@@ -9,6 +9,7 @@ import angular from 'angular';
 angular.module('qrGuiApp').controller('OverviewCtrl', ['$rootScope', '$location', '$window',
 	function ($rootScope, $location, $window) {
 
+		$rootScope.activeMenu = 'overview'
 		$rootScope.columnOffSet = "col-md-offset-1";
 
 	}])
