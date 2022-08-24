@@ -16,6 +16,8 @@ angular
 			ListUtilityFactory, $uibModal, EmiaRestUtilityFactory,
 			UtilErrorsFactory, $q) {
 
+			$rootScope.activeMenu = 'routines'
+
 			var routineController = this;
 
 			routineController.deleteRoutineTitle = "Cancella Routine";
