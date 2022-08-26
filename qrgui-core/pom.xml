@@ -86,7 +86,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
+            <version>8.0.30</version>
         </dependency>
 
         <dependency>
@@ -126,6 +126,7 @@
                                         <version>5.3.20.Final</version>
                                     </path>
                                 </annotationProcessorPaths>
+                                <showDeprecation>true</showDeprecation>
                             </configuration>
                         </plugin>
                         <plugin>

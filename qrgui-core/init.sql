@@ -1,8 +1,6 @@
 CREATE DATABASE IF NOT EXISTS test;
-CREATE USER 'db_user'@'localhost' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'db_user'@'localhost' WITH GRANT OPTION;
-CREATE USER 'db_user'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'db_user'@'%' WITH GRANT OPTION;
+CREATE USER 'db_user'@'10.5.0.1' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'db_user'@'10.5.0.1' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 
 use test;
