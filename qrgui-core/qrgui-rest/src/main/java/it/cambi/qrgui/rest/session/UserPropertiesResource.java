@@ -1,23 +1,22 @@
 package it.cambi.qrgui.rest.session;
 
-import static it.cambi.qrgui.util.Constants.R_FEPQR1;
-import static it.cambi.qrgui.util.Constants.R_FEPQR2;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import it.cambi.qrgui.response.model.ErtaGuiUser;
 import it.cambi.qrgui.response.model.ErtaQrGuiRoles;
 import it.cambi.qrgui.rest.BasicResource;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
+import static it.cambi.qrgui.util.Constants.R_FEPQR1;
+import static it.cambi.qrgui.util.Constants.R_FEPQR2;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 @Component
 @RequestMapping("/userProperties")

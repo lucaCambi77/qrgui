@@ -3,15 +3,14 @@
  */
 package it.cambi.qrgui.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import it.cambi.qrgui.enums.OrderType;
 
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
-
-import it.cambi.qrgui.enums.OrderType;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author luca

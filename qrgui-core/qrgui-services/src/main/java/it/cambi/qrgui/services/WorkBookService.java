@@ -1,14 +1,13 @@
 package it.cambi.qrgui.services;
 
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import com.amazonaws.services.s3.AmazonS3;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cambi.qrgui.enums.JavaTypes;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.query.model.QueryToJson;
+import it.cambi.qrgui.util.DateUtils;
+import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -18,16 +17,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
-import it.cambi.qrgui.enums.JavaTypes;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.util.DateUtils;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
-import lombok.RequiredArgsConstructor;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
 @RequiredArgsConstructor
 public class WorkBookService {

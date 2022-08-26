@@ -1,22 +1,21 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.Constants.F_QRRINS;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
+import it.cambi.qrgui.services.emia.api.ITemi18Service;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import it.cambi.qrgui.model.Temi18RouQue;
-import it.cambi.qrgui.model.Temi18RouQueId;
-import it.cambi.qrgui.services.emia.api.ITemi18Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
+import static it.cambi.qrgui.util.Constants.F_QRRINS;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 @RequestMapping("/emia/routQuery")
 @Component

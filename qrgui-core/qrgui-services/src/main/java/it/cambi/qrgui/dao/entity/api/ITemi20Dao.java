@@ -1,10 +1,9 @@
 package it.cambi.qrgui.dao.entity.api;
 
-import java.util.List;
+import it.cambi.qrgui.dao.api.IEntityDao;
 
 import javax.servlet.http.HttpServletRequest;
-
-import it.cambi.qrgui.dao.api.IEntityDao;
+import java.util.List;
 
 public interface ITemi20Dao<T, K> extends IEntityDao<T, K>
 {

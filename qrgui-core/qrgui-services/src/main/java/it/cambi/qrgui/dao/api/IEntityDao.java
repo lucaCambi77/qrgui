@@ -1,12 +1,11 @@
 package it.cambi.qrgui.dao.api;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
+import java.util.List;
 
 public interface IEntityDao<T, K>
 {

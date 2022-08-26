@@ -1,16 +1,10 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.Constants.F_QRCMOD;
-import static it.cambi.qrgui.util.Constants.F_QRQE00;
-import static it.cambi.qrgui.util.Constants.F_QRQINS;
-import static it.cambi.qrgui.util.Constants.F_QRQMOD;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.services.emia.api.ITemi15Service;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -20,11 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.model.Temi15UteQueId;
-import it.cambi.qrgui.services.emia.api.ITemi15Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
+import static it.cambi.qrgui.util.Constants.F_QRCMOD;
+import static it.cambi.qrgui.util.Constants.F_QRQE00;
+import static it.cambi.qrgui.util.Constants.F_QRQINS;
+import static it.cambi.qrgui.util.Constants.F_QRQMOD;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 @RequestMapping("/emia/query")
 @Component

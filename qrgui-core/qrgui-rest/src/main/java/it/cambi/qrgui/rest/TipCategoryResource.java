@@ -1,23 +1,22 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.Constants.F_QRCG00;
-import static it.cambi.qrgui.util.Constants.F_QRCG01;
-import static it.cambi.qrgui.util.Constants.F_QRRE00;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-
+import it.cambi.qrgui.model.Temi20AnaTipCat;
+import it.cambi.qrgui.services.emia.api.ITemi20Service;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.cambi.qrgui.model.Temi20AnaTipCat;
-import it.cambi.qrgui.services.emia.api.ITemi20Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
+import static it.cambi.qrgui.util.Constants.F_QRCG00;
+import static it.cambi.qrgui.util.Constants.F_QRCG01;
+import static it.cambi.qrgui.util.Constants.F_QRRE00;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 @RequestMapping("/emia/anaTipCat")
 @Component

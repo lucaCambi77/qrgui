@@ -1,12 +1,11 @@
 package it.cambi.qrgui.dao.temi.impl;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
+import it.cambi.qrgui.dao.JpaEntityDao;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import it.cambi.qrgui.dao.JpaEntityDao;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * @param <T>

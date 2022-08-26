@@ -1,11 +1,5 @@
 package it.cambi.qrgui.security;
 
-import static java.lang.String.format;
-
-import java.util.Date;
-
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +10,11 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import it.cambi.qrgui.security.db.model.GuiUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+import static java.lang.String.format;
 
 @Component
 @RequiredArgsConstructor

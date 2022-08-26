@@ -1,10 +1,9 @@
 package it.cambi.qrgui.security;
 
-import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.jpa.repository.UserRepository;
+import it.cambi.qrgui.security.services.GuiUserDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,10 +17,9 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
-import it.cambi.qrgui.security.jpa.repository.UserRepository;
-import it.cambi.qrgui.security.services.GuiUserDetailService;
-import lombok.RequiredArgsConstructor;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * @author luca

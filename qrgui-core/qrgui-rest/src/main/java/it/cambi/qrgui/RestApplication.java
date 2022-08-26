@@ -1,11 +1,10 @@
 package it.cambi.qrgui;
 
+import it.cambi.qrgui.config.InitConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import it.cambi.qrgui.config.InitConfiguration;
 
 @SpringBootApplication
 @EnableWebMvc

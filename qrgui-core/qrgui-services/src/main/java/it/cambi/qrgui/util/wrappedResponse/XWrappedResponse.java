@@ -1,9 +1,9 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
-import java.util.List;
-
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * Classe utilizzata nel caso che oltre alla entity della WrappedResponse si voglia utilizzare

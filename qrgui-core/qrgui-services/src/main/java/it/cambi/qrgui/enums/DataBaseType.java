@@ -1,7 +1,6 @@
 package it.cambi.qrgui.enums;
 
-public enum DataBaseType
-{
-
-    ORACLE, DB2
+public enum DataBaseType {
+  ORACLE,
+  DB2
 }

@@ -1,6 +1,7 @@
 package it.cambi.qrgui.dao;
 
-import java.util.List;
+import it.cambi.qrgui.dao.api.IEntityDao;
+import it.cambi.qrgui.util.QueryUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -9,9 +10,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
-
-import it.cambi.qrgui.dao.api.IEntityDao;
-import it.cambi.qrgui.util.QueryUtils;
+import java.util.List;
 
 /**
  * @param <T>

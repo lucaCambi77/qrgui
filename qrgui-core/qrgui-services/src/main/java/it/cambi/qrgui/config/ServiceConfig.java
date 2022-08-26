@@ -1,12 +1,6 @@
 package it.cambi.qrgui.config;
 
-import java.util.List;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.model.Temi15UteQue;
@@ -21,6 +15,10 @@ import it.cambi.qrgui.util.TreeNode;
 import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class ServiceConfig {
@@ -87,6 +85,7 @@ public class ServiceConfig {
       ObjectMapperFactory objectMapperFactory) {
     return new XWrappedResponse<>(objectMapperFactory);
   }
+
   @Bean
   public XWrappedResponse<Temi15UteQue, List<Object>> responseExecutor(
       ObjectMapperFactory objectMapperFactory) {
@@ -124,8 +123,10 @@ public class ServiceConfig {
   public WrappedResponse<Integer> responseInteger(ObjectMapperFactory objectMapperFactory) {
     return new WrappedResponse<>(objectMapperFactory);
   }
+
   @Bean
-  public WrappedResponse<QueryExecutionResponse> responseQueryExecution(ObjectMapperFactory objectMapperFactory) {
+  public WrappedResponse<QueryExecutionResponse> responseQueryExecution(
+      ObjectMapperFactory objectMapperFactory) {
     return new WrappedResponse<>(objectMapperFactory);
   }
 }

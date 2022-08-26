@@ -1,15 +1,14 @@
 package it.cambi.qrgui.dao;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 /** */
 public abstract class AbstractDao {
@@ -27,7 +26,6 @@ public abstract class AbstractDao {
     return pageSize;
   }
 
-  @SuppressWarnings("unchecked")
   public List<Object> getByNativeQuery(String nativeQuery, Integer page) {
     return Optional.ofNullable(page)
         .map(

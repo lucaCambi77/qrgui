@@ -1,22 +1,21 @@
 package it.cambi.qrgui.rest;
 
-import static it.cambi.qrgui.util.Constants.R_FEPQR1;
-import static it.cambi.qrgui.util.Constants.R_FEPQR2;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
-
-import javax.annotation.security.RolesAllowed;
-import javax.servlet.http.HttpServletRequest;
-
+import it.cambi.qrgui.model.Temi13DtbInf;
+import it.cambi.qrgui.services.emia.api.ITemi13Service;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import it.cambi.qrgui.model.Temi13DtbInf;
-import it.cambi.qrgui.services.emia.api.ITemi13Service;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
+
+import static it.cambi.qrgui.util.Constants.R_FEPQR1;
+import static it.cambi.qrgui.util.Constants.R_FEPQR2;
+import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 
 @RequestMapping("/emia/dbInfo")
 @Component

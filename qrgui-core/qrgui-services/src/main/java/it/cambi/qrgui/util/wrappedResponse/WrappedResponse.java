@@ -1,27 +1,9 @@
 package it.cambi.qrgui.util.wrappedResponse;
 
-import static it.cambi.qrgui.util.Constants.ERRORPARSE;
-import static it.cambi.qrgui.util.Constants.HANDLER;
-import static it.cambi.qrgui.util.Constants.HIBERNATELAZYINITIALIZER;
-
-import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
 import it.cambi.qrgui.response.model.ErtaGuiUser;
 import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.Errors;
@@ -32,6 +14,21 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import static it.cambi.qrgui.util.Constants.ERRORPARSE;
+import static it.cambi.qrgui.util.Constants.HANDLER;
+import static it.cambi.qrgui.util.Constants.HIBERNATELAZYINITIALIZER;
 
 @SuperBuilder(builderMethodName = "baseBuilder", toBuilder = true)
 @Data
@@ -92,13 +89,6 @@ public class WrappedResponse<T> {
     setResponse();
 
     return this;
-  }
-
-  /* Nel caso si abbia bisogno dell'entità in json. Viene usata per gli unit test */
-  @JsonIgnore
-  public String getSerializedEntity() throws JsonProcessingException {
-
-    return getObjectMapper().writeValueAsString(getEntity());
   }
 
   public ResponseEntity<String> getResponse(HttpServletRequest sr) {
@@ -192,7 +182,7 @@ public class WrappedResponse<T> {
     return this;
   }
 
-  public ObjectWriter getObjectMapper() {
+  private ObjectWriter getObjectMapper() {
     return objectMapper == null
         ? objectMapperFactory.createWriter(getIgnorableFields().toArray(String[]::new))
         : objectMapperFactory.getObjectMapper().writer();

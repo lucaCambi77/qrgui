@@ -1,8 +1,7 @@
 package it.cambi.qrgui.rest;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  * @author luca Abstract Class for Basic Resource attributes

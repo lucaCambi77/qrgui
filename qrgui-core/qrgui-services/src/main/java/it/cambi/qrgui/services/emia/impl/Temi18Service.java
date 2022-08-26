@@ -1,15 +1,14 @@
 /** */
 package it.cambi.qrgui.services.emia.impl;
 
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
 import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.services.emia.api.ITemi18Service;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /** @author luca */
 @Component

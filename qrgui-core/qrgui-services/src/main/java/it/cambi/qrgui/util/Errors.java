@@ -3,18 +3,16 @@
  */
 package it.cambi.qrgui.util;
 
-import static it.cambi.qrgui.util.Constants.NO_RESULT_EXCEPTION;
-import static it.cambi.qrgui.util.Constants.NULL_POINTER_EXCEPTION;
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLSyntaxErrorException;
 
-import javax.persistence.NoResultException;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import static it.cambi.qrgui.util.Constants.NO_RESULT_EXCEPTION;
+import static it.cambi.qrgui.util.Constants.NULL_POINTER_EXCEPTION;
 
 /**
  * @author luca

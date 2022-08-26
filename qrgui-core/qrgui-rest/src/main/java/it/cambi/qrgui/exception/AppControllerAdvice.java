@@ -1,7 +1,7 @@
 package it.cambi.qrgui.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
+import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 @RequiredArgsConstructor

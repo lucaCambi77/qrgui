@@ -1,16 +1,14 @@
 package it.cambi.qrgui.dao.entity.impl;
 
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import it.cambi.qrgui.dao.entity.api.ITemi13Dao;
 import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi13DtbInfId;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @param <T>

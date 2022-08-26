@@ -1,9 +1,6 @@
 
 package it.cambi.qrgui.util.objectMapper;
 
-import java.util.List;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +11,6 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-
 import it.cambi.qrgui.model.Temi13DtbInf;
 import it.cambi.qrgui.model.Temi13DtbInfId;
 import it.cambi.qrgui.model.Temi14UteCat;
@@ -28,6 +24,9 @@ import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * Classe per la creazione dell'object mapper che serve per la serializzazione degli oggetti verso il web. Mentre hibernate, tramite l'
@@ -61,11 +60,6 @@ public class ObjectMapperFactory
     {
         this.objectMapper = new ObjectMapper();
 
-        /*
-         * Avoid null attributes
-         */
-        // mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        this.objectMapper.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, true);
         this.objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS); // Ho aggiunto questo ma non serve...
 
         objectMapper.addMixIn(Temi13DtbInf.class, Temi13DtbInfMixIn.class);
@@ -98,12 +92,6 @@ public class ObjectMapperFactory
             SimpleBeanPropertyFilter.serializeAllExcept(
               ignorableFields)));
     }
-
-    public ObjectWriter getDefaultWriter()
-    {
-        return defaultWriter;
-    }
-
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi13DtbInf.class)
     public interface Temi13DtbInfMixIn

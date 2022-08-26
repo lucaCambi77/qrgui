@@ -1,7 +1,9 @@
 /** */
 package it.cambi.qrgui.util;
 
-/** @author luca */
+/**
+ * @author luca
+ */
 public class WrappingUtils {
 
   public static String cleanQueryString(String statement) {

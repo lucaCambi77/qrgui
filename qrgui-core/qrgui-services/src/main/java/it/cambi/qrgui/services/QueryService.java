@@ -1,21 +1,6 @@
 package it.cambi.qrgui.services;
 
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import it.cambi.qrgui.dao.AbstractDao;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.query.model.Attribute;
@@ -29,6 +14,19 @@ import it.cambi.qrgui.util.WrappingUtils;
 import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
 @Service
 @Setter

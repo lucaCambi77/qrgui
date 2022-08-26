@@ -3,13 +3,12 @@
  */
 package it.cambi.qrgui.util;
 
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 import java.math.BigDecimal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
-
-import javax.sql.rowset.serial.SerialBlob;
-import javax.sql.rowset.serial.SerialException;
 
 /**
  * Classe di utilità. TODO I metodi per stabilire la differenza possono essere riunificati in un unico modo che prende in input il tipo di dato.
@@ -31,7 +30,7 @@ public class Functions
     @Deprecated
     public static Blob getBlobFromBytes(byte[] bytes) throws SerialException, SQLException
     {
-        Blob blob = null; // is our blob object
+        Blob blob; // is our blob object
 
         blob = new SerialBlob(bytes);
         return blob;
@@ -48,11 +47,7 @@ public class Functions
      */
     public static boolean areDifferentInt(Integer value1, Integer value2)
     {
-        if ((value1 == null ? 0 : value1)
-                - (value2 == null ? 0 : value2) != 0)
-            return true;
-
-        return false;
+        return (value1 == null ? 0 : value1) - (value2 == null ? 0 : value2) != 0;
     }
 
     /**
@@ -66,11 +61,7 @@ public class Functions
      */
     public static boolean areDifferentLong(Long value1, Long value2)
     {
-        if ((value1 == null ? 0 : value1)
-                - (value2 == null ? 0 : value2) != 0)
-            return true;
-
-        return false;
+        return (value1 == null ? 0 : value1) - (value2 == null ? 0 : value2) != 0;
     }
 
     /**
@@ -84,11 +75,7 @@ public class Functions
      */
     public static boolean areDifferentDates(Date value1, Date value2)
     {
-        if ((value1 == null ? 0 : value1.getTime())
-                - (value2 == null ? 0 : value2.getTime()) != 0)
-            return true;
-
-        return false;
+        return (value1 == null ? 0 : value1.getTime()) - (value2 == null ? 0 : value2.getTime()) != 0;
     }
 
     /**
@@ -102,15 +89,10 @@ public class Functions
      */
     public static boolean areDifferentBytes(byte value1, byte value2)
     {
-        Byte aByte = new Byte(value1);
-        Byte anotherByte = new Byte(value2);
+        Byte aByte = value1;
+        Byte anotherByte = value2;
 
-        if (aByte.compareTo(anotherByte) != 0)
-        {
-            return true;
-        }
-
-        return false;
+        return aByte.compareTo(anotherByte) != 0;
     }
 
     /**
@@ -124,10 +106,7 @@ public class Functions
      */
     public static boolean areDifferentString(String value1, String value2)
     {
-        if (!(value1 == null ? "" : value1).equals(value2 == null ? "" : value2))
-            return true;
-
-        return false;
+        return !(value1 == null ? "" : value1).equals(value2 == null ? "" : value2);
     }
 
     /**
@@ -144,10 +123,7 @@ public class Functions
         if (value1 == null || value2 == null)
             return true;
 
-        if (value1 == value2)
-            return false;
-
-        return true;
+        return value1 != value2;
     }
 
     /**
@@ -161,11 +137,7 @@ public class Functions
      */
     public static boolean areDifferentDouble(Double value1, Double value2)
     {
-        if ((value1 == null ? 0 : value1)
-                - (value2 == null ? 0 : value2) != 0)
-            return true;
-
-        return false;
+        return (value1 == null ? 0 : value1) - (value2 == null ? 0 : value2) != 0;
     }
 
     /**
@@ -179,10 +151,7 @@ public class Functions
      */
     public static boolean areDifferentDecimal(BigDecimal value1, BigDecimal value2)
     {
-        if (value1.compareTo(value2) != 0)
-            return true;
-
-        return false;
+        return value1.compareTo(value2) != 0;
 
     }
 }

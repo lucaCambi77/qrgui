@@ -1,11 +1,10 @@
 package it.cambi.qrgui.dao.entity.api;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import it.cambi.qrgui.dao.api.IEntityDao;
 import it.cambi.qrgui.model.Temi16QueCatAss;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface ITemi16Dao<T, K> extends IEntityDao<T, K> {
 
