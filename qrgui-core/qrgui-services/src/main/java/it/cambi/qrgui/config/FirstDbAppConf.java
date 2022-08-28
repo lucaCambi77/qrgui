@@ -55,6 +55,7 @@ public class FirstDbAppConf {
 
   @Bean
   public DataSource testDataSource() {
+    System.out.println(env.getProperty("datasource.test.jdbcUrl"));
     return DataSourceBuilder.create()
         .url(env.getProperty("datasource.test.jdbcUrl"))
         .username(env.getProperty("datasource.test.username"))

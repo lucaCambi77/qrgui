@@ -59,7 +59,7 @@ public class SecurityDbAppConf {
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
         jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        jpaProperties.put("hibernate.dialect", env.getProperty("datasource.security.driver-class-name"));
 
         factory.setJpaProperties(jpaProperties);
 

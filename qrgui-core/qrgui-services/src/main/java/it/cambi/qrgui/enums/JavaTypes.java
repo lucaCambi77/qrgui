@@ -17,8 +17,8 @@ public enum JavaTypes {
   STRING("java.lang.String"),
   NUMBER("java.lang.number");
 
-  private String clazz;
-  private static Map<String, JavaTypes> map = new HashMap<String, JavaTypes>();
+  private final String clazz;
+  private static final Map<String, JavaTypes> map = new HashMap<>();
 
   static {
     for (JavaTypes legEnum : JavaTypes.values()) {

@@ -19,6 +19,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -39,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     properties = {"server.servlet.contextPath=/api"})
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
+@TestPropertySource(properties = {"datasource.test.driver-class-name=org.hibernate.dialect.H2Dialect","datasource.test.jdbcUrl=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS TEST"})
 public class ApplicationTest {
 
   private @Autowired DbInfoJpaRepository dbInforRepository;

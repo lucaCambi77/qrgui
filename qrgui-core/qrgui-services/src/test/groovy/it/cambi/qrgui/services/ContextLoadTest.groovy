@@ -16,7 +16,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @ContextConfiguration(classes = [FirstDbAppConf.class, ServiceConfig.class])
-@TestPropertySource("/test.properties")
+@TestPropertySource("/services.properties")
 class ContextLoadTest extends Specification {
 
     @PersistenceContext(unitName = "firstPU")

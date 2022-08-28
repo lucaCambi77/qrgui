@@ -25,4 +25,23 @@ class QueryServiceTest extends Specification {
         !wrapperResponse.isSuccess()
     }
 
+    def "fail validation when statement contains forbidden statement"() {
+        given:
+        objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> queryToJson
+
+        when:
+        def wrapperResponse = queryService.checkQuery(temi15UteQue, false, firstGenericDao)
+
+        then:
+        wrapperResponse.isSuccess() == result
+
+        where:
+        queryToJson                                                        | result
+        QueryToJson.builder().statement("insert into table ...").build()   | false
+        QueryToJson.builder().statement("delete from table").build()       | false
+        QueryToJson.builder().statement("update table set ...").build()    | false
+        QueryToJson.builder().statement("create table ...").build()        | false
+        QueryToJson.builder().statement("drop table ...").build()          | false
+        QueryToJson.builder().statement("select * from table ...").build() | false
+    }
 }
