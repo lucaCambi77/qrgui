@@ -43,7 +43,8 @@ public class GuiUser implements java.io.Serializable, UserDetails {
 
     private String passwordConfirm;
 
-    private Set<UserRole> userRoles = new HashSet<UserRole>(0);
+    @Builder.Default
+    private Set<UserRole> userRoles = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

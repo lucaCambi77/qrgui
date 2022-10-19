@@ -1,6 +1,5 @@
 package it.cambi.qrgui.rest;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
  *     is used as an @Inject
  */
 @CrossOrigin(origins = "*")
-@RequiredArgsConstructor
 public abstract class BasicResource {
 
 }

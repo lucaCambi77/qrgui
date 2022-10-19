@@ -33,7 +33,8 @@ public class Role implements java.io.Serializable
 
     private String name;
 
-    private Set<UserRole> userRoles = new HashSet<UserRole>(0);
+    @Builder.Default
+    private Set<UserRole> userRoles = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

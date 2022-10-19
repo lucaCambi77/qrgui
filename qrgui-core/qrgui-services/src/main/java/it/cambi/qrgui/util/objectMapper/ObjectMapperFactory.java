@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -50,16 +51,16 @@ public class ObjectMapperFactory
 {
 
     @JsonFilter("Filter")
-    public class PropertyFilterMixIn
+    public static class PropertyFilterMixIn
     {
     }
-
-    private ObjectWriter defaultWriter;
 
     public ObjectMapperFactory()
     {
         this.objectMapper = new ObjectMapper();
 
+        this.objectMapper.disable(DeserializationFeature
+                .FAIL_ON_UNKNOWN_PROPERTIES);
         this.objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS); // Ho aggiunto questo ma non serve...
 
         objectMapper.addMixIn(Temi13DtbInf.class, Temi13DtbInfMixIn.class);
@@ -96,7 +97,6 @@ public class ObjectMapperFactory
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi13DtbInf.class)
     public interface Temi13DtbInfMixIn
     {
-
         @JsonProperty("id")
         Temi13DtbInfId getId();
 

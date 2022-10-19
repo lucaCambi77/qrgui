@@ -1,8 +1,6 @@
 package it.cambi.qrgui.query.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.cambi.qrgui.enums.QueryType;
-import it.cambi.qrgui.model.Temi13DtbInf;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
