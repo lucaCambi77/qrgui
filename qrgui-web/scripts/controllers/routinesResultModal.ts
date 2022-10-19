@@ -53,9 +53,9 @@ angular
 			routineModal.doQueries = function (list, page,
 				queryPosition, createFile) {
 
-				var queryRestList = [];
+				const queryRestList = [];
 
-				for (var element in list) {
+				for (const element in list) {
 					list[element].query.json = JSON.stringify(
 						list[element].json, replacer)
 
@@ -104,28 +104,21 @@ angular
 							 * tabella e paginatore
 							 */
 
-							var template = "";
+							let template = "";
 
 							/**
 							 * Se non ho la posizione allora sto
 							 * lanciando tutte le query
 							 */
+							let query;
+
 							if (null == queryPosition) {
 
 								routineModal.filePath = response.entity[0].queryFilePath;
 
-								/**
-								 * L'ordine di visualizzazione
-								 * corrisponde all'ordine di
-								 * esecuzione, questo forse non
-								 * è l'ottimale ma è coerente.
-								 * Altrimenti si dovrebbe
-								 * prendere direttamente la
-								 * query della response
-								 */
-								for (var element in response.entity) {
+								for (const element in response.entity) {
 
-									var query = list[element].json;
+									query = list[element].json;
 
 									template += HtmlUtilityFactory
 										.GetQueryListTemplate(
@@ -159,7 +152,7 @@ angular
 								 */
 							} else {
 
-								var query = list[queryPosition].json;
+								query = list[queryPosition].json;
 
 								template += HtmlUtilityFactory
 									.GetQueryListTemplate(
@@ -190,7 +183,7 @@ angular
 							routineModal.errors = [];
 							UtilErrorsFactory.SetErrors(
 								routineModal,
-								response.entity.errorMessage);
+								response.errorMessage);
 						}, function (value) {
 							console.log(value)
 
@@ -205,7 +198,7 @@ angular
 			};
 
 			function addDivOnFirsLoad(position, template, name) {
-				var tmp = '<div id="routineResultList'
+				return '<div id="routineResultList'
 					+ position
 					+ '">'
 					+ '<h3 style="margin : 0.5em">'
@@ -213,8 +206,6 @@ angular
 					+ '</h3>'
 					+ '<p style="margin : 1em; color: #337ab7"></p>'
 					+ template + '</div>';
-
-				return tmp;
 
 			}
 

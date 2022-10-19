@@ -37,7 +37,7 @@ module.exports = (env) => {
     ],
     devServer: {
       // Can be omitted unless you are using 'docker'
-      host: '0.0.0.0',
+      host: 'localhost',
       publicPath: '/assets/',
       contentBase: path.resolve(__dirname),
       watchContentBase: true,
