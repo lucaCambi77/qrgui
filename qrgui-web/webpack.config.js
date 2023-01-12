@@ -42,7 +42,7 @@ module.exports = (env) => {
       contentBase: path.resolve(__dirname),
       watchContentBase: true,
       compress: true,
-      port: 8081
+      port: 8082
     }
   }
 }

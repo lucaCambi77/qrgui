@@ -103,7 +103,7 @@ angular
 											.close('Query '
 												+ queryRest.nam
 												+ ' '
-												+ (queryRest.id.que == null ? 'creata'
+												+ (queryRest.que == null ? 'creata'
 													: ' modificata')
 												+ ' con successo')
 

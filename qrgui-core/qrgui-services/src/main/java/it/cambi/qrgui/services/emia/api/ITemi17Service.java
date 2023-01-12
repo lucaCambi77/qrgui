@@ -2,15 +2,13 @@ package it.cambi.qrgui.services.emia.api;
 
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ITemi17Service<T> {
-  WrappedResponse<List<Temi17UteRou>> findAll(HttpServletRequest request);
+  List<Temi17UteRou> findAll(List<String> functions);
 
-  WrappedResponse<T> delete(Temi17UteRouId crou);
+  void delete(Temi17UteRouId crou);
 
-  WrappedResponse<T> merge(T temi17);
+  T merge(T temi17);
 }

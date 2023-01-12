@@ -4,7 +4,7 @@
 	"scripts": {
 		"build": "npm run clean && rimraf src/dist && webpack --bail --progress --profile --env prod=true --mode=production",
 		"server": "webpack serve --env prod=false --mode development",
-		"start": "npm run server",
+		"start": "npm run server ",
 		"clean": "rm ./dist -rf",
 		"lint": "eslint --ext .ts ."
 	},

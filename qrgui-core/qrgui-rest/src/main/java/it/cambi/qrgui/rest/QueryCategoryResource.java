@@ -1,47 +1,64 @@
 package it.cambi.qrgui.rest;
 
-import it.cambi.qrgui.model.Temi16QueCatAss;
-import it.cambi.qrgui.services.emia.api.ITemi16Service;
+import it.cambi.qrgui.api.model.QueCatAssDto;
+import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static it.cambi.qrgui.util.Constants.F_QRCG00;
-import static it.cambi.qrgui.util.Constants.F_QRCG01;
-import static it.cambi.qrgui.util.Constants.F_QRCMOD;
-import static it.cambi.qrgui.util.Constants.F_QRQE00;
-import static it.cambi.qrgui.util.Constants.F_QRQMOD;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG01;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCMOD;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQE00;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQMOD;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 @RequestMapping("/emia/queCatAssoc")
-@Component
+@RestController
 @Slf4j
 @RequiredArgsConstructor
 public class QueryCategoryResource extends BasicResource {
-  private final ITemi16Service<Temi16QueCatAss> temi16Service;
 
-  @GetMapping
-  @RolesAllowed({F_QRCG00, F_QRCG01, F_QRQE00, R_FEPQRA})
-  public ResponseEntity<String> getQueCatAssoc(HttpServletRequest request, HttpServletRequest sr) {
-    log.info("... cerco tutte le associazioni categorie - query");
-    return temi16Service.findByCategory(request).getResponse(sr);
-  }
+    private final RestTemplate restTemplate;
 
-  @PostMapping
-  @RequestMapping("post")
-  @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD})
-  public ResponseEntity<String> addQueriesToCategory(
-      @RequestBody List<Temi16QueCatAss> temi16, HttpServletRequest sr) {
-    log.info("... aggiungo le queries alla categoria ");
-    return temi16Service.addQueriesToCateg(temi16).getResponse(sr);
-  }
+    @GetMapping
+    @RolesAllowed({F_QRCG00, F_QRCG01, F_QRQE00, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> getQueCatAssoc(
+            Authentication authentication, HttpServletRequest sr) {
+        log.info("... cerco tutte le associazioni categorie - query");
+
+        return getResponse(
+                sr,
+                () ->
+                        restTemplate.getForObject(
+                                UriComponentsBuilder.fromHttpUrl(servicesUrl + "queCatAssoc")
+                                        .queryParam("tipCateg", authentication.getAuthorities())
+                                        .build()
+                                        .toString(),
+                                WrappedResponse.class));
+    }
+
+    @PostMapping
+    @RequestMapping("post")
+    @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD})
+    public ResponseEntity<WrappedResponse<?>> addQueriesToCategory(
+            @RequestBody List<QueCatAssDto> temi16, HttpServletRequest sr) {
+        log.info("... aggiungo le queries alla categoria ");
+
+        return getResponse(
+                sr,
+                () -> restTemplate.postForObject(servicesUrl + "queCatAssoc", temi16, WrappedResponse.class));
+    }
 }

@@ -36,38 +36,8 @@ public class Constants {
   public static final String SEMI15_ANA_QUE = "SELECT EMIA.SEMI15_ANA_QUE.nextval from dual";
   public static final String SEMI17_ANA_ROU = "SELECT EMIA.SEMI17_ANA_ROU.nextval from dual";
 
-  /** Errors */
-  public static final String ERRORPARSE = "PARSEJSONERROR";
-
-  public static final String ERRORBLOB = "BLOBERROR";
-  public static final String SYNTAXERROR = "SYNTAXERROR";
-
-  public static final String UNKOWN_EXCEPTION = "UNKNOWK EXCEPTION";
-  public static final String NULL_POINTER_EXCEPTION = "NULL POINTER EXCEPTION";
-  public static final String NO_RESULT_EXCEPTION = "NO RESULT EXCEPTION";
   public static final String ERROR_NO_QUERY_ASSOCIATION = "ERROR.NO.QUERY.ASSOCIATION";
   public static final String ERROR_MISSING_PROPERTIES_FILE = "ERROR.MISSING.PROPERTIES.FILE";
   /** Fine Errors */
 
-  // Ignorable fields, questi campi sono da ignorare in hibernate
-  public static final String KA = "ka";
-
-  public static final String HANDLER = "handler";
-  public static final String HIBERNATELAZYINITIALIZER = "hibernateLazyInitializer";
-
-  // Roles Functions
-  public static final String R_FEPQRA = "QRA";
-  public static final String R_FEPQR1 = "QR1";
-  public static final String R_FEPQR2 = "QR2";
-
-  public static final String F_QRCG00 = "QRCG00";
-  public static final String F_QRCG01 = "QRCG01";
-  public static final String F_QRCINS = "QRCINS";
-  public static final String F_QRCMOD = "QRCMOD";
-  public static final String F_QRRE00 = "QRRE00";
-  public static final String F_QRRINS = "QRRINS";
-  public static final String F_QRRMOD = "QRRMOD";
-  public static final String F_QRQMOD = "QRQMOD";
-  public static final String F_QRQE00 = "QRQE00";
-  public static final String F_QRQINS = "QRQINS";
 }

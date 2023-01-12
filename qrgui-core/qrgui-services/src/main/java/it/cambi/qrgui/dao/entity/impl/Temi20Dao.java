@@ -29,9 +29,7 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
   }
 
   @Override
-  public List<Temi20AnaTipCat> findByAllowedCategories(HttpServletRequest request) {
-
-    List<String> functions = getFunctionsByRequest(request);
+  public List<Temi20AnaTipCat> findByAllowedCategories(List<String> functions) {
 
     CriteriaQuery<Temi20AnaTipCat> criteriaTemi20 =
         getEntityManager().getCriteriaBuilder().createQuery(Temi20AnaTipCat.class);

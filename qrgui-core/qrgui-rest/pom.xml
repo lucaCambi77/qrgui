@@ -17,6 +17,12 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- This automatically start security due to @EnableWebSecurity -->
@@ -28,7 +34,7 @@
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>qrgui-services</artifactId>
+			<artifactId>qrgui-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

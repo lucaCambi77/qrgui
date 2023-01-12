@@ -1,95 +1,95 @@
 /**
- * 
+ *
  */
 import angular from 'angular';
 
 angular.module('qrGuiApp').factory('RestUtilityFactory', ['$rootScope', '$q', '$http', 'constant',
-	function RestUtilityFactory($rootScope, $q, $http, constant) {
+    function RestUtilityFactory($rootScope, $q, $http, constant) {
 
-		var restUtilService: any = {};
+        const restUtilService: any = {};
 
-		restUtilService.DeferredPromiseGet = DeferredPromiseGet;
-		restUtilService.DeferredPromisePost = DeferredPromisePost;
-		restUtilService.DeferredPromisePut = DeferredPromisePut;
-		restUtilService.DeferredPromiseDelete = DeferredPromiseDelete;
+        restUtilService.DeferredPromiseGet = DeferredPromiseGet;
+        restUtilService.DeferredPromisePost = DeferredPromisePost;
+        restUtilService.DeferredPromisePut = DeferredPromisePut;
+        restUtilService.DeferredPromiseDelete = DeferredPromiseDelete;
 
-		return restUtilService;
+        return restUtilService;
 
-		function DeferredPromiseGet(path, params?) {
-			var defer = $q.defer();
+        function DeferredPromiseGet(path, params?) {
+            const defer = $q.defer();
 
-			$http.get($rootScope.restdev + path, {
-				params: params == null ? {} : params,
-				headers: constant.JSONCONTENTTYPE
-			}).then(function (response) {
-				defer.resolve(response.data);
-			}, function (response) {
-				defer.reject(response.data);
-			}, function (value) {
+            $http.get($rootScope.restdev + path, {
+                params: params == null ? {} : params,
+                headers: constant.JSONCONTENTTYPE
+            }).then(function (response) {
+                defer.resolve(response.data);
+            }, function (response) {
+                defer.reject(response.data);
+            }, function (value) {
 
-			});
+            });
 
-			return defer.promise;
-		}
+            return defer.promise;
+        }
 
-		function DeferredPromisePost(path, data, params?) {
-			var defer = $q.defer();
+        function DeferredPromisePost(path, data, params?) {
+            const defer = $q.defer();
 
-			var req = {
-				method: 'POST',
-				url: $rootScope.restdev + path,
-				headers: constant.JSONCONTENTTYPE,
-				data: data,
-				params: params == null ? {} : params,
-			}
+            const req = {
+                method: 'POST',
+                url: $rootScope.restdev + path,
+                headers: constant.JSONCONTENTTYPE,
+                data: data,
+                params: params == null ? {} : params,
+            };
 
-			$http(req).then(function (response) {
-				defer.resolve(response.data);
-			}, function (response) {
-				defer.reject(response.data);
-			}, function (value) {
+            $http(req).then(function (response) {
+                defer.resolve(response.data);
+            }, function (response) {
+                defer.reject(response.data);
+            }, function (value) {
 
-			});
+            });
 
-			return defer.promise;
+            return defer.promise;
 
-		}
+        }
 
-		function DeferredPromisePut(path, data) {
-			var defer = $q.defer();
+        function DeferredPromisePut(path, data) {
+            var defer = $q.defer();
 
-			$http.put($rootScope.restdev + path, data, constant.JSONCONTENTTYPE).then(
-				function (response) {
-					defer.resolve(response.data);
-				}, function (response) {
-					defer.reject(response.data);
-				}, function (value) {
+            $http.put($rootScope.restdev + path, data, constant.JSONCONTENTTYPE).then(
+                function (response) {
+                    defer.resolve(response.data);
+                }, function (response) {
+                    defer.reject(response.data);
+                }, function (value) {
 
-				});
+                });
 
-			return defer.promise;
-		}
+            return defer.promise;
+        }
 
-		function DeferredPromiseDelete(path, data, params?) {
-			var defer = $q.defer();
+        function DeferredPromiseDelete(path, data, params?) {
+            var defer = $q.defer();
 
-			var req = {
-				method: 'DELETE',
-				url: $rootScope.restdev + path,
-				headers: constant.JSONCONTENTTYPE,
-				data: data,
-				params: params == null ? {} : params,
-			}
+            var req = {
+                method: 'DELETE',
+                url: $rootScope.restdev + path,
+                headers: constant.JSONCONTENTTYPE,
+                data: data,
+                params: params == null ? {} : params,
+            };
 
-			$http(req).then(function (response) {
-				defer.resolve(response.data);
-			}, function (response) {
-				defer.reject(response.data);
-			}, function (value) {
+            $http(req).then(function (response) {
+                defer.resolve(response.data);
+            }, function (response) {
+                defer.reject(response.data);
+            }, function (value) {
 
-			});
+            });
 
-			return defer.promise;
+            return defer.promise;
 
-		}
-}])
+        }
+    }]);

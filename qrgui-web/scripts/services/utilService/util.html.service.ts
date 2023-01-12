@@ -392,9 +392,9 @@ angular.module('qrGuiApp').factory('HtmlUtilityFactory', ['$compile', '$rootScop
 
         function GetQueryErrorListTemplate(errors) {
 
-            var errorUl = '<div class="panel panel-default" style="margin: 1em;"> <ul>';
+            let errorUl = '<div class="panel panel-default" style="margin: 1em;"> <ul>';
 
-            for (var error in errors) {
+            for (const error in errors) {
                 errorUl += '<li style="margin: 0.3em; color:red;">'
                     + errors[error] + '</li>';
 
