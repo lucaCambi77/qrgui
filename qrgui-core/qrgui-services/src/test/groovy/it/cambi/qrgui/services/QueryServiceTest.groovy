@@ -2,7 +2,6 @@ package it.cambi.qrgui.services
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.api.model.UteQueDto
-import it.cambi.qrgui.dao.generic.impl.FirstGenericDao
 import it.cambi.qrgui.query.model.QueryToJson
 import it.cambi.qrgui.services.taskExecutor.QueryService
 import spock.lang.Specification
@@ -12,7 +11,6 @@ class QueryServiceTest extends Specification {
     def objectMapper = Mock(ObjectMapper)
     def queryService = new QueryService(objectMapper)
     def temi15UteQue = Mock(UteQueDto)
-    def firstGenericDao = Mock(FirstGenericDao)
 
     def "fail validation when statement is null"() {
         given:

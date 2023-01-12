@@ -23,7 +23,7 @@ class ContextLoadTest extends Specification {
     EntityManager em;
 
     @Autowired
-    ObjectMapper mapperFactory
+    ObjectMapper objectMapper
 
     def setup() {
     }
@@ -38,9 +38,9 @@ class ContextLoadTest extends Specification {
         Temi13DtbInf dtbInf = new Temi13DtbInf(new Temi13DtbInfId("ORACLE", "TEST"));
 
         when:
-        String serializedEntity = mapperFactory.writeValueAsString(dtbInf)
+        String serializedEntity = objectMapper.writeValueAsString(dtbInf)
 
         then:
-        dtbInf == mapperFactory.readValue(serializedEntity, Temi13DtbInf.class)
+        dtbInf == objectMapper.readValue(serializedEntity, Temi13DtbInf.class)
     }
 }
