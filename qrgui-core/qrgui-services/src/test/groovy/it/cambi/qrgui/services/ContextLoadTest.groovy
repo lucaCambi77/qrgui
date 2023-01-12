@@ -1,11 +1,10 @@
 package it.cambi.qrgui.services
 
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.config.FirstDbAppConf
 import it.cambi.qrgui.config.ServiceConfig
 import it.cambi.qrgui.model.Temi13DtbInf
 import it.cambi.qrgui.model.Temi13DtbInfId
-import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.test.context.ContextConfiguration
@@ -24,7 +23,7 @@ class ContextLoadTest extends Specification {
     EntityManager em;
 
     @Autowired
-    ObjectMapperFactory mapperFactory
+    ObjectMapper mapperFactory
 
     def setup() {
     }
@@ -39,9 +38,9 @@ class ContextLoadTest extends Specification {
         Temi13DtbInf dtbInf = new Temi13DtbInf(new Temi13DtbInfId("ORACLE", "TEST"));
 
         when:
-        String serializedEntity = mapperFactory.getObjectMapper().writeValueAsString(dtbInf)
+        String serializedEntity = mapperFactory.writeValueAsString(dtbInf)
 
         then:
-        dtbInf == mapperFactory.getObjectMapper().readValue(serializedEntity, Temi13DtbInf.class)
+        dtbInf == mapperFactory.readValue(serializedEntity, Temi13DtbInf.class)
     }
 }

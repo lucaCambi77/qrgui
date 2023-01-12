@@ -7,251 +7,253 @@ import angular from 'angular';
  * @description # MainCtrl Controller of the qrGuiApp
  */
 angular
-	.module('qrGuiApp')
-	.controller(
-		'RoutineModalResultsCtrl', [
-		'queries', '$scope', '$compile', 'RestUtilityFactory',
-		'UtilErrorsFactory', 'HtmlUtilityFactory', 'constant',
-		'PaginationUtilityFactory',
-		'$uibModalInstance', 'DateUtilityFactory',
-		function (queries, $scope, $compile, RestUtilityFactory,
-			UtilErrorsFactory, HtmlUtilityFactory, constant,
-			PaginationUtilityFactory,
-			$uibModalInstance, DateUtilityFactory) {
+    .module('qrGuiApp')
+    .controller(
+        'RoutineModalResultsCtrl', [
+            'queries', '$scope', '$compile', 'RestUtilityFactory',
+            'UtilErrorsFactory', 'HtmlUtilityFactory', 'constant',
+            'PaginationUtilityFactory',
+            '$uibModalInstance', 'DateUtilityFactory',
+            function (queries, $scope, $compile, RestUtilityFactory,
+                      UtilErrorsFactory, HtmlUtilityFactory, constant,
+                      PaginationUtilityFactory,
+                      $uibModalInstance, DateUtilityFactory) {
 
-			var routineModal = this;
+                var routineModal = this;
 
-			routineModal.datePopup = {};
+                routineModal.datePopup = {};
 
-			routineModal.areResultsVisibile = false;
+                routineModal.areResultsVisibile = false;
 
-			for (var query in queries) {
+                for (var query in queries) {
 
-				for (var attr in queries[query].json.attrs) {
+                    for (var attr in queries[query].json.attrs) {
 
-					/**
-					 * Per gli attributi data aggiungo il popup per poi
-					 * toglierlo nell'esecuzione della query
-					 */
-					if (queries[query].json.attrs[attr].parameter.type == 'DATE'
-						|| queries[query].json.attrs[attr].parameter.type == 'DATE_TRUNC') {
+                        /**
+                         * Per gli attributi data aggiungo il popup per poi
+                         * toglierlo nell'esecuzione della query
+                         */
+                        if (queries[query].json.attrs[attr].parameter.type == 'DATE'
+                            || queries[query].json.attrs[attr].parameter.type == 'DATE_TRUNC') {
 
-						queries[query].json.attrs[attr].parameter.datePopup = {};
+                            queries[query].json.attrs[attr].parameter.datePopup = {};
 
-						DateUtilityFactory
-							.SetDatePicker(queries[query].json.attrs[attr].parameter.datePopup);
+                            DateUtilityFactory
+                                .SetDatePicker(queries[query].json.attrs[attr].parameter.datePopup);
 
-					}
-				}
-			}
+                        }
+                    }
+                }
 
-			routineModal.queries = queries;
+                routineModal.queries = queries;
 
-			/**
-			 * Eseguo le query
-			 */
-			routineModal.doQueries = function (list, page,
-				queryPosition, createFile) {
+                /**
+                 * Eseguo le query
+                 */
+                routineModal.doQueries = function (list, page,
+                                                   queryPosition, createFile) {
 
-				const queryRestList = [];
+                    const queryRestList = [];
 
-				for (const element in list) {
-					list[element].query.json = JSON.stringify(
-						list[element].json, replacer)
+                    for (const element in list) {
+                        list[element].query.json = JSON.stringify(
+                            list[element].json, replacer);
 
-					queryRestList.push(list[element].query);
-				}
+                        queryRestList.push(list[element].query);
+                    }
 
-				RestUtilityFactory
-					.DeferredPromisePost(
-						constant.contextRoot
-						+ constant.restBasicPath
-						+ '/query/execute_query',
-						queryRestList, {
-						page: page,
-						createFile: createFile
-					})
-					.then(
-						function (response) {
+                    RestUtilityFactory
+                        .DeferredPromisePost(
+                            constant.contextRoot
+                            + constant.restBasicPath
+                            + '/query/execute_query',
+                            queryRestList, {
+                                page: page,
+                                createFile: createFile
+                            })
+                        .then(
+                            function (response) {
 
-							routineModal.errors = [];
+                                routineModal.errors = [];
 
-							var hasErrors = UtilErrorsFactory
-								.CheckResponse(
-									routineModal,
-									response.entity).hasErrors;
+                                var hasErrors = UtilErrorsFactory
+                                    .CheckResponse(
+                                        routineModal,
+                                        response.entity).hasErrors;
 
-							/**
-							 * Se ci sono errori li visualizzo
-							 * nello spazio dove ci dovrebbe
-							 * essere il risultato della query
-							 */
-							if (hasErrors) {
-								$("#routineResults")
-									.html(
-										$compile(
-											HtmlUtilityFactory
-												.GetQueryErrorListTemplate(angular
-													.copy(routineModal.errors)))
-											($scope));
-								return;
-							}
+                                /**
+                                 * Se ci sono errori li visualizzo
+                                 * nello spazio dove ci dovrebbe
+                                 * essere il risultato della query
+                                 */
+                                if (hasErrors) {
+                                    $("#routineResults")
+                                        .html(
+                                            $compile(
+                                                HtmlUtilityFactory
+                                                    .GetQueryErrorListTemplate(angular
+                                                        .copy(routineModal.errors)))
+                                            ($scope));
+                                    return;
+                                }
 
-							routineModal.areResultsVisibile = true;
+                                routineModal.areResultsVisibile = true;
 
-							/*
-							 * Faccio un template composto da
-							 * tabella e paginatore
-							 */
+                                /*
+                                 * Faccio un template composto da
+                                 * tabella e paginatore
+                                 */
 
-							let template = "";
+                                let template = "";
 
-							/**
-							 * Se non ho la posizione allora sto
-							 * lanciando tutte le query
-							 */
-							let query;
+                                /**
+                                 * Se non ho la posizione allora sto
+                                 * lanciando tutte le query
+                                 */
+                                let query;
 
-							if (null == queryPosition) {
+                                if (null == queryPosition) {
 
-								routineModal.filePath = response.entity[0].queryFilePath;
+                                    routineModal.filePath = response.entity[0].queryFilePath;
 
-								for (const element in response.entity) {
+                                    for (const element in response.entity) {
 
-									query = list[element].json;
+                                        query = list[element].json;
 
-									template += HtmlUtilityFactory
-										.GetQueryListTemplate(
-											response.entity[element].entity,
-											query.querySelectColumns,
-											element);
+                                        template += HtmlUtilityFactory
+                                            .GetQueryListTemplate(
+                                                response.entity[element].entity,
+                                                query.querySelectColumns,
+                                                element);
 
-									// /* Paginatore */
-									$scope['query' + element] = {};
+                                        // /* Paginatore */
+                                        $scope['query' + element] = {};
 
-									$scope['query' + element].pager = PaginationUtilityFactory
-										.GetPager(
-											response.entity[element].count,
-											page);
+                                        $scope['query' + element].pager = PaginationUtilityFactory
+                                            .GetPager(
+                                                response.entity[element].count,
+                                                page);
 
-									$("#routineResults")
-										.append(
-											$compile(
-												addDivOnFirsLoad(
-													element,
-													template,
-													response.entity[element].xentity.nam))
-												(
-													$scope));
-									template = ""
-								}
+                                        $("#routineResults")
+                                            .append(
+                                                $compile(
+                                                    addDivOnFirsLoad(
+                                                        element,
+                                                        template,
+                                                        response.entity[element].xentity.nam))
+                                                (
+                                                    $scope));
+                                        template = "";
+                                    }
 
-								/**
-								 * Altrimenti ricarico la
-								 * sezione della query richiesta
-								 */
-							} else {
+                                    /**
+                                     * Altrimenti ricarico la
+                                     * sezione della query richiesta
+                                     */
+                                } else {
 
-								query = list[queryPosition].json;
+                                    query = list[0].json;
 
-								template += HtmlUtilityFactory
-									.GetQueryListTemplate(
-										response.entity[0].entity,
-										query.querySelectColumns,
-										queryPosition);
+                                    template += HtmlUtilityFactory
+                                        .GetQueryListTemplate(
+                                            response.entity[0].entity,
+                                            query.querySelectColumns,
+                                            queryPosition);
 
-								// /* Paginatore */
-								$scope['query' + queryPosition] = {};
+                                    // /* Paginatore */
+                                    $scope['query' + queryPosition] = {};
 
-								$scope['query' + queryPosition].pager = PaginationUtilityFactory
-									.GetPager(
-										response.entity[0].count,
-										page);
+                                    $scope['query' + queryPosition].pager = PaginationUtilityFactory
+                                        .GetPager(
+                                            response.entity[0].count,
+                                            page);
 
-								$(
-									"#routineResultList"
-									+ queryPosition)
-									.html(
-										$compile(
-											template)
-											($scope));
-							}
+                                    $(
+                                        "#routineResultList"
+                                        + queryPosition)
+                                        .html(
+                                            $compile(
+                                                template)
+                                            ($scope));
+                                }
 
-						},
-						function (response) {
+                            },
+                            function (response) {
 
-							routineModal.errors = [];
-							UtilErrorsFactory.SetErrors(
-								routineModal,
-								response.errorMessage);
-						}, function (value) {
-							console.log(value)
+                                routineModal.errors = [];
+                                UtilErrorsFactory.SetErrors(
+                                    routineModal,
+                                    response.errorMessage);
+                            }, function (value) {
+                                console.log(value);
 
-						})
+                            });
 
-			};
+                };
 
-			$scope.submitQuery = function (page, queryPosition) {
+                $scope.submitQuery = function (page, queryPosition) {
 
-				routineModal.doQueries(routineModal.queries, page,
-					queryPosition, false);
-			};
+                    const queryToUpdate = [routineModal.queries[queryPosition]];
 
-			function addDivOnFirsLoad(position, template, name) {
-				return '<div id="routineResultList'
-					+ position
-					+ '">'
-					+ '<h3 style="margin : 0.5em">'
-					+ name
-					+ '</h3>'
-					+ '<p style="margin : 1em; color: #337ab7"></p>'
-					+ template + '</div>';
+                    routineModal.doQueries(queryToUpdate, page,
+                        queryPosition, false);
+                };
 
-			}
+                function addDivOnFirsLoad(position, template, name) {
+                    return '<div id="routineResultList'
+                        + position
+                        + '">'
+                        + '<h3 style="margin : 0.5em">'
+                        + name
+                        + '</h3>'
+                        + '<p style="margin : 1em; color: #337ab7"></p>'
+                        + template + '</div>';
 
-			/**
-			 * Eseguo le queries
-			 */
-			routineModal.executeQueries = function () {
+                }
 
-				routineModal.doQueries(routineModal.queries, null,
-					null, true);
-			}
+                /**
+                 * Eseguo le queries
+                 */
+                routineModal.executeQueries = function () {
 
-			/**
-			 * Ritorno alla query dopo aver eseguito la routine
-			 */
-			routineModal.backToWhere = function () {
-				routineModal.areResultsVisibile = false;
+                    routineModal.doQueries(routineModal.queries, null,
+                        null, true);
+                };
 
-				$("#routineResults").html(
-					$compile('<div></div>')($scope));
-			}
+                /**
+                 * Ritorno alla query dopo aver eseguito la routine
+                 */
+                routineModal.backToWhere = function () {
+                    routineModal.areResultsVisibile = false;
 
-			routineModal.cancel = function () {
-				$uibModalInstance.dismiss('cancel');
+                    $("#routineResults").html(
+                        $compile('<div></div>')($scope));
+                };
 
-			};
+                routineModal.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
 
-		}])
+                };
+
+            }]);
 
 function replacer(key, value) {
-	// if (key == "cque")
-	// return undefined;
-	// else
-	if (key == "$$hashKey")
-		return undefined;
-	else if (key == "datePopup")
-		return undefined;
-	else if (key == "dateOptions")
-		return undefined;
-	else if (key == "timePickerOptions")
-		return undefined;
-	else if (key == "formats")
-		return undefined;
-	else if (key == "altInputFormats")
-		return undefined;
+    // if (key == "cque")
+    // return undefined;
+    // else
+    if (key == "$$hashKey")
+        return undefined;
+    else if (key == "datePopup")
+        return undefined;
+    else if (key == "dateOptions")
+        return undefined;
+    else if (key == "timePickerOptions")
+        return undefined;
+    else if (key == "formats")
+        return undefined;
+    else if (key == "altInputFormats")
+        return undefined;
 
-	else
-		return value;
+    else
+        return value;
 }

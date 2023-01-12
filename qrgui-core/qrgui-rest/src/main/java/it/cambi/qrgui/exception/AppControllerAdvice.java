@@ -1,7 +1,6 @@
 package it.cambi.qrgui.exception;
 
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import lombok.RequiredArgsConstructor;
+import it.cambi.qrgui.rest.BasicResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,21 +12,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-@RequiredArgsConstructor
-public class AppControllerAdvice {
-
-  private final WrappedResponse<String> response;
+public class AppControllerAdvice extends BasicResource {
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public @ResponseBody ResponseEntity<String> runtimeException(
       Exception ex, HttpServletRequest sr) {
 
-    return response.toBuilder()
-        .exception(ex)
-        .build()
-        .processException()
-        .getResponse(sr, HttpStatus.INTERNAL_SERVER_ERROR);
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
   }
 
   @ExceptionHandler(AccessDeniedException.class)
@@ -35,10 +27,6 @@ public class AppControllerAdvice {
   public @ResponseBody ResponseEntity<String> accessDeniedException(
       AccessDeniedException ex, HttpServletRequest sr) {
 
-    return response.toBuilder()
-        .exception(ex)
-        .build()
-        .processException()
-        .getResponse(sr, HttpStatus.FORBIDDEN);
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
   }
 }

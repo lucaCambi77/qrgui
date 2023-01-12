@@ -1,50 +1,40 @@
-/** */
+/**
+ *
+ */
 package it.cambi.qrgui.services.emia.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi20Dao;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi20Service;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-/** @author luca */
+/**
+ * @author luca
+ */
 @Component
 @RequiredArgsConstructor
 public class Temi20Service implements ITemi20Service<Temi20AnaTipCat> {
-  private final ITemi20Dao<Temi20AnaTipCat, String> anaTipCatDao;
+    private final ITemi20Dao<Temi20AnaTipCat, String> anaTipCatDao;
 
-  private final WrappedResponse<List<Temi20AnaTipCat>> response;
+    @Override
+    public List<Temi20AnaTipCat> findAll() {
+        return anaTipCatDao.findAll(null);
+    }
 
-  @Override
-  public List<Temi20AnaTipCat> findAll() {
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Temi20AnaTipCat> getByCategory(List<String> functions) {
+        return anaTipCatDao.findByAllowedCategories(functions);
+    }
 
-    return anaTipCatDao.findAll(null);
-  }
-
-  @Override
-  @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public WrappedResponse<List<Temi20AnaTipCat>> getByCategory(HttpServletRequest request) {
-    return response.toBuilder()
-        .entity(anaTipCatDao.findByAllowedCategories(request))
-        .build()
-        .setResponse();
-  }
-
-  @Override
-  public List<String> getFunctionsByRequest(HttpServletRequest request) {
-
-    return anaTipCatDao.getFunctionsByRequest(request);
-  }
-
-  @Override
-  @Transactional()
-  public void merge(Temi20AnaTipCat temi20AnaTipCat) {
-    anaTipCatDao.merge(temi20AnaTipCat);
-  }
+    @Override
+    @Transactional
+    public void merge(Temi20AnaTipCat temi20AnaTipCat) {
+        anaTipCatDao.merge(temi20AnaTipCat);
+    }
 }

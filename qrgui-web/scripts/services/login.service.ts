@@ -66,17 +66,19 @@ import angular from 'angular';
 							userName: input.username,
 							authData: token
 						}
-			
+
 						$window.sessionStorage.setItem(
 							'userData', JSON.stringify(userData)
 						);
-			
+
 						var user = response[1].entity;
 						$rootScope.ertaQrGuiUser = user;
 
 						$window.sessionStorage.setItem(
 							'qruiUser', JSON.stringify(user)
 						);
+
+						$rootScope.isUserLogged = true;
 
 						$location.path('/overview');
 					}, function (response) {

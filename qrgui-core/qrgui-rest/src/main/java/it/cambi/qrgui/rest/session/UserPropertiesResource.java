@@ -1,9 +1,9 @@
 package it.cambi.qrgui.rest.session;
 
-import it.cambi.qrgui.response.model.ErtaGuiUser;
-import it.cambi.qrgui.response.model.ErtaQrGuiRoles;
+import it.cambi.qrgui.api.user.ErtaGuiUser;
+import it.cambi.qrgui.api.user.ErtaQrGuiRoles;
+import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.rest.BasicResource;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.util.Constants.R_FEPQR1;
-import static it.cambi.qrgui.util.Constants.R_FEPQR2;
-import static it.cambi.qrgui.util.Constants.R_FEPQRA;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 @Component
 @RequestMapping("/userProperties")
@@ -24,58 +24,45 @@ import static it.cambi.qrgui.util.Constants.R_FEPQRA;
 @RequiredArgsConstructor
 public class UserPropertiesResource extends BasicResource {
 
-  private final WrappedResponse<ErtaGuiUser> response;
+    private final WrappedResponse<ErtaGuiUser> response = new WrappedResponse<>();
 
-  @PostMapping
-  @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
-  public ResponseEntity<String> getUserPrincipal(ErtaGuiUser user, HttpServletRequest sr) {
+    @PostMapping
+    @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
+    public ResponseEntity<WrappedResponse<?>> getUserPrincipal(
+            ErtaGuiUser user, HttpServletRequest sr) {
 
-    if (null != user.getUrl() && user.getUrl().contains("localhost")) {
-      user.setUserName("Localhost");
-      user.addToErtaQrGuiRoles(ErtaQrGuiRoles.FEPQRA);
-      return response.toBuilder().entity(user).count(1).build().setResponse().getResponse(sr);
+        if (null != user.getUrl() && user.getUrl().contains("localhost")) {
+            user.toBuilder().userName("Localhost");
+            user.addToErtaQrGuiRoles(ErtaQrGuiRoles.FEPQRA);
+            return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
+        }
+
+        user.toBuilder().userName(null == sr.getUserPrincipal() ? "" : sr.getUserPrincipal().getName());
+
+        for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
+            if (sr.isUserInRole(role.getRole())) {
+                user.addToErtaQrGuiRoles(role);
+                log.info("Utente " + sr.getUserPrincipal().getName() + " ha il ruolo di " + role.getRole());
+            }
+        }
+
+        return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
     }
 
-    user.setUserName(null == sr.getUserPrincipal() ? "" : sr.getUserPrincipal().getName());
+    @PostMapping
+    @RequestMapping("/login")
+    public ResponseEntity<WrappedResponse<?>> login(ErtaGuiUser user, HttpServletRequest sr) {
 
-    for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
-      if (sr.isUserInRole(role.getRole())) {
-        user.addToErtaQrGuiRoles(role);
-        log.info("Utente " + sr.getUserPrincipal().getName() + " ha il ruolo di " + role.getRole());
-      }
+        if (null != user.getUrl() && user.getUrl().contains("localhost")) {
+            user.toBuilder().guiVersion("Development");
+            return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
+        }
+
+        for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
+            if (sr.isUserInRole(role.getRole()))
+                log.info("Utente " + sr.getUserPrincipal().getName() + " ha il ruolo di " + role.getRole());
+        }
+
+        return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
     }
-
-    return response.toBuilder()
-        .entity(user)
-        .count(1)
-        .build()
-        .setIgnorableFields(new String[] {"password"})
-        .setResponse()
-        .getResponse(sr);
-  }
-
-  @PostMapping
-  @RequestMapping("/login")
-  public ResponseEntity<String> login(ErtaGuiUser user, HttpServletRequest sr) {
-
-    if (null != user.getUrl() && user.getUrl().contains("localhost")) {
-      user.setGuiVersion("Development");
-      return response.toBuilder().entity(user).count(1).build().setResponse().getResponse(sr);
-    }
-
-    for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
-      if (sr.isUserInRole(role.getRole()))
-        log.info("Utente " + sr.getUserPrincipal().getName() + " ha il ruolo di " + role.getRole());
-    }
-
-    String[] ignorableFieldNames = {"password"};
-
-    return response.toBuilder()
-        .entity(user)
-        .count(1)
-        .build()
-        .setIgnorableFields(ignorableFieldNames)
-        .setResponse()
-        .getResponse(sr);
-  }
 }

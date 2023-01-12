@@ -1,24 +1,21 @@
 package it.cambi.qrgui.services.emia.api;
 
+import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.model.Temi15UteQueId;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
 
-import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 public interface ITemi15Service<T> {
 
-  WrappedResponse<T> postQuery(T que, String locale);
+  T postQuery(UteQueDto que, String locale);
 
-  WrappedResponse<T> getByPk(Long cQue, Long dateIns);
+  List<T>
+  getByTipCateg(
+      List<String> listAllowedCat, List<Temi15UteQue> queries, List<String> functions);
 
-  WrappedResponse<List<T>> getByTipCateg(
-      List<String> listAllowedCat, List<Temi15UteQue> queries, HttpServletRequest request);
+  List<Object> getAlreadyAssociatedQuery(int ccat, String insCat) throws ParseException;
 
-  WrappedResponse<List<T>> getByDb(String schema, String type);
-
-  WrappedResponse<List<Object>> getAlreadyAssociatedQuery(int ccat, Long insCat, String tipCat);
-
-  WrappedResponse<T> deleteQuery(Temi15UteQueId cque);
+  T deleteQuery(Temi15UteQueId cque);
 }

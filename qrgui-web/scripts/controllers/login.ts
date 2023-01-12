@@ -7,25 +7,12 @@ import angular from 'angular';
  */
 
 
-angular.module('qrGuiApp').controller('LoginCtrl', ['$rootScope', 'LoginFactory',
+angular.module('qrGuiApp').controller('LoginCtrl', ['$rootScope', 'LoginFactory', '$location',
 
-    function LoginCtrl($rootScope, LoginFactory) {
+    function LoginCtrl($rootScope, LoginFactory, $location) {
 
         var auth = this;
         auth.login = Login;
-
-        /*
-         * Login e Logout functions
-         */
-        $rootScope.logOut = function () {
-
-            sessionStorage.removeItem("isUserLogged");
-            sessionStorage.removeItem("ertaQrGuiUser");
-            $rootScope.isUserLogged = false;
-            $rootScope.userName = null;
-            $rootScope.password = null;
-
-        };
 
         function Login() {
 

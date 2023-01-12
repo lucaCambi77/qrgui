@@ -1,236 +1,174 @@
 /**
- * 
+ *
  */
- import angular from 'angular';
+import angular from 'angular';
 
- angular.module('qrGuiApp').factory('EmiaRestUtilityFactory', ['constant',
-			'RestUtilityFactory', 'ModelFactory', 'UtilErrorsFactory',
-			'$rootScope', '$q',
-	function EmiaRestUtilityFactory(constant, RestUtilityFactory,
-			ModelFactory, UtilErrorsFactory, $rootScope, $q) {
+angular.module('qrGuiApp').factory('EmiaRestUtilityFactory', ['constant',
+    'RestUtilityFactory', 'ModelFactory', 'UtilErrorsFactory',
+    '$rootScope', '$q',
+    function EmiaRestUtilityFactory(constant, RestUtilityFactory,
+                                    ModelFactory, UtilErrorsFactory, $rootScope, $q) {
 
-		var restUtilService : any =  {};
+        const restUtilService: any = {};
 
-		restUtilService.GetDataBaseInfo = GetDataBaseInfo;
+        restUtilService.GetDataBaseInfo = GetDataBaseInfo;
 
-		restUtilService.PostCategory = PostCategory;
-		restUtilService.GetCategories = GetCategories;
-		restUtilService.DeleteCategory = DeleteCategory;
+        restUtilService.PostCategory = PostCategory;
+        restUtilService.GetCategories = GetCategories;
+        restUtilService.DeleteCategory = DeleteCategory;
 
-		restUtilService.PostQueCatAssoc = PostQueCatAssoc;
-		restUtilService.GetQueCatAssoc = GetQueCatAssoc;
+        restUtilService.PostQueCatAssoc = PostQueCatAssoc;
+        restUtilService.GetQueCatAssoc = GetQueCatAssoc;
 
-		restUtilService.GetQueryByDb = GetQueryByDb;
-		restUtilService.GetQueryById = GetQueryById;
-		restUtilService.PostQuery = PostQuery;
-		restUtilService.GetQueriesByTipCateg = GetQueriesByTipCateg;
-		restUtilService.GetAlreadyAssociatedQuery = GetAlreadyAssociatedQuery;
-		restUtilService.DeleteQuery = DeleteQuery;
+        restUtilService.PostQuery = PostQuery;
+        restUtilService.GetQueriesByTipCateg = GetQueriesByTipCateg;
+        restUtilService.GetAlreadyAssociatedQuery = GetAlreadyAssociatedQuery;
+        restUtilService.DeleteQuery = DeleteQuery;
 
-		restUtilService.GetRoutines = GetRoutines;
-		restUtilService.PostRoutine = PostRoutine;
-		restUtilService.DeleteRoutine = DeleteRoutine;
-		restUtilService.PostRoutineQuery = PostRoutineQuery;
-		restUtilService.DeleteRoutineQuery = DeleteRoutineQuery;
+        restUtilService.GetRoutines = GetRoutines;
+        restUtilService.PostRoutine = PostRoutine;
+        restUtilService.DeleteRoutine = DeleteRoutine;
+        restUtilService.PostRoutineQuery = PostRoutineQuery;
+        restUtilService.DeleteRoutineQuery = DeleteRoutineQuery;
 
-		restUtilService.GetAllowedCategories = GetAllowedCategories;
+        restUtilService.GetAllowedCategories = GetAllowedCategories;
 
-		restUtilService.GetQueryByDbWrapper = GetQueryByDbWrapper;
+        return restUtilService;
 
-		return restUtilService;
+        function GetAllowedCategories() {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/anaTipCat';
 
-		function GetQueryByDbWrapper(controller) {
+            return RestUtilityFactory.DeferredPromiseGet(path);
+        }
 
-			if (null != $rootScope.selectedSchema) {
+        function GetDataBaseInfo() {
 
-				var list = [ GetQueryByDb($rootScope.selectedSchema.id.csch,
-						$rootScope.selectedSchema.id.ctyp) ];
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/dbInfo';
 
-				$q
-						.allSettled(list)
-						.then(
-								function(response) {
-									var hasErrors = UtilErrorsFactory
-											.CheckResponse(controller, response).hasErrors;
+            return RestUtilityFactory.DeferredPromiseGet(path);
 
-									$rootScope.schema.queries[$rootScope.selectedSchema.id.csch] = [];
+        }
 
-									/*
-									 * Se l'item è visible , faccio il check
-									 * sulla lista delle query dello schema
-									 */
-									for ( var element in response[0].value.entity) {
+        function GetCategories() {
 
-										var item = response[0].value.entity[element];
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/category';
 
-										for ( var schemaQueries in $rootScope.selects[$rootScope.selectedSchema.id.csch]) {
+            return RestUtilityFactory.DeferredPromiseGet(path);
 
-											if ($rootScope.selects[$rootScope.selectedSchema.id.csch][schemaQueries].isVisible
-													&& $rootScope.selects[$rootScope.selectedSchema.id.csch][schemaQueries].cque == response[0].value.entity[element].cque)
-												item.isOnBoard = true;
-										}
+        }
 
-										$rootScope.schema.queries[$rootScope.selectedSchema.id.csch]
-												.push(item);
+        function PostQueCatAssoc(queryToAdd) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/queCatAssoc/post';
 
-									}
+            return RestUtilityFactory.DeferredPromisePost(path, queryToAdd);
+        }
 
-								});
-			}
+        function GetQueCatAssoc() {
 
-		}
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/queCatAssoc';
 
-		function GetAllowedCategories() {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/anaTipCat';
+            return RestUtilityFactory.DeferredPromiseGet(path);
 
-			return RestUtilityFactory.DeferredPromiseGet(path);
-		}
+        }
 
-		function GetDataBaseInfo() {
+        function PostCategory(parent, newCateg) {
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/dbInfo';
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/category';
 
-			return RestUtilityFactory.DeferredPromiseGet(path);
+            return RestUtilityFactory.DeferredPromisePost(path, ModelFactory
+                .GetTemi14(parent, newCateg), null);
+        }
 
-		}
+        function DeleteCategory(category) {
 
-		function GetCategories() {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/category/delete/';
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/category';
+            return RestUtilityFactory.DeferredPromisePost(path, category);
+        }
 
-			return RestUtilityFactory.DeferredPromiseGet(path);
+        function DeleteQuery(que, insQue) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/query/delete/';
 
-		}
+            return RestUtilityFactory.DeferredPromisePost(path, {que: que, insQue: insQue});
 
-		function PostQueCatAssoc(queryToAdd) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/queCatAssoc/post';
+        }
 
-			return RestUtilityFactory.DeferredPromisePost(path, queryToAdd);
-		}
+        function PostQuery(ttps15) {
 
-		function GetQueCatAssoc() {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/query';
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/queCatAssoc';
+            return RestUtilityFactory.DeferredPromisePost(path, ttps15);
+        }
 
-			return RestUtilityFactory.DeferredPromiseGet(path);
+        function GetQueriesByTipCateg(tipCat, queries) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/query/tipCateg';
 
-		}
+            return RestUtilityFactory.DeferredPromisePost(path, queries, {
+                tipCat: tipCat,
+            });
+        }
 
-		function PostCategory(parent, newCateg) {
+        function GetAlreadyAssociatedQuery(ccat, insCat, tipCat) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/query/associatedQuery';
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/category';
+            return RestUtilityFactory.DeferredPromiseGet(path, {
+                cat: ccat,
+                tipCat: tipCat,
+                insCat: insCat
+            });
+        }
 
-			return RestUtilityFactory.DeferredPromisePost(path, ModelFactory
-					.GetTemi14(parent, newCateg), null);
-		}
+        function GetRoutines() {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/routine';
 
-		function DeleteCategory(category) {
+            return RestUtilityFactory.DeferredPromiseGet(path, {});
+        }
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/category/delete/';
+        function PostRoutine(routine) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/routine';
 
-			return RestUtilityFactory.DeferredPromisePost(path, category);
-		}
+            return RestUtilityFactory.DeferredPromisePost(path, routine);
+        }
 
-		function DeleteQuery(que, insQue) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query/delete/';
+        function DeleteRoutine(routine) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/routine/delete';
 
-			return RestUtilityFactory.DeferredPromisePost(path, { que : que, insQue : insQue});
+            return RestUtilityFactory.DeferredPromisePost(path, routine);
+        }
 
-		}
+        function PostRoutineQuery(rou, insRou, que, insQue) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/routQuery';
 
-		function PostQuery(ttps15) {
+            const data = ModelFactory.GetTemi18Pk(rou, insRou, que, insQue);
 
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query';
+            return RestUtilityFactory.DeferredPromisePost(path, data);
+        }
 
-			return RestUtilityFactory.DeferredPromisePost(path, ttps15);
-		}
+        function DeleteRoutineQuery(rou, insRou, que, insQue) {
+            const path = constant.contextRoot + constant.restBasicPath
+                + '/emia/routQuery/delete';
 
-		function GetQueryByDb(schema, type) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query/db';
+            return RestUtilityFactory.DeferredPromisePost(path, {
+                rou: rou,
+                insRou: insRou,
+                que: que,
+                insQue: insQue
+            });
+        }
 
-			return RestUtilityFactory.DeferredPromiseGet(path, {
-				schema : schema,
-				type : type
-			});
-		}
-
-		function GetQueryById(cque) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query/' + cque;
-
-			return RestUtilityFactory.DeferredPromiseGet(path);
-		}
-
-		function GetQueriesByTipCateg(tipCat, queries) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query/tipCateg';
-
-			return RestUtilityFactory.DeferredPromisePost(path, queries, {
-				tipCat : tipCat,
-			});
-		}
-
-		function GetAlreadyAssociatedQuery(ccat, insCat, tipCat) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/query/associatedQuery';
-
-			return RestUtilityFactory.DeferredPromiseGet(path, {
-				cat : ccat,
-				tipCat : tipCat,
-				insCat : insCat
-			});
-		}
-
-		function GetRoutines() {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/routine';
-
-			return RestUtilityFactory.DeferredPromiseGet(path, {});
-		}
-
-		function PostRoutine(routine) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/routine';
-
-			return RestUtilityFactory.DeferredPromisePost(path, routine);
-		}
-
-		function DeleteRoutine(routine) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/routine/delete';
-
-			return RestUtilityFactory.DeferredPromisePost(path, routine);
-		}
-
-		function PostRoutineQuery(rou, insRou, que, insQue) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/routQuery';
-
-			var data = ModelFactory.GetTemi18Pk(rou, insRou, que, insQue);
-
-			return RestUtilityFactory.DeferredPromisePost(path, data);
-		}
-
-		function DeleteRoutineQuery(rou, insRou, que, insQue) {
-			var path = constant.contextRoot + constant.restBasicPath
-					+ '/emia/routQuery/delete';
-
-			return RestUtilityFactory.DeferredPromisePost(path, {
-				rou : rou,
-				insRou : insRou,
-				que : que,
-				insQue : insQue
-			});
-		}
-
-}])
+    }]);

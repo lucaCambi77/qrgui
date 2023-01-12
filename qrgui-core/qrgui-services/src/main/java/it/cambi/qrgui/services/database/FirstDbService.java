@@ -1,11 +1,13 @@
-/** */
+/**
+ *
+ */
 package it.cambi.qrgui.services.database;
 
+import it.cambi.qrgui.api.model.UteQueDto;
+import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.dao.generic.impl.FirstGenericDao;
-import it.cambi.qrgui.model.Temi15UteQue;
 import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.services.QueryService;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.services.taskExecutor.QueryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,16 +22,17 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FirstDbService {
 
-  private final QueryService checkQueryService;
+    private final QueryService checkQueryService;
 
-  private final FirstGenericDao firstGenericDao;
-  /**
-   * @param que
-   * @return
-   * @throws IOException
-   */
-  @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public WrappedResponse<QueryToJson> checkQuery(Temi15UteQue que) throws IOException {
-    return checkQueryService.checkQuery(que, true, firstGenericDao);
-  }
+    private final FirstGenericDao firstGenericDao;
+
+    /**
+     * @param que
+     * @return
+     * @throws IOException
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public WrappedResponse<QueryToJson> checkQuery(UteQueDto que) throws IOException {
+        return checkQueryService.checkQuery(que, true, firstGenericDao::getByNativeQuery);
+    }
 }

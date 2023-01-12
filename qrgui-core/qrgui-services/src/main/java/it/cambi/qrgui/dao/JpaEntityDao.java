@@ -6,150 +6,120 @@ import it.cambi.qrgui.util.QueryUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
- * @param <T>
- *            Type of the Entity.
- * @param <I>
- *            Type of the Primary Key.
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
  */
-public class JpaEntityDao<T, K> extends AbstractDao implements IEntityDao<T, K>
-{
+public class JpaEntityDao<T, K> extends AbstractDao implements IEntityDao<T, K> {
 
     private Class<T> entityClass;
 
-    public JpaEntityDao()
-    {
+    public JpaEntityDao() {
         // TODO Auto-generated constructor stub
     }
 
-    public Class<T> getEntityClass()
-    {
+    public Class<T> getEntityClass() {
         return entityClass;
     }
 
-    public JpaEntityDao(Class<T> entityClass)
-    {
+    public JpaEntityDao(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
 
-    public List<T> findAll(List<Order> orderList)
-    {
+    public void save(T entity) {
+        getEntityManager().persist(entity);
+    }
+
+    public List<T> findAll(List<Order> orderList) {
         final CriteriaQuery<T> criteriaQuery = getCriteriaBuilder().createQuery(getEntityClass());
 
         Root<T> root = criteriaQuery.from(getEntityClass());
         criteriaQuery.select(root);
 
-        if (null != orderList)
-            criteriaQuery.orderBy(orderList);
+        if (null != orderList) criteriaQuery.orderBy(orderList);
 
         return getEntityManager().createQuery(criteriaQuery).getResultList();
     }
 
-    public T merge(T entity)
-    {
+    public T merge(T entity) {
         return this.getEntityManager().merge(entity);
     }
 
-    public T delete(T entity)
-    {
+    public T delete(T entity) {
         this.getEntityManager().remove(entity);
-
         return entity;
     }
 
     @Override
-    public EntityManager getEntityManager()
-    {
+    public EntityManager getEntityManager() {
         return null;
     }
 
-    public List<T> getEntityListByCriteriaQuery(
-            CriteriaQuery<T> criteria, Integer pageNumber)
-    {
+    public List<T> getEntityListByCriteriaQuery(CriteriaQuery<T> criteria, Integer pageNumber) {
 
-        if (null == pageNumber)
-            return getEntityManager().createQuery(criteria)
-                    .getResultList();
+        if (null == pageNumber) return getEntityManager().createQuery(criteria).getResultList();
 
-        return getEntityManager().createQuery(criteria)
+        return getEntityManager()
+                .createQuery(criteria)
                 .setMaxResults(getPageSize())
                 .setFirstResult((pageNumber - 1) * getPageSize())
                 .getResultList();
     }
 
-    public T getEntityByCriteriaQuery(
-            CriteriaQuery<T> criteria)
-    {
+    public T getEntityByCriteriaQuery(CriteriaQuery<T> criteria) {
 
-        try
-        {
-            return getEntityManager().createQuery(criteria)
-                    .getSingleResult();
-        }
-        catch (NoResultException e)
-        {
+        try {
+            return getEntityManager().createQuery(criteria).getSingleResult();
+        } catch (NoResultException e) {
 
             return null;
         }
-
     }
 
-    public Integer deleteEntityByCriteria(
-            CriteriaDelete<T> criteria)
-    {
-        return getEntityManager().createQuery(criteria)
-                .executeUpdate();
+    public void deleteByEntityId(K id) {
+        getEntityManager().remove(getEntityManager().find(getEntityClass(), id));
     }
 
-    public Object getTupleByCriteriaQuery(
-            CriteriaQuery<Tuple> criteria, Integer pageNumber)
-    {
+    public Object getTupleByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber) {
 
-        try
-        {
+        try {
             if (null == pageNumber)
-                return QueryUtils.getFromTupleToObject(getEntityManager().createQuery(criteria)
-                        .getSingleResult());
+                return QueryUtils.getFromTupleToObject(
+                        getEntityManager().createQuery(criteria).getSingleResult());
 
-            return QueryUtils.getFromTupleToObject(getEntityManager().createQuery(criteria)
-                    .setMaxResults(getPageSize())
-                    .setFirstResult((pageNumber - 1) * getPageSize()).getSingleResult());
+            return QueryUtils.getFromTupleToObject(
+                    getEntityManager()
+                            .createQuery(criteria)
+                            .setMaxResults(getPageSize())
+                            .setFirstResult((pageNumber - 1) * getPageSize())
+                            .getSingleResult());
 
-        }
-        catch (NoResultException e)
-        {
+        } catch (NoResultException e) {
 
             return null;
         }
-
     }
 
     public List<Object> getTupleListByCriteriaQuery(
-            CriteriaQuery<Tuple> criteria, Integer pageNumber)
-    {
-
+            CriteriaQuery<Tuple> criteria, Integer pageNumber) {
         if (null == pageNumber)
-            return QueryUtils
-                    .getFromTupleListToObjectList(getEntityManager().createQuery(criteria)
-                            .getResultList());
+            return QueryUtils.getFromTupleListToObjectList(
+                    getEntityManager().createQuery(criteria).getResultList());
 
-        return QueryUtils
-                .getFromTupleListToObjectList(getEntityManager().createQuery(criteria)
+        return QueryUtils.getFromTupleListToObjectList(
+                getEntityManager()
+                        .createQuery(criteria)
                         .setMaxResults(getPageSize())
                         .setFirstResult((pageNumber - 1) * getPageSize())
                         .getResultList());
-
     }
 
-    public T getEntityByPrimaryKey(K primaryKey)
-    {
-
+    public T getEntityByPrimaryKey(K primaryKey) {
         return getEntityManager().find(getEntityClass(), primaryKey);
     }
 }

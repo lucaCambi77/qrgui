@@ -1,33 +1,32 @@
-/** */
+/**
+ *
+ */
 package it.cambi.qrgui.services.taskExecutor;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import it.cambi.qrgui.api.model.UteQueDto;
+import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse;
 import it.cambi.qrgui.enums.QueryType;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.query.model.QueryExecutionResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
-import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
-import it.cambi.qrgui.util.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.util.wrappedResponse.XWrappedResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
+
+import static java.util.concurrent.CompletableFuture.allOf;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /**
  * @author luca
@@ -35,127 +34,116 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class GenericQueryTaskExecutorService {
-  private final IQueryExecutorFactory queryExecutorFactory;
+    private final ExecuteQueryTask queryExecutorFactory;
 
-  private final ObjectMapperFactory objectMapperFactory;
+    private final ObjectMapper objectMapper;
 
-  private final XWrappedResponse<Temi15UteQue, List<Object>> response;
+    private final XWrappedResponse<UteQueDto, List<Object>> response = new XWrappedResponse<>();
 
-  /**
-   * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
-   * callable. Per l' {@link ExecuteQueryTask} , vedi applicationContext.xml, in cui viene definita
-   * la factory {@link QueryExecutorFactoryImpl} che col metodo getExecuteQueryTask restitiusce
-   * sempre una nuova instanza
-   *
-   * @param queryAttributes
-   * @param page
-   * @param pageSize
-   * @return
-   * @throws InterruptedException
-   * @throws ExecutionException
-   * @throws IOException
-   * @throws JsonMappingException
-   * @throws JsonParseException
-   */
-  @SuppressWarnings("serial")
-  @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public List<XWrappedResponse<Temi15UteQue, List<Object>>> executeQuery(
-      List<Temi15UteQue> queryAttributes, Integer page, Integer pageSize)
-      throws InterruptedException, ExecutionException, JsonMappingException, IOException {
+    /**
+     * Cached thread pool: not bound to a size, but can reuse existing threads.
+     */
+    private final static Executor AGGREGATE_THREAD_POOL = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
 
-    ExecutorService executor = Executors.newFixedThreadPool(queryAttributes.size() * 2);
+    /**
+     * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
+     * callable. Per l' {@link ExecuteQueryTask} , vedi applicationContext.xml, in cui viene definita
+     * la factory {@link QueryExecutorFactoryImpl} che col metodo getExecuteQueryTask restitiusce
+     * sempre una nuova instanza
+     *
+     * @param queries
+     * @param page
+     * @param pageSize
+     * @return
+     * @throws IOException
+     * @throws JsonMappingException
+     * @throws JsonParseException
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
+            List<UteQueDto> queries, Integer page, Integer pageSize)
+            throws JsonMappingException, IOException {
 
-    List<Future<WrappedResponse<QueryExecutionResponse>>> taskList = new ArrayList<>();
+        CompletableFuture<WrappedResponse<QueryExecutionResponse>>[] taskList = new CompletableFuture[queries.size() * 2];
 
-    int position = 0;
+        int position = 0;
+        int future = 0;
+        for (UteQueDto query : queries) {
 
-    /** Creo una query per il result set ed una per la count, e lancio un thread per ognuna */
-    for (Temi15UteQue query : queryAttributes) {
+            String aQuery = objectMapper.writeValueAsString(query);
 
-      String aQuery = objectMapperFactory.getObjectMapper().writeValueAsString(query);
+            /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
+            UteQueDto aCopy = objectMapper.readValue(aQuery, UteQueDto.class);
+            UteQueDto anotherCopy = objectMapper.readValue(aQuery, UteQueDto.class);
 
-      /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
-      Temi15UteQue aCopy =
-          objectMapperFactory.getObjectMapper().readValue(aQuery, Temi15UteQue.class);
-      Temi15UteQue anotherCopy =
-          objectMapperFactory.getObjectMapper().readValue(aQuery, Temi15UteQue.class);
+            /** Count */
+            QueryToJson json = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
 
-      /** Count */
-      QueryToJson json =
-          objectMapperFactory.getObjectMapper().readValue(anotherCopy.getJson(), QueryToJson.class);
+            json.setPosition(position);
+            json.setQueryType(QueryType.COUNT);
 
-      json.setPosition(position);
-      json.setQueryType(QueryType.COUNT);
+            aCopy.setJson(objectMapper.writeValueAsString(json));
 
-      aCopy.setJson(objectMapperFactory.getObjectMapper().writeValueAsString(json));
+            /** Result Set */
+            QueryToJson anotherJson = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
 
-      FutureTask<WrappedResponse<QueryExecutionResponse>> myTask =
-          new FutureTask<>(
-              queryExecutorFactory
-                  .getExecuteQueryTask()
-                  .setPage(page)
-                  .setPageSize(pageSize)
-                  .setQuery(aCopy));
+            anotherJson.setQueryType(QueryType.RESULT_SET);
+            anotherJson.setPosition(position);
 
-      /** Result Set */
-      QueryToJson anotherJson =
-          objectMapperFactory.getObjectMapper().readValue(anotherCopy.getJson(), QueryToJson.class);
+            anotherCopy.setJson(objectMapper.writeValueAsString(anotherJson));
 
-      anotherJson.setQueryType(QueryType.RESULT_SET);
-      anotherJson.setPosition(position);
+            taskList[future++] = supplyAsync(() -> {
+                try {
+                    return queryExecutorFactory.call(aCopy, page, pageSize);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }, AGGREGATE_THREAD_POOL);
 
-      anotherCopy.setJson(objectMapperFactory.getObjectMapper().writeValueAsString(anotherJson));
+            taskList[future++] = supplyAsync(() -> {
+                try {
+                    return queryExecutorFactory.call(anotherCopy, page, pageSize);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }, AGGREGATE_THREAD_POOL);
 
-      /** Task Executor */
-      FutureTask<WrappedResponse<QueryExecutionResponse>> myTaskCount =
-          new FutureTask<>(
-              queryExecutorFactory
-                  .getExecuteQueryTask()
-                  .setPage(page)
-                  .setPageSize(pageSize)
-                  .setQuery(anotherCopy));
+            position++;
+        }
 
-      executor.execute(myTask);
-      executor.execute(myTaskCount);
+        return allOf(taskList).thenApplyAsync(
+                fn -> {
+                    LinkedList<XWrappedResponse<UteQueDto, List<Object>>> listOut = new LinkedList<>();
 
-      taskList.add(myTask);
-      taskList.add(myTaskCount);
+                    Map<UteQueDto, Integer> uteQueCountMap = new HashMap<>();
 
-      position++;
+                    for (CompletableFuture<WrappedResponse<QueryExecutionResponse>> task : taskList) {
+                        WrappedResponse<QueryExecutionResponse> response = task.join();
+
+                        if (!response.isSuccess()) {
+                            listOut = new LinkedList<>();
+                            listOut.add(this.response.toBuilder().errorMessage(response.getErrorMessage()).build());
+                            return listOut;
+                        }
+
+                        if (response.getEntity().json().getQueryType() == QueryType.COUNT) {
+                            uteQueCountMap.put(response.getEntity().temi15UteQue(), response.getEntity().count());
+                            continue;
+                        }
+
+                        listOut.add(
+                                this.response.toBuilder()
+                                        .xentity(response.getEntity().temi15UteQue())
+                                        .entity(response.getEntity().resultSet())
+                                        .build());
+                    }
+
+                    for (XWrappedResponse<UteQueDto, List<Object>> wrappedResponse : listOut) {
+                        wrappedResponse.setCount(uteQueCountMap.get(wrappedResponse.getXentity()));
+                    }
+
+                    return listOut;
+                }, AGGREGATE_THREAD_POOL
+        ).join();
     }
-
-    /** Best practice per l'executor, faccio lo shutdown ed aspetto la fine di tutti i risultati */
-    executor.shutdown();
-    executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-
-    List<XWrappedResponse<Temi15UteQue, List<Object>>> listOut = new ArrayList<>();
-
-    Map<Temi15UteQue, Integer> uteQueCountMap = new HashMap<>();
-
-    for (Future<WrappedResponse<QueryExecutionResponse>> task : taskList) {
-      WrappedResponse<QueryExecutionResponse> response = task.get();
-
-      if (!response.isSuccess())
-        return List.of(this.response.toBuilder().errorMessage(response.getErrorMessage()).build());
-
-      if (response.getEntity().getJson().getQueryType() == QueryType.COUNT) {
-        uteQueCountMap.put(response.getEntity().getTemi15UteQue(), response.getEntity().getCount());
-        continue;
-      }
-
-      listOut.add(
-          this.response.toBuilder()
-              .xentity(response.getEntity().getTemi15UteQue())
-              .entity(response.getEntity().getResultSet())
-              .build());
-    }
-
-    for (XWrappedResponse<Temi15UteQue, List<Object>> wrappedResponse : listOut) {
-      wrappedResponse.setCount(uteQueCountMap.get(wrappedResponse.getXentity()));
-    }
-
-    return listOut.stream()
-        .sorted(Comparator.comparing(a -> a.getXentity().getNam()))
-        .collect(Collectors.toList());
-  }
 }

@@ -65,6 +65,7 @@ angular.module(
         $rootScope.restdev = process.env.NODE_ENV;
 
         const index = this;
+        index.logOut = logOut;
 
         $rootScope.colorYellow = '#ecb941';
         $rootScope.colorRed = '#d84e4e';
@@ -73,7 +74,6 @@ angular.module(
 
         $rootScope.desMaxLength = constant.DES_MAX_LENGTH;
 
-        $rootScope.isUserLogged = false;
         $rootScope.columnOffSet = "col-md-offset-1";
         $rootScope.dateType = constant.GMT;
 
@@ -90,9 +90,21 @@ angular.module(
             $http.defaults.headers.common['Authorization']
                 = 'Basic ' + JSON.parse(userData).authData;
             ListUtilityFactory.LoadCategoriesState(index);
+            $rootScope.isUserLogged = true;
         } else {
             LoginFactory.GetUserProperties(index);
         }
+
+        /*
+         * Login e Logout functions
+         */
+        function logOut() {
+            sessionStorage.removeItem("isUserLogged");
+            sessionStorage.removeItem("userData");
+            $rootScope.isUserLogged = false;
+            $location.path('/');
+        };
+
         /*
          * Controllo che l'utente non torni indietro alla pagina di login
          */

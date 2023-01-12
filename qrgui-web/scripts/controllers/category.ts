@@ -50,7 +50,7 @@ angular
 					return;
 				}
 
-				var list = [
+				const list = [
 					EmiaRestUtilityFactory.PostCategory(parent,
 						newCateg),
 					EmiaRestUtilityFactory.GetQueCatAssoc()];
@@ -80,8 +80,6 @@ angular
 								templateSetFunction);
 
 							category.errors = [];
-
-							category.messageSuccess = [];
 
 							category.messageSuccess
 								.push('Categoria '
@@ -188,14 +186,14 @@ angular
 
 							category.errors = [];
 
-							var notAssociatedQueries = [];
+							const notAssociatedQueries = [];
 
-							for (var element in response.entity) {
+							for (const element in response.entity) {
 								notAssociatedQueries
 									.push(response.entity[element])
 							}
 
-							var entity = {
+							const entity = {
 								category: cat,
 								description: 'Le query già associate ad altre categorie verranno rimosse da questa categoria.'
 									+ ' Per le queries non già associate, prego specificare un\' altra categoria, altrimenti saranno cancellate.',
@@ -204,12 +202,12 @@ angular
 									+ ' e tutte le sottocategorie. Vuoi continuare?',
 								action: 'Cancella Categoria',
 								queries: notAssociatedQueries
-							}
+							};
 							/*
 							 * Modale per cancellare una entityà
 							 */
 
-							var modalInstance = $uibModal
+							const modalInstance = $uibModal
 								.open({
 									animation: true,
 									templateUrl: 'views/modal/deleteCategoryModal.html?v1.2.1',

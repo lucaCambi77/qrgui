@@ -7,8 +7,7 @@ import java.util.List;
 
 public interface ITemi20Dao<T, K> extends IEntityDao<T, K>
 {
-
-    List<T> findByAllowedCategories(HttpServletRequest request);
+    List<T> findByAllowedCategories(List<String> functions);
 
     List<String> getFunctionsByRequest(HttpServletRequest request);
 
