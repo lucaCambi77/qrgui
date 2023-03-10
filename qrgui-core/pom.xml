@@ -21,6 +21,7 @@
         <module>qrgui-rest</module>
         <module>qrgui-security</module>
         <module>qrgui-services</module>
+        <module>multitenant</module>
     </modules>
 
     <dependencyManagement>
