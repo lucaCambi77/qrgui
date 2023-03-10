@@ -9,8 +9,7 @@ import it.cambi.qrgui.repository.GenericRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 /**
  * Classe che implementa Callable e permette di eseguire un task di esecuzione di una query.
@@ -36,23 +35,21 @@ public class ExecuteQueryTask {
             return response.toBuilder().success(false).errorMessage(queryStringResponse.getErrorMessage()).build();
         }
 
-        String finalQuery = queryStringResponse.getEntity();
+        return response.toBuilder()
+                .entity(
+                        queryExecutionResponse(
+                                query
+                                , page
+                                , pageSize
+                                , queryStringResponse.getEntity(), objectMapper.readValue(query.getJson(), QueryToJson.class)))
+                .build();
+    }
 
-        List<Object> resultSet = new ArrayList<>();
+    private QueryExecutionResponse queryExecutionResponse(UteQueDto query, Integer page, Integer pageSize, String finalQuery, QueryToJson json) {
 
-        Long count = 0L;
-
-        QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
-
-
-        if (json.getQueryType() == QueryType.COUNT) {
-            count = firstGenericDao.executeQueryCount(finalQuery);
-        } else {
-            resultSet = firstGenericDao.getByNativeQuery(finalQuery, page, pageSize);
-        }
-
-        QueryExecutionResponse queryExecutionResponse = new QueryExecutionResponse(queryService.setResultSet(json, resultSet), count.intValue(), query, json);
-
-        return response.toBuilder().entity(queryExecutionResponse).build();
+        return new QueryExecutionResponse(queryService
+                .setResultSet(json, json.getQueryType() == QueryType.RESULT_SET ? firstGenericDao.getByNativeQuery(finalQuery, page, pageSize) : Collections.emptyList())
+                , json.getQueryType() == QueryType.COUNT ? firstGenericDao.executeQueryCount(finalQuery).intValue() : 0
+                , query, json);
     }
 }

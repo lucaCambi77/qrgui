@@ -4,7 +4,6 @@ package it.cambi.qrgui.rest;
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse;
-import it.cambi.qrgui.enums.Schema;
 import it.cambi.qrgui.services.DbService;
 import it.cambi.qrgui.services.WorkBookService;
 import it.cambi.qrgui.services.taskExecutor.GenericQueryTaskExecutorService;
@@ -68,13 +67,8 @@ public class GenericQueryController {
     public WrappedResponse<?> checkQuery(@RequestBody UteQueDto query, HttpServletRequest sr)
             throws IOException {
 
-        switch (Schema.valueOf(query.getTemi13DtbInf().getId().getSch())) {
-            case TEST:
-                return dbService.checkQuery(query);
+        return dbService.checkQuery(query);
 
-            default:
-                return null;
-        }
     }
 
 }
