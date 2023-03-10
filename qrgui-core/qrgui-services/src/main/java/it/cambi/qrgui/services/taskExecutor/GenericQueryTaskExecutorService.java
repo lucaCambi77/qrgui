@@ -47,9 +47,7 @@ public class GenericQueryTaskExecutorService {
 
     /**
      * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
-     * callable. Per l' {@link ExecuteQueryTask} , vedi applicationContext.xml, in cui viene definita
-     * la factory {@link QueryExecutorFactoryImpl} che col metodo getExecuteQueryTask restitiusce
-     * sempre una nuova instanza
+     * callable {@link ExecuteQueryTask}
      *
      * @param queries
      * @param page

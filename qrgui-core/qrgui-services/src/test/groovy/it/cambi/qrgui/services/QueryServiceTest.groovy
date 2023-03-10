@@ -17,7 +17,7 @@ class QueryServiceTest extends Specification {
         objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> new QueryToJson()
 
         when:
-        def wrapperResponse = queryService.checkQuery(temi15UteQue, false, null)
+        def wrapperResponse = queryService.checkQuery(temi15UteQue, Optional.empty())
 
         then:
         !wrapperResponse.isSuccess()
@@ -28,7 +28,7 @@ class QueryServiceTest extends Specification {
         objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> queryToJson
 
         when:
-        def wrapperResponse = queryService.checkQuery(temi15UteQue, false, null)
+        def wrapperResponse = queryService.checkQuery(temi15UteQue, Optional.empty())
 
         then:
         wrapperResponse.isSuccess() == result

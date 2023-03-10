@@ -44,14 +44,10 @@ public abstract class BasicResource {
 
         List<XWrappedResponse<UteQueDto, List<Object>>> errors = Arrays.stream(responses).filter(r -> !r.isSuccess()).toList();
 
-        if (!errors.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(WrappedResponse.baseBuilder().entity(errors).build());
-
-        }
-
-        return ResponseEntity.ok(WrappedResponse.baseBuilder().entity(responses).build());
+        return !errors.isEmpty()
+                ? ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(WrappedResponse.baseBuilder().entity(errors).build())
+                : ResponseEntity.ok(WrappedResponse.baseBuilder().entity(responses).build());
     }
-
 
     public void logRequestInfo(HttpServletRequest sr) {
 

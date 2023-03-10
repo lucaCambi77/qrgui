@@ -31,47 +31,47 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 @Slf4j
 @RequiredArgsConstructor
 public class RoutineResource extends BasicResource {
-  private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-  @GetMapping
-  @RolesAllowed({F_QRRE00, F_QRCG00, F_QRCG01, R_FEPQRA})
-  public ResponseEntity<WrappedResponse<?>> getRoutines(
-      Authentication authentication, HttpServletRequest sr) {
-    log.info("... cerco tutte le routines");
+    @GetMapping
+    @RolesAllowed({F_QRRE00, F_QRCG00, F_QRCG01, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> getRoutines(
+            Authentication authentication, HttpServletRequest sr) {
+        log.info("... cerco tutte le routines");
 
-    return getResponse(
-        sr,
-        () ->
-            restTemplate.getForObject(
-                UriComponentsBuilder.fromHttpUrl(servicesUrl + "routine")
-                    .queryParam("tipCateg", authentication.getAuthorities())
-                    .build()
-                    .toString(),
-                WrappedResponse.class));
-  }
+        return getResponse(
+                sr,
+                () ->
+                        restTemplate.getForObject(
+                                UriComponentsBuilder.fromHttpUrl(servicesUrl + "routine")
+                                        .queryParam("tipCateg", authentication.getAuthorities())
+                                        .build()
+                                        .toString(),
+                                WrappedResponse.class));
+    }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  @RolesAllowed({F_QRRINS, R_FEPQRA})
-  public ResponseEntity<WrappedResponse<?>> postRoutine(
-          @RequestBody UteRouDto temi17, HttpServletRequest sr) {
-    log.info("... creo una nuova routine");
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed({F_QRRINS, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> postRoutine(
+            @RequestBody UteRouDto temi17, HttpServletRequest sr) {
+        log.info("... creo una nuova routine");
 
-    return getResponse(
-        sr,
-        () -> restTemplate.postForObject(servicesUrl + "routine", temi17, WrappedResponse.class));
-  }
+        return getResponse(
+                sr,
+                () -> restTemplate.postForObject(servicesUrl + "routine", temi17, WrappedResponse.class));
+    }
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-  @RequestMapping("delete")
-  @RolesAllowed({F_QRRMOD, R_FEPQRA})
-  public ResponseEntity<WrappedResponse<?>> deleteRoutine(
-      @RequestBody UteRouId crou, HttpServletRequest sr) {
-    log.info("... cancella la routine " + crou);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("delete")
+    @RolesAllowed({F_QRRMOD, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> deleteRoutine(
+            @RequestBody UteRouId crou, HttpServletRequest sr) {
+        log.info("... cancella la routine " + crou);
 
-    return getResponse(
-        sr,
-        () ->
-            restTemplate.postForObject(
-                servicesUrl + "routine/delete", crou, WrappedResponse.class));
-  }
+        return getResponse(
+                sr,
+                () ->
+                        restTemplate.postForObject(
+                                servicesUrl + "routine/delete", crou, WrappedResponse.class));
+    }
 }

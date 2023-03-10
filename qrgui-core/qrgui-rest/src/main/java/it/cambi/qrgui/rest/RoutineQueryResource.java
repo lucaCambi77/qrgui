@@ -23,31 +23,31 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 @RequiredArgsConstructor
 public class RoutineQueryResource extends BasicResource {
 
-  private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-  @PostMapping
-  @RolesAllowed({F_QRRINS, R_FEPQRA})
-  public ResponseEntity<WrappedResponse<?>> postQueRoutine(
-      @RequestBody RouQueId temi18Pk, HttpServletRequest sr) {
-    log.info("... creo una nuova routine");
+    @PostMapping
+    @RolesAllowed({F_QRRINS, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> postQueRoutine(
+            @RequestBody RouQueId temi18Pk, HttpServletRequest sr) {
+        log.info("... creo una nuova routine");
 
-    return getResponse(
-        sr,
-        () ->
-            restTemplate.postForObject(servicesUrl + "routQuery", temi18Pk, WrappedResponse.class));
-  }
+        return getResponse(
+                sr,
+                () ->
+                        restTemplate.postForObject(servicesUrl + "routQuery", temi18Pk, WrappedResponse.class));
+    }
 
-  @PostMapping
-  @RequestMapping("delete")
-  @RolesAllowed({F_QRRINS, R_FEPQRA})
-  public ResponseEntity<WrappedResponse<?>> deleteQueRoutineAssoc(
-      @RequestBody RouQueId temi18Pk, HttpServletRequest sr) {
-    log.info("... elimino assciazione routine della query " + temi18Pk.getQue());
+    @PostMapping
+    @RequestMapping("delete")
+    @RolesAllowed({F_QRRINS, R_FEPQRA})
+    public ResponseEntity<WrappedResponse<?>> deleteQueRoutineAssoc(
+            @RequestBody RouQueId temi18Pk, HttpServletRequest sr) {
+        log.info("... elimino assciazione routine della query " + temi18Pk.getQue());
 
-    return getResponse(
-        sr,
-        () ->
-            restTemplate.postForObject(
-                servicesUrl + "routQuery/delete", temi18Pk, WrappedResponse.class));
-  }
+        return getResponse(
+                sr,
+                () ->
+                        restTemplate.postForObject(
+                                servicesUrl + "routQuery/delete", temi18Pk, WrappedResponse.class));
+    }
 }

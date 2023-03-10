@@ -1,5 +1,4 @@
 HELP.md
-qrgui-services/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -18,14 +17,6 @@ qrgui-services/target/
 *.iws
 *.iml
 *.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
 
 ### VS Code ###
 .vscode/

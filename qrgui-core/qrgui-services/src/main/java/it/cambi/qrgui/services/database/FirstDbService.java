@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author luca
@@ -33,6 +34,6 @@ public class FirstDbService {
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public WrappedResponse<QueryToJson> checkQuery(UteQueDto que) throws IOException {
-        return checkQueryService.checkQuery(que, true, firstGenericDao::getByNativeQuery);
+        return checkQueryService.checkQuery(que, Optional.of(firstGenericDao::getByNativeQuery));
     }
 }

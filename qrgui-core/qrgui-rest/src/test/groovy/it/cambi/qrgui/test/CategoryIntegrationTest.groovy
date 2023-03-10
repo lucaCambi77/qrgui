@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
@@ -59,7 +59,7 @@ class CategoryIntegrationTest extends Specification {
     private MockRestServiceServer mockServer;
 
     def setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+        mvc = webAppContextSetup(context).apply(springSecurity()).build();
         mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 

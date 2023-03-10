@@ -49,7 +49,7 @@ public class GenericQueryController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "10")
             Integer pageSize,
             @DefaultValue("false") @RequestParam("createFile") Boolean createFile,
-            HttpServletRequest sr) throws IOException, ExecutionException, InterruptedException {
+            HttpServletRequest sr) throws IOException {
 
         log.info("Eseguo query ...");
 

@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +37,8 @@ public class QueryService {
     private final WrappedResponse<String> responseString = new WrappedResponse<>();
 
     public WrappedResponse<QueryToJson> checkQuery(
-            UteQueDto query, boolean execQuery, BiFunction<String, Integer, List<Object>> function) throws IOException {
+            UteQueDto query,
+            Optional<BiFunction<String, Integer, List<Object>>> queryCheckFunction) throws IOException {
 
         QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
 
@@ -287,7 +289,7 @@ public class QueryService {
         }
 
         /** Provo ad eseguire la query con valori fittizi quando la inserisco */
-        if (execQuery) function.apply(finaleReplace, 1);
+        if (queryCheckFunction.isPresent()) queryCheckFunction.get().apply(finaleReplace, 1);
 
         return responseQueryToJson.toBuilder().entity(json).build();
     }
