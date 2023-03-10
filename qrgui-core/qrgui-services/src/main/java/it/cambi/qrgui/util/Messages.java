@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package it.cambi.qrgui.util;
 
 import it.cambi.qrgui.util.messages.UTF8Control;
 
-import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -17,43 +16,24 @@ import static it.cambi.qrgui.util.Constants.TRANSLATIONS_FILE_NAME;
  * @author luca
  *
  */
-public class Messages
-{
+public class Messages {
 
-    private ResourceBundle bundle;
+    private final ResourceBundle bundle;
 
-    public Messages(String locale)
-    {
+    public Messages(String locale) {
 
         Locale userLocale = new Locale(null == locale ? DEFAULT_LOCALE : locale);
         this.bundle = ResourceBundle.getBundle(TRANSLATIONS_FILE_NAME, userLocale, new UTF8Control());
     }
 
-    public ResourceBundle getBundle()
-    {
+    public ResourceBundle getBundle() {
         return bundle;
     }
 
-    public String getString(String key)
-    {
-        try
-        {
+    public String getString(String key) {
+        try {
             return getBundle().getString(key);
-        }
-        catch (MissingResourceException e)
-        {
-            return '!' + key + '!';
-        }
-    }
-
-    public String getString(String key, Object... params)
-    {
-        try
-        {
-            return MessageFormat.format(getBundle().getString(key), params);
-        }
-        catch (MissingResourceException e)
-        {
+        } catch (MissingResourceException e) {
             return '!' + key + '!';
         }
     }

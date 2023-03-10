@@ -17,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
@@ -31,6 +30,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 
 @SpringBootTest(
         classes = [RestApplication.class, TestConfiguration.class, AppControllerAdvice.class],

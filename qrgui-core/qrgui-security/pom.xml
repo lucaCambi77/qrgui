@@ -13,7 +13,6 @@
     <description>Spring Security Module for Qrgui</description>
 
     <dependencies>
-
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>qrgui-api</artifactId>

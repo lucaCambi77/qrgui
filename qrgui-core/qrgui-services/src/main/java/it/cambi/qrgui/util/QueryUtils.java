@@ -1,14 +1,9 @@
 /**
- * 
+ *
  */
 package it.cambi.qrgui.util;
 
-import it.cambi.qrgui.enums.OrderType;
-
 import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Order;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,25 +12,22 @@ import java.util.List;
  *
  *         Classe per utility su query jpa
  */
-public class QueryUtils
-{
+public class QueryUtils {
 
     /**
-     * 
-     * 
+     *
+     *
      * @param Tuple
      *            list
      * @return list Object da una lista di Tuple, da utilizzare nella gui
      */
-    public static List<Object> getFromTupleListToObjectList(List<Tuple> list)
-    {
+    public static List<Object> getFromTupleListToObjectList(List<Tuple> list) {
 
-        List<Object> resultObjectList = new ArrayList<Object>();
+        List<Object> resultObjectList = new ArrayList<>();
 
         int i = 0;
 
-        for (Tuple tuple : list)
-        {
+        for (Tuple tuple : list) {
             resultObjectList.add(i, tuple.toArray());
             i++;
         }
@@ -44,31 +36,12 @@ public class QueryUtils
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param Tuple
      * @return Object da una Tuple, da utilizzare nella gui
      */
-    public static Object getFromTupleToObject(Tuple tuple)
-    {
+    public static Object getFromTupleToObject(Tuple tuple) {
         return tuple.toArray();
     }
-
-
-    public static void addToOrderList(CriteriaBuilder criteriaBuilder, List<Order> orderList, OrderType orderBy,
-            Expression<?> orderAttribute)
-    {
-        if (null == orderAttribute)
-            return;
-
-        if (orderBy == OrderType.ASC)
-        {
-            orderList.add(criteriaBuilder.asc(orderAttribute));
-        }
-        else
-        {
-            orderList.add(criteriaBuilder.desc(orderAttribute));
-        }
-    }
-
 }

@@ -22,7 +22,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQINS;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;

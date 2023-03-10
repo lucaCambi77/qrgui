@@ -43,7 +43,7 @@ public class GenericQueryTaskExecutorService {
     /**
      * Cached thread pool: not bound to a size, but can reuse existing threads.
      */
-    private final static Executor AGGREGATE_THREAD_POOL = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
+    private final static Executor CACHED_THREAD_POOL = Executors.newCachedThreadPool(Executors.defaultThreadFactory());
 
     /**
      * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
@@ -96,7 +96,7 @@ public class GenericQueryTaskExecutorService {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }, AGGREGATE_THREAD_POOL);
+            }, CACHED_THREAD_POOL);
 
             taskList[future++] = supplyAsync(() -> {
                 try {
@@ -104,7 +104,7 @@ public class GenericQueryTaskExecutorService {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-            }, AGGREGATE_THREAD_POOL);
+            }, CACHED_THREAD_POOL);
 
             position++;
         }
@@ -141,7 +141,7 @@ public class GenericQueryTaskExecutorService {
                     }
 
                     return listOut;
-                }, AGGREGATE_THREAD_POOL
+                }, CACHED_THREAD_POOL
         ).join();
     }
 }

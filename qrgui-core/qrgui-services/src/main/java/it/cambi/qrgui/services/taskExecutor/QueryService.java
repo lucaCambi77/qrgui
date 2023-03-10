@@ -10,7 +10,6 @@ import it.cambi.qrgui.query.model.SelectColumns;
 import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.DateUtils;
 import it.cambi.qrgui.util.WhereConditionOperator;
-import it.cambi.qrgui.util.WrappingUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -18,15 +17,18 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
 import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
+import static it.cambi.qrgui.util.WrappingUtils.cleanQueryString;
 
 @Service
 @RequiredArgsConstructor
@@ -104,7 +106,7 @@ public class QueryService {
         }
 
         /** Pulisco la stringa della query da eventuali ritorni a capo, punto e virgola */
-        String cleanedStatement = WrappingUtils.cleanQueryString(json.getStatement());
+        String cleanedStatement = cleanQueryString(json.getStatement());
 
         /** Controllo che ci siano tutti i parametri */
         int count = 0;
@@ -299,7 +301,6 @@ public class QueryService {
 
         for (String param : constr.getParameters().split(",")) {
             for (Attribute attr : query.getAttrs()) {
-
                 if (param.equalsIgnoreCase(attr.getParameter().getName()))
                     attributes.append(attr.getAlias()).append(" - ");
             }
@@ -415,7 +416,7 @@ public class QueryService {
         }
 
         /** Sostituzione parametri */
-        String finaleReplace = WrappingUtils.cleanQueryString(json.getStatement());
+        String finaleReplace = cleanQueryString(json.getStatement());
 
         for (Attribute attr : json.getAttrs()) {
             switch (attr.getParameter().getType()) {
@@ -441,7 +442,7 @@ public class QueryService {
                             .equalsIgnoreCase(WhereConditionOperator.IN.getName())) {
                         StringBuilder finalString = new StringBuilder();
                         String[] split =
-                                WrappingUtils.cleanQueryString(attr.getParameter().getValue()).split(",");
+                                cleanQueryString(attr.getParameter().getValue()).split(",");
 
                         for (int i = 0; i < split.length; i++) {
 
@@ -473,21 +474,11 @@ public class QueryService {
                     if (attr.getOperator()
                             .toUpperCase()
                             .equalsIgnoreCase(WhereConditionOperator.IN.getName())) {
-                        StringBuilder finalString = new StringBuilder();
-                        String[] split =
-                                WrappingUtils.cleanQueryString(attr.getParameter().getValue()).split(",");
-
-                        for (int i = 0; i < split.length; i++) {
-
-                            finalString
-                                    .append("'")
-                                    .append(split[i])
-                                    .append("'")
-                                    .append((i == split.length - 1) ? "" : ",");
-                        }
 
                         finaleReplace =
-                                finaleReplace.replace(attr.getParameter().getName(), "(" + finalString + ")");
+                                finaleReplace.replace(attr.getParameter().getName(), "(" +
+                                        Arrays.stream(cleanQueryString(attr.getParameter().getValue()).split(",")).map(s -> "'" + s + "'").collect(Collectors.joining(","))
+                                        + ")");
 
                         break;
                     }
