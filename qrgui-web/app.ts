@@ -103,7 +103,7 @@ angular.module(
             sessionStorage.removeItem("userData");
             $rootScope.isUserLogged = false;
             $location.path('/');
-        };
+        }
 
         /*
          * Controllo che l'utente non torni indietro alla pagina di login

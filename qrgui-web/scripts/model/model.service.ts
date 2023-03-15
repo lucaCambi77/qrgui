@@ -99,15 +99,7 @@ import angular from 'angular';
                 insQue: null == query.insQue ? null : query.insQue,
                 json: JSON.stringify(queryRest, replacer),
                 nam: query.nam,
-                temi13DtbInf: {
-                    id: {
-                        typ: query.temi13DtbInf == null ? null
-                            : query.temi13DtbInf.id.typ,
-                        sch: query.temi13DtbInf == null ? null
-                            : query.temi13DtbInf.id.sch
-                    },
-                    temi15UteQues: null
-                },
+                tenant: query.tenant,
                 temi16QueCatAsses: listTemi16,
                 temi18RouQues: null
             };
