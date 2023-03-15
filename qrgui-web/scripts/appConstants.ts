@@ -109,7 +109,6 @@ angular.module('qrGuiApp').constant('constant', (function() {
 			headers : {
 				'Content-Type' : 'application/json;',
 				'Cache-Control' : 'no-cache'
-
 			}
 		},
 

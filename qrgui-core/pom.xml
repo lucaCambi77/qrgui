@@ -17,10 +17,11 @@
     </properties>
 
     <modules>
-        <module>qrgui-api</module>
-        <module>qrgui-rest</module>
-        <module>qrgui-security</module>
-        <module>qrgui-services</module>
+        <module>api</module>
+        <module>gateway</module>
+        <module>security</module>
+        <module>services</module>
+        <module>multi-tenant</module>
     </modules>
 
     <dependencyManagement>
@@ -52,7 +53,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson</groupId>
                 <artifactId>jackson-bom</artifactId>
-                <version>2.13.2</version>
+                <version>2.14.2</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -84,7 +85,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.31</version>
+            <version>8.0.32</version>
         </dependency>
 
         <dependency>

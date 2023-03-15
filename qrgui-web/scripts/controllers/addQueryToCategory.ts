@@ -27,7 +27,6 @@ angular
 			 * ed i constraint
 			 */
 			addQueryToCategory.query = {};
-			addQueryToCategory.query.cque = null;
 
 			/**
 			 * Oggetto query in cui ci sono le informazioni dello schema
