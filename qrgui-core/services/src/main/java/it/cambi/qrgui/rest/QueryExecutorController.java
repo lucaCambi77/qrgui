@@ -22,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQINS;
