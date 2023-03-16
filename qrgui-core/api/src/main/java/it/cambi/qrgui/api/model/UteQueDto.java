@@ -16,7 +16,9 @@ public class UteQueDto implements java.io.Serializable {
     private String tenant;
     private String nam;
     private String json;
+    @Builder.Default
     private Set<QueCatAssDto> Temi16QueCatAsses = new HashSet<>(0);
+    @Builder.Default
     private Set<RouQueDto> rouQues = new HashSet<>(0);
     private long que;
     private Date insQue;

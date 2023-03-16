@@ -65,7 +65,9 @@ public class QueryExecutorController {
                             .toString(), new HttpEntity<>(List.of(query), headers),
                     XWrappedResponse[].class);
 
-            Collections.addAll(listOut, responses);
+            for (XWrappedResponse response : responses) {
+                listOut.add(response);
+            }
         }
 
         return listOut;
