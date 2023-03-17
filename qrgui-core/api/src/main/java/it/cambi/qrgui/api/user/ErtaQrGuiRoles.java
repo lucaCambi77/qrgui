@@ -9,7 +9,7 @@ public enum ErtaQrGuiRoles {
   FEPQR1(R_FEPQR1),
   FEPQR2(R_FEPQR2);
 
-  private String role;
+  private final String role;
 
   ErtaQrGuiRoles(String role) {
     this.role = role;

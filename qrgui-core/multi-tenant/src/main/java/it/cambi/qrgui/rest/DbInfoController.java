@@ -25,7 +25,8 @@ public class DbInfoController {
     public WrappedResponse<?> getDatabaseInfoList() {
 
         Set<Object> tenants = dataSourceMap.entrySet().stream()
-                .flatMap(d -> Stream.of(((MultiTenantDataSource) d.getValue()).getResolvedDataSources())).flatMap(d -> d.keySet().stream()).collect(Collectors.toSet());
+                .flatMap(d -> Stream.of(((MultiTenantDataSource) d.getValue()).getResolvedDataSources()))
+                .flatMap(d -> d.keySet().stream()).collect(Collectors.toSet());
 
         return WrappedResponse.baseBuilder()
                 .entity(tenants)
