@@ -14,6 +14,7 @@ import lombok.Value;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author luca
@@ -30,6 +31,8 @@ public class ErtaGuiUser {
     String guiVersion;
     String requestType;
     String browser;
+
+    @Builder.Default
     List<ErtaQrGuiRoles> ertaQrGuiRoles = new ArrayList<>();
     @Builder.Default
     Boolean isAdmin = false;
@@ -37,4 +40,14 @@ public class ErtaGuiUser {
     String address;
 
     Date requestDate = new Date();
+
+    public void addToErtaQrGuiRoles(ErtaQrGuiRoles role) {
+        this.ertaQrGuiRoles.add(role);
+    }
+
+    public boolean isAdmin() {
+        return this.ertaQrGuiRoles.stream().map(ErtaQrGuiRoles::getRole)
+                .collect(Collectors.toSet())
+                .contains(ErtaQrGuiRoles.FEPQRA.getRole()) || this.isAdmin;
+    }
 }

@@ -44,21 +44,25 @@ public class ServiceConfig {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ObjectMapper objectMapper(
+            Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
 
-        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        objectMapper.disable(
-                SerializationFeature.FAIL_ON_EMPTY_BEANS); // Ho aggiunto questo ma non serve...
+        return
+                jacksonObjectMapperBuilder
+                        .featuresToEnable(SerializationFeature.INDENT_OUTPUT)
+                        .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                        .featuresToDisable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+                        .modulesToInstall(new JavaTimeModule())
+                        .build();
 
+/*
         objectMapper.addMixIn(Temi14UteCat.class, ObjectMapperFactory.Temi14UteCatMixIn.class);
         objectMapper.addMixIn(Temi15UteQue.class, ObjectMapperFactory.Temi15UteQueMixIn.class);
         objectMapper.addMixIn(Temi16QueCatAss.class, ObjectMapperFactory.Temi16QueCatAssMixIn.class);
         objectMapper.addMixIn(Temi17UteRou.class, ObjectMapperFactory.Temi17UteRouMixIn.class);
         objectMapper.addMixIn(Temi18RouQue.class, ObjectMapperFactory.Temi18RouQueMixIn.class);
         objectMapper.addMixIn(Temi20AnaTipCat.class, ObjectMapperFactory.Temi20AnaTipCatMixIn.class);
-
-        return objectMapper;
+*/
     }
 
     @Bean
@@ -81,16 +85,7 @@ public class ServiceConfig {
 
     @Bean
     public MappingJackson2HttpMessageConverter myMessageConverter(
-            RequestMappingHandlerAdapter reqAdapter,
-            Jackson2ObjectMapperBuilder jacksonObjectMapperBuilder) {
-
-        ObjectMapper mapper =
-                jacksonObjectMapperBuilder
-                        .featuresToEnable(SerializationFeature.INDENT_OUTPUT)
-                        .featuresToDisable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-                        .featuresToDisable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-                        .modulesToInstall(new JavaTimeModule())
-                        .build();
+            RequestMappingHandlerAdapter reqAdapter, ObjectMapper mapper) {
 
         // **replace previous MappingJackson converter**
         List<HttpMessageConverter<?>> converters = reqAdapter.getMessageConverters();

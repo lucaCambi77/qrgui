@@ -1,17 +1,10 @@
 
 package it.cambi.qrgui.util.objectMapper;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.model.Temi14UteCatId;
 import it.cambi.qrgui.model.Temi15UteQue;
@@ -27,63 +20,10 @@ import it.cambi.qrgui.model.Temi20AnaTipCat;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Classe per la creazione dell'object mapper che serve per la serializzazione degli oggetti verso il web. Mentre hibernate, tramite l'
- * Hibernate5Module, evitata il loop infinito dovuto alle relazione della jpa, per Weblogic, non dispondendo di un simile modulo, erano state inserite
- * le annotation @JsonIgnore, rendendo però impossibile construire una entity per intero in quanto le relazione venivano appunto ignorate.
- * <p>
- * Jackson fornisce la possibilità di aggiungere al mapper le MixIn, che permettono di serializzare la entity jpa, tramite oggetti su cui poi
- * intervenire con le modifiche necessarie, senza incorrere nel loop infinito. Se ci troviamo nella sessione jpa, quando un oggetto viene
- * serializzato, scatena automaticamente le query per le get fatte nell'accesso agli attributi della classe.
- * <p>
- * In questo modo si rende il dao (tpsa) indipendente dal progetto web e da qualsiasi modifica dovuto all'utilizzo di un application server piuttosto
- * di un altro.
- * <p>
- * Mappare le mix in è piuttosto laborioso nel senso che sono state mappate molte entity anche per limitare il numero di query fatte dalla jpa e deve
- * essere mantenuto nel caso di modifiche alla base dati(Vedi lo unit test nell'obumgmnt) . Allo stesso tempo offre maggiore flessibilità e permette
- * quando si ha necessità di ricreare nell'oggetto serializzato le varie relazione tra le entity senza dover definire oggetti intermedi
- * <p>
- * Ho aggiunto la possibilità di creare un writer in cui dichiarare ignorable a runtime anche campi che non hanno @JsonIgnore
- */
+
 public class ObjectMapperFactory {
 
-    @JsonFilter("Filter")
-    public static class PropertyFilterMixIn {
-    }
-
     public ObjectMapperFactory() {
-        this.objectMapper = new ObjectMapper();
-
-        this.objectMapper.disable(DeserializationFeature
-                .FAIL_ON_UNKNOWN_PROPERTIES);
-        this.objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS); // Ho aggiunto questo ma non serve...
-
-        objectMapper.addMixIn(Temi14UteCat.class, Temi14UteCatMixIn.class);
-        objectMapper.addMixIn(Temi15UteQue.class, Temi15UteQueMixIn.class);
-        objectMapper.addMixIn(Temi16QueCatAss.class, Temi16QueCatAssMixIn.class);
-        objectMapper.addMixIn(Temi17UteRou.class, Temi17UteRouMixIn.class);
-        objectMapper.addMixIn(Temi18RouQue.class, Temi18RouQueMixIn.class);
-        objectMapper.addMixIn(Temi20AnaTipCat.class, Temi20AnaTipCatMixIn.class);
-
-        objectMapper.addMixIn(
-                Object.class, PropertyFilterMixIn.class);
-
-        objectMapper.setFilterProvider(new SimpleFilterProvider()
-                .addFilter("Filter",
-                        SimpleBeanPropertyFilter.serializeAllExcept()));
-    }
-
-    private final ObjectMapper objectMapper;
-
-    public ObjectMapper getObjectMapper() {
-        return objectMapper;
-    }
-
-    public ObjectWriter createWriter(String[] ignorableFields) {
-        return objectMapper.writer(new SimpleFilterProvider()
-                .addFilter("Filter",
-                        SimpleBeanPropertyFilter.serializeAllExcept(
-                                ignorableFields)));
     }
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi14UteCat.class)

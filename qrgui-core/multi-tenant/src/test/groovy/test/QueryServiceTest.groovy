@@ -10,28 +10,25 @@ class QueryServiceTest extends Specification {
 
     def objectMapper = Mock(ObjectMapper)
     def queryService = new QueryService(objectMapper)
-    def temi15UteQue = Mock(UteQueDto)
+    def uteQue = Mock(UteQueDto)
 
     def "fail validation when statement is null"() {
         given:
-        objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> new QueryToJson()
+        objectMapper.readValue(uteQue.getJson(), QueryToJson.class) >> new QueryToJson()
 
         when:
-        def wrapperResponse = queryService.checkQuery(temi15UteQue, Optional.empty())
+        def wrapperResponse = queryService.checkQuery(uteQue, Optional.empty())
 
         then:
         !wrapperResponse.isSuccess()
     }
 
-    def "fail validation when statement contains forbidden statement"() {
+    def "fail validation when statement is forbidden"() {
         given:
-        objectMapper.readValue(temi15UteQue.getJson(), QueryToJson.class) >> queryToJson
+        objectMapper.readValue(uteQue.getJson(), QueryToJson.class) >> queryToJson
 
-        when:
-        def wrapperResponse = queryService.checkQuery(temi15UteQue, Optional.empty())
-
-        then:
-        wrapperResponse.isSuccess() == result
+        expect:
+        queryService.checkQuery(uteQue, Optional.empty()).isSuccess() == result
 
         where:
         queryToJson                                                        | result

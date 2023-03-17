@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
@@ -31,22 +36,14 @@ public class UserPropertiesResource extends BasicResource {
     public ResponseEntity<WrappedResponse<?>> getUserPrincipal(
             ErtaGuiUser user, HttpServletRequest sr) {
 
-        if (null != user.getUrl() && user.getUrl().contains("localhost")) {
-            user.toBuilder().userName("Localhost");
-            user.addToErtaQrGuiRoles(ErtaQrGuiRoles.FEPQRA);
-            return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
-        }
-
-        user.toBuilder().userName(null == sr.getUserPrincipal() ? "" : sr.getUserPrincipal().getName());
-
-        for (ErtaQrGuiRoles role : ErtaQrGuiRoles.values()) {
-            if (sr.isUserInRole(role.getRole())) {
-                user.addToErtaQrGuiRoles(role);
-                log.info("Utente " + sr.getUserPrincipal().getName() + " ha il ruolo di " + role.getRole());
-            }
-        }
-
-        return getResponse(sr, () -> response.toBuilder().entity(user).count(1).build());
+        return getResponse(sr, () -> response.toBuilder()
+                .entity(
+                        user.toBuilder()
+                                .ertaQrGuiRoles(Arrays.stream(ErtaQrGuiRoles.values()).filter(r -> sr.isUserInRole(r.getRole())).collect(Collectors.toList()))
+                                .userName(null == sr.getUserPrincipal() ? "" : sr.getUserPrincipal().getName())
+                                .build())
+                .count(1)
+                .build());
     }
 
     @PostMapping
