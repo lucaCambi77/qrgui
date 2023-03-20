@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,7 @@ import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQINS;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
@@ -34,7 +38,7 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 public class QueryExecutorController {
     private final RestTemplate restTemplate;
     @Value("${multitenant.contextPath}")
-    protected String multiTenantUrl;
+    private String multiTenantUrl;
 
     @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -55,18 +59,16 @@ public class QueryExecutorController {
             HttpHeaders headers = new HttpHeaders();
             headers.set("X-TenantID", query.getTenant());
 
-            XWrappedResponse[] responses = restTemplate.postForObject(
-                    UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/execute_query")
+            ResponseEntity<List<XWrappedResponse<UteQueDto, List<Object>>>> responses = restTemplate
+                    .exchange(UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/execute_query")
                             .queryParam("createFile", createFile)
                             .queryParam("page", page)
                             .queryParam("pageSize", pageSize)
                             .build()
-                            .toString(), new HttpEntity<>(List.of(query), headers),
-                    XWrappedResponse[].class);
+                            .toString(), HttpMethod.POST, new HttpEntity<>(List.of(query), headers), new ParameterizedTypeReference<>() {
+                    });
 
-            for (XWrappedResponse response : responses) {
-                listOut.add(response);
-            }
+            Optional.ofNullable(responses.getBody()).map(listOut::addAll);
         }
 
         return listOut;

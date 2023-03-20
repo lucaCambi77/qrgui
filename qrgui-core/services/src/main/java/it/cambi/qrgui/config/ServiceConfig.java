@@ -54,15 +54,6 @@ public class ServiceConfig {
                         .featuresToDisable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
                         .modulesToInstall(new JavaTimeModule())
                         .build();
-
-/*
-        objectMapper.addMixIn(Temi14UteCat.class, ObjectMapperFactory.Temi14UteCatMixIn.class);
-        objectMapper.addMixIn(Temi15UteQue.class, ObjectMapperFactory.Temi15UteQueMixIn.class);
-        objectMapper.addMixIn(Temi16QueCatAss.class, ObjectMapperFactory.Temi16QueCatAssMixIn.class);
-        objectMapper.addMixIn(Temi17UteRou.class, ObjectMapperFactory.Temi17UteRouMixIn.class);
-        objectMapper.addMixIn(Temi18RouQue.class, ObjectMapperFactory.Temi18RouQueMixIn.class);
-        objectMapper.addMixIn(Temi20AnaTipCat.class, ObjectMapperFactory.Temi20AnaTipCatMixIn.class);
-*/
     }
 
     @Bean
