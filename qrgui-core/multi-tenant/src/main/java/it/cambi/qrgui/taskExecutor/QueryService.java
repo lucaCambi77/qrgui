@@ -42,7 +42,7 @@ public class QueryService {
             UteQueDto query,
             Optional<BiFunction<String, Integer, List<Object>>> queryCheckFunction) throws IOException {
 
-        QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
+        QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
 
         if (null == json.getStatement())
             return responseQueryToJson.toBuilder()
@@ -80,7 +80,7 @@ public class QueryService {
                                     "Non è consentito l'uso dei commenti in quanto potrebbero alterare la formattazione della query"))
                     .build();
 
-        if (null == query.getNam())
+        if (null == query.nam())
             return responseQueryToJson.toBuilder()
                     .success(false)
                     .errorMessage(List.of("E' necessario indicare un nome per la query"))
@@ -319,7 +319,7 @@ public class QueryService {
      */
     public WrappedResponse<String> getFinalQueryString(UteQueDto query) throws IOException {
 
-        QueryToJson json = objectMapper.readValue(query.getJson(), QueryToJson.class);
+        QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
 
         /** Controllo i valori */
         List<String> requireParamError = new ArrayList<>();
@@ -328,7 +328,7 @@ public class QueryService {
 
             if (null == attr.getParameter().getValue() || attr.getParameter().getValue().isEmpty())
                 requireParamError.add(
-                        "Valore richiesto per " + attr.getAlias() + " nella query " + query.getNam());
+                        "Valore richiesto per " + attr.getAlias() + " nella query " + query.nam());
         }
 
         if (requireParamError.size() > 0)

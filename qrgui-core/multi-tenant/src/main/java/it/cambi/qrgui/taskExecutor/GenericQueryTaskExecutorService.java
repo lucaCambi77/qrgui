@@ -69,38 +69,39 @@ public class GenericQueryTaskExecutorService {
         for (UteQueDto query : queries) {
 
             String aQuery = objectMapper.writeValueAsString(query);
+            int finalPosition = position;
 
             /** Faccio due copie del Json e ne utilizzo una per il result set ed una per la count */
-            UteQueDto aCopy = objectMapper.readValue(aQuery, UteQueDto.class);
-            UteQueDto anotherCopy = objectMapper.readValue(aQuery, UteQueDto.class);
-
-            /** Count */
-            QueryToJson json = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
-
-            json.setPosition(position);
-            json.setQueryType(QueryType.COUNT);
-
-            aCopy.setJson(objectMapper.writeValueAsString(json));
-
-            /** Result Set */
-            QueryToJson anotherJson = objectMapper.readValue(anotherCopy.getJson(), QueryToJson.class);
-
-            anotherJson.setQueryType(QueryType.RESULT_SET);
-            anotherJson.setPosition(position);
-
-            anotherCopy.setJson(objectMapper.writeValueAsString(anotherJson));
 
             taskList[future++] = supplyAsync(() -> {
                 try {
-                    return queryExecutorFactory.call(aCopy, page, pageSize);
+                    UteQueDto aCopy = objectMapper.readValue(aQuery, UteQueDto.class);
+
+                    /** Count */
+                    QueryToJson json = objectMapper.readValue(aCopy.json(), QueryToJson.class);
+
+                    json.setPosition(finalPosition);
+                    json.setQueryType(QueryType.COUNT);
+
+
+                    return queryExecutorFactory.call(aCopy.withJson(objectMapper.writeValueAsString(json)), page, pageSize);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }, CACHED_THREAD_POOL);
 
             taskList[future++] = supplyAsync(() -> {
+
                 try {
-                    return queryExecutorFactory.call(anotherCopy, page, pageSize);
+                    UteQueDto anotherCopy = objectMapper.readValue(aQuery, UteQueDto.class);
+
+                    /** Result Set */
+                    QueryToJson anotherJson = objectMapper.readValue(anotherCopy.json(), QueryToJson.class);
+
+                    anotherJson.setQueryType(QueryType.RESULT_SET);
+                    anotherJson.setPosition(finalPosition);
+
+                    return queryExecutorFactory.call(anotherCopy.withJson(objectMapper.writeValueAsString(anotherJson)), page, pageSize);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

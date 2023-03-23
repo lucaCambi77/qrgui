@@ -57,7 +57,7 @@ public class QueryExecutorController {
 
         for (UteQueDto query : queries) {
             HttpHeaders headers = new HttpHeaders();
-            headers.set("X-TenantID", query.getTenant());
+            headers.set("X-TenantID", query.tenant());
 
             ResponseEntity<List<XWrappedResponse<UteQueDto, List<Object>>>> responses = restTemplate
                     .exchange(UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/execute_query")
@@ -85,7 +85,7 @@ public class QueryExecutorController {
         log.info("Eseguo query ...");
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-TenantID", query.getTenant());
+        headers.set("X-TenantID", query.tenant());
 
         return restTemplate.postForObject(
                 UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/checkQuery")

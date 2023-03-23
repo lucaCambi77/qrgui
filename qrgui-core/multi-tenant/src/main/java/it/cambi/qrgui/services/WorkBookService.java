@@ -87,7 +87,7 @@ public class WorkBookService {
 
         if (null != queryList && queryList.size() > 0) {
 
-            String sheetName = cleanSheetBookName(response.getXentity().getNam());
+            String sheetName = cleanSheetBookName(response.getXentity().nam());
 
             /**
              * #############################################
@@ -119,7 +119,7 @@ public class WorkBookService {
 
             /** Recupero il json in cui ci sono le informazioni della query */
             QueryToJson json =
-                    new ObjectMapper().readValue(response.getXentity().getJson(), QueryToJson.class);
+                    new ObjectMapper().readValue(response.getXentity().json(), QueryToJson.class);
 
             /** Per ogni colonna creo una cella nella prima riga */
             for (int k = 0; k < json.getQuerySelectColumns().size(); k++) {

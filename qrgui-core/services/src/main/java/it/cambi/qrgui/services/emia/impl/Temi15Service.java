@@ -53,22 +53,22 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
     @Override
     public Temi15UteQue postQuery(UteQueDto que, String locale) {
 
-        if (null == que.getTemi16QueCatAsses()) {
+        if (null == que.Temi16QueCatAsses()) {
             throw new IllegalArgumentException(
                     new Messages(locale).getString(ERROR_NO_QUERY_ASSOCIATION));
         }
 
         Temi15UteQue temi15UteQue = new Temi15UteQue();
-        temi15UteQue.setTenant(que.getTenant());
-        temi15UteQue.setInsQue(que.getInsQue() == null ? new Date() : que.getInsQue());
-        temi15UteQue.setQue(que.getQue());
-        temi15UteQue.setNam(que.getNam());
-        temi15UteQue.setJson(que.getJson());
+        temi15UteQue.setTenant(que.tenant());
+        temi15UteQue.setInsQue(que.insQue() == null ? new Date() : que.insQue());
+        temi15UteQue.setQue(que.que());
+        temi15UteQue.setNam(que.nam());
+        temi15UteQue.setJson(que.json());
 
         Temi15UteQue newQuery = queryDao.merge(temi15UteQue);
 
-        if (que.getQue() == 0) {
-            que.getTemi16QueCatAsses().forEach(
+        if (que.que() == 0) {
+            que.Temi16QueCatAsses().forEach(
                     temi16 -> {
 
                         Temi16QueCatAss temi16QueCatAss = new Temi16QueCatAss();

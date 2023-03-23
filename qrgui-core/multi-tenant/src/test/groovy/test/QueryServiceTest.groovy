@@ -10,11 +10,11 @@ class QueryServiceTest extends Specification {
 
     def objectMapper = Mock(ObjectMapper)
     def queryService = new QueryService(objectMapper)
-    def uteQue = Mock(UteQueDto)
+    def uteQue = GroovyMock(UteQueDto)
 
     def "fail validation when statement is null"() {
         given:
-        objectMapper.readValue(uteQue.getJson(), QueryToJson.class) >> new QueryToJson()
+        objectMapper.readValue(uteQue.json(), QueryToJson.class) >> new QueryToJson()
 
         when:
         def wrapperResponse = queryService.checkQuery(uteQue, Optional.empty())
@@ -25,7 +25,7 @@ class QueryServiceTest extends Specification {
 
     def "fail validation when statement is forbidden"() {
         given:
-        objectMapper.readValue(uteQue.getJson(), QueryToJson.class) >> queryToJson
+        objectMapper.readValue(uteQue.json(), QueryToJson.class) >> queryToJson
 
         expect:
         queryService.checkQuery(uteQue, Optional.empty()).isSuccess() == result

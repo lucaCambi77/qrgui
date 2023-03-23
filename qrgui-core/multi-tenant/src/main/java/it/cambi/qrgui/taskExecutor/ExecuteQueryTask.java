@@ -26,7 +26,7 @@ public class ExecuteQueryTask {
     private final WrappedResponse<QueryExecutionResponse> response = new WrappedResponse<>();
 
     public WrappedResponse<QueryExecutionResponse> call(
-            UteQueDto query, Integer page, Integer pageSize) throws Exception {
+           final UteQueDto query, Integer page, Integer pageSize) throws Exception {
 
         WrappedResponse<String> queryStringResponse = queryService.getFinalQueryString(query);
 
@@ -40,7 +40,7 @@ public class ExecuteQueryTask {
                                 query
                                 , page
                                 , pageSize
-                                , queryStringResponse.getEntity(), objectMapper.readValue(query.getJson(), QueryToJson.class)))
+                                , queryStringResponse.getEntity(), objectMapper.readValue(query.json(), QueryToJson.class)))
                 .build();
     }
 
