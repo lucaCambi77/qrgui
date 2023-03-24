@@ -42,7 +42,7 @@ public class RoutineQueryResource extends BasicResource {
     @RolesAllowed({F_QRRINS, R_FEPQRA})
     public ResponseEntity<WrappedResponse<?>> deleteQueRoutineAssoc(
             @RequestBody RouQueId temi18Pk, HttpServletRequest sr) {
-        log.info("... elimino assciazione routine della query " + temi18Pk.getQue());
+        log.info("... elimino assciazione routine della query " + temi18Pk.que());
 
         return getResponse(
                 sr,

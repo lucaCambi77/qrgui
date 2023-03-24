@@ -51,32 +51,32 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
     @Transactional
     @Override
-    public Temi15UteQue postQuery(UteQueDto que, String locale) {
+    public Temi15UteQue postQuery(UteQueDto uteQueDto, String locale) {
 
-        if (null == que.Temi16QueCatAsses()) {
+        if (null == uteQueDto.temi16QueCatAsses()) {
             throw new IllegalArgumentException(
                     new Messages(locale).getString(ERROR_NO_QUERY_ASSOCIATION));
         }
 
         Temi15UteQue temi15UteQue = new Temi15UteQue();
-        temi15UteQue.setTenant(que.tenant());
-        temi15UteQue.setInsQue(que.insQue() == null ? new Date() : que.insQue());
-        temi15UteQue.setQue(que.que());
-        temi15UteQue.setNam(que.nam());
-        temi15UteQue.setJson(que.json());
+        temi15UteQue.setTenant(uteQueDto.tenant());
+        temi15UteQue.setInsQue(uteQueDto.insQue() == null ? new Date() : uteQueDto.insQue());
+        temi15UteQue.setQue(uteQueDto.que());
+        temi15UteQue.setNam(uteQueDto.nam());
+        temi15UteQue.setJson(uteQueDto.json());
 
         Temi15UteQue newQuery = queryDao.merge(temi15UteQue);
 
-        if (que.que() == 0) {
-            que.Temi16QueCatAsses().forEach(
+        if (uteQueDto.que() == 0) {
+            uteQueDto.temi16QueCatAsses().forEach(
                     temi16 -> {
 
                         Temi16QueCatAss temi16QueCatAss = new Temi16QueCatAss();
                         Temi16QueCatAssId temi16QueCatAssId = new Temi16QueCatAssId();
                         temi16QueCatAssId.setQue(newQuery.getQue());
                         temi16QueCatAssId.setInsQue(newQuery.getInsQue());
-                        temi16QueCatAssId.setCat(temi16.getId().getCat());
-                        temi16QueCatAssId.setInsCat(temi16.getId().getInsCat());
+                        temi16QueCatAssId.setCat(temi16.id().cat());
+                        temi16QueCatAssId.setInsCat(temi16.id().insCat());
 
                         temi16QueCatAss.setId(temi16QueCatAssId);
 

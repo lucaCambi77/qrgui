@@ -88,12 +88,12 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
         /** Controllo le query che non sono state riassociate e nel caso le cancello */
         for (Object object :
                 queryDao.getAlreadyAssociatedQuery(
-                        cat.getCat(), cat.getInsCat())) {
+                        cat.cat(), cat.insCat())) {
             Object[] associatedQuery = (Object[]) object;
             Temi15UteQueId id = new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]);
 
-            if (cat.getTemi16QueCatAsses().stream().noneMatch(temi16 -> !Functions.areDifferentLong(temi16.getId().getQue(), id.getQue())
-                    && !Functions.areDifferentDates(temi16.getId().getInsQue(), id.getInsQue()))) {
+            if (cat.queCatAsses().stream().noneMatch(temi16 -> !Functions.areDifferentLong(temi16.id().que(), id.getQue())
+                    && !Functions.areDifferentDates(temi16.id().insQue(), id.getInsQue()))) {
                 notReAssoc.add(object);
             }
         }
@@ -113,14 +113,14 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
          * Creo le nuove associazioni se ci sono. Dalla gui un utente può associare query che non
          * avrebbero più associazioni a categorie esistenti
          */
-        for (QueCatAssDto temi16QueCatAss : cat.getTemi16QueCatAsses()) {
+        for (QueCatAssDto temi16QueCatAss : cat.queCatAsses()) {
             Temi16QueCatAss temi16QueCatAss1 = new Temi16QueCatAss();
             temi16QueCatAss1.setId(new Temi16QueCatAssId(
-                    temi16QueCatAss.getId().getQue(),
-                    temi16QueCatAss.getId().getCat(),
-                    temi16QueCatAss.getId().getInsCat(),
-                    temi16QueCatAss.getId().getInsQue()
-            ));
+                    temi16QueCatAss.id().que(),
+                    temi16QueCatAss.id().cat(),
+                    temi16QueCatAss.id().insCat(),
+                    temi16QueCatAss.id().insQue())
+            );
             queCatAssDao.save(temi16QueCatAss1);
         }
     }
@@ -135,9 +135,9 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
     public List<TreeNode<Temi14UteCat, Integer>> deleteCategory(
             List<String> functions, CategoryDto cat) {
 
-        log.info("Cancello la categoria " + cat.getDes());
+        log.info("Cancello la categoria " + cat.des());
 
-        deleteCategAndChildrens(cat.getCat(), cat.getInsCat());
+        deleteCategAndChildrens(cat.cat(), cat.insCat());
 
         return findAll(functions, null);
     }

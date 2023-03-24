@@ -2,20 +2,23 @@ package it.cambi.qrgui.test
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.RestApplication
+import it.cambi.qrgui.api.model.CategoryDto
+import it.cambi.qrgui.api.model.QueCatAssDto
+import it.cambi.qrgui.api.model.QueCatAssId
+import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse
 import it.cambi.qrgui.exception.AppControllerAdvice
+import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
-import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.test.context.support.WithUserDetails
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
-import org.springframework.test.web.client.MockRestServiceServer
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.context.WebApplicationContext
@@ -24,10 +27,6 @@ import spock.lang.Specification
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA
 import static org.junit.jupiter.api.Assertions.assertTrue
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
-import static org.springframework.test.web.client.ExpectedCount.once
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
@@ -36,17 +35,13 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
         classes = [RestApplication.class, TestConfiguration.class, AppControllerAdvice.class],
         webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@TestPropertySource(properties = [
-        "datasource.test.driver-class-name=org.hibernate.dialect.H2Dialect",
-        "datasource.test.jdbcUrl=jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS TEST"]
-)
-class CategoryIntegrationTest extends Specification {
+class GatewayIntegrationTest extends Specification {
 
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    @SpringBean
+    private RestTemplate restTemplate = Mock()
 
     @Autowired
     private ObjectMapper mapper;
@@ -56,34 +51,57 @@ class CategoryIntegrationTest extends Specification {
 
     private MockMvc mvc;
 
-    private MockRestServiceServer mockServer;
-
     def setup() {
         mvc = webAppContextSetup(context).apply(springSecurity()).build();
-        mockServer = MockRestServiceServer.createServer(restTemplate);
     }
 
     @WithUserDetails(value = "user@xxx.com")
-    def "shouldGetForbiddenWhenUserAccessAdminEndpoint"() throws Exception {
-        expect: "Status is 403 when user access restricted endpoint"
+    def "Status is 403 when user access restricted endpoint POST category"() throws Exception {
+
+        when:
         mvc.perform(post("/emia/category").content("{}").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
                         result -> assertTrue(result.getResolvedException() instanceof AccessDeniedException))
                 .andExpect(status().isForbidden());
+
+        then:
+        0 * restTemplate.postForObject(servicesUrl + "category?tipCateg=" + R_FEPQRA, _, WrappedResponse.class)
+
     }
 
     @WithUserDetails(value = "admin@xxx.com")
-    def "shouldGetOkWhenAdminAccessAdminEndpoint"() throws Exception {
-        expect: "Status is 200 when user has role permission"
-        mockServer.expect(once(),
-                requestTo(servicesUrl + "category?tipCateg=" + R_FEPQRA))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withStatus(HttpStatus.OK)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(mapper.writeValueAsString(new WrappedResponse<>()))
-                );
+    def "Status is 200 when user has role permission POST category"() throws Exception {
+        given:
+        CategoryDto categoryDto = CategoryDto.builder().cat(0).insCat(new Date()).build()
 
-        mvc.perform(post("/emia/category").content("{}").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        when:
+        MockHttpServletResponse response = mvc.perform(post("/emia/category").content(mapper.writeValueAsString(categoryDto)).contentType(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        then:
+        response.status == HttpStatus.OK.value()
+        1 * restTemplate.postForObject(servicesUrl + "category?tipCateg=" + R_FEPQRA, categoryDto, WrappedResponse.class) >> WrappedResponse.baseBuilder().entity(1).build()
+    }
+
+    @WithUserDetails(value = "admin@xxx.com")
+    def "Status is 200 when user has role permission POST query"() throws Exception {
+        given:
+        Date insQue = new Date()
+        QueCatAssId catAssId = QueCatAssId.builder().que(1).insQue(insQue).cat(1).insCat(new Date()).build()
+        UteQueDto uteQueDto = UteQueDto.builder()
+                .que(1)
+                .insQue(insQue)
+                .temi16QueCatAsses(Set.of(QueCatAssDto.builder()
+                        .id(catAssId).build())).build()
+
+        when:
+        MockHttpServletResponse mvcResult = mvc.perform(post("/emia/query")
+                .content(mapper.writeValueAsString(uteQueDto))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        then:
+        mvcResult.status == HttpStatus.OK.value()
+        1 * restTemplate.postForObject(servicesUrl + "query", uteQueDto, WrappedResponse.class) >> WrappedResponse.baseBuilder().entity(1).build()
     }
 }

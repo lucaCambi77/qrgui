@@ -41,10 +41,6 @@ public class ErtaGuiUser {
 
     Date requestDate = new Date();
 
-    public void addToErtaQrGuiRoles(ErtaQrGuiRoles role) {
-        this.ertaQrGuiRoles.add(role);
-    }
-
     public boolean isAdmin() {
         return this.ertaQrGuiRoles.stream().map(ErtaQrGuiRoles::getRole)
                 .collect(Collectors.toSet())

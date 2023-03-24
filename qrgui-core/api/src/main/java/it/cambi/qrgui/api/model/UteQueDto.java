@@ -1,5 +1,4 @@
 package it.cambi.qrgui.api.model;
-// Generated Apr 10, 2018 11:58:47 AM by Hibernate Tools 3.6.0.Final
 
 import lombok.Builder;
 import lombok.With;
@@ -10,8 +9,8 @@ import java.util.Set;
 
 @Builder
 @With
-public record UteQueDto(String tenant, String nam, String json, Set<QueCatAssDto> Temi16QueCatAsses,
-                        Set<RouQueDto> rouQues, long que, Date insQue) {
+public record UteQueDto(String tenant, String nam, String json, Set<QueCatAssDto> temi16QueCatAsses,
+                        Set<RouQueDto> temi18RouQues, long que, Date insQue) {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
