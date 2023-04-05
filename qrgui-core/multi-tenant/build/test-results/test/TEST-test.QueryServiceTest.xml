@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test.QueryServiceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2023-04-05T09:43:33" hostname="luca-20qes8cd01" time="0.025">
+  <properties/>
+  <testcase name="fail validation when statement is null" classname="test.QueryServiceTest" time="0.005"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=insert into table ..., attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #0]" classname="test.QueryServiceTest" time="0.001"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=delete from table, attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #1]" classname="test.QueryServiceTest" time="0.0"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=update table set ..., attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #2]" classname="test.QueryServiceTest" time="0.0"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=create table ..., attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #3]" classname="test.QueryServiceTest" time="0.001"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=drop table ..., attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #4]" classname="test.QueryServiceTest" time="0.001"/>
+  <testcase name="fail validation when statement is forbidden [queryToJson: QueryToJson(statement=select * from table ..., attrs=null, constr=null, querySelectColumns=null, queryType=null, position=0), result: false, #5]" classname="test.QueryServiceTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

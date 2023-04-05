@@ -1,0 +1,10 @@
+dependencies {
+    implementation project(':api')
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.262'
+    implementation 'org.apache.poi:poi:5.2.2'
+    implementation 'com.mysql:mysql-connector-j:8.0.32'
+    testImplementation 'org.testcontainers:localstack:1.17.3'
+    testImplementation 'org.testcontainers:spock:1.17.3'
+}
+
+description = 'multitenant'

@@ -4,14 +4,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import it.cambi.qrgui.model.Temi14UteCat;
-import it.cambi.qrgui.model.Temi15UteQue;
-import it.cambi.qrgui.model.Temi16QueCatAss;
-import it.cambi.qrgui.model.Temi17UteRou;
-import it.cambi.qrgui.model.Temi18RouQue;
-import it.cambi.qrgui.model.Temi20AnaTipCat;
+import it.cambi.qrgui.model.*;
 import it.cambi.qrgui.services.emia.impl.Temi20Service;
-import it.cambi.qrgui.util.objectMapper.ObjectMapperFactory;
+import it.cambi.qrgui.util.objectMapper.ModelMixin;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -60,17 +55,17 @@ public class ServiceConfig {
     public Jackson2ObjectMapperBuilderCustomizer personCustomizer() {
         return jacksonObjectMapperBuilder -> {
             jacksonObjectMapperBuilder.mixIn(
-                    Temi14UteCat.class, ObjectMapperFactory.Temi14UteCatMixIn.class);
+                    Temi14UteCat.class, ModelMixin.Temi14UteCatMixIn.class);
             jacksonObjectMapperBuilder.mixIn(
-                    Temi15UteQue.class, ObjectMapperFactory.Temi15UteQueMixIn.class);
+                    Temi15UteQue.class, ModelMixin.Temi15UteQueMixIn.class);
             jacksonObjectMapperBuilder.mixIn(
-                    Temi16QueCatAss.class, ObjectMapperFactory.Temi16QueCatAssMixIn.class);
+                    Temi16QueCatAss.class, ModelMixin.Temi16QueCatAssMixIn.class);
             jacksonObjectMapperBuilder.mixIn(
-                    Temi17UteRou.class, ObjectMapperFactory.Temi17UteRouMixIn.class);
+                    Temi17UteRou.class, ModelMixin.Temi17UteRouMixIn.class);
             jacksonObjectMapperBuilder.mixIn(
-                    Temi18RouQue.class, ObjectMapperFactory.Temi18RouQueMixIn.class);
+                    Temi18RouQue.class, ModelMixin.Temi18RouQueMixIn.class);
             jacksonObjectMapperBuilder.mixIn(
-                    Temi20AnaTipCat.class, ObjectMapperFactory.Temi20AnaTipCatMixIn.class);
+                    Temi20AnaTipCat.class, ModelMixin.Temi20AnaTipCatMixIn.class);
         };
     }
 

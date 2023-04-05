@@ -7,22 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG01;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCINS;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCMOD;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
+import static it.cambi.qrgui.api.user.RolesFunctions.*;
 
 @RequestMapping("/emia/category")
 @Slf4j

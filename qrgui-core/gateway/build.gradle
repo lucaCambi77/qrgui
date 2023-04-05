@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':api')
+    implementation project(':security')
+    testImplementation 'org.springframework.security:spring-security-test:5.7.6'
+}
+
+description = 'gateway'

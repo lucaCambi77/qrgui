@@ -14,10 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG01;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRRE00;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
+import static it.cambi.qrgui.api.user.RolesFunctions.*;
 
 @RequestMapping("/emia/anaTipCat")
 @Component

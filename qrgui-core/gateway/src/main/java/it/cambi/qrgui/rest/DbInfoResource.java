@@ -13,9 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
+import static it.cambi.qrgui.api.user.RolesFunctions.*;
 
 @RequestMapping("/emia/dbInfo")
 @RestController
