@@ -13,8 +13,8 @@ At runtime, we can switch over different databases and the data source router wi
 ## Requirements :
 
 * Git
-* Java11
-* Maven
+* Java17
+* Gradle
 * Docker
 
 ## Getting Started
@@ -22,7 +22,7 @@ At runtime, we can switch over different databases and the data source router wi
 * Build the project
 
 ```bash
- - mvn clean install
+ - ./gradlew clean build
 ```
 
 ## Run application
