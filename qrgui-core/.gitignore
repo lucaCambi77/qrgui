@@ -2,8 +2,10 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
-!**/build/**
-.gradle/**
+
+### build ###
+.gradle
+**/build/
 
 ### STS ###
 .apt_generated
