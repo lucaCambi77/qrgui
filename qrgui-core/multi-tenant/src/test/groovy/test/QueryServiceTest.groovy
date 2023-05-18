@@ -1,6 +1,6 @@
 package test
 
-import com.fasterxml.jackson.databind.ObjectMapper
+
 import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.query.model.QueryToJson
 import it.cambi.qrgui.taskExecutor.QueryService
@@ -8,16 +8,13 @@ import spock.lang.Specification
 
 class QueryServiceTest extends Specification {
 
-    def objectMapper = Mock(ObjectMapper)
-    def queryService = new QueryService(objectMapper)
+    def queryService = new QueryService()
     def uteQue = GroovyMock(UteQueDto)
 
     def "fail validation when statement is null"() {
-        given:
-        objectMapper.readValue(uteQue.json(), QueryToJson.class) >> new QueryToJson()
 
         when:
-        def wrapperResponse = queryService.checkQuery(uteQue, Optional.empty())
+        def wrapperResponse = queryService.checkQuery(new QueryToJson(), Optional.empty())
 
         then:
         !wrapperResponse.isSuccess()
@@ -25,10 +22,10 @@ class QueryServiceTest extends Specification {
 
     def "fail validation when statement is forbidden"() {
         given:
-        objectMapper.readValue(uteQue.json(), QueryToJson.class) >> queryToJson
+        uteQue.json() >> queryToJson
 
         expect:
-        queryService.checkQuery(uteQue, Optional.empty()).isSuccess() == result
+        queryService.checkQuery(queryToJson, Optional.empty()).isSuccess() == result
 
         where:
         queryToJson                                                        | result

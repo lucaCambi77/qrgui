@@ -1,6 +1,5 @@
 package it.cambi.qrgui.query.model;
 
-import it.cambi.qrgui.enums.QueryType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +12,9 @@ import java.util.List;
 @Builder
 @Data
 public class QueryToJson {
-
-  private String statement;
-  private List<Attribute> attrs;
-  private List<Constraint> constr;
-  private List<SelectColumns> querySelectColumns;
-  private QueryType queryType;
-  private int position;
+    private String statement;
+    private List<Attribute> attrs;
+    private List<Constraint> constr;
+    private List<SelectColumns> querySelectColumns;
+    private int position;
 }

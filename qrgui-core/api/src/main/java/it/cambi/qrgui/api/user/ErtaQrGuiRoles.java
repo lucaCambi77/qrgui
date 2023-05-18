@@ -1,6 +1,8 @@
 package it.cambi.qrgui.api.user;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.*;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 public enum ErtaQrGuiRoles {
   FEPQRA(R_FEPQRA),

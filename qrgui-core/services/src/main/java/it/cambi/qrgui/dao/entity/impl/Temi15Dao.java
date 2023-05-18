@@ -4,7 +4,12 @@ import it.cambi.qrgui.dao.entity.api.ITemi14Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.dao.temi.impl.TemiGenericDao;
-import it.cambi.qrgui.model.*;
+import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCatId;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAssId;
 import it.cambi.qrgui.util.QueryUtils;
 import org.springframework.stereotype.Component;
 

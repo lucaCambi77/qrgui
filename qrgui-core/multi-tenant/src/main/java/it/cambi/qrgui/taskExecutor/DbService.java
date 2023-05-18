@@ -3,6 +3,7 @@
  */
 package it.cambi.qrgui.taskExecutor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
@@ -24,7 +25,9 @@ public class DbService {
 
     private final QueryService checkQueryService;
 
-    private final GenericRepository firstGenericDao;
+    private final GenericRepository genericRepository;
+
+    private final ObjectMapper objectMapper;
 
     /**
      * @param que
@@ -33,6 +36,8 @@ public class DbService {
      */
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public WrappedResponse<QueryToJson> checkQuery(UteQueDto que) throws IOException {
-        return checkQueryService.checkQuery(que, Optional.of(firstGenericDao::getByNativeQuery));
+
+        QueryToJson json = objectMapper.readValue(que.json(), QueryToJson.class);
+        return checkQueryService.checkQuery(json, Optional.of(genericRepository::getByNativeQuery));
     }
 }

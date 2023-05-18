@@ -1,7 +1,5 @@
 package it.cambi.qrgui.taskExecutor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.query.model.Attribute;
 import it.cambi.qrgui.query.model.Constraint;
@@ -16,7 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,15 +32,12 @@ import static it.cambi.qrgui.util.WrappingUtils.cleanQueryString;
 @RequiredArgsConstructor
 public class QueryService {
 
-    private final ObjectMapper objectMapper;
     private final WrappedResponse<QueryToJson> responseQueryToJson = new WrappedResponse<>();
     private final WrappedResponse<String> responseString = new WrappedResponse<>();
 
     public WrappedResponse<QueryToJson> checkQuery(
-            UteQueDto query,
-            Optional<BiFunction<String, Integer, List<Object>>> queryCheckFunction) throws IOException {
-
-        QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
+            QueryToJson json,
+            Optional<BiFunction<String, Integer, List<Object>>> queryCheckFunction) {
 
         if (null == json.getStatement())
             return responseQueryToJson.toBuilder()
@@ -74,12 +73,6 @@ public class QueryService {
                     .errorMessage(
                             List.of(
                                     "Non è consentito l'uso dei commenti in quanto potrebbero alterare la formattazione della query"))
-                    .build();
-
-        if (null == query.nam())
-            return responseQueryToJson.toBuilder()
-                    .success(false)
-                    .errorMessage(List.of("E' necessario indicare un nome per la query"))
                     .build();
 
         if (null == json.getQuerySelectColumns() || json.getQuerySelectColumns().size() == 0)
@@ -313,9 +306,7 @@ public class QueryService {
      * @return
      * @throws IOException
      */
-    public WrappedResponse<String> getFinalQueryString(UteQueDto query) throws IOException {
-
-        QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
+    public WrappedResponse<String> getFinalQueryString(QueryToJson json) {
 
         /** Controllo i valori */
         List<String> requireParamError = new ArrayList<>();
@@ -324,7 +315,7 @@ public class QueryService {
 
             if (null == attr.getParameter().getValue() || attr.getParameter().getValue().isEmpty())
                 requireParamError.add(
-                        "Valore richiesto per " + attr.getAlias() + " nella query " + query.nam());
+                        "Valore mancante per " + attr.getAlias());
         }
 
         if (requireParamError.size() > 0)
@@ -499,7 +490,7 @@ public class QueryService {
      * @param resultSet
      * @return
      */
-    public List<Object> setResultSet(QueryToJson query, List<Object> resultSet) {
+    public List<Object> parseResultSet(QueryToJson query, List<Object> resultSet) {
 
         if (query.getQuerySelectColumns().size() == 1) {
 

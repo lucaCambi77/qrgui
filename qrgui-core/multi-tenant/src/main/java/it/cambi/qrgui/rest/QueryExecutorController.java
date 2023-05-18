@@ -7,12 +7,16 @@ import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.WorkBookService;
 import it.cambi.qrgui.taskExecutor.DbService;
-import it.cambi.qrgui.taskExecutor.GenericQueryTaskExecutorService;
+import it.cambi.qrgui.taskExecutor.GenericQueryExecutorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
@@ -27,7 +31,7 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 @RequiredArgsConstructor
 public class QueryExecutorController {
 
-    private final GenericQueryTaskExecutorService genericTaskExecutor;
+    private final GenericQueryExecutorService genericTaskExecutor;
 
     private final DbService dbService;
 

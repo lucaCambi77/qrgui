@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.MultiTenantApplication
 import it.cambi.qrgui.config.MultiTenantConfiguration
-import it.cambi.qrgui.taskExecutor.GenericQueryTaskExecutorService
+import it.cambi.qrgui.taskExecutor.GenericQueryExecutorService
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -38,14 +38,14 @@ class QueryIntegrationTest extends Specification {
     AmazonS3 amazonS3 = Mock()
 
     @SpringBean
-    GenericQueryTaskExecutorService queryTaskExecutorService = Mock()
+    GenericQueryExecutorService queryTaskExecutorService = Mock()
 
     MockMvc mvc;
 
     def setup() {
         mvc = webAppContextSetup(context).build()
         amazonS3 = Mock(AmazonS3)
-        queryTaskExecutorService = Mock(GenericQueryTaskExecutorService)
+        queryTaskExecutorService = Mock(GenericQueryExecutorService)
     }
 
     def "should get database list and available tenants at /GET /dbInfo"() throws Exception {

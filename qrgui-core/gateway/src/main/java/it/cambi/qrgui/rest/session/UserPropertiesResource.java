@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.*;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 @Component
 @RequestMapping("/userProperties")

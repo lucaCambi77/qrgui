@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':api')
     implementation project(':security')
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.7'
     testImplementation 'org.springframework.security:spring-security-test:5.7.6'
 }
 

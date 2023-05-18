@@ -5,7 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import it.cambi.qrgui.model.*;
+import it.cambi.qrgui.model.Temi14UteCat;
+import it.cambi.qrgui.model.Temi14UteCatId;
+import it.cambi.qrgui.model.Temi15UteQue;
+import it.cambi.qrgui.model.Temi15UteQueId;
+import it.cambi.qrgui.model.Temi16QueCatAss;
+import it.cambi.qrgui.model.Temi16QueCatAssId;
+import it.cambi.qrgui.model.Temi17UteRou;
+import it.cambi.qrgui.model.Temi17UteRouId;
+import it.cambi.qrgui.model.Temi18RouQue;
+import it.cambi.qrgui.model.Temi18RouQueId;
+import it.cambi.qrgui.model.Temi20AnaTipCat;
 
 import java.util.List;
 import java.util.Set;

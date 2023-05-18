@@ -8,7 +8,7 @@ import it.cambi.qrgui.api.wrappedResponse.WrappedResponse
 import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse
 import it.cambi.qrgui.config.MultiTenantConfiguration
 import it.cambi.qrgui.taskExecutor.DbService
-import it.cambi.qrgui.taskExecutor.GenericQueryTaskExecutorService
+import it.cambi.qrgui.taskExecutor.GenericQueryExecutorService
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -42,7 +42,7 @@ class QueryMvcTest extends Specification {
     AmazonS3 amazonS3 = Mock()
 
     @SpringBean
-    GenericQueryTaskExecutorService queryTaskExecutorService = Mock(GenericQueryTaskExecutorService);
+    GenericQueryExecutorService queryTaskExecutorService = Mock(GenericQueryExecutorService);
 
     MockMvc mvc;
 
