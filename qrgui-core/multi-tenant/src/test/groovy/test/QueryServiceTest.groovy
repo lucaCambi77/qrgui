@@ -1,6 +1,6 @@
 package test
 
-
+import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.query.model.QueryToJson
 import it.cambi.qrgui.taskExecutor.QueryService
@@ -35,5 +35,25 @@ class QueryServiceTest extends Specification {
         QueryToJson.builder().statement("create table ...").build()        | false
         QueryToJson.builder().statement("drop table ...").build()          | false
         QueryToJson.builder().statement("select * from table ...").build() | false
+    }
+
+    def "fail validation when statement is forbidden"() {
+
+        expect:
+        maxArea(height) == result
+
+        where:
+        height | result
+        new int[]{1, 8, 6, 2, 5, 4, 8, 3, 7} 49
+
+
+    }
+
+    int maxArea(int[] height) {
+        int l = height[0]
+
+        for (int i = 1; i < height.length; i++) {
+
+        }
     }
 }

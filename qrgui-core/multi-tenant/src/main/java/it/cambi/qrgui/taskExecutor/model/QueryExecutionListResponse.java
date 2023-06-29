@@ -2,6 +2,9 @@ package it.cambi.qrgui.taskExecutor.model;
 
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.enums.QueryType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
 
 import java.util.List;
 

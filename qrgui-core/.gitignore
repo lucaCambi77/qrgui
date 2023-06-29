@@ -4,8 +4,8 @@ HELP.md
 !**/src/test/**
 
 ### build ###
-.gradle
-**/build/
+.gradle/
+**/build/**
 
 ### STS ###
 .apt_generated
