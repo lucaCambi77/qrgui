@@ -5,7 +5,6 @@ HELP.md
 
 ### build ###
 .gradle/
-**/build/**
 
 ### STS ###
 .apt_generated
