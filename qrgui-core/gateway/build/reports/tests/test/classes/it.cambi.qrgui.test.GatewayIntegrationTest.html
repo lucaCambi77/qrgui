@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.907s</div>
+<div class="counter">0.821s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,17 +79,17 @@
 </thead>
 <tr>
 <td class="success">Status is 200 when user has role permission POST category</td>
-<td class="success">0.169s</td>
+<td class="success">0.177s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Status is 200 when user has role permission POST query</td>
-<td class="success">0.073s</td>
+<td class="success">0.072s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">Status is 403 when user access restricted endpoint POST category</td>
-<td class="success">0.665s</td>
+<td class="success">0.572s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -97,8 +97,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>10:39:53.100 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@6df20ade testClass = GatewayIntegrationTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4fbb001b testClass = GatewayIntegrationTest, locations = '{}', classes = '{class it.cambi.qrgui.RestApplication, class it.cambi.qrgui.test.TestConfiguration, class it.cambi.qrgui.exception.AppControllerAdvice}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@1ca368e2, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@4044fb95, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@2313052e, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@57fd91c9, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@565b064f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@45efc20d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5bf8fa12], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; false]], class annotated with @DirtiesContext [false] with mode [null].
-10:39:54.654 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@6df20ade testClass = GatewayIntegrationTest, testInstance = it.cambi.qrgui.test.GatewayIntegrationTest@78d9f51b, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4fbb001b testClass = GatewayIntegrationTest, locations = '{}', classes = '{class it.cambi.qrgui.RestApplication, class it.cambi.qrgui.test.TestConfiguration, class it.cambi.qrgui.exception.AppControllerAdvice}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@1ca368e2, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@4044fb95, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@2313052e, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@57fd91c9, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@565b064f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@45efc20d, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5bf8fa12], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; false, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]].
+<pre>11:49:11.766 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@48d7ad8b testClass = GatewayIntegrationTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@7e053511 testClass = GatewayIntegrationTest, locations = '{}', classes = '{class it.cambi.qrgui.RestApplication, class it.cambi.qrgui.test.TestConfiguration, class it.cambi.qrgui.exception.AppControllerAdvice}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@44b6a0e2, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@4d18aa28, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@25e2a451, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2fc0cc3, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@75459c75, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@41e350f1, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5a1de7fb], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; false]], class annotated with @DirtiesContext [false] with mode [null].
+11:49:12.777 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@48d7ad8b testClass = GatewayIntegrationTest, testInstance = it.cambi.qrgui.test.GatewayIntegrationTest@39c85c1a, testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@7e053511 testClass = GatewayIntegrationTest, locations = '{}', classes = '{class it.cambi.qrgui.RestApplication, class it.cambi.qrgui.test.TestConfiguration, class it.cambi.qrgui.exception.AppControllerAdvice}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@44b6a0e2, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@4d18aa28, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@25e2a451, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@2fc0cc3, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@75459c75, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@41e350f1, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@5a1de7fb], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; false, 'org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]].
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -108,41 +108,41 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.7.7)
 
-2023-05-18 10:39:55.111  INFO 39349 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : Starting GatewayIntegrationTest using Java 17.0.7 on luca-20qes8cd01 with PID 39349 (started by luca in /home/luca/Documents/qrgui/qrgui-core/gateway)
-2023-05-18 10:39:55.113  INFO 39349 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : The following 1 profile is active: &quot;test&quot;
-2023-05-18 10:39:55.898  INFO 39349 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-05-18 10:39:55.964  INFO 39349 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 54 ms. Found 3 JPA repository interfaces.
-2023-05-18 10:39:56.705  INFO 39349 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-2023-05-18 10:39:57.276  INFO 39349 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-05-18 10:39:57.292  INFO 39349 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-05-18 10:39:57.293  INFO 39349 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
-2023-05-18 10:39:57.446  INFO 39349 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring embedded WebApplicationContext
-2023-05-18 10:39:57.447  INFO 39349 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2270 ms
-2023-05-18 10:39:57.762  INFO 39349 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2023-05-18 10:39:57.831  INFO 39349 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
-2023-05-18 10:39:57.892  INFO 39349 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-05-18 10:39:58.094  INFO 39349 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-05-18 10:39:58.374  INFO 39349 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-05-18 10:39:58.392  INFO 39349 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2023-05-18 10:39:58.710  WARN 39349 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000038: Composite-id class does not override equals(): it.cambi.qrgui.security.db.model.UserRoleId
-2023-05-18 10:39:58.710  WARN 39349 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000039: Composite-id class does not override hashCode(): it.cambi.qrgui.security.db.model.UserRoleId
-2023-05-18 10:39:58.999  INFO 39349 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-05-18 10:39:59.010  INFO 39349 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2023-05-18 10:40:00.266 DEBUG 39349 --- [    Test worker] edFilterInvocationSecurityMetadataSource : Adding web access control expression [anonymous] for Ant [pattern='/**/login']
-2023-05-18 10:40:00.290 DEBUG 39349 --- [    Test worker] edFilterInvocationSecurityMetadataSource : Adding web access control expression [authenticated] for any request
-2023-05-18 10:40:00.336  WARN 39349 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-05-18 10:40:00.736  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6230a15a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7225f871, org.springframework.security.web.context.SecurityContextPersistenceFilter@747216b6, org.springframework.security.web.header.HeaderWriterFilter@421c4c3e, org.springframework.web.filter.CorsFilter@1bff4cb9, org.springframework.security.web.authentication.logout.LogoutFilter@5c6fae3c, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@3ef7064b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7b9e7633, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@40af3dd8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@c521a79, org.springframework.security.web.session.SessionManagementFilter@67cc5a38, org.springframework.security.web.access.ExceptionTranslationFilter@58f27c37, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4de14c58]
-2023-05-18 10:40:00.749  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/css/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2023-05-18 10:40:00.749  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/css/**']
-2023-05-18 10:40:00.750  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/js/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2023-05-18 10:40:00.750  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/js/**']
-2023-05-18 10:40:00.750  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/img/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2023-05-18 10:40:00.750  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/img/**']
-2023-05-18 10:40:00.750  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/lib/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2023-05-18 10:40:00.751  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/lib/**']
-2023-05-18 10:40:00.751  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/favicon.ico']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
-2023-05-18 10:40:00.751  INFO 39349 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/favicon.ico']
-2023-05-18 10:40:00.757  WARN 39349 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : 
+2023-07-06 11:49:13.023  INFO 6794 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : Starting GatewayIntegrationTest using Java 17.0.7 on luca-20qes8cd01 with PID 6794 (started by luca in /home/luca/Documenti/qrgui/qrgui-core/gateway)
+2023-07-06 11:49:13.024  INFO 6794 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : The following 1 profile is active: &quot;test&quot;
+2023-07-06 11:49:13.509  INFO 6794 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-06 11:49:13.556  INFO 6794 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 38 ms. Found 3 JPA repository interfaces.
+2023-07-06 11:49:14.199  INFO 6794 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2023-07-06 11:49:14.528  INFO 6794 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-07-06 11:49:14.538  INFO 6794 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-07-06 11:49:14.539  INFO 6794 --- [    Test worker] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-07-06 11:49:14.626  INFO 6794 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring embedded WebApplicationContext
+2023-07-06 11:49:14.626  INFO 6794 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1557 ms
+2023-07-06 11:49:14.813  INFO 6794 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-06 11:49:14.862  INFO 6794 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-07-06 11:49:14.894  INFO 6794 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-07-06 11:49:14.986  INFO 6794 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-06 11:49:15.142  INFO 6794 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-06 11:49:15.153  INFO 6794 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-07-06 11:49:15.382  WARN 6794 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000038: Composite-id class does not override equals(): it.cambi.qrgui.security.db.model.UserRoleId
+2023-07-06 11:49:15.382  WARN 6794 --- [    Test worker] org.hibernate.mapping.RootClass          : HHH000039: Composite-id class does not override hashCode(): it.cambi.qrgui.security.db.model.UserRoleId
+2023-07-06 11:49:15.580  INFO 6794 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-06 11:49:15.588  INFO 6794 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-06 11:49:16.324 DEBUG 6794 --- [    Test worker] edFilterInvocationSecurityMetadataSource : Adding web access control expression [anonymous] for Ant [pattern='/**/login']
+2023-07-06 11:49:16.338 DEBUG 6794 --- [    Test worker] edFilterInvocationSecurityMetadataSource : Adding web access control expression [authenticated] for any request
+2023-07-06 11:49:16.373  WARN 6794 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-06 11:49:16.656  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a349644, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@42b6acc2, org.springframework.security.web.context.SecurityContextPersistenceFilter@347770a9, org.springframework.security.web.header.HeaderWriterFilter@121fe002, org.springframework.web.filter.CorsFilter@3de8e614, org.springframework.security.web.authentication.logout.LogoutFilter@46a5aff, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@6ed78a5e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@28ec92c9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3edb09b9, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1a819769, org.springframework.security.web.session.SessionManagementFilter@7b80ac30, org.springframework.security.web.access.ExceptionTranslationFilter@529b8e41, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@e62d757]
+2023-07-06 11:49:16.665  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/css/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-07-06 11:49:16.665  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/css/**']
+2023-07-06 11:49:16.666  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/js/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-07-06 11:49:16.666  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/js/**']
+2023-07-06 11:49:16.667  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/img/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-07-06 11:49:16.667  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/img/**']
+2023-07-06 11:49:16.667  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/lib/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-07-06 11:49:16.667  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/lib/**']
+2023-07-06 11:49:16.667  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/favicon.ico']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-07-06 11:49:16.667  INFO 6794 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/favicon.ico']
+2023-07-06 11:49:16.672  WARN 6794 --- [    Test worker] o.s.s.c.a.web.builders.WebSecurity       : 
 
 ********************************************************************
 **********        Security debugging is enabled.       *************
@@ -151,21 +151,21 @@
 ********************************************************************
 
 
-2023-05-18 10:40:01.256  WARN 39349 --- [    Test worker] .b.a.g.t.GroovyTemplateAutoConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
-2023-05-18 10:40:01.743  INFO 39349 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 41131 (http) with context path '/qrgui/rest'
-2023-05-18 10:40:01.760  INFO 39349 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : Started GatewayIntegrationTest in 7.077 seconds (JVM running for 10.463)
-2023-05-18 10:40:02.362  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user user@xxx.com
-2023-05-18 10:40:02.533  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User user@xxx.com has role QRCG00
-2023-05-18 10:40:02.748  INFO 39349 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
-2023-05-18 10:40:02.748  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2023-05-18 10:40:02.750  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2023-05-18 10:40:02.804  INFO 39349 --- [    Test worker] Spring Security Debugger                 : 
+2023-07-06 11:49:17.070  WARN 6794 --- [    Test worker] .b.a.g.t.GroovyTemplateAutoConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2023-07-06 11:49:17.343  INFO 6794 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 35305 (http) with context path '/qrgui/rest'
+2023-07-06 11:49:17.354  INFO 6794 --- [    Test worker] i.c.qrgui.test.GatewayIntegrationTest    : Started GatewayIntegrationTest in 4.56 seconds (JVM running for 6.788)
+2023-07-06 11:49:17.675  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user user@xxx.com
+2023-07-06 11:49:17.811  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User user@xxx.com has role QRCG00
+2023-07-06 11:49:17.984  INFO 6794 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
+2023-07-06 11:49:17.984  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-07-06 11:49:17.985  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-07-06 11:49:18.028  INFO 6794 --- [    Test worker] Spring Security Debugger                 : 
 
 ************************************************************
 
 Request received for POST '/emia/category':
 
-org.springframework.mock.web.MockHttpServletRequest@6cddb04c
+org.springframework.mock.web.MockHttpServletRequest@5d95c7c2
 
 servletPath:
 pathInfo:/emia/category
@@ -194,25 +194,25 @@ Security filter chain: [
 ************************************************************
 
 
-2023-05-18 10:40:02.808 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/category
-2023-05-18 10:40:02.811 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=user@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRCG00]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRCG00]]]
-2023-05-18 10:40:02.826 DEBUG 39349 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/category] with attributes [authenticated]
-2023-05-18 10:40:02.826 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/category
-2023-05-18 10:40:02.938 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
-2023-05-18 10:40:02.942 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource] with authorization manager org.springframework.security.authorization.method.Jsr250AuthorizationManager@42e7e12f and decision AuthorityAuthorizationDecision [granted=false, authorities=[QRCINS, QRA]]
-2023-05-18 10:40:02.954 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
-2023-05-18 10:40:03.006  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user admin@xxx.com
-2023-05-18 10:40:03.010  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User admin@xxx.com has role QRA
-2023-05-18 10:40:03.013  INFO 39349 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
-2023-05-18 10:40:03.013  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2023-05-18 10:40:03.014  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2023-05-18 10:40:03.077  INFO 39349 --- [    Test worker] Spring Security Debugger                 : 
+2023-07-06 11:49:18.032 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/category
+2023-07-06 11:49:18.036 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=user@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRCG00]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRCG00]]]
+2023-07-06 11:49:18.057 DEBUG 6794 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/category] with attributes [authenticated]
+2023-07-06 11:49:18.058 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/category
+2023-07-06 11:49:18.167 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
+2023-07-06 11:49:18.171 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource] with authorization manager org.springframework.security.authorization.method.Jsr250AuthorizationManager@3268f664 and decision AuthorityAuthorizationDecision [granted=false, authorities=[QRCINS, QRA]]
+2023-07-06 11:49:18.184 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
+2023-07-06 11:49:18.229  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user admin@xxx.com
+2023-07-06 11:49:18.233  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User admin@xxx.com has role QRA
+2023-07-06 11:49:18.236  INFO 6794 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
+2023-07-06 11:49:18.236  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-07-06 11:49:18.238  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-07-06 11:49:18.305  INFO 6794 --- [    Test worker] Spring Security Debugger                 : 
 
 ************************************************************
 
 Request received for POST '/emia/category':
 
-org.springframework.mock.web.MockHttpServletRequest@3a6732bc
+org.springframework.mock.web.MockHttpServletRequest@127e838b
 
 servletPath:
 pathInfo:/emia/category
@@ -241,29 +241,29 @@ Security filter chain: [
 ************************************************************
 
 
-2023-05-18 10:40:03.078 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/category
-2023-05-18 10:40:03.079 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=admin@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRA]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRA]]]
-2023-05-18 10:40:03.080 DEBUG 39349 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/category] with attributes [authenticated]
-2023-05-18 10:40:03.080 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/category
-2023-05-18 10:40:03.084 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
-2023-05-18 10:40:03.085 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
-2023-05-18 10:40:03.092  INFO 39349 --- [    Test worker] it.cambi.qrgui.rest.CategoryResource     : ... creo una nuova categoria
-2023-05-18 10:40:03.118  INFO 39349 --- [    Test worker] it.cambi.qrgui.rest.BasicResource        : Request  ----&gt; ErtaGuiUser(userName=admin@xxx.com, password=null, locale=en, url=http://localhost/emia/category, queryString=null, guiVersion=null, requestType=POST, browser=null, ertaQrGuiRoles=[], isAdmin=false, address=localhost (127.0.0.1:80), requestDate=Thu May 18 10:40:03 CEST 2023)
-Response ----&gt; 2023-05-18 10:40:03.118, success --&gt; , count --&gt; 
+2023-07-06 11:49:18.306 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/category
+2023-07-06 11:49:18.307 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=admin@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRA]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRA]]]
+2023-07-06 11:49:18.308 DEBUG 6794 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/category] with attributes [authenticated]
+2023-07-06 11:49:18.308 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/category
+2023-07-06 11:49:18.311 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
+2023-07-06 11:49:18.312 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.CategoryResource.postCategory(it.cambi.qrgui.api.model.CategoryDto,javax.servlet.http.HttpServletRequest,org.springframework.security.core.Authentication); target is of class [it.cambi.qrgui.rest.CategoryResource]
+2023-07-06 11:49:18.320  INFO 6794 --- [    Test worker] it.cambi.qrgui.rest.CategoryResource     : ... creo una nuova categoria
+2023-07-06 11:49:18.349  INFO 6794 --- [    Test worker] it.cambi.qrgui.rest.BasicResource        : Request  ----&gt; ErtaGuiUser(userName=admin@xxx.com, password=null, locale=en, url=http://localhost/emia/category, queryString=null, guiVersion=null, requestType=POST, browser=null, ertaQrGuiRoles=[], isAdmin=false, address=localhost (127.0.0.1:80), requestDate=Thu Jul 06 11:49:18 CEST 2023)
+Response ----&gt; 2023-07-06 11:49:18.348, success --&gt; , count --&gt; 
 
-2023-05-18 10:40:03.160 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
-2023-05-18 10:40:03.176  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user admin@xxx.com
-2023-05-18 10:40:03.180  INFO 39349 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User admin@xxx.com has role QRA
-2023-05-18 10:40:03.182  INFO 39349 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
-2023-05-18 10:40:03.182  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2023-05-18 10:40:03.184  INFO 39349 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2023-05-18 10:40:03.216  INFO 39349 --- [    Test worker] Spring Security Debugger                 : 
+2023-07-06 11:49:18.385 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
+2023-07-06 11:49:18.410  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : ... attempting to authenticate user admin@xxx.com
+2023-07-06 11:49:18.413  INFO 6794 --- [    Test worker] i.c.q.s.services.GuiUserDetailService    : User admin@xxx.com has role QRA
+2023-07-06 11:49:18.416  INFO 6794 --- [    Test worker] o.a.c.c.C.[.[localhost].[/qrgui/rest]    : Initializing Spring TestDispatcherServlet ''
+2023-07-06 11:49:18.416  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-07-06 11:49:18.418  INFO 6794 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2023-07-06 11:49:18.451  INFO 6794 --- [    Test worker] Spring Security Debugger                 : 
 
 ************************************************************
 
 Request received for POST '/emia/query':
 
-org.springframework.mock.web.MockHttpServletRequest@68a4129d
+org.springframework.mock.web.MockHttpServletRequest@445dc8dc
 
 servletPath:
 pathInfo:/emia/query
@@ -292,17 +292,17 @@ Security filter chain: [
 ************************************************************
 
 
-2023-05-18 10:40:03.217 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/query
-2023-05-18 10:40:03.217 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=admin@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRA]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRA]]]
-2023-05-18 10:40:03.218 DEBUG 39349 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/query] with attributes [authenticated]
-2023-05-18 10:40:03.219 DEBUG 39349 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/query
-2023-05-18 10:40:03.233 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.QueryResource.postQuery(it.cambi.qrgui.api.model.UteQueDto,javax.servlet.http.HttpServletRequest); target is of class [it.cambi.qrgui.rest.QueryResource]
-2023-05-18 10:40:03.234 DEBUG 39349 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.QueryResource.postQuery(it.cambi.qrgui.api.model.UteQueDto,javax.servlet.http.HttpServletRequest); target is of class [it.cambi.qrgui.rest.QueryResource]
-2023-05-18 10:40:03.242  INFO 39349 --- [    Test worker] it.cambi.qrgui.rest.QueryResource        : ... salvo una nuova query
-2023-05-18 10:40:03.243  INFO 39349 --- [    Test worker] it.cambi.qrgui.rest.BasicResource        : Request  ----&gt; ErtaGuiUser(userName=admin@xxx.com, password=null, locale=en, url=http://localhost/emia/query, queryString=null, guiVersion=null, requestType=POST, browser=null, ertaQrGuiRoles=[], isAdmin=false, address=localhost (127.0.0.1:80), requestDate=Thu May 18 10:40:03 CEST 2023)
-Response ----&gt; 2023-05-18 10:40:03.243, success --&gt; , count --&gt; 
+2023-07-06 11:49:18.452 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Securing POST /emia/query
+2023-07-06 11:49:18.452 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Set SecurityContextHolder to SecurityContextImpl [Authentication=UsernamePasswordAuthenticationToken [Principal=org.springframework.security.core.userdetails.User [Username=admin@xxx.com, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[QRA]], Credentials=[PROTECTED], Authenticated=true, Details=null, Granted Authorities=[QRA]]]
+2023-07-06 11:49:18.453 DEBUG 6794 --- [    Test worker] o.s.s.w.a.i.FilterSecurityInterceptor    : Authorized filter invocation [POST /emia/query] with attributes [authenticated]
+2023-07-06 11:49:18.453 DEBUG 6794 --- [    Test worker] o.s.security.web.FilterChainProxy        : Secured POST /emia/query
+2023-07-06 11:49:18.465 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.QueryResource.postQuery(it.cambi.qrgui.api.model.UteQueDto,javax.servlet.http.HttpServletRequest); target is of class [it.cambi.qrgui.rest.QueryResource]
+2023-07-06 11:49:18.466 DEBUG 6794 --- [    Test worker] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity it.cambi.qrgui.rest.QueryResource.postQuery(it.cambi.qrgui.api.model.UteQueDto,javax.servlet.http.HttpServletRequest); target is of class [it.cambi.qrgui.rest.QueryResource]
+2023-07-06 11:49:18.474  INFO 6794 --- [    Test worker] it.cambi.qrgui.rest.QueryResource        : ... salvo una nuova query
+2023-07-06 11:49:18.475  INFO 6794 --- [    Test worker] it.cambi.qrgui.rest.BasicResource        : Request  ----&gt; ErtaGuiUser(userName=admin@xxx.com, password=null, locale=en, url=http://localhost/emia/query, queryString=null, guiVersion=null, requestType=POST, browser=null, ertaQrGuiRoles=[], isAdmin=false, address=localhost (127.0.0.1:80), requestDate=Thu Jul 06 11:49:18 CEST 2023)
+Response ----&gt; 2023-07-06 11:49:18.475, success --&gt; , count --&gt; 
 
-2023-05-18 10:40:03.245 DEBUG 39349 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
+2023-07-06 11:49:18.477 DEBUG 6794 --- [    Test worker] s.s.w.c.SecurityContextPersistenceFilter : Cleared SecurityContextHolder to complete request
 </pre>
 </span>
 </div>
@@ -314,7 +314,7 @@ Response ----&gt; 2023-05-18 10:40:03.243, success --&gt; , count --&gt;
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.0.2</a> at May 18, 2023, 10:40:05 AM</p>
+<a href="http://www.gradle.org">Gradle 8.2</a> at Jul 6, 2023, 11:49:18 AM</p>
 </div>
 </div>
 </body>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="test.QueryServiceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-05-18T08:40:52" hostname="luca-20qes8cd01" time="10.61">
-  <properties/>
-  <testcase name="fail validation when statement is null" classname="test.QueryServiceTest" time="10.61"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

@@ -23,7 +23,7 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">6</div>
+<div class="counter">1</div>
 <p>tests</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.194s</div>
+<div class="counter">0.409s</div>
 <p>duration</p>
 </div>
 </td>
@@ -78,33 +78,8 @@
 </tr>
 </thead>
 <tr>
-<td class="success">test [s1: a#c, s2: b, result: false, #3]</td>
-<td class="success">0.003s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test [s1: ab##, s2: c#d#, result: true, #2]</td>
-<td class="success">0.003s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test [s1: ab#c, s2: ad#c, result: true, #0]</td>
-<td class="success">0.172s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test [s1: bxj##tw, s2: bxj###tw, result: false, #4]</td>
-<td class="success">0.005s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test [s1: bxj##tw, s2: bxo#j##tw, result: true, #5]</td>
-<td class="success">0.004s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">test [s1: xywrrmp, s2: xywrrm#, result: false, #1]</td>
-<td class="success">0.007s</td>
+<td class="success">should get query execution list at /POST /query/execute_query</td>
+<td class="success">0.409s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -112,7 +87,7 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>10:53:56.058 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4d6ee47 testClass = QueryMvcTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@a33b4e3 testClass = QueryMvcTest, locations = '{}', classes = '{class it.cambi.qrgui.ServiceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{classpath:/services.properties}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@0, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@1d0d6318, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@3542162a, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@5bd82fed, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@549949be, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@6f0b0a5e, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3d3e5463], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+<pre>11:49:35.094 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@23f72d88 testClass = QueryMvcTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4bafe935 testClass = QueryMvcTest, locations = '{}', classes = '{class it.cambi.qrgui.ServiceApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{classpath:/services.properties}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.spockframework.spring.mock.SpockContextCustomizer@0, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@18cebaa5, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@b6b1987, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@7c541c15, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@3b2c0e88, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@7516e4e5, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@7331196b], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -122,52 +97,52 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.7.7)
 
-2023-06-13 10:53:56.519  INFO 12957 --- [    Test worker] QueryMvcTest                             : Starting QueryMvcTest using Java 17.0.7 on luca-20qes8cd01 with PID 12957 (started by luca in /home/luca/Documents/qrgui/qrgui-core/services)
-2023-06-13 10:53:56.520  INFO 12957 --- [    Test worker] QueryMvcTest                             : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2023-06-13 10:53:56.521 DEBUG 12957 --- [    Test worker] o.s.boot.SpringApplication               : Loading source class it.cambi.qrgui.ServiceApplication
-2023-06-13 10:53:56.565 DEBUG 12957 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@63d4f0a2
-2023-06-13 10:53:57.024  INFO 12957 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2023-06-13 10:53:57.036  INFO 12957 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
-2023-06-13 10:53:57.455 DEBUG 12957 --- [    Test worker] ySourcesPropertyResolver$DefaultResolver : Found key 'datasource.emia.jdbcUrl' in PropertySource 'class path resource [services.properties]' with value of type String
-2023-06-13 10:53:57.571  INFO 12957 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: emiaPU]
-2023-06-13 10:53:57.617  INFO 12957 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
-2023-06-13 10:53:57.764  INFO 12957 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2023-06-13 10:53:57.888  INFO 12957 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2023-06-13 10:53:58.070  INFO 12957 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2023-06-13 10:53:58.086  INFO 12957 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2023-06-13 10:53:58.678 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi14_UTE_CAT CASCADE 
-2023-06-13 10:53:58.681 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi15_UTE_QUE CASCADE 
-2023-06-13 10:53:58.682 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi16_QUE_CAT_ASS CASCADE 
-2023-06-13 10:53:58.682 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi17_UTE_ROU CASCADE 
-2023-06-13 10:53:58.683 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi18_ROU_QUE CASCADE 
-2023-06-13 10:53:58.683 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi20_ANA_TIP_CAT CASCADE 
-2023-06-13 10:53:58.683 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI14_ANA_CAT
-2023-06-13 10:53:58.684 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI15_ANA_QUE
-2023-06-13 10:53:58.684 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI17_ANA_ROU
-2023-06-13 10:53:58.687 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI14_ANA_CAT start with 1 increment by 1
-2023-06-13 10:53:58.688 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI15_ANA_QUE start with 1 increment by 1
-2023-06-13 10:53:58.689 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI17_ANA_ROU start with 1 increment by 1
-2023-06-13 10:53:58.690 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi14_UTE_CAT (C_CAT integer not null, D_INS_CAT timestamp not null, T_DES varchar(80) not null, D_INS_PAR timestamp, N_PAR integer, C_TIP_CAT varchar(32) not null, primary key (C_CAT, D_INS_CAT))
-2023-06-13 10:53:58.696 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi15_UTE_QUE (D_INS_QUE timestamp not null, C_QUE bigint not null, T_JSON clob not null, T_NAM varchar(80) not null, tenant varchar(255), primary key (D_INS_QUE, C_QUE))
-2023-06-13 10:53:58.698 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi16_QUE_CAT_ASS (C_CAT bigint not null, D_INS_CAT timestamp not null, D_INS_QUE timestamp not null, C_QUE bigint not null, primary key (C_CAT, D_INS_CAT, D_INS_QUE, C_QUE))
-2023-06-13 10:53:58.699 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi17_UTE_ROU (D_INS_ROU timestamp not null, C_ROU bigint not null, T_DES varchar(80) not null, primary key (D_INS_ROU, C_ROU))
-2023-06-13 10:53:58.701 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi18_ROU_QUE (D_INS_QUE timestamp not null, D_INS_ROU timestamp not null, C_QUE bigint not null, C_ROU bigint not null, primary key (D_INS_QUE, D_INS_ROU, C_QUE, C_ROU))
-2023-06-13 10:53:58.703 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi20_ANA_TIP_CAT (C_TIP_CAT varchar(32) not null, T_DES varchar(32) not null, primary key (C_TIP_CAT))
-2023-06-13 10:53:58.704 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi14_UTE_CAT add constraint FK116qu43go2bjfuautxs465pqn foreign key (C_TIP_CAT) references EMIA.Temi20_ANA_TIP_CAT
-2023-06-13 10:53:58.716 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi16_QUE_CAT_ASS add constraint FKeb2c9d8vnt6fvls1x5m0yxjl foreign key (C_CAT, D_INS_CAT) references EMIA.Temi14_UTE_CAT
-2023-06-13 10:53:58.718 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi16_QUE_CAT_ASS add constraint FKjnngpdh4t5pewak9y2io5j9wv foreign key (D_INS_QUE, C_QUE) references EMIA.Temi15_UTE_QUE
-2023-06-13 10:53:58.720 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi18_ROU_QUE add constraint FKr4diuffewuydf4ifn67anpwpm foreign key (D_INS_QUE, C_QUE) references EMIA.Temi15_UTE_QUE
-2023-06-13 10:53:58.722 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi18_ROU_QUE add constraint FK9a7iva4g72wffdh8acegr44r6 foreign key (D_INS_ROU, C_ROU) references EMIA.Temi17_UTE_ROU
-2023-06-13 10:53:58.729  INFO 12957 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2023-06-13 10:53:58.735  INFO 12957 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'emiaPU'
-2023-06-13 10:53:58.966  WARN 12957 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2023-06-13 10:53:59.070 DEBUG 12957 --- [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'it.cambi.qrgui'. Automatic @Repository and @Entity scanning is enabled.
-2023-06-13 10:53:59.183 DEBUG 12957 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2023-06-13 10:53:59.255 DEBUG 12957 --- [    Test worker] ySourcesPropertyResolver$DefaultResolver : Found key 'multitenant.contextPath' in PropertySource 'class path resource [services.properties]' with value of type String
-2023-06-13 10:53:59.349 DEBUG 12957 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 19 mappings in 'requestMappingHandlerMapping'
-2023-06-13 10:53:59.387 DEBUG 12957 --- [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
-2023-06-13 10:53:59.618  WARN 12957 --- [    Test worker] .b.a.g.t.GroovyTemplateAutoConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
-2023-06-13 10:53:59.914 DEBUG 12957 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
+2023-07-06 11:49:35.348  INFO 6976 --- [    Test worker] QueryMvcTest                             : Starting QueryMvcTest using Java 17.0.7 on luca-20qes8cd01 with PID 6976 (started by luca in /home/luca/Documenti/qrgui/qrgui-core/services)
+2023-07-06 11:49:35.350  INFO 6976 --- [    Test worker] QueryMvcTest                             : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-07-06 11:49:35.350 DEBUG 6976 --- [    Test worker] o.s.boot.SpringApplication               : Loading source class it.cambi.qrgui.ServiceApplication
+2023-07-06 11:49:35.399 DEBUG 6976 --- [    Test worker] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@53f4c1e6
+2023-07-06 11:49:35.811  INFO 6976 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-06 11:49:35.821  INFO 6976 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
+2023-07-06 11:49:36.175 DEBUG 6976 --- [    Test worker] ySourcesPropertyResolver$DefaultResolver : Found key 'datasource.emia.jdbcUrl' in PropertySource 'class path resource [services.properties]' with value of type String
+2023-07-06 11:49:36.265  INFO 6976 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: emiaPU]
+2023-07-06 11:49:36.302  INFO 6976 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-07-06 11:49:36.420  INFO 6976 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-07-06 11:49:36.518  INFO 6976 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-07-06 11:49:36.652  INFO 6976 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-07-06 11:49:36.663  INFO 6976 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-07-06 11:49:37.248 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi14_UTE_CAT CASCADE 
+2023-07-06 11:49:37.257 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi15_UTE_QUE CASCADE 
+2023-07-06 11:49:37.257 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi16_QUE_CAT_ASS CASCADE 
+2023-07-06 11:49:37.258 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi17_UTE_ROU CASCADE 
+2023-07-06 11:49:37.258 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi18_ROU_QUE CASCADE 
+2023-07-06 11:49:37.258 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop table if exists EMIA.Temi20_ANA_TIP_CAT CASCADE 
+2023-07-06 11:49:37.259 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI14_ANA_CAT
+2023-07-06 11:49:37.259 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI15_ANA_QUE
+2023-07-06 11:49:37.259 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : drop sequence if exists EMIA.SEMI17_ANA_ROU
+2023-07-06 11:49:37.261 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI14_ANA_CAT start with 1 increment by 1
+2023-07-06 11:49:37.264 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI15_ANA_QUE start with 1 increment by 1
+2023-07-06 11:49:37.265 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create sequence EMIA.SEMI17_ANA_ROU start with 1 increment by 1
+2023-07-06 11:49:37.267 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi14_UTE_CAT (C_CAT integer not null, D_INS_CAT timestamp not null, T_DES varchar(80) not null, D_INS_PAR timestamp, N_PAR integer, C_TIP_CAT varchar(32) not null, primary key (C_CAT, D_INS_CAT))
+2023-07-06 11:49:37.276 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi15_UTE_QUE (D_INS_QUE timestamp not null, C_QUE bigint not null, T_JSON clob not null, T_NAM varchar(80) not null, tenant varchar(255), primary key (D_INS_QUE, C_QUE))
+2023-07-06 11:49:37.279 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi16_QUE_CAT_ASS (C_CAT bigint not null, D_INS_CAT timestamp not null, D_INS_QUE timestamp not null, C_QUE bigint not null, primary key (C_CAT, D_INS_CAT, D_INS_QUE, C_QUE))
+2023-07-06 11:49:37.281 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi17_UTE_ROU (D_INS_ROU timestamp not null, C_ROU bigint not null, T_DES varchar(80) not null, primary key (D_INS_ROU, C_ROU))
+2023-07-06 11:49:37.284 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi18_ROU_QUE (D_INS_QUE timestamp not null, D_INS_ROU timestamp not null, C_QUE bigint not null, C_ROU bigint not null, primary key (D_INS_QUE, D_INS_ROU, C_QUE, C_ROU))
+2023-07-06 11:49:37.287 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : create table EMIA.Temi20_ANA_TIP_CAT (C_TIP_CAT varchar(32) not null, T_DES varchar(32) not null, primary key (C_TIP_CAT))
+2023-07-06 11:49:37.290 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi14_UTE_CAT add constraint FK116qu43go2bjfuautxs465pqn foreign key (C_TIP_CAT) references EMIA.Temi20_ANA_TIP_CAT
+2023-07-06 11:49:37.309 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi16_QUE_CAT_ASS add constraint FKeb2c9d8vnt6fvls1x5m0yxjl foreign key (C_CAT, D_INS_CAT) references EMIA.Temi14_UTE_CAT
+2023-07-06 11:49:37.313 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi16_QUE_CAT_ASS add constraint FKjnngpdh4t5pewak9y2io5j9wv foreign key (D_INS_QUE, C_QUE) references EMIA.Temi15_UTE_QUE
+2023-07-06 11:49:37.317 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi18_ROU_QUE add constraint FKr4diuffewuydf4ifn67anpwpm foreign key (D_INS_QUE, C_QUE) references EMIA.Temi15_UTE_QUE
+2023-07-06 11:49:37.323 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : alter table EMIA.Temi18_ROU_QUE add constraint FK9a7iva4g72wffdh8acegr44r6 foreign key (D_INS_ROU, C_ROU) references EMIA.Temi17_UTE_ROU
+2023-07-06 11:49:37.336  INFO 6976 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-06 11:49:37.345  INFO 6976 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'emiaPU'
+2023-07-06 11:49:37.510  WARN 6976 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-07-06 11:49:37.599 DEBUG 6976 --- [    Test worker] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'it.cambi.qrgui'. Automatic @Repository and @Entity scanning is enabled.
+2023-07-06 11:49:37.724 DEBUG 6976 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-07-06 11:49:37.825 DEBUG 6976 --- [    Test worker] ySourcesPropertyResolver$DefaultResolver : Found key 'multitenant.contextPath' in PropertySource 'class path resource [services.properties]' with value of type String
+2023-07-06 11:49:37.947 DEBUG 6976 --- [    Test worker] s.w.s.m.m.a.RequestMappingHandlerMapping : 19 mappings in 'requestMappingHandlerMapping'
+2023-07-06 11:49:38.015 DEBUG 6976 --- [    Test worker] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-07-06 11:49:38.385  WARN 6976 --- [    Test worker] .b.a.g.t.GroovyTemplateAutoConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Groovy configuration, or set spring.groovy.template.check-template-location=false)
+2023-07-06 11:49:39.024 DEBUG 6976 --- [    Test worker] ConditionEvaluationReportLoggingListener : 
 
 
 ============================
@@ -1193,15 +1168,21 @@ Unconditional classes:
 
 
 
-2023-06-13 10:53:59.933  INFO 12957 --- [    Test worker] QueryMvcTest                             : Started QueryMvcTest in 3.649 seconds (JVM running for 5.297)
-2023-06-13 10:53:59.935 DEBUG 12957 --- [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
-2023-06-13 10:54:00.014 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : select temi20anat0_.C_TIP_CAT as c_tip_ca1_5_0_, temi20anat0_.T_DES as t_des2_5_0_ from EMIA.Temi20_ANA_TIP_CAT temi20anat0_ where temi20anat0_.C_TIP_CAT=?
-2023-06-13 10:54:00.020 TRACE 12957 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [QRA]
-2023-06-13 10:54:00.058 DEBUG 12957 --- [    Test worker] org.hibernate.SQL                        : insert into EMIA.Temi20_ANA_TIP_CAT (T_DES, C_TIP_CAT) values (?, ?)
-2023-06-13 10:54:00.059 TRACE 12957 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Tip Category Test]
-2023-06-13 10:54:00.060 TRACE 12957 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [QRA]
-2023-06-13 10:54:00.069 DEBUG 12957 --- [    Test worker] o.s.boot.devtools.restart.Restarter      : Creating new Restarter for thread Thread[Test worker,5,main]
-2023-06-13 10:54:00.069 DEBUG 12957 --- [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2023-07-06 11:49:39.050  INFO 6976 --- [    Test worker] QueryMvcTest                             : Started QueryMvcTest in 3.929 seconds (JVM running for 5.174)
+2023-07-06 11:49:39.052 DEBUG 6976 --- [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2023-07-06 11:49:39.158 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : select temi20anat0_.C_TIP_CAT as c_tip_ca1_5_0_, temi20anat0_.T_DES as t_des2_5_0_ from EMIA.Temi20_ANA_TIP_CAT temi20anat0_ where temi20anat0_.C_TIP_CAT=?
+2023-07-06 11:49:39.164 TRACE 6976 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [QRA]
+2023-07-06 11:49:39.215 DEBUG 6976 --- [    Test worker] org.hibernate.SQL                        : insert into EMIA.Temi20_ANA_TIP_CAT (T_DES, C_TIP_CAT) values (?, ?)
+2023-07-06 11:49:39.217 TRACE 6976 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [Tip Category Test]
+2023-07-06 11:49:39.217 TRACE 6976 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [QRA]
+2023-07-06 11:49:39.227 DEBUG 6976 --- [    Test worker] o.s.boot.devtools.restart.Restarter      : Creating new Restarter for thread Thread[Test worker,5,main]
+2023-07-06 11:49:39.227 DEBUG 6976 --- [    Test worker] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2023-07-06 11:49:39.557  INFO 6976 --- [    Test worker] i.c.qrgui.rest.QueryExecutorController   : Eseguo query ...
+2023-07-06 11:49:39.572 DEBUG 6976 --- [    Test worker] o.s.web.client.RestTemplate              : HTTP POST http://localhost:8080/query/execute_query?createFile=false&amp;page=10&amp;pageSize=10
+2023-07-06 11:49:39.574 DEBUG 6976 --- [    Test worker] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-07-06 11:49:39.600 DEBUG 6976 --- [    Test worker] o.s.web.client.RestTemplate              : Writing [[UteQueDto[tenant=null, nam=null, json=null, temi16QueCatAsses=null, temi18RouQues=null, que=1, insQue=Thu Jul 06 11:49:39 CEST 2023]]] with org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+2023-07-06 11:49:39.606 DEBUG 6976 --- [    Test worker] o.s.web.client.RestTemplate              : Response 200 OK
+2023-07-06 11:49:39.607 DEBUG 6976 --- [    Test worker] o.s.web.client.RestTemplate              : Reading to [java.util.List&lt;it.cambi.qrgui.api.wrappedResponse.XWrappedResponse&lt;it.cambi.qrgui.api.model.UteQueDto, java.util.List&lt;java.lang.Object&gt;&gt;&gt;]
 </pre>
 </span>
 </div>
@@ -1213,7 +1194,7 @@ Unconditional classes:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.0.2</a> at Jun 13, 2023, 10:54:00 AM</p>
+<a href="http://www.gradle.org">Gradle 8.2</a> at Jul 6, 2023, 11:49:39 AM</p>
 </div>
 </div>
 </body>
