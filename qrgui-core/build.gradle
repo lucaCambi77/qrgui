@@ -1,8 +1,11 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     id 'java'
     id 'groovy'
     id "com.diffplug.spotless" version "6.3.0"
     id "io.freefair.lombok" version "8.0.1"
+    id("org.springframework.boot") version "2.7.13" apply false
 }
 
 check.dependsOn spotlessCheck
@@ -35,26 +38,33 @@ configure(subprojects) {
     apply plugin: 'java'
     apply plugin: 'groovy'
     apply plugin: 'io.freefair.lombok'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom(SpringBootPlugin.BOM_COORDINATES)
+        }
+    }
 
     sourceCompatibility = '1.17'
     targetCompatibility = '1.17'
+
     dependencies {
-        implementation('javax.xml.bind:jaxb-api:2.4.0-b180830.0359') // required by Intellij
 
-        implementation 'org.springframework.boot:spring-boot-devtools:2.7.7'
-        implementation 'org.springframework.boot:spring-boot-starter-web:2.7.7'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.7'
+        implementation 'org.springframework.boot:spring-boot-devtools'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-        implementation 'org.apache.commons:commons-lang3:3.12.0'
+        implementation 'org.apache.commons:commons-lang3'
 
-        runtimeOnly 'com.h2database:h2:2.1.214'
+        runtimeOnly 'com.h2database:h2'
 
         testImplementation(
-                'junit:junit:4.12',
+                'junit:junit',
                 'org.codehaus.groovy:groovy-all:3.0.6',
                 'org.spockframework:spock-core:2.1-groovy-3.0',
                 'org.spockframework:spock-spring:2.1-groovy-3.0',
-                'org.springframework.boot:spring-boot-starter-test:2.7.7'
+                'org.springframework.boot:spring-boot-starter-test'
         )
     }
 
