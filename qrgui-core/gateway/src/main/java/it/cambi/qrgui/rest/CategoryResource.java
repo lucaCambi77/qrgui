@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
 import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
@@ -33,7 +33,7 @@ public class CategoryResource extends BasicResource {
     private final RestTemplate restTemplate;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @RolesAllowed({F_QRCG00, F_QRCG01, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + F_QRCG00 + "', '" + F_QRCG01 + "')")
     public ResponseEntity<WrappedResponse<?>> getCategories(
             Authentication authentication, HttpServletRequest sr) {
         log.info("... cerco tutte le categorie");
@@ -50,7 +50,7 @@ public class CategoryResource extends BasicResource {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @RolesAllowed({F_QRCINS, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + F_QRCINS + "')")
     public ResponseEntity<WrappedResponse<?>> postCategory(
             @RequestBody CategoryDto temi14, HttpServletRequest sr, Authentication authentication) {
         log.info("... creo una nuova categoria");
@@ -68,7 +68,7 @@ public class CategoryResource extends BasicResource {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("delete")
-    @RolesAllowed({F_QRCMOD, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + F_QRCMOD + "')")
     public ResponseEntity<WrappedResponse<?>> deleteCategory(
             @RequestBody CategoryDto categoryDeleteDto, HttpServletRequest sr, Authentication authentication) {
         log.info("... cancello categoria");

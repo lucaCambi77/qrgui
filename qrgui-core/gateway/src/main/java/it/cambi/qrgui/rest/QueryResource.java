@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class QueryResource extends BasicResource {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("associatedQuery")
-    @RolesAllowed({F_QRQE00, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRQE00 + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> getAlreadyAssociatedQuery(
             @RequestParam("tipCat") String tipCat,
             @RequestParam("cat") Integer cat,
@@ -58,7 +58,7 @@ public class QueryResource extends BasicResource {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("tipCateg")
-    @RolesAllowed({F_QRQE00, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRQE00 + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> getByTipCateg(
             @RequestParam(value = "tipCat", required = false) List<String> tipCatInput,
             @RequestBody(required = false) List<UteQueDto> queries,
@@ -79,7 +79,7 @@ public class QueryResource extends BasicResource {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @RolesAllowed({F_QRQINS, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRQINS + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> postQuery(
             @RequestBody UteQueDto que, HttpServletRequest sr) {
         log.info("... salvo una nuova query");
@@ -89,7 +89,7 @@ public class QueryResource extends BasicResource {
     }
 
     @PostMapping
-    @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRQMOD + "','" + F_QRCMOD + "', '" + R_FEPQRA + "')")
     @RequestMapping("delete")
     public ResponseEntity<WrappedResponse<?>> deleteQuery(
             @RequestBody UteQueId key, HttpServletRequest sr) {

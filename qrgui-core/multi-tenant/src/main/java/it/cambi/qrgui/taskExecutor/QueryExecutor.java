@@ -1,6 +1,5 @@
 package it.cambi.qrgui.taskExecutor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.enums.QueryType;

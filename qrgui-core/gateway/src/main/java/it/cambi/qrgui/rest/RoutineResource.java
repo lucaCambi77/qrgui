@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
 import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
@@ -34,7 +34,7 @@ public class RoutineResource extends BasicResource {
     private final RestTemplate restTemplate;
 
     @GetMapping
-    @RolesAllowed({F_QRRE00, F_QRCG00, F_QRCG01, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRCG01 + "','" + F_QRCG00 + "','" + F_QRRE00 + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> getRoutines(
             Authentication authentication, HttpServletRequest sr) {
         log.info("... cerco tutte le routines");
@@ -51,7 +51,7 @@ public class RoutineResource extends BasicResource {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @RolesAllowed({F_QRRINS, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRRINS + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> postRoutine(
             @RequestBody UteRouDto temi17, HttpServletRequest sr) {
         log.info("... creo una nuova routine");
@@ -63,7 +63,7 @@ public class RoutineResource extends BasicResource {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("delete")
-    @RolesAllowed({F_QRRMOD, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRRMOD + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> deleteRoutine(
             @RequestBody UteRouId crou, HttpServletRequest sr) {
         log.info("... cancella la routine " + crou);

@@ -5,6 +5,7 @@ import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class QueryCategoryResource extends BasicResource {
     private final RestTemplate restTemplate;
 
     @GetMapping
-    @RolesAllowed({F_QRCG00, F_QRCG01, F_QRQE00, R_FEPQRA})
+    @PreAuthorize("hasAnyAuthority('" + F_QRCG00 + "', '" + F_QRCG01 + "', '" + F_QRQE00 + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> getQueCatAssoc(
             Authentication authentication, HttpServletRequest sr) {
         log.info("... cerco tutte le associazioni categorie - query");
@@ -52,7 +52,7 @@ public class QueryCategoryResource extends BasicResource {
 
     @PostMapping
     @RequestMapping("post")
-    @RolesAllowed({R_FEPQRA, F_QRQMOD, F_QRCMOD})
+    @PreAuthorize("hasAnyAuthority('" + F_QRQMOD + "', '" + F_QRCMOD + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> addQueriesToCategory(
             @RequestBody List<QueCatAssDto> temi16, HttpServletRequest sr) {
         log.info("... aggiungo le queries alla categoria ");
