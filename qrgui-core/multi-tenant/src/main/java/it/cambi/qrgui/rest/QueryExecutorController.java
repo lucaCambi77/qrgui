@@ -62,7 +62,6 @@ public class QueryExecutorController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @RequestMapping("checkQuery")
-    @RolesAllowed({F_QRQINS, R_FEPQRA})
     public WrappedResponse<QueryToJson> checkQuery(@RequestBody UteQueDto query)
             throws IOException {
 

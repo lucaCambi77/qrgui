@@ -7,6 +7,7 @@ import it.cambi.qrgui.rest.BasicResource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG01;
+import static it.cambi.qrgui.api.user.RolesFunctions.F_QRRE00;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
@@ -29,7 +33,7 @@ public class UserPropertiesResource extends BasicResource {
     private final WrappedResponse<ErtaGuiUser> response = new WrappedResponse<>();
 
     @PostMapping
-    @RolesAllowed({R_FEPQRA, R_FEPQR1, R_FEPQR2})
+    @PreAuthorize("hasAnyAuthority('" + R_FEPQR2 + "','" + R_FEPQR1 + "', '" + R_FEPQRA + "')")
     public ResponseEntity<WrappedResponse<?>> getUserPrincipal(
             ErtaGuiUser user, HttpServletRequest sr) {
 
