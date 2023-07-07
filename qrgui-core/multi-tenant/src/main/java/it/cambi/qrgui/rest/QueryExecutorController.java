@@ -18,12 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.util.List;
-
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQINS;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 @RequestMapping("/query")
 @Slf4j

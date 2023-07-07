@@ -12,14 +12,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG00;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRCG01;
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRRE00;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;

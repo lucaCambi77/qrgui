@@ -22,14 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.security.RolesAllowed;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static it.cambi.qrgui.api.user.RolesFunctions.F_QRQINS;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 @RequestMapping("/query")
 @Slf4j
