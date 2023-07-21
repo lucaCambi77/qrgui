@@ -11,16 +11,15 @@ import it.cambi.qrgui.model.Temi15UteQueId;
 import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.model.Temi16QueCatAssId;
 import it.cambi.qrgui.util.QueryUtils;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @param <T> Type of the Entity.

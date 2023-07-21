@@ -4,7 +4,6 @@ import it.cambi.qrgui.api.model.CategoryDto;
 import it.cambi.qrgui.model.Temi14UteCat;
 import it.cambi.qrgui.model.Temi14UteCatId;
 import it.cambi.qrgui.util.TreeNode;
-
 import java.util.List;
 
 public interface ITemi14Service<T> {

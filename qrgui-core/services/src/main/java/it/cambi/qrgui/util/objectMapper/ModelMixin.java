@@ -16,10 +16,8 @@ import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.model.Temi20AnaTipCat;
-
 import java.util.List;
 import java.util.Set;
-
 
 public class ModelMixin {
 

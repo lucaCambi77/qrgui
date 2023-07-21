@@ -5,12 +5,11 @@ import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
 import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.model.Temi16QueCatAssId;
 import it.cambi.qrgui.services.emia.api.ITemi16Service;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author luca

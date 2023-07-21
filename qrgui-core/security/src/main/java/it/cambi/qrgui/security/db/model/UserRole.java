@@ -3,22 +3,22 @@
  */
 package it.cambi.qrgui.security.db.model;
 
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * @author luca
@@ -33,7 +33,7 @@ public class UserRole implements java.io.Serializable, GrantedAuthority
 {
 
     private Role role;
-    private GuiUser user;
+    private SecurityUser user;
     private UserRoleId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,12 +52,12 @@ public class UserRole implements java.io.Serializable, GrantedAuthority
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumns({
             @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false, insertable = false, updatable = false) })
-    public GuiUser getUser()
+    public SecurityUser getUser()
     {
         return user;
     }
 
-    public void setUser(GuiUser user)
+    public void setUser(SecurityUser user)
     {
         this.user = user;
     }

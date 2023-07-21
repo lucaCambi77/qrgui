@@ -1,6 +1,11 @@
 package it.cambi.qrgui.rest;
 
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
+import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
+
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -11,26 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletRequest;
-
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR1;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQR2;
-import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
-
 @RequestMapping("/emia/dbInfo")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
 public class DbInfoResource extends BasicResource {
 
-    private final RestTemplate restTemplate;
+  private final RestTemplate restTemplate;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + R_FEPQR1 + "', '" + R_FEPQR2 + "')")
-    public ResponseEntity<WrappedResponse<?>> getDatabaseInfoList(HttpServletRequest sr) {
-        log.info("Recupero informazioni degli schema utilizzati dall'applicazione ...");
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + R_FEPQR1 + "', '" + R_FEPQR2 + "')")
+  public ResponseEntity<WrappedResponse<?>> getDatabaseInfoList(HttpServletRequest sr) {
+    log.info("Recupero informazioni degli schema utilizzati dall'applicazione ...");
 
-        return getResponse(
-                sr, () -> restTemplate.getForObject(multiTenantUrl + "dbInfo", WrappedResponse.class));
-    }
+    return getResponse(
+        sr, () -> restTemplate.getForObject(multiTenantUrl + "dbInfo", WrappedResponse.class));
+  }
 }

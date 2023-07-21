@@ -3,6 +3,8 @@
  */
 package it.cambi.qrgui.services.emia.impl;
 
+import static it.cambi.qrgui.util.Constants.ERROR_NO_QUERY_ASSOCIATION;
+
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.dao.entity.api.ITemi15Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi16Dao;
@@ -16,25 +18,22 @@ import it.cambi.qrgui.model.Temi18RouQue;
 import it.cambi.qrgui.model.Temi18RouQueId;
 import it.cambi.qrgui.services.emia.api.ITemi15Service;
 import it.cambi.qrgui.util.Messages;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.ParameterExpression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import jakarta.persistence.Tuple;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.ParameterExpression;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static it.cambi.qrgui.util.Constants.ERROR_NO_QUERY_ASSOCIATION;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author luca

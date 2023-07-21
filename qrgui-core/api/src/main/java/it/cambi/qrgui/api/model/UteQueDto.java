@@ -1,11 +1,10 @@
 package it.cambi.qrgui.api.model;
 
-import lombok.Builder;
-import lombok.With;
-
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
+import lombok.Builder;
+import lombok.With;
 
 @Builder
 @With

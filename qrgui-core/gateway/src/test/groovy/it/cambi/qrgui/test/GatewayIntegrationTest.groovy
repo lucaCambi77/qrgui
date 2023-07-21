@@ -8,6 +8,7 @@ import it.cambi.qrgui.api.model.QueCatAssId
 import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse
 import it.cambi.qrgui.exception.AppControllerAdvice
+import it.cambi.qrgui.security.db.model.SecurityUser
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.mock.web.MockHttpServletResponse
 import org.springframework.security.access.AccessDeniedException
+import org.springframework.security.test.context.support.WithAnonymousUser
 import org.springframework.security.test.context.support.WithUserDetails
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
@@ -103,5 +105,20 @@ class GatewayIntegrationTest extends Specification {
         then:
         mvcResult.status == HttpStatus.OK.value()
         1 * restTemplate.postForObject(servicesUrl + "query", uteQueDto, WrappedResponse.class) >> WrappedResponse.baseBuilder().entity(1).build()
+    }
+
+    @WithAnonymousUser()
+    def "Status is 200 when anonymous user POST login"() throws Exception {
+        given:
+        SecurityUser guiUser = SecurityUser.builder().password("1234").username("test").build()
+
+        when:
+        MockHttpServletResponse mvcResult = mvc.perform(post("/userProperties/login")
+                .content(mapper.writeValueAsString(guiUser))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        then:
+        mvcResult.status == HttpStatus.OK.value()
     }
 }

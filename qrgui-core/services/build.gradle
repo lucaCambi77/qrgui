@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':api')
-    annotationProcessor 'org.hibernate:hibernate-jpamodelgen'
+    annotationProcessor 'org.hibernate.orm:hibernate-jpamodelgen'
 }
 
 description = 'qrgui-services'

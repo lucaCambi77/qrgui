@@ -8,13 +8,12 @@ import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.taskExecutor.repository.GenericRepository;
+import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.util.Optional;
 
 /**
  * @author luca

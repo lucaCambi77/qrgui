@@ -8,6 +8,8 @@ import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.services.WorkBookService;
 import it.cambi.qrgui.taskExecutor.DbService;
 import it.cambi.qrgui.taskExecutor.GenericQueryExecutorService;
+import java.io.IOException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -17,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.util.List;
 
 @RequestMapping("/query")
 @Slf4j

@@ -3,7 +3,7 @@
  */
 package it.cambi.qrgui.security.services;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.db.model.SecurityUser;
 
 /**
  * @author luca
@@ -11,7 +11,7 @@ import it.cambi.qrgui.security.db.model.GuiUser;
  */
 public interface UserService
 {
-    GuiUser save(GuiUser user);
+    SecurityUser save(SecurityUser user);
 
-    GuiUser findByUsername(String username);
+    SecurityUser findByUsername(String username);
 }

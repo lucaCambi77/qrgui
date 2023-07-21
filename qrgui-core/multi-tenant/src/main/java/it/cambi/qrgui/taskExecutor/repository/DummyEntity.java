@@ -1,12 +1,10 @@
 package it.cambi.qrgui.taskExecutor.repository;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 @Entity
 public class DummyEntity {
 
-    @Id
-    private Long id;
-
+  @Id private Long id;
 }

@@ -3,6 +3,7 @@ package it.cambi.qrgui.rest;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.model.Temi16QueCatAss;
 import it.cambi.qrgui.services.emia.api.ITemi16Service;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RequestMapping("/queCatAssoc")
 @RestController

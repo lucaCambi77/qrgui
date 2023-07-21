@@ -3,8 +3,10 @@
  */
 package it.cambi.qrgui.security.services;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.db.model.SecurityUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,9 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author luca
@@ -35,7 +34,7 @@ public class GuiUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         log.info("... attempting to authenticate user " + userName);
 
-        GuiUser user = userRepository.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException(userName));
+        SecurityUser user = userRepository.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException(userName));
 
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 

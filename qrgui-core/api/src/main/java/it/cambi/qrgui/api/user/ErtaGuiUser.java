@@ -8,19 +8,22 @@
  */
 package it.cambi.qrgui.api.user;
 
-import lombok.Builder;
-import lombok.Value;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author luca
  */
 @Builder(toBuilder = true)
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ErtaGuiUser {
 
     String userName;

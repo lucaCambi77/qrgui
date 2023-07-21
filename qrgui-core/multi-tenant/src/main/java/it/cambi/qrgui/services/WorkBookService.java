@@ -1,5 +1,8 @@
 package it.cambi.qrgui.services;
 
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.model.UteQueDto;
@@ -7,6 +10,11 @@ import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse;
 import it.cambi.qrgui.enums.JavaTypes;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.util.DateUtils;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,15 +24,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Value;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
 @RequiredArgsConstructor
 public class WorkBookService {
