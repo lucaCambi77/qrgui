@@ -3,6 +3,9 @@
  */
 package it.cambi.qrgui.taskExecutor;
 
+import static java.util.concurrent.CompletableFuture.allOf;
+import static java.util.concurrent.CompletableFuture.supplyAsync;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,11 +16,6 @@ import it.cambi.qrgui.enums.QueryType;
 import it.cambi.qrgui.query.model.QueryToJson;
 import it.cambi.qrgui.taskExecutor.model.QueryExecutionCountResponse;
 import it.cambi.qrgui.taskExecutor.model.QueryExecutionListResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -26,9 +24,10 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
-import static java.util.concurrent.CompletableFuture.allOf;
-import static java.util.concurrent.CompletableFuture.supplyAsync;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author luca

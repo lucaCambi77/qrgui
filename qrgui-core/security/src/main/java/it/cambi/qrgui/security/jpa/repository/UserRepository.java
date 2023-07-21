@@ -3,16 +3,15 @@
  */
 package it.cambi.qrgui.security.jpa.repository;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import it.cambi.qrgui.security.db.model.SecurityUser;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * @author luca
  *
  */
-public interface UserRepository extends JpaRepository<GuiUser, Integer>
+public interface UserRepository extends JpaRepository<SecurityUser, Integer>
 {
-    Optional<GuiUser> findByUsername(String username);
+    Optional<SecurityUser> findByUsername(String username);
 }

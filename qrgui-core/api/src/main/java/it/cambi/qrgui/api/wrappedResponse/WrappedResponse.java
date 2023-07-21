@@ -1,17 +1,18 @@
 package it.cambi.qrgui.api.wrappedResponse;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @SuperBuilder(builderMethodName = "baseBuilder", toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class WrappedResponse<T> {
 
   private T entity;

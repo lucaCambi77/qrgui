@@ -1,7 +1,6 @@
 package it.cambi.qrgui.services.emia.api;
 
 import it.cambi.qrgui.model.Temi20AnaTipCat;
-
 import java.util.List;
 
 public interface ITemi20Service<T> {

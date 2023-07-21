@@ -1,8 +1,11 @@
 package it.cambi.qrgui.security;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.db.model.SecurityUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
 import it.cambi.qrgui.security.services.GuiUserDetailService;
+import jakarta.persistence.EntityManagerFactory;
+import java.util.Properties;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,16 +20,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-import java.util.Properties;
-
 /**
  * @author luca
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = {GuiUser.class, GuiUserDetailService.class})
+@ComponentScan(basePackageClasses = { SecurityUser.class, GuiUserDetailService.class})
 @EnableJpaRepositories(basePackageClasses = UserRepository.class, entityManagerFactoryRef = "securityEntityManagerFactory", transactionManagerRef = "securityTransactionManager")
 @RequiredArgsConstructor
 @PropertySource("classpath:security.properties")
@@ -54,7 +53,7 @@ public class SecurityDbAppConf {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setDataSource(securityDataSource());
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factory.setPackagesToScan(GuiUser.class.getPackage().getName());
+        factory.setPackagesToScan(SecurityUser.class.getPackage().getName());
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));

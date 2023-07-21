@@ -3,7 +3,7 @@
  */
 package it.cambi.qrgui.util;
 
-import javax.persistence.Tuple;
+import jakarta.persistence.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 

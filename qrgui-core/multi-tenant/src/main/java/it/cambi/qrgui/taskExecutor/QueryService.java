@@ -1,5 +1,9 @@
 package it.cambi.qrgui.taskExecutor;
 
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
+import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
+import static it.cambi.qrgui.util.WrappingUtils.cleanQueryString;
+
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.query.model.Attribute;
 import it.cambi.qrgui.query.model.Constraint;
@@ -8,10 +12,6 @@ import it.cambi.qrgui.query.model.SelectColumns;
 import it.cambi.qrgui.util.Constants;
 import it.cambi.qrgui.util.DateUtils;
 import it.cambi.qrgui.util.WhereConditionOperator;
-import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,10 +23,9 @@ import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
-import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
-import static it.cambi.qrgui.util.WrappingUtils.cleanQueryString;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

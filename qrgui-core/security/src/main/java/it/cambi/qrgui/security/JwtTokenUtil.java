@@ -1,5 +1,7 @@
 package it.cambi.qrgui.security;
 
+import static java.lang.String.format;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -7,14 +9,11 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.db.model.SecurityUser;
+import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
-
-import static java.lang.String.format;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +22,7 @@ public class JwtTokenUtil {
 
   private final String jwtSecret = "zdtlD3JK56m6wTTgsNFhqzjqP";
 
-  public String generateAccessToken(GuiUser user) {
+  public String generateAccessToken(SecurityUser user) {
     String jwtIssuer = "example.io";
     return Jwts.builder()
         .setSubject(format("%s,%s", user.getUserId(), user.getUsername()))

@@ -1,6 +1,9 @@
 package it.cambi.qrgui.config;
 
 import it.cambi.qrgui.model.Temi14UteCat;
+import java.util.Objects;
+import java.util.Properties;
+import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -15,10 +18,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-import javax.sql.DataSource;
-import java.util.Objects;
-import java.util.Properties;
 
 /**
  * @author luca

@@ -3,7 +3,7 @@
  */
 package it.cambi.qrgui.security.services;
 
-import it.cambi.qrgui.security.db.model.GuiUser;
+import it.cambi.qrgui.security.db.model.SecurityUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,14 +23,14 @@ public class UserServiceImpl implements UserService
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    public GuiUser save(GuiUser user)
+    public SecurityUser save(SecurityUser user)
     {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
         return userRepository.save(user);
     }
 
     @Override
-    public GuiUser findByUsername(String username)
+    public SecurityUser findByUsername(String username)
     {
         return userRepository.findByUsername(username).orElse(null);
     }

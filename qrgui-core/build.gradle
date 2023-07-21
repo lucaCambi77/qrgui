@@ -5,7 +5,7 @@ plugins {
     id 'groovy'
     id "com.diffplug.spotless" version "6.3.0"
     id "io.freefair.lombok" version "8.0.1"
-    id("org.springframework.boot") version "2.7.13" apply false
+    id("org.springframework.boot") version "3.1.0" apply false
 }
 
 check.dependsOn spotlessCheck
@@ -61,9 +61,9 @@ configure(subprojects) {
 
         testImplementation(
                 'junit:junit',
-                'org.codehaus.groovy:groovy-all:3.0.6',
-                'org.spockframework:spock-core:2.1-groovy-3.0',
-                'org.spockframework:spock-spring:2.1-groovy-3.0',
+                'org.apache.groovy:groovy-all:4.0.13',
+                'org.spockframework:spock-core:2.4-M1-groovy-4.0',
+                'org.spockframework:spock-spring:2.4-M1-groovy-4.0',
                 'org.springframework.boot:spring-boot-starter-test'
         )
     }

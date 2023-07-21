@@ -1,7 +1,6 @@
 package it.cambi.qrgui.dao.entity.api;
 
 import it.cambi.qrgui.dao.api.IEntityDao;
-
 import java.util.Date;
 import java.util.List;
 
