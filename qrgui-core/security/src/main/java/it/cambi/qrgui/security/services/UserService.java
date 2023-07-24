@@ -1,17 +1,13 @@
-/**
- * 
- */
+/** */
 package it.cambi.qrgui.security.services;
 
 import it.cambi.qrgui.security.db.model.SecurityUser;
 
 /**
  * @author luca
- *
  */
-public interface UserService
-{
-    SecurityUser save(SecurityUser user);
+public interface UserService {
+  SecurityUser save(SecurityUser user);
 
-    SecurityUser findByUsername(String username);
+  SecurityUser findByUsername(String username);
 }

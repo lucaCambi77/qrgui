@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface QueryExecutionList extends QueryExecution {
 
-    List<Object> resultSet();
+  List<Object> resultSet();
 }

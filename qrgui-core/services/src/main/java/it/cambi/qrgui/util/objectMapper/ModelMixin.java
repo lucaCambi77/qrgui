@@ -1,8 +1,8 @@
-
 package it.cambi.qrgui.util.objectMapper;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.cambi.qrgui.model.Temi14UteCat;
@@ -19,97 +19,97 @@ import it.cambi.qrgui.model.Temi20AnaTipCat;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.boot.jackson.JsonMixin;
+
 public class ModelMixin {
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi14UteCat.class)
-    public interface Temi14UteCatMixIn {
-        @JsonProperty("id")
-        Temi14UteCatId getId();
+  @JsonMixin(Temi14UteCat.class)
+  @JsonIgnoreProperties(
+      ignoreUnknown = true,
+      value = {"temi16QueCatAsses"})
+  public interface Temi14UteCatMixIn {
+    @JsonProperty("id")
+    Temi14UteCatId getId();
 
-        @JsonProperty("npar")
-        Long getNPar();
+    @JsonProperty("npar")
+    Long getPar();
 
-        @JsonProperty("tdes")
-        String getTDes();
+    @JsonProperty("tdes")
+    String getDes();
 
-        @JsonProperty("temi20AnaTipCat")
-        Temi20AnaTipCat getTemi20AnaTipCat();
+    @JsonProperty("temi20AnaTipCat")
+    Temi20AnaTipCat getTemi20AnaTipCat();
+  }
 
-        @JsonIgnore
-        @JsonProperty("temi16QueCatAsses")
-        Set<Temi16QueCatAss> getTemi16QueCatAsses();
-    }
+  @JsonMixin(Temi15UteQue.class)
+  @JsonIgnoreProperties(
+      ignoreUnknown = true,
+      value = {"temi16QueCatAsses"})
+  public interface Temi15UteQueMixIn {
+    @JsonProperty("id")
+    Temi15UteQueId getId();
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi15UteQue.class)
-    public interface Temi15UteQueMixIn {
-        @JsonProperty("id")
-        Temi15UteQueId getId();
+    @JsonProperty("tjson")
+    String getTJson();
 
-        @JsonProperty("tjson")
-        String getTJson();
+    @JsonProperty("tNam")
+    String getTNam();
 
-        @JsonProperty("tNam")
-        String getTNam();
+    @JsonProperty("tenant")
+    String getTenant();
 
-        @JsonProperty("tenant")
-        String getTenant();
+    @JsonProperty("temi18RouQues")
+    List<Temi18RouQue> getTemi18RouQues();
+  }
 
-        @JsonIgnore
-        @JsonProperty("temi16QueCatAsses")
-        List<Temi16QueCatAss> getTemi16QueCatAsses();
+  @JsonMixin(Temi16QueCatAss.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public interface Temi16QueCatAssMixIn {
+    @JsonProperty("id")
+    Temi16QueCatAssId getId();
 
-        @JsonProperty("temi18RouQues")
-        List<Temi18RouQue> getTemi18RouQues();
-    }
+    @JsonProperty("temi14UteCat")
+    Temi14UteCat getTemi14UteCat();
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi16QueCatAss.class)
-    public interface Temi16QueCatAssMixIn {
-        @JsonProperty("id")
-        Temi16QueCatAssId getId();
+    @JsonProperty("temi15UteQue")
+    Temi15UteQue getTemi15UteQue();
+  }
 
-        @JsonProperty("temi14UteCat")
-        Temi14UteCat getTemi14UteCat();
+  @JsonMixin(Temi17UteRou.class)
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  public interface Temi17UteRouMixIn {
+    @JsonProperty("id")
+    Temi17UteRouId getId();
 
-        @JsonProperty("temi15UteQue")
-        Temi15UteQue getTemi15UteQue();
-    }
+    @JsonProperty("tdes")
+    String getTDes();
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi17UteRou.class)
-    public interface Temi17UteRouMixIn {
-        @JsonProperty("id")
-        Temi17UteRouId getId();
+    @JsonProperty("temi18RouQues")
+    List<Temi18RouQue> getTemi18RouQues();
+  }
 
-        @JsonProperty("tdes")
-        String getTDes();
+  @JsonMixin(Temi18RouQue.class)
+  @JsonIgnoreProperties(
+      ignoreUnknown = true,
+      value = {"temi17UteRou"})
+  public interface Temi18RouQueMixIn {
+    @JsonProperty("id")
+    Temi18RouQueId getId();
 
-        @JsonProperty("temi18RouQues")
-        List<Temi18RouQue> getTemi18RouQues();
-    }
+    @JsonIgnore
+    @JsonProperty("temi15UteQue")
+    Temi15UteQue getTemi15UteQue();
+  }
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "id", scope = Temi18RouQue.class)
-    public interface Temi18RouQueMixIn {
-        @JsonProperty("id")
-        Temi18RouQueId getId();
+  @JsonMixin(Temi20AnaTipCat.class)
+  @JsonIgnoreProperties(
+      ignoreUnknown = true,
+      value = {"temi14UteCats"})
+  public interface Temi20AnaTipCatMixIn {
+    @JsonProperty("tipCat")
+    String getTipCat();
 
-        @JsonIgnore
-        @JsonProperty("temi15UteQue")
-        Temi15UteQue getTemi15UteQue();
-
-        @JsonIgnore
-        @JsonProperty("temi17UteRou")
-        Temi17UteRou getTemi17UteRou();
-    }
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.None.class, property = "cTipCat", scope = Temi20AnaTipCat.class)
-    public interface Temi20AnaTipCatMixIn {
-        @JsonProperty("cTipCat")
-        String getCTipCat();
-
-        @JsonProperty("tDes")
-        String getTDes();
-
-        @JsonIgnore
-        @JsonProperty("temi14UteCats")
-        List<Temi14UteCat> getTemi14UteCats();
-    }
+    @JsonProperty("des")
+    String getDes();
+  }
 }

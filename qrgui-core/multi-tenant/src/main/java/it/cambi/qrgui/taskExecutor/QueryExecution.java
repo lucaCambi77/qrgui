@@ -5,7 +5,7 @@ import it.cambi.qrgui.enums.QueryType;
 
 public interface QueryExecution {
 
-    QueryType executionType();
+  QueryType executionType();
 
-    UteQueDto uteQueDto();
+  UteQueDto uteQueDto();
 }

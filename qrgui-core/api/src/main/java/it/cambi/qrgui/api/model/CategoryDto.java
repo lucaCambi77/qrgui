@@ -5,6 +5,11 @@ import java.util.Set;
 import lombok.Builder;
 
 @Builder
-public record CategoryDto(TipCatDto temi20AnaTipCat, Integer par, Date insPar, String des,
-                          Set<QueCatAssDto> queCatAsses, int cat, Date insCat) {
-}
+public record CategoryDto(
+    TipCatDto temi20AnaTipCat,
+    Integer par,
+    Date insPar,
+    String des,
+    Set<QueCatAssDto> queCatAsses,
+    int cat,
+    Date insCat) {}

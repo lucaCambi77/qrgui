@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.security.db.model;
 
 import jakarta.persistence.Column;
@@ -23,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author luca
- *
  */
 @Entity
 @Table(name = "GUI_USER", schema = "SECURITY")
@@ -32,101 +29,100 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 public class SecurityUser implements java.io.Serializable, UserDetails {
 
-    private long userId;
+  private long userId;
 
-    private String username;
+  private String username;
 
-    private String password;
+  private String password;
 
-    private boolean active;
+  private boolean active;
 
-    private String passwordConfirm;
+  private String passwordConfirm;
 
-    @Builder.Default
-    private Set<UserRole> userRoles = new HashSet<>(0);
+  @Builder.Default private Set<UserRole> userRoles = new HashSet<>(0);
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public long getUserId() {
-        return userId;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public long getUserId() {
+    return userId;
+  }
 
-    public void setUserId(long id) {
-        this.userId = id;
-    }
+  public void setUserId(long id) {
+    this.userId = id;
+  }
 
-    @Column
-    public String getUsername() {
-        return username;
-    }
+  @Column
+  public String getUsername() {
+    return username;
+  }
 
-    public void setUsername(String userName) {
-        this.username = userName;
-    }
+  public void setUsername(String userName) {
+    this.username = userName;
+  }
 
-    @Column
-    public String getPassword() {
-        return password;
-    }
+  @Column
+  public String getPassword() {
+    return password;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    @Column
-    public boolean isActive() {
-        return active;
-    }
+  @Column
+  public boolean isActive() {
+    return active;
+  }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+  public void setActive(boolean active) {
+    this.active = active;
+  }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
 
-    public void setUserRoles(Set<UserRole> roles) {
-        this.userRoles = roles;
-    }
+  public void setUserRoles(Set<UserRole> roles) {
+    this.userRoles = roles;
+  }
 
-    @Override
-    @Transient
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRoles;
-    }
+  @Override
+  @Transient
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return userRoles;
+  }
 
-    @Override
-    @Transient
-    public boolean isAccountNonExpired() {
-        return active;
-    }
+  @Override
+  @Transient
+  public boolean isAccountNonExpired() {
+    return active;
+  }
 
-    @Override
-    @Transient
-    public boolean isAccountNonLocked() {
-        return active;
-    }
+  @Override
+  @Transient
+  public boolean isAccountNonLocked() {
+    return active;
+  }
 
-    @Override
-    @Transient
-    public boolean isCredentialsNonExpired() {
-        return active;
-    }
+  @Override
+  @Transient
+  public boolean isCredentialsNonExpired() {
+    return active;
+  }
 
-    @Override
-    @Transient
-    public boolean isEnabled() {
-        return active;
-    }
+  @Override
+  @Transient
+  public boolean isEnabled() {
+    return active;
+  }
 
-    @Transient
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
+  @Transient
+  public String getPasswordConfirm() {
+    return passwordConfirm;
+  }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
+  public void setPasswordConfirm(String passwordConfirm) {
+    this.passwordConfirm = passwordConfirm;
+  }
 }

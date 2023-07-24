@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.taskExecutor;
 
 import static java.util.concurrent.CompletableFuture.allOf;
@@ -35,98 +33,107 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 public class GenericQueryExecutorService {
-    private final QueryExecutor queryExecutor;
+  private final QueryExecutor queryExecutor;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+  private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private final XWrappedResponse<UteQueDto, List<Object>> response = new XWrappedResponse<>();
+  private final XWrappedResponse<UteQueDto, List<Object>> response = new XWrappedResponse<>();
 
-    private final static Executor THREAD_POOL = Executors.newFixedThreadPool(10);
+  private static final Executor THREAD_POOL = Executors.newFixedThreadPool(10);
 
-    /**
-     * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
-     * callable {@link QueryExecutor}
-     *
-     * @param queries
-     * @param page
-     * @param pageSize
-     * @return
-     * @throws IOException
-     * @throws JsonMappingException
-     * @throws JsonParseException
-     */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
-            List<UteQueDto> queries, Integer page, Integer pageSize)
-            throws IOException {
+  /**
+   * Metodo per l'esecuzione simultanea di tutte le query. Contiene un executor service che lancia N
+   * callable {@link QueryExecutor}
+   *
+   * @param queries
+   * @param page
+   * @param pageSize
+   * @return
+   * @throws IOException
+   * @throws JsonMappingException
+   * @throws JsonParseException
+   */
+  @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+  public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
+      List<UteQueDto> queries, Integer page, Integer pageSize) throws IOException {
 
-        CompletableFuture<WrappedResponse<QueryExecution>>[] taskList = new CompletableFuture[queries.size() * 2];
+    CompletableFuture<WrappedResponse<QueryExecution>>[] taskList =
+        new CompletableFuture[queries.size() * 2];
 
-        int position = 0;
-        int future = 0;
-        for (UteQueDto query : queries) {
+    int position = 0;
+    int future = 0;
+    for (UteQueDto query : queries) {
 
-            QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
-            json.setPosition(position);
+      QueryToJson json = objectMapper.readValue(query.json(), QueryToJson.class);
+      json.setPosition(position);
 
-            taskList[future++] = supplyAsync(() -> {
+      taskList[future++] =
+          supplyAsync(
+              () -> {
                 try {
-                    return queryExecutor.call(query, json, page, pageSize, QueryType.COUNT);
+                  return queryExecutor.call(query, json, page, pageSize, QueryType.COUNT);
 
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                  throw new RuntimeException(e);
                 }
-            }, THREAD_POOL);
+              },
+              THREAD_POOL);
 
-            taskList[future++] = supplyAsync(() -> {
-
+      taskList[future++] =
+          supplyAsync(
+              () -> {
                 try {
-                    return queryExecutor.call(query, json, page, pageSize, QueryType.RESULT_SET);
+                  return queryExecutor.call(query, json, page, pageSize, QueryType.RESULT_SET);
 
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                  throw new RuntimeException(e);
                 }
-            }, THREAD_POOL);
+              },
+              THREAD_POOL);
 
-            position++;
-        }
-
-        return allOf(taskList).thenApplyAsync(
-                fn -> {
-                    LinkedList<XWrappedResponse<UteQueDto, List<Object>>> listOut = new LinkedList<>();
-
-                    Map<UteQueDto, Integer> uteQueCountMap = new HashMap<>();
-
-                    for (CompletableFuture<WrappedResponse<QueryExecution>> task : taskList) {
-                        WrappedResponse<QueryExecution> response = task.join();
-
-                        if (!response.isSuccess()) {
-                            listOut = new LinkedList<>();
-                            listOut.add(this.response.toBuilder().errorMessage(response.getErrorMessage()).build());
-                            return listOut;
-                        }
-
-                        if (response.getEntity().executionType() == QueryType.COUNT) {
-                            QueryExecutionCountResponse countResponse = (QueryExecutionCountResponse) response.getEntity();
-                            uteQueCountMap.put(countResponse.uteQueDto(), countResponse.count());
-                        } else {
-                            QueryExecutionListResponse executionListResponse = (QueryExecutionListResponse) response.getEntity();
-
-                            listOut.add(
-                                    this.response.toBuilder()
-                                            .xentity(executionListResponse.uteQueDto())
-                                            .entity(executionListResponse.resultSet())
-                                            .build());
-                        }
-
-                    }
-
-                    for (XWrappedResponse<UteQueDto, List<Object>> wrappedResponse : listOut) {
-                        wrappedResponse.setCount(uteQueCountMap.get(wrappedResponse.getXentity()));
-                    }
-
-                    return listOut;
-                }, THREAD_POOL
-        ).join();
+      position++;
     }
+
+    return allOf(taskList)
+        .thenApplyAsync(
+            fn -> {
+              LinkedList<XWrappedResponse<UteQueDto, List<Object>>> listOut = new LinkedList<>();
+
+              Map<UteQueDto, Integer> uteQueCountMap = new HashMap<>();
+
+              for (CompletableFuture<WrappedResponse<QueryExecution>> task : taskList) {
+                WrappedResponse<QueryExecution> response = task.join();
+
+                if (!response.isSuccess()) {
+                  listOut = new LinkedList<>();
+                  listOut.add(
+                      this.response.toBuilder().errorMessage(response.getErrorMessage()).build());
+                  return listOut;
+                }
+
+                if (response.getEntity().executionType() == QueryType.COUNT) {
+                  QueryExecutionCountResponse countResponse =
+                      (QueryExecutionCountResponse) response.getEntity();
+                  uteQueCountMap.put(countResponse.uteQueDto(), countResponse.count());
+                } else {
+                  QueryExecutionListResponse executionListResponse =
+                      (QueryExecutionListResponse) response.getEntity();
+
+                  listOut.add(
+                      this.response.toBuilder()
+                          .xentity(executionListResponse.uteQueDto())
+                          .entity(executionListResponse.resultSet())
+                          .build());
+                }
+              }
+
+              for (XWrappedResponse<UteQueDto, List<Object>> wrappedResponse : listOut) {
+                wrappedResponse.setCount(uteQueCountMap.get(wrappedResponse.getXentity()));
+              }
+
+              return listOut;
+            },
+            THREAD_POOL)
+        .join();
+  }
 }

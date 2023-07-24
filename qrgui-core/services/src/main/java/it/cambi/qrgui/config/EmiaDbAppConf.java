@@ -26,47 +26,48 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackageClasses = {Temi14UteCat.class})
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "emiaEntityManagerFactory",
-        transactionManagerRef = "emiaTransactionManager")
+    entityManagerFactoryRef = "emiaEntityManagerFactory",
+    transactionManagerRef = "emiaTransactionManager")
 @RequiredArgsConstructor
 @PropertySource("classpath:services.properties")
 public class EmiaDbAppConf {
 
-    private final Environment env;
+  private final Environment env;
 
-    @Primary
-    @Bean
-    public DataSource emiaDataSource() {
-        return DataSourceBuilder.create()
-                .url(env.getProperty("datasource.emia.jdbcUrl"))
-                .username(env.getProperty("datasource.emia.username"))
-                .password(env.getProperty("datasource.emia.password"))
-                .build();
-    }
+  @Primary
+  @Bean
+  public DataSource emiaDataSource() {
+    return DataSourceBuilder.create()
+        .url(env.getProperty("datasource.emia.jdbcUrl"))
+        .username(env.getProperty("datasource.emia.username"))
+        .password(env.getProperty("datasource.emia.password"))
+        .build();
+  }
 
-    @Primary
-    @Bean
-    public PlatformTransactionManager emiaTransactionManager(LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
-        return new JpaTransactionManager(
-                Objects.requireNonNull(localContainerEntityManagerFactoryBean.getObject()));
-    }
+  @Primary
+  @Bean
+  public PlatformTransactionManager emiaTransactionManager(
+      LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
+    return new JpaTransactionManager(
+        Objects.requireNonNull(localContainerEntityManagerFactoryBean.getObject()));
+  }
 
-    @Primary
-    @Bean
-    public LocalContainerEntityManagerFactoryBean emiaEntityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setDataSource(emiaDataSource());
-        factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factory.setPackagesToScan(Temi14UteCat.class.getPackage().getName());
-        factory.setPersistenceUnitName("emiaPU");
+  @Primary
+  @Bean
+  public LocalContainerEntityManagerFactoryBean emiaEntityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+    factory.setDataSource(emiaDataSource());
+    factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+    factory.setPackagesToScan(Temi14UteCat.class.getPackage().getName());
+    factory.setPersistenceUnitName("emiaPU");
 
-        Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
-        jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
-        jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+    Properties jpaProperties = new Properties();
+    jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
+    jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
+    jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
 
-        factory.setJpaProperties(jpaProperties);
+    factory.setJpaProperties(jpaProperties);
 
-        return factory;
-    }
+    return factory;
+  }
 }

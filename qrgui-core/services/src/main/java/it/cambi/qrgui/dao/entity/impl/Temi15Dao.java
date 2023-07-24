@@ -27,149 +27,147 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId>
-        implements ITemi15Dao<Temi15UteQue, Temi15UteQueId> {
+    implements ITemi15Dao<Temi15UteQue, Temi15UteQueId> {
 
-    private final ITemi14Dao<Temi14UteCat, Temi14UteCatId> categDao;
+  private final ITemi14Dao<Temi14UteCat, Temi14UteCatId> categDao;
 
-    private final ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao;
+  private final ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao;
 
-    public Temi15Dao(
-            ITemi14Dao<Temi14UteCat, Temi14UteCatId> categDao,
-            ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao) {
-        super(Temi15UteQue.class);
-        this.categDao = categDao;
-        this.queCatAssDao = queCatAssDao;
-    }
+  public Temi15Dao(
+      ITemi14Dao<Temi14UteCat, Temi14UteCatId> categDao,
+      ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> queCatAssDao) {
+    super(Temi15UteQue.class);
+    this.categDao = categDao;
+    this.queCatAssDao = queCatAssDao;
+  }
 
-    @Override
-    public Temi15UteQue merge(Temi15UteQue entity) {
-        return super.merge(entity);
-    }
+  @Override
+  public Temi15UteQue merge(Temi15UteQue entity) {
+    return super.merge(entity);
+  }
 
-    @Override
-    public List<Object> getAlreadyAssociatedQuery(int cat, Date insCat) {
+  @Override
+  public List<Object> getAlreadyAssociatedQuery(int cat, Date insCat) {
 
-        List<Temi16QueCatAss> associatedQuery =
-                getQueryCategList(cat, insCat, new ArrayList<>());
+    List<Temi16QueCatAss> associatedQuery = getQueryCategList(cat, insCat, new ArrayList<>());
 
-        List<Tuple> listTemi15 = new ArrayList<>();
+    List<Tuple> listTemi15 = new ArrayList<>();
 
-        if (!associatedQuery.isEmpty()) {
+    if (!associatedQuery.isEmpty()) {
 
-            /**
-             * Una volta trovate le query e le categorie , allora cerco le query che hanno il count = 1
-             * raggruppate per categorie. Quelle sono le query che nel caso in cui venga cancellata la
-             * categoria possono essere riassociate
-             */
-            CriteriaQuery<Tuple> criteriaQueryPar =
-                    getEntityManager().getCriteriaBuilder().createQuery(Tuple.class);
+      /**
+       * Una volta trovate le query e le categorie , allora cerco le query che hanno il count = 1
+       * raggruppate per categorie. Quelle sono le query che nel caso in cui venga cancellata la
+       * categoria possono essere riassociate
+       */
+      CriteriaQuery<Tuple> criteriaQueryPar =
+          getEntityManager().getCriteriaBuilder().createQuery(Tuple.class);
 
-            Root<Temi15UteQue> rootPar = criteriaQueryPar.from(Temi15UteQue.class);
+      Root<Temi15UteQue> rootPar = criteriaQueryPar.from(Temi15UteQue.class);
 
-            criteriaQueryPar.multiselect(
-                    rootPar.get("que"),
-                    rootPar.get("insQue"),
-                    rootPar.get("nam"),
-                    getEntityManager().getCriteriaBuilder().count(rootPar.get("que")));
+      criteriaQueryPar.multiselect(
+          rootPar.get("que"),
+          rootPar.get("insQue"),
+          rootPar.get("nam"),
+          getEntityManager().getCriteriaBuilder().count(rootPar.get("que")));
 
-            criteriaQueryPar.groupBy(rootPar.get("que"), rootPar.get("insQue"), rootPar.get("nam"));
-            criteriaQueryPar.having(
+      criteriaQueryPar.groupBy(rootPar.get("que"), rootPar.get("insQue"), rootPar.get("nam"));
+      criteriaQueryPar.having(
+          getEntityManager()
+              .getCriteriaBuilder()
+              .equal(getEntityManager().getCriteriaBuilder().count(rootPar.get("que")), 1));
+
+      rootPar.join("temi16QueCatAsses");
+
+      List<Predicate> predicateList =
+          new ArrayList<>() {
+            {
+              for (Temi16QueCatAss temi15AnaQue : associatedQuery) {
+
+                Expression<?> parentExpression = rootPar.get("que");
+                Expression<?> insQueExpression = rootPar.get("insQue");
+
+                Predicate predicate =
                     getEntityManager()
-                            .getCriteriaBuilder()
-                            .equal(
-                                    getEntityManager().getCriteriaBuilder().count(rootPar.get("que")), 1));
+                        .getCriteriaBuilder()
+                        .and(
+                            getEntityManager()
+                                .getCriteriaBuilder()
+                                .equal(parentExpression, temi15AnaQue.getId().getQue()),
+                            getEntityManager()
+                                .getCriteriaBuilder()
+                                .equal(insQueExpression, temi15AnaQue.getId().getInsQue()));
+                add(predicate);
+              }
+            }
+          };
 
-            rootPar.join("temi16QueCatAsses");
+      Predicate[] finalPredicateList = new Predicate[predicateList.size()];
+      predicateList.toArray(finalPredicateList);
 
-            List<Predicate> predicateList =
-                    new ArrayList<>() {
-                        {
-                            for (Temi16QueCatAss temi15AnaQue : associatedQuery) {
-
-                                Expression<?> parentExpression = rootPar.get("que");
-                                Expression<?> insQueExpression = rootPar.get("insQue");
-
-                                Predicate predicate =
-                                        getEntityManager()
-                                                .getCriteriaBuilder()
-                                                .and(
-                                                        getEntityManager()
-                                                                .getCriteriaBuilder()
-                                                                .equal(parentExpression, temi15AnaQue.getId().getQue()),
-                                                        getEntityManager()
-                                                                .getCriteriaBuilder()
-                                                                .equal(insQueExpression, temi15AnaQue.getId().getInsQue()));
-                                add(predicate);
-                            }
-                        }
-                    };
-
-            Predicate[] finalPredicateList = new Predicate[predicateList.size()];
-            predicateList.toArray(finalPredicateList);
-
-            listTemi15 =
-                    getEntityManager()
-                            .createQuery(
-                                    criteriaQueryPar.where(
-                                            getEntityManager().getCriteriaBuilder().or(finalPredicateList)))
-                            .getResultList();
-        }
-
-        return QueryUtils.getFromTupleListToObjectList(listTemi15);
+      listTemi15 =
+          getEntityManager()
+              .createQuery(
+                  criteriaQueryPar.where(
+                      getEntityManager().getCriteriaBuilder().or(finalPredicateList)))
+              .getResultList();
     }
 
-    /**
-     * Cerco le query associate alla categoria corrente e ai parent
-     *
-     * @param ccat
-     * @param npar
-     * @param queryList
-     * @return
-     */
-    private List<Temi16QueCatAss> getQueryCategList(
-            int ccat, Date insCat, List<Temi16QueCatAss> queryList) {
-        CriteriaQuery<Temi16QueCatAss> criteria =
-                queCatAssDao.getEntityManager().getCriteriaBuilder().createQuery(Temi16QueCatAss.class);
-        Root<Temi16QueCatAss> rootTemi16 = criteria.from(Temi16QueCatAss.class);
+    return QueryUtils.getFromTupleListToObjectList(listTemi15);
+  }
 
-        Expression<Long> cCatExpression = rootTemi16.get("id").get("cat");
+  /**
+   * Cerco le query associate alla categoria corrente e ai parent
+   *
+   * @param ccat
+   * @param npar
+   * @param queryList
+   * @return
+   */
+  private List<Temi16QueCatAss> getQueryCategList(
+      int ccat, Date insCat, List<Temi16QueCatAss> queryList) {
+    CriteriaQuery<Temi16QueCatAss> criteria =
+        queCatAssDao.getEntityManager().getCriteriaBuilder().createQuery(Temi16QueCatAss.class);
+    Root<Temi16QueCatAss> rootTemi16 = criteria.from(Temi16QueCatAss.class);
 
-        List<Predicate> predicateList = new ArrayList<Predicate>();
+    Expression<Long> cCatExpression = rootTemi16.get("id").get("cat");
 
-        predicateList.add(
-                queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression, ccat));
+    List<Predicate> predicateList = new ArrayList<Predicate>();
 
-        Predicate[] finalPredicateList = new Predicate[predicateList.size()];
-        predicateList.toArray(finalPredicateList);
+    predicateList.add(
+        queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression, ccat));
 
-        criteria.where(queCatAssDao.getEntityManager().getCriteriaBuilder().or(finalPredicateList));
+    Predicate[] finalPredicateList = new Predicate[predicateList.size()];
+    predicateList.toArray(finalPredicateList);
 
-        List<Temi16QueCatAss> temi16List = queCatAssDao.getEntityListByCriteriaQuery(criteria, null);
+    criteria.where(queCatAssDao.getEntityManager().getCriteriaBuilder().or(finalPredicateList));
 
-        queryList.addAll(temi16List);
+    List<Temi16QueCatAss> temi16List = queCatAssDao.getEntityListByCriteriaQuery(criteria, null);
 
-        CriteriaQuery<Temi14UteCat> criteria14 =
-                queCatAssDao.getEntityManager().getCriteriaBuilder().createQuery(Temi14UteCat.class);
-        Root<Temi14UteCat> rootTemi14 = criteria14.from(Temi14UteCat.class);
+    queryList.addAll(temi16List);
 
-        Expression<Integer> cCatExpression14 = rootTemi14.get("par");
+    CriteriaQuery<Temi14UteCat> criteria14 =
+        queCatAssDao.getEntityManager().getCriteriaBuilder().createQuery(Temi14UteCat.class);
+    Root<Temi14UteCat> rootTemi14 = criteria14.from(Temi14UteCat.class);
 
-        Predicate predicate =
-                queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression14, ccat);
+    Expression<Integer> cCatExpression14 = rootTemi14.get("par");
 
-        Expression<Date> insCarExpression14 = rootTemi14.get("insPar");
+    Predicate predicate =
+        queCatAssDao.getEntityManager().getCriteriaBuilder().equal(cCatExpression14, ccat);
 
-        Predicate predicateInsCat =
-                queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insCarExpression14, insCat);
+    Expression<Date> insCarExpression14 = rootTemi14.get("insPar");
 
-        criteria14.where(predicate, predicateInsCat);
+    Predicate predicateInsCat =
+        queCatAssDao.getEntityManager().getCriteriaBuilder().equal(insCarExpression14, insCat);
 
-        List<Temi14UteCat> temi14List = categDao.getEntityListByCriteriaQuery(criteria14, null);
+    criteria14.where(predicate, predicateInsCat);
 
-        for (Temi14UteCat temi14AnaCat : temi14List) {
-            getQueryCategList(temi14AnaCat.getCat(), insCat, queryList);
-        }
+    List<Temi14UteCat> temi14List = categDao.getEntityListByCriteriaQuery(criteria14, null);
 
-        return queryList;
+    for (Temi14UteCat temi14AnaCat : temi14List) {
+      getQueryCategList(temi14AnaCat.getCat(), insCat, queryList);
     }
+
+    return queryList;
+  }
 }

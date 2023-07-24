@@ -1,6 +1,4 @@
-/**
- * 
- */
+/** */
 package it.cambi.qrgui.security.services;
 
 import it.cambi.qrgui.security.db.model.SecurityUser;
@@ -11,27 +9,23 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author luca
- *
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService
-{
+public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
-    public SecurityUser save(SecurityUser user)
-    {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
-        return userRepository.save(user);
-    }
+  @Override
+  public SecurityUser save(SecurityUser user) {
+    user.setPassword(bCryptPasswordEncoder.encode(user.getPasswordConfirm()));
+    return userRepository.save(user);
+  }
 
-    @Override
-    public SecurityUser findByUsername(String username)
-    {
-        return userRepository.findByUsername(username).orElse(null);
-    }
+  @Override
+  public SecurityUser findByUsername(String username) {
+    return userRepository.findByUsername(username).orElse(null);
+  }
 }

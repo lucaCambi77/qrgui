@@ -1,4 +1,3 @@
-
 package it.cambi.qrgui.rest;
 
 import it.cambi.qrgui.api.model.UteQueDto;
@@ -26,43 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class QueryExecutorController {
 
-    private final GenericQueryExecutorService genericTaskExecutor;
+  private final GenericQueryExecutorService genericTaskExecutor;
 
-    private final DbService dbService;
+  private final DbService dbService;
 
-    private final WorkBookService workBookService;
+  private final WorkBookService workBookService;
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("execute_query")
-    public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
-            @RequestBody List<UteQueDto> queries,
-            @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10")
-            Integer pageSize,
-            @DefaultValue("false") @RequestParam("createFile") Boolean createFile) throws IOException {
+  @PostMapping(
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping("execute_query")
+  public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
+      @RequestBody List<UteQueDto> queries,
+      @RequestParam(value = "page", required = false) Integer page,
+      @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+      @DefaultValue("false") @RequestParam("createFile") Boolean createFile)
+      throws IOException {
 
-        log.info("Eseguo query ...");
+    log.info("Eseguo query ...");
 
-        List<XWrappedResponse<UteQueDto, List<Object>>> listOut =
-                genericTaskExecutor.executeQuery(queries, page, pageSize);
+    List<XWrappedResponse<UteQueDto, List<Object>>> listOut =
+        genericTaskExecutor.executeQuery(queries, page, pageSize);
 
-        if (createFile) workBookService.createWorkBook(pageSize, listOut);
+    if (createFile) workBookService.createWorkBook(pageSize, listOut);
 
-        return listOut;
-    }
+    return listOut;
+  }
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("checkQuery")
-    public WrappedResponse<QueryToJson> checkQuery(@RequestBody UteQueDto query)
-            throws IOException {
+  @PostMapping(
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping("checkQuery")
+  public WrappedResponse<QueryToJson> checkQuery(@RequestBody UteQueDto query) throws IOException {
 
-        return dbService.checkQuery(query);
-
-    }
-
+    return dbService.checkQuery(query);
+  }
 }
-

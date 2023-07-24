@@ -8,13 +8,12 @@ import java.util.List;
 
 public interface ITemi15Service<T> {
 
-  T postQuery(UteQueDto que, String locale);
+  Temi15UteQue postQuery(UteQueDto que, String locale);
 
-  List<T>
-  getByTipCateg(
+  List<T> getByTipCateg(
       List<String> listAllowedCat, List<Temi15UteQue> queries, List<String> functions);
 
   List<Object> getAlreadyAssociatedQuery(int ccat, String insCat) throws ParseException;
 
-  T deleteQuery(Temi15UteQueId cque);
+  Temi15UteQue deleteQuery(Temi15UteQueId cque);
 }

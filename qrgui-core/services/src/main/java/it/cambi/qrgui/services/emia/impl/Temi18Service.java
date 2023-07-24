@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.services.emia.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
@@ -20,25 +18,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class Temi18Service implements ITemi18Service<Temi18RouQue> {
 
-    private final ITemi18Dao<Temi18RouQue, Temi18RouQueId> routineQueryDao;
+  private final ITemi18Dao<Temi18RouQue, Temi18RouQueId> routineQueryDao;
 
-    @Transactional
-    @Override
-    public Temi18RouQue merge(Temi18RouQueId temi18Pk) {
-        Temi18RouQue temi18 = new Temi18RouQue();
-        temi18.setId(temi18Pk);
+  @Transactional
+  @Override
+  public Temi18RouQue merge(Temi18RouQueId temi18Pk) {
+    Temi18RouQue temi18 = new Temi18RouQue();
+    temi18.setId(temi18Pk);
 
-        return routineQueryDao.merge(temi18);
-    }
+    return routineQueryDao.merge(temi18);
+  }
 
-    @Transactional
-    @Override
-    public Temi18RouQue deleteQueRoutineAssoc(Temi18RouQueId temi18Pk) {
-        return routineQueryDao.delete(routineQueryDao.getEntityByPrimaryKey(temi18Pk));
-    }
+  @Transactional
+  @Override
+  public Temi18RouQue deleteQueRoutineAssoc(Temi18RouQueId temi18Pk) {
+    return routineQueryDao.delete(routineQueryDao.getEntityByPrimaryKey(temi18Pk));
+  }
 
-    @Override
-    public List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque) {
-        return routineQueryDao.getQueRoutineByQueryId(cque);
-    }
+  @Override
+  public List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque) {
+    return routineQueryDao.getQueRoutineByQueryId(cque);
+  }
 }

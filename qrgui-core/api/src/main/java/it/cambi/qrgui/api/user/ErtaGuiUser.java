@@ -26,27 +26,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErtaGuiUser {
 
-    String userName;
-    String password;
-    String locale;
-    String url;
-    String queryString;
-    String guiVersion;
-    String requestType;
-    String browser;
+  String userName;
+  String password;
+  String locale;
+  String url;
+  String queryString;
+  String guiVersion;
+  String requestType;
+  String browser;
 
-    @Builder.Default
-    List<ErtaQrGuiRoles> ertaQrGuiRoles = new ArrayList<>();
-    @Builder.Default
-    Boolean isAdmin = false;
+  @Builder.Default List<ErtaQrGuiRoles> ertaQrGuiRoles = new ArrayList<>();
+  @Builder.Default Boolean isAdmin = false;
 
-    String address;
+  String address;
 
-    Date requestDate = new Date();
+  Date requestDate = new Date();
 
-    public boolean isAdmin() {
-        return this.ertaQrGuiRoles.stream().map(ErtaQrGuiRoles::getRole)
-                .collect(Collectors.toSet())
-                .contains(ErtaQrGuiRoles.FEPQRA.getRole()) || this.isAdmin;
-    }
+  public boolean isAdmin() {
+    return this.ertaQrGuiRoles.stream()
+            .map(ErtaQrGuiRoles::getRole)
+            .collect(Collectors.toSet())
+            .contains(ErtaQrGuiRoles.FEPQRA.getRole())
+        || this.isAdmin;
+  }
 }

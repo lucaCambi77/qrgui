@@ -6,9 +6,9 @@ import it.cambi.qrgui.model.Temi18RouQueId;
 import java.util.List;
 
 public interface ITemi18Service<T> {
-    T merge(Temi18RouQueId temi18Pk);
+  T merge(Temi18RouQueId temi18Pk);
 
-    T deleteQueRoutineAssoc(Temi18RouQueId temi18Pk);
+  T deleteQueRoutineAssoc(Temi18RouQueId temi18Pk);
 
-    List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque);
+  List<Temi18RouQue> getQueRoutineByQueryId(Temi15UteQueId cque);
 }

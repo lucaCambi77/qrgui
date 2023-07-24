@@ -8,30 +8,27 @@ import java.util.List;
 
 public interface IEntityDao<T, K> {
 
-    void save(T entity);
+  void save(T entity);
 
-    List<T> findAll(List<Order> orderList);
+  List<T> findAll(List<Order> orderList);
 
-    Long getSequence(String sequenceName);
+  Long getSequence(String sequenceName);
 
-    EntityManager getEntityManager();
+  EntityManager getEntityManager();
 
-    T merge(T entity);
+  T merge(T entity);
 
-    T delete(T entity);
+  T delete(T entity);
 
-    List<T> getEntityListByCriteriaQuery(CriteriaQuery<T> criteriaQuery, Integer pageNumber);
+  List<T> getEntityListByCriteriaQuery(CriteriaQuery<T> criteriaQuery, Integer pageNumber);
 
-    Object getTupleByCriteriaQuery(
-            CriteriaQuery<Tuple> criteria, Integer pageNumber);
+  Object getTupleByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber);
 
-    List<Object> getTupleListByCriteriaQuery(
-            CriteriaQuery<Tuple> criteria, Integer pageNumber);
+  List<Object> getTupleListByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber);
 
-    T getEntityByCriteriaQuery(
-            CriteriaQuery<T> criteria);
+  T getEntityByCriteriaQuery(CriteriaQuery<T> criteria);
 
-    T getEntityByPrimaryKey(K primaryKey);
+  T getEntityByPrimaryKey(K primaryKey);
 
-    void deleteByEntityId(K id);
+  void deleteByEntityId(K id);
 }

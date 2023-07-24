@@ -6,16 +6,13 @@ import java.util.List;
 
 public interface ITemi15Dao<T, K> extends IEntityDao<T, K> {
 
-    /**
-     * @param ccat
-     * @param insCat
-     * @return
-     */
-    List<Object> getAlreadyAssociatedQuery(int ccat, Date insCat);
+  /**
+   * @param ccat
+   * @param insCat
+   * @return
+   */
+  List<Object> getAlreadyAssociatedQuery(int ccat, Date insCat);
 
-    /**
-     *
-     */
-    T merge(T query);
-
+  /** */
+  T merge(T query);
 }

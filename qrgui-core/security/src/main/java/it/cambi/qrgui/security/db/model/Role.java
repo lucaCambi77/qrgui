@@ -1,6 +1,4 @@
-/**
- * 
- */
+/** */
 package it.cambi.qrgui.security.db.model;
 
 import jakarta.persistence.Column;
@@ -19,53 +17,44 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author luca
- *
  */
 @Entity
 @Table(name = "ROLE", schema = "SECURITY")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role implements java.io.Serializable
-{
-    private Long roleId;
+public class Role implements java.io.Serializable {
+  private Long roleId;
 
-    private String name;
+  private String name;
 
-    @Builder.Default
-    private Set<UserRole> userRoles = new HashSet<>(0);
+  @Builder.Default private Set<UserRole> userRoles = new HashSet<>(0);
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getRoleId()
-    {
-        return roleId;
-    }
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  public Long getRoleId() {
+    return roleId;
+  }
 
-    public void setRoleId(Long id)
-    {
-        this.roleId = id;
-    }
+  public void setRoleId(Long id) {
+    this.roleId = id;
+  }
 
-    @Column
-    public String getName()
-    {
-        return name;
-    }
+  @Column
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
-    public Set<UserRole> getUserRoles()
-    {
-        return userRoles;
-    }
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
 
-    public void setUserRoles(Set<UserRole> users)
-    {
-        this.userRoles = users;
-    }
+  public void setUserRoles(Set<UserRole> users) {
+    this.userRoles = users;
+  }
 }

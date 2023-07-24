@@ -33,7 +33,7 @@ public class QueryCategoryResource extends BasicResource {
 
   private final RestTemplate restTemplate;
 
-  @GetMapping
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize(
       "hasAnyAuthority('"
           + F_QRCG00

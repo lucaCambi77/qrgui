@@ -25,44 +25,47 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = { SecurityUser.class, GuiUserDetailService.class})
-@EnableJpaRepositories(basePackageClasses = UserRepository.class, entityManagerFactoryRef = "securityEntityManagerFactory", transactionManagerRef = "securityTransactionManager")
+@ComponentScan(basePackageClasses = {SecurityUser.class, GuiUserDetailService.class})
+@EnableJpaRepositories(
+    basePackageClasses = UserRepository.class,
+    entityManagerFactoryRef = "securityEntityManagerFactory",
+    transactionManagerRef = "securityTransactionManager")
 @RequiredArgsConstructor
 @PropertySource("classpath:security.properties")
 public class SecurityDbAppConf {
 
-    private final Environment env;
+  private final Environment env;
 
-    @Bean
-    public DataSource securityDataSource() {
-        return DataSourceBuilder.create()
-                .url(env.getProperty("datasource.security.jdbcUrl"))
-                .username(env.getProperty("datasource.security.username"))
-                .password(env.getProperty("datasource.security.password"))
-                .build();
-    }
+  @Bean
+  public DataSource securityDataSource() {
+    return DataSourceBuilder.create()
+        .url(env.getProperty("datasource.security.jdbcUrl"))
+        .username(env.getProperty("datasource.security.username"))
+        .password(env.getProperty("datasource.security.password"))
+        .build();
+  }
 
-    @Bean
-    public PlatformTransactionManager securityTransactionManager() {
-        EntityManagerFactory factory = securityEntityManagerFactory().getObject();
-        return new JpaTransactionManager(factory);
-    }
+  @Bean
+  public PlatformTransactionManager securityTransactionManager() {
+    EntityManagerFactory factory = securityEntityManagerFactory().getObject();
+    return new JpaTransactionManager(factory);
+  }
 
-    @Bean
-    public LocalContainerEntityManagerFactoryBean securityEntityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-        factory.setDataSource(securityDataSource());
-        factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factory.setPackagesToScan(SecurityUser.class.getPackage().getName());
+  @Bean
+  public LocalContainerEntityManagerFactoryBean securityEntityManagerFactory() {
+    LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
+    factory.setDataSource(securityDataSource());
+    factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+    factory.setPackagesToScan(SecurityUser.class.getPackage().getName());
 
-        Properties jpaProperties = new Properties();
-        jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
-        jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
-        jpaProperties.put("hibernate.dialect", env.getProperty("datasource.security.driver-class-name"));
+    Properties jpaProperties = new Properties();
+    jpaProperties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
+    jpaProperties.put("hibernate.show-sql", env.getProperty("spring.jpa.show-sql"));
+    jpaProperties.put(
+        "hibernate.dialect", env.getProperty("datasource.security.driver-class-name"));
 
-        factory.setJpaProperties(jpaProperties);
+    factory.setJpaProperties(jpaProperties);
 
-        return factory;
-    }
-
+    return factory;
+  }
 }

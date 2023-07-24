@@ -18,18 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class DbInfoController {
 
-    private final Map<String, DataSource> dataSourceMap;
+  private final Map<String, DataSource> dataSourceMap;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public WrappedResponse<?> getDatabaseInfoList() {
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  public WrappedResponse<?> getDatabaseInfoList() {
 
-        Set<Object> tenants = dataSourceMap.entrySet().stream()
-                .flatMap(d -> Stream.of(((MultiTenantDataSource) d.getValue()).getResolvedDataSources()))
-                .flatMap(d -> d.keySet().stream()).collect(Collectors.toSet());
+    Set<Object> tenants =
+        dataSourceMap.entrySet().stream()
+            .flatMap(
+                d -> Stream.of(((MultiTenantDataSource) d.getValue()).getResolvedDataSources()))
+            .flatMap(d -> d.keySet().stream())
+            .collect(Collectors.toSet());
 
-        return WrappedResponse.baseBuilder()
-                .entity(tenants)
-                .count(tenants.size())
-                .build();
-    }
+    return WrappedResponse.baseBuilder().entity(tenants).count(tenants.size()).build();
+  }
 }

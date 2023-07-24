@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.taskExecutor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,21 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DbService {
 
-    private final QueryService checkQueryService;
+  private final QueryService checkQueryService;
 
-    private final GenericRepository genericRepository;
+  private final GenericRepository genericRepository;
 
-    private final ObjectMapper objectMapper;
+  private final ObjectMapper objectMapper;
 
-    /**
-     * @param que
-     * @return
-     * @throws IOException
-     */
-    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public WrappedResponse<QueryToJson> checkQuery(UteQueDto que) throws IOException {
+  /**
+   * @param que
+   * @return
+   * @throws IOException
+   */
+  @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+  public WrappedResponse<QueryToJson> checkQuery(UteQueDto que) throws IOException {
 
-        QueryToJson json = objectMapper.readValue(que.json(), QueryToJson.class);
-        return checkQueryService.checkQuery(json, Optional.of(genericRepository::getByNativeQuery));
-    }
+    QueryToJson json = objectMapper.readValue(que.json(), QueryToJson.class);
+    return checkQueryService.checkQuery(json, Optional.of(genericRepository::getByNativeQuery));
+  }
 }

@@ -11,20 +11,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @RequestMapping("/anaTipCat")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
 public class TipCategoryController {
-    private final ITemi20Service<Temi20AnaTipCat> temi20Service;
+  private final ITemi20Service<Temi20AnaTipCat> temi20Service;
+  private final ObjectMapper mapper;
 
-    @GetMapping
-    public WrappedResponse<?> getAnaTipCat(@RequestParam("tipCateg") List<String> functions) {
-        List<Temi20AnaTipCat> temi20AnaTipCats = temi20Service.getByCategory(functions);
+  @GetMapping
+  public WrappedResponse<?> getAnaTipCat(@RequestParam("tipCateg") List<String> functions)
+      throws JsonProcessingException {
+    List<Temi20AnaTipCat> temi20AnaTipCats = temi20Service.getByCategory(functions);
 
-        return WrappedResponse.baseBuilder()
-                .entity(temi20AnaTipCats)
-                .count(temi20AnaTipCats.size())
-                .build();
-    }
+    return WrappedResponse.baseBuilder()
+        .entity(
+            mapper.readValue(
+                mapper.writeValueAsString(temi20AnaTipCats),
+                new TypeReference<List<Temi20AnaTipCat>>() {}))
+        .count(temi20AnaTipCats.size())
+        .build();
+  }
 }

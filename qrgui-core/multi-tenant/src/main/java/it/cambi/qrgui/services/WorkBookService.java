@@ -28,163 +28,163 @@ import org.springframework.beans.factory.annotation.Value;
 @RequiredArgsConstructor
 public class WorkBookService {
 
-    private final AmazonS3 s3;
+  private final AmazonS3 s3;
 
-    @Value("${excel.path}")
-    private String excelPath;
+  @Value("${excel.path}")
+  private String excelPath;
 
-    @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
-    public String host;
+  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
+  public String host;
 
-    @Value("${amazon.aws.s3.bucket.name:bucket}")
-    public String bucketName;
+  @Value("${amazon.aws.s3.bucket.name:bucket}")
+  public String bucketName;
 
-    private static final String fileName = "workbook.xls";
+  private static final String fileName = "workbook.xls";
 
-    public void createWorkBook(
-            int pageSize, List<XWrappedResponse<UteQueDto, List<Object>>> listOut) throws IOException {
+  public void createWorkBook(int pageSize, List<XWrappedResponse<UteQueDto, List<Object>>> listOut)
+      throws IOException {
 
-        String localFilePath = excelPath + fileName;
+    String localFilePath = excelPath + fileName;
 
-        int rowToStart = 0;
-        Workbook wb = new HSSFWorkbook();
+    int rowToStart = 0;
+    Workbook wb = new HSSFWorkbook();
 
-        Sheet sheet = wb.createSheet();
-        for (XWrappedResponse<UteQueDto, List<Object>> response : listOut) {
-            rowToStart =
-                    setWorkBookSheet(
-                            pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
-        }
-
-        FileOutputStream fileOut = new FileOutputStream(localFilePath);
-        wb.write(fileOut);
-        fileOut.close();
-        wb.close();
-
-        uploadToS3Bucket(bucketName, fileName, localFilePath);
-
-        new File(localFilePath).delete();
+    Sheet sheet = wb.createSheet();
+    for (XWrappedResponse<UteQueDto, List<Object>> response : listOut) {
+      rowToStart =
+          setWorkBookSheet(
+              pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
     }
 
-    /**
-     * Creo il work book che contiene tutte le query eseguite
-     */
-    public int setWorkBookSheet(
-            int pageSize,
-            Workbook wb,
-            XWrappedResponse<UteQueDto, List<Object>> response,
-            String fileName,
-            Sheet sheet,
-            int rowToStart)
-            throws IOException {
+    FileOutputStream fileOut = new FileOutputStream(localFilePath);
+    wb.write(fileOut);
+    fileOut.close();
+    wb.close();
 
-        /** Assegno il nome del file che poi viene recuperato dal front end */
-        response.setQueryFilePath(fileName);
+    uploadToS3Bucket(bucketName, fileName, localFilePath);
 
-        /** Recupero la lista di entity dalla response */
-        List<Object> queryList = response.getEntity();
+    new File(localFilePath).delete();
+  }
 
-        if (null != queryList && queryList.size() > 0) {
+  /** Creo il work book che contiene tutte le query eseguite */
+  private int setWorkBookSheet(
+      int pageSize,
+      Workbook wb,
+      XWrappedResponse<UteQueDto, List<Object>> response,
+      String fileName,
+      Sheet sheet,
+      int rowToStart)
+      throws IOException {
 
-            String sheetName = cleanSheetBookName(response.getXentity().nam());
+    /** Assegno il nome del file che poi viene recuperato dal front end */
+    response.setQueryFilePath(fileName);
 
-            /**
-             * #############################################
-             *
-             * <p>Prima riga della query il nome in bold
-             *
-             * <p>#############################################
-             */
-            Row row = sheet.createRow(rowToStart);
+    /** Recupero la lista di entity dalla response */
+    List<Object> queryList = response.getEntity();
 
-            CellStyle style = wb.createCellStyle(); // Create style
-            Font font = wb.createFont(); // Create font
-            font.setBold(true); // Make font bold
-            style.setFont(font); // set it to bold
+    if (null != queryList && queryList.size() > 0) {
 
-            row.createCell(0).setCellStyle(style);
-            row.getCell(0).setCellValue(sheetName);
+      String sheetName = cleanSheetBookName(response.getXentity().nam());
 
-            rowToStart = rowToStart + 2;
+      /**
+       * #############################################
+       *
+       * <p>Prima riga della query il nome in bold
+       *
+       * <p>#############################################
+       */
+      Row row = sheet.createRow(rowToStart);
 
-            /**
-             * ##############################################
-             *
-             * <p>Setto le colonne
-             *
-             * <p>#############################################
-             */
-            Row rowColumns = sheet.createRow(rowToStart);
+      CellStyle style = wb.createCellStyle(); // Create style
+      Font font = wb.createFont(); // Create font
+      font.setBold(true); // Make font bold
+      style.setFont(font); // set it to bold
 
-            /** Recupero il json in cui ci sono le informazioni della query */
-            QueryToJson json =
-                    new ObjectMapper().readValue(response.getXentity().json(), QueryToJson.class);
+      row.createCell(0).setCellStyle(style);
+      row.getCell(0).setCellValue(sheetName);
 
-            /** Per ogni colonna creo una cella nella prima riga */
-            for (int k = 0; k < json.getQuerySelectColumns().size(); k++) {
-                // Create a cell and put a value in it.
-                Cell cell = rowColumns.createCell(k);
-                cell.setCellValue(json.getQuerySelectColumns().get(k).getAs());
-            }
+      rowToStart = rowToStart + 2;
 
-            rowToStart++;
+      /**
+       * ##############################################
+       *
+       * <p>Setto le colonne
+       *
+       * <p>#############################################
+       */
+      Row rowColumns = sheet.createRow(rowToStart);
 
-            /**
-             * ##############################################
-             *
-             * <p>Aggiungo il result set della query
-             *
-             * <p>#############################################
-             */
-            /**
-             * Creo una riga per ogni t-pla. Se il tipo di dato della colonna è una data, viene formattata
-             * come tale. TODO Per adesso l'unico database utilizzato è oracle che con l'attuale driver
-             * restituisce un long. Può darsi che per altri database ci siano risultati diversi
-             */
-            for (Object o : queryList) {
-                Row rows = sheet.createRow(rowToStart);
+      /** Recupero il json in cui ci sono le informazioni della query */
+      QueryToJson json =
+          new ObjectMapper().readValue(response.getXentity().json(), QueryToJson.class);
 
-                Object[] object = (Object[]) o;
+      /** Per ogni colonna creo una cella nella prima riga */
+      for (int k = 0; k < json.getQuerySelectColumns().size(); k++) {
+        // Create a cell and put a value in it.
+        Cell cell = rowColumns.createCell(k);
+        cell.setCellValue(json.getQuerySelectColumns().get(k).getAs());
+      }
 
-                for (int j = 0; j < object.length; j++) {
+      rowToStart++;
 
-                    JavaTypes javaType = json.getQuerySelectColumns().get(j).getType();
-                    // Create a cell and put a value in it.
-                    Cell cell = rows.createCell(j);
+      /**
+       * ##############################################
+       *
+       * <p>Aggiungo il result set della query
+       *
+       * <p>#############################################
+       */
+      /**
+       * Creo una riga per ogni t-pla. Se il tipo di dato della colonna è una data, viene formattata
+       * come tale. TODO Per adesso l'unico database utilizzato è oracle che con l'attuale driver
+       * restituisce un long. Può darsi che per altri database ci siano risultati diversi
+       */
+      for (Object o : queryList) {
+        Row rows = sheet.createRow(rowToStart);
 
-                    String value = object[j] == null ? "" : object[j].toString();
+        Object[] object = (Object[]) o;
 
-                    if (javaType == JavaTypes.DATE && null != value && !value.isEmpty())
-                        value =
-                                DateUtils.getStringFromDate(
-                                        new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS), Long.parseLong(value));
+        for (int j = 0; j < object.length; j++) {
 
-                    if (javaType == JavaTypes.DATE_TRUNC && null != value && !value.isEmpty())
-                        value = DateUtils.getStringFromDate(new SimpleDateFormat(YYYY_MM_DD), Long.parseLong(value));
+          JavaTypes javaType = json.getQuerySelectColumns().get(j).getType();
+          // Create a cell and put a value in it.
+          Cell cell = rows.createCell(j);
 
-                    cell.setCellValue(value);
-                }
+          String value = object[j] == null ? "" : object[j].toString();
 
-                rowToStart++;
-            }
+          if (javaType == JavaTypes.DATE && null != value && !value.isEmpty())
+            value =
+                DateUtils.getStringFromDate(
+                    new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS), Long.parseLong(value));
 
-            response.setEntity(
-                    queryList.subList(0, queryList.size() - pageSize > 0 ? pageSize : queryList.size()));
+          if (javaType == JavaTypes.DATE_TRUNC && null != value && !value.isEmpty())
+            value =
+                DateUtils.getStringFromDate(
+                    new SimpleDateFormat(YYYY_MM_DD), Long.parseLong(value));
+
+          cell.setCellValue(value);
         }
 
         rowToStart++;
+      }
 
-        return rowToStart;
+      response.setEntity(
+          queryList.subList(0, queryList.size() - pageSize > 0 ? pageSize : queryList.size()));
     }
 
-    public void uploadToS3Bucket(String bucket, String awsPath, String filePath) {
-        s3.putObject(bucket, awsPath, new File(filePath));
-    }
+    rowToStart++;
 
-    public static String cleanSheetBookName(String name) {
-        return name.replaceAll("\\r\\n", " ")
-                .replaceAll("\\n", " ")
-                .replaceAll("\\t", " ")
-                .replaceAll("\\*", "");
-    }
+    return rowToStart;
+  }
+
+  public void uploadToS3Bucket(String bucket, String awsPath, String filePath) {
+    s3.putObject(bucket, awsPath, new File(filePath));
+  }
+
+  public static String cleanSheetBookName(String name) {
+    return name.replaceAll("\\r\\n", " ")
+        .replaceAll("\\n", " ")
+        .replaceAll("\\t", " ")
+        .replaceAll("\\*", "");
+  }
 }

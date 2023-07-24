@@ -18,45 +18,48 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 @Configuration
 public class MultiTenantConfiguration {
 
-    private final String defaultTenant = "tenant_1";
+  private final String defaultTenant = "tenant_1";
 
-    @Bean
-    public DataSource dataSource() {
-        URL url = this.getClass().getClassLoader().getResource("tenants");
+  @Bean
+  public DataSource dataSource() {
+    URL url = this.getClass().getClassLoader().getResource("tenants");
 
-        if (url == null)
-            throw new RuntimeException("Tenants directory 'tenants' do not exists");
+    if (url == null) throw new RuntimeException("Tenants directory 'tenants' do not exists");
 
-        File[] files = Optional.of(new File(url.getPath())).map(File::listFiles).orElse(new File[]{});
+    File[] files = Optional.of(new File(url.getPath())).map(File::listFiles).orElse(new File[] {});
 
-        Map<Object, Object> dataSources =
-                Arrays.stream(files).map(f -> {
+    Map<Object, Object> dataSources =
+        Arrays.stream(files)
+            .map(
+                f -> {
+                  Properties tenantProperties = new Properties();
+                  try {
+                    tenantProperties.load((new FileInputStream(f)));
+                  } catch (IOException e) {
+                    throw new RuntimeException("Problem in tenant datasource:" + e);
+                  }
+                  return tenantProperties;
+                })
+            .collect(
+                Collectors.toMap(
+                    p -> p.getProperty("name"),
+                    p ->
+                        DataSourceBuilder.create()
+                            .driverClassName(p.getProperty("datasource.driver-class-name"))
+                            .username(p.getProperty("datasource.username"))
+                            .password(p.getProperty("datasource.password"))
+                            .url(p.getProperty("datasource.url"))
+                            .build()));
 
-                    Properties tenantProperties = new Properties();
-                    try {
-                        tenantProperties.load((new FileInputStream(f)));
-                    } catch (IOException e) {
-                        throw new RuntimeException("Problem in tenant datasource:" + e);
-                    }
-                    return tenantProperties;
+    if (dataSources.isEmpty()) throw new RuntimeException("No tenants currently available");
 
-                }).collect(Collectors.toMap(p -> p.getProperty("name"), p -> DataSourceBuilder.create()
-                        .driverClassName(p.getProperty("datasource.driver-class-name"))
-                        .username(p.getProperty("datasource.username"))
-                        .password(p.getProperty("datasource.password"))
-                        .url(p.getProperty("datasource.url"))
-                        .build()));
+    AbstractRoutingDataSource dataSource = new MultiTenantDataSource();
 
-        if (dataSources.isEmpty())
-            throw new RuntimeException("No tenants currently available");
+    dataSource.setDefaultTargetDataSource(dataSources.get(defaultTenant));
+    dataSource.setTargetDataSources(dataSources);
 
-        AbstractRoutingDataSource dataSource = new MultiTenantDataSource();
+    dataSource.afterPropertiesSet();
 
-        dataSource.setDefaultTargetDataSource(dataSources.get(defaultTenant));
-        dataSource.setTargetDataSources(dataSources);
-
-        dataSource.afterPropertiesSet();
-
-        return dataSource;
-    }
+    return dataSource;
+  }
 }

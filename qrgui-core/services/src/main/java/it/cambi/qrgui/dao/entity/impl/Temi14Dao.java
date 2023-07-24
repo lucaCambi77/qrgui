@@ -7,18 +7,14 @@ import it.cambi.qrgui.model.Temi14UteCatId;
 import org.springframework.stereotype.Component;
 
 /**
- * @param <T>
- *            Type of the Entity.
- * @param <I>
- *            Type of the Primary Key.
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
  */
 @Component
-public class Temi14Dao extends TemiGenericDao<Temi14UteCat, Temi14UteCatId> implements ITemi14Dao<Temi14UteCat, Temi14UteCatId>
-{
+public class Temi14Dao extends TemiGenericDao<Temi14UteCat, Temi14UteCatId>
+    implements ITemi14Dao<Temi14UteCat, Temi14UteCatId> {
 
-    public Temi14Dao()
-    {
-        super(Temi14UteCat.class);
-    }
-
+  public Temi14Dao() {
+    super(Temi14UteCat.class);
+  }
 }

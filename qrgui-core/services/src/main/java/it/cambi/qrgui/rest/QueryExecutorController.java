@@ -29,63 +29,61 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 public class QueryExecutorController {
-    private final RestTemplate restTemplate;
-    @Value("${multitenant.contextPath}")
-    private String multiTenantUrl;
+  private final RestTemplate restTemplate;
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("execute_query")
-    public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
-            @RequestBody List<UteQueDto> queries,
-            @RequestParam(value = "page", required = false) Integer page,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "10")
-            Integer pageSize,
-            @DefaultValue("false") @RequestParam("createFile") Boolean createFile) {
+  @Value("${multitenant.contextPath}")
+  private String multiTenantUrl;
 
-        log.info("Eseguo query ...");
+  @PostMapping(
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping("execute_query")
+  public List<XWrappedResponse<UteQueDto, List<Object>>> executeQuery(
+      @RequestBody List<UteQueDto> queries,
+      @RequestParam(value = "page", required = false) Integer page,
+      @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
+      @DefaultValue("false") @RequestParam("createFile") Boolean createFile) {
 
-        List<XWrappedResponse<UteQueDto, List<Object>>> listOut = new ArrayList<>();
+    log.info("Eseguo query ...");
 
-        for (UteQueDto query : queries) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("X-TenantID", query.tenant());
+    List<XWrappedResponse<UteQueDto, List<Object>>> listOut = new ArrayList<>();
 
-            ResponseEntity<List<XWrappedResponse<UteQueDto, List<Object>>>> responses = restTemplate
-                    .exchange(UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/execute_query")
-                            .queryParam("createFile", createFile)
-                            .queryParam("page", page)
-                            .queryParam("pageSize", pageSize)
-                            .build()
-                            .toString(), HttpMethod.POST, new HttpEntity<>(List.of(query), headers), new ParameterizedTypeReference<>() {
-                    });
+    for (UteQueDto query : queries) {
+      HttpHeaders headers = new HttpHeaders();
+      headers.set("X-TenantID", query.tenant());
 
-            Optional.ofNullable(responses.getBody()).map(listOut::addAll);
-        }
+      ResponseEntity<List<XWrappedResponse<UteQueDto, List<Object>>>> responses =
+          restTemplate.exchange(
+              UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/execute_query")
+                  .queryParam("createFile", createFile)
+                  .queryParam("page", page)
+                  .queryParam("pageSize", pageSize)
+                  .build()
+                  .toString(),
+              HttpMethod.POST,
+              new HttpEntity<>(List.of(query), headers),
+              new ParameterizedTypeReference<>() {});
 
-        return listOut;
+      Optional.ofNullable(responses.getBody()).map(listOut::addAll);
     }
 
-    @PostMapping(
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    @RequestMapping("checkQuery")
-    public WrappedResponse<?> checkQuery(@RequestBody UteQueDto query) {
+    return listOut;
+  }
 
-        log.info("Eseguo query ...");
+  @PostMapping(
+      consumes = MediaType.APPLICATION_JSON_VALUE,
+      produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping("checkQuery")
+  public WrappedResponse<?> checkQuery(@RequestBody UteQueDto query) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-TenantID", query.tenant());
+    log.info("Eseguo query ...");
 
-        return restTemplate.postForObject(
-                UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/checkQuery")
-                        .build()
-                        .toString(),
-                new HttpEntity<>(query, headers),
-                WrappedResponse.class);
-    }
+    HttpHeaders headers = new HttpHeaders();
+    headers.set("X-TenantID", query.tenant());
 
+    return restTemplate.postForObject(
+        UriComponentsBuilder.fromHttpUrl(multiTenantUrl + "query/checkQuery").build().toString(),
+        new HttpEntity<>(query, headers),
+        WrappedResponse.class);
+  }
 }
-
-

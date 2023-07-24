@@ -1,4 +1,3 @@
-
 ## Task ##
 
 The project is composed by 3 different main modules:

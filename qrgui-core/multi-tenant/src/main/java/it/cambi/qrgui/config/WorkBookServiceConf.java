@@ -15,37 +15,37 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:multitenant.properties")
 public class WorkBookServiceConf {
 
-    @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
-    public String host;
+  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
+  public String host;
 
-    @Value("${amazon.aws.s3.region:us-east-1}")
-    public String defaultRegion;
+  @Value("${amazon.aws.s3.region:us-east-1}")
+  public String defaultRegion;
 
-    @Value("${amazon.aws.s3.accessKey:accesskey}")
-    public String accessKey;
+  @Value("${amazon.aws.s3.accessKey:accesskey}")
+  public String accessKey;
 
-    @Value("${amazon.aws.s3.secretKey:secretkey}")
-    public String secretKey;
+  @Value("${amazon.aws.s3.secretKey:secretkey}")
+  public String secretKey;
 
-    @Value("${amazon.aws.s3.bucket.name:bucket}")
-    public String bucketName;
+  @Value("${amazon.aws.s3.bucket.name:bucket}")
+  public String bucketName;
 
-    @Bean
-    public WorkBookService workBookService(AmazonS3 amazonS3) {
-        return new WorkBookService(amazonS3);
-    }
+  @Bean
+  public WorkBookService workBookService(AmazonS3 amazonS3) {
+    return new WorkBookService(amazonS3);
+  }
 
-    @Bean
-    public AmazonS3 amazonS3() {
-        AmazonS3 amazonS3 =
-                AmazonS3ClientBuilder.standard()
-                        .withEndpointConfiguration(
-                                new AwsClientBuilder.EndpointConfiguration(host, defaultRegion))
-                        .withCredentials(
-                                new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-                        .build();
+  @Bean
+  public AmazonS3 amazonS3() {
+    AmazonS3 amazonS3 =
+        AmazonS3ClientBuilder.standard()
+            .withEndpointConfiguration(
+                new AwsClientBuilder.EndpointConfiguration(host, defaultRegion))
+            .withCredentials(
+                new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
+            .build();
 
-        amazonS3.createBucket(bucketName);
-        return amazonS3;
-    }
+    amazonS3.createBucket(bucketName);
+    return amazonS3;
+  }
 }

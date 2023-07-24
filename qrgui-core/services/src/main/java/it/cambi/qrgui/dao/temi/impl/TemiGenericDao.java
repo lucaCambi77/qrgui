@@ -7,30 +7,22 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 /**
- * @param <T>
- *            Type of the Entity.
- * @param <I>
- *            Type of the Primary Key.
+ * @param <T> Type of the Entity.
+ * @param <I> Type of the Primary Key.
  */
 @Service
-public class TemiGenericDao<T, I> extends JpaEntityDao<T, I>
-{
-    public TemiGenericDao()
-    {
-    }
+public class TemiGenericDao<T, I> extends JpaEntityDao<T, I> {
+  public TemiGenericDao() {}
 
-    public TemiGenericDao(Class<T> clazz)
-    {
-        super(clazz);
-    }
+  public TemiGenericDao(Class<T> clazz) {
+    super(clazz);
+  }
 
-    @PersistenceContext(unitName = "emiaPU")
-    @Qualifier(value = "emiaEntityManagerFactory")
-    private EntityManager entityManager;
+  @PersistenceContext(unitName = "emiaPU")
+  @Qualifier(value = "emiaEntityManagerFactory")
+  private EntityManager entityManager;
 
-    public EntityManager getEntityManager()
-    {
-        return this.entityManager;
-    }
-
+  public EntityManager getEntityManager() {
+    return this.entityManager;
+  }
 }

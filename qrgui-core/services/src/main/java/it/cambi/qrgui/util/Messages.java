@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.util;
 
 import static it.cambi.qrgui.util.Constants.DEFAULT_LOCALE;
@@ -13,27 +11,26 @@ import java.util.ResourceBundle;
 
 /**
  * @author luca
- *
  */
 public class Messages {
 
-    private final ResourceBundle bundle;
+  private final ResourceBundle bundle;
 
-    public Messages(String locale) {
+  public Messages(String locale) {
 
-        Locale userLocale = new Locale(null == locale ? DEFAULT_LOCALE : locale);
-        this.bundle = ResourceBundle.getBundle(TRANSLATIONS_FILE_NAME, userLocale, new UTF8Control());
+    Locale userLocale = new Locale(null == locale ? DEFAULT_LOCALE : locale);
+    this.bundle = ResourceBundle.getBundle(TRANSLATIONS_FILE_NAME, userLocale, new UTF8Control());
+  }
+
+  public ResourceBundle getBundle() {
+    return bundle;
+  }
+
+  public String getString(String key) {
+    try {
+      return getBundle().getString(key);
+    } catch (MissingResourceException e) {
+      return '!' + key + '!';
     }
-
-    public ResourceBundle getBundle() {
-        return bundle;
-    }
-
-    public String getString(String key) {
-        try {
-            return getBundle().getString(key);
-        } catch (MissingResourceException e) {
-            return '!' + key + '!';
-        }
-    }
+  }
 }

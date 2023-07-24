@@ -1,7 +1,6 @@
 package it.cambi.qrgui.model;
 // Generated Apr 10, 2018 11:58:47 AM by Hibernate Tools 3.6.0.Final
 
-
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
 import jakarta.persistence.Column;

@@ -1,6 +1,4 @@
-/**
- *
- */
+/** */
 package it.cambi.qrgui.security.services;
 
 import it.cambi.qrgui.security.db.model.SecurityUser;
@@ -20,30 +18,33 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author luca
- *
  */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class GuiUserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    @Override
-    @Transactional(value = "securityTransactionManager", readOnly = true)
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        log.info("... attempting to authenticate user " + userName);
+  @Override
+  @Transactional(value = "securityTransactionManager", readOnly = true)
+  public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+    log.info("... attempting to authenticate user " + userName);
 
-        SecurityUser user = userRepository.findByUsername(userName).orElseThrow(() -> new UsernameNotFoundException(userName));
+    SecurityUser user =
+        userRepository
+            .findByUsername(userName)
+            .orElseThrow(() -> new UsernameNotFoundException(userName));
 
-        Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        user.getUserRoles().forEach(role -> {
-            log.info("User " + userName + " has role " + role.getRole().getName());
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getName()));
-        });
+    user.getUserRoles()
+        .forEach(
+            role -> {
+              log.info("User " + userName + " has role " + role.getRole().getName());
+              grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole().getName()));
+            });
 
-        return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
-    }
-
+    return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+  }
 }

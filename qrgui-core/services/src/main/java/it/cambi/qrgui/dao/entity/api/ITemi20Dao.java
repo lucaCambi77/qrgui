@@ -4,10 +4,8 @@ import it.cambi.qrgui.dao.api.IEntityDao;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public interface ITemi20Dao<T, K> extends IEntityDao<T, K>
-{
-    List<T> findByAllowedCategories(List<String> functions);
+public interface ITemi20Dao<T, K> extends IEntityDao<T, K> {
+  List<T> findByAllowedCategories(List<String> functions);
 
-    List<String> getFunctionsByRequest(HttpServletRequest request);
-
+  List<String> getFunctionsByRequest(HttpServletRequest request);
 }
