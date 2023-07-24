@@ -88,14 +88,14 @@ angular.module('qrGuiApp').factory('EmiaRestUtilityFactory', ['constant',
         function DeleteCategory(category) {
 
             const path = constant.contextRoot + constant.restBasicPath
-                + '/emia/category/delete/';
+                + '/emia/category/delete';
 
             return RestUtilityFactory.DeferredPromisePost(path, category);
         }
 
         function DeleteQuery(que, insQue) {
             const path = constant.contextRoot + constant.restBasicPath
-                + '/emia/query/delete/';
+                + '/emia/query/delete';
 
             return RestUtilityFactory.DeferredPromisePost(path, {que: que, insQue: insQue});
 
