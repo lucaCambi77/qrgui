@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 /**
  * @author luca
@@ -79,52 +80,56 @@ public class Temi14Service implements ITemi14Service<Temi14UteCat> {
   @Transactional
   public void reAssocAndDeleteOld(CategoryDto cat) {
 
-    List<Object> notReAssoc = new ArrayList<>();
+    if (!CollectionUtils.isEmpty(cat.queCatAsses())) {
 
-    /** Controllo le query che non sono state riassociate e nel caso le cancello */
-    for (Object object : queryDao.getAlreadyAssociatedQuery(cat.cat(), cat.insCat())) {
-      Object[] associatedQuery = (Object[]) object;
-      Temi15UteQueId id = new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]);
+      List<Object> notReAssoc = new ArrayList<>();
 
-      if (cat.queCatAsses().stream()
-          .noneMatch(
-              temi16 ->
-                  !Functions.areDifferentLong(temi16.id().que(), id.getQue())
-                      && !Functions.areDifferentDates(temi16.id().insQue(), id.getInsQue()))) {
-        notReAssoc.add(object);
+      /** Controllo le query che non sono state riassociate e nel caso le cancello */
+      for (Object object : queryDao.getAlreadyAssociatedQuery(cat.cat(), cat.insCat())) {
+        Object[] associatedQuery = (Object[]) object;
+        Temi15UteQueId id =
+            new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]);
+
+        if (cat.queCatAsses().stream()
+            .noneMatch(
+                temi16 ->
+                    !Functions.areDifferentLong(temi16.id().que(), id.getQue())
+                        && !Functions.areDifferentDates(temi16.id().insQue(), id.getInsQue()))) {
+          notReAssoc.add(object);
+        }
       }
-    }
 
-    notReAssoc.forEach(
-        object -> {
-          Object[] associatedQuery = (Object[]) object;
-          Temi15UteQueId id =
-              new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]);
-          temi85Service
-              .getQueRoutineByQueryId(new Temi15UteQueId(id.getQue(), id.getInsQue()))
-              .forEach(temi18 -> temi85Service.deleteQueRoutineAssoc(temi18.getId()));
-        });
+      notReAssoc.forEach(
+          object -> {
+            Object[] associatedQuery = (Object[]) object;
+            Temi15UteQueId id =
+                new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]);
+            temi85Service
+                .getQueRoutineByQueryId(new Temi15UteQueId(id.getQue(), id.getInsQue()))
+                .forEach(temi18 -> temi85Service.deleteQueRoutineAssoc(temi18.getId()));
+          });
 
-    notReAssoc.forEach(
-        object -> {
-          Object[] associatedQuery = (Object[]) object;
-          temi15Service.deleteQuery(
-              new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]));
-        });
+      notReAssoc.forEach(
+          object -> {
+            Object[] associatedQuery = (Object[]) object;
+            temi15Service.deleteQuery(
+                new Temi15UteQueId((long) associatedQuery[0], (Date) associatedQuery[1]));
+          });
 
-    /**
-     * Creo le nuove associazioni se ci sono. Dalla gui un utente può associare query che non
-     * avrebbero più associazioni a categorie esistenti
-     */
-    for (QueCatAssDto temi16QueCatAss : cat.queCatAsses()) {
-      Temi16QueCatAss temi16QueCatAss1 = new Temi16QueCatAss();
-      temi16QueCatAss1.setId(
-          new Temi16QueCatAssId(
-              temi16QueCatAss.id().que(),
-              temi16QueCatAss.id().cat(),
-              temi16QueCatAss.id().insCat(),
-              temi16QueCatAss.id().insQue()));
-      queCatAssDao.save(temi16QueCatAss1);
+      /**
+       * Creo le nuove associazioni se ci sono. Dalla gui un utente può associare query che non
+       * avrebbero più associazioni a categorie esistenti
+       */
+      for (QueCatAssDto temi16QueCatAss : cat.queCatAsses()) {
+        Temi16QueCatAss temi16QueCatAss1 = new Temi16QueCatAss();
+        temi16QueCatAss1.setId(
+            new Temi16QueCatAssId(
+                temi16QueCatAss.id().que(),
+                temi16QueCatAss.id().cat(),
+                temi16QueCatAss.id().insCat(),
+                temi16QueCatAss.id().insQue()));
+        queCatAssDao.save(temi16QueCatAss1);
+      }
     }
   }
 

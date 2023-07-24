@@ -1,9 +1,11 @@
 package it.cambi.qrgui.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
-import it.cambi.qrgui.model.Temi20AnaTipCat;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RequestMapping("/routine")
 @RestController

@@ -23,8 +23,6 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.ParameterExpression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -270,11 +268,8 @@ public class Temi15Service implements ITemi15Service<Temi15UteQue> {
 
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public List<Object> getAlreadyAssociatedQuery(int cat, String insCat) throws ParseException {
+  public List<Object> getAlreadyAssociatedQuery(int cat, String insCat) {
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-
-    return queryDao.getAlreadyAssociatedQuery(
-        cat, simpleDateFormat.parse(insCat.replace(" ", "+")));
+    return queryDao.getAlreadyAssociatedQuery(cat, new Date());
   }
 }
