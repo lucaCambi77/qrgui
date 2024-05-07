@@ -8,6 +8,4 @@ import it.cambi.qrgui.security.db.model.SecurityUser;
  */
 public interface UserService {
   SecurityUser save(SecurityUser user);
-
-  SecurityUser findByUsername(String username);
 }

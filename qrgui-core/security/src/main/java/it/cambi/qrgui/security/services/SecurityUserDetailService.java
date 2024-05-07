@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class GuiUserDetailService implements UserDetailsService {
+public class SecurityUserDetailService implements UserDetailsService {
 
   private final UserRepository userRepository;
 

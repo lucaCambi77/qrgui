@@ -26,11 +26,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @ComponentScan(basePackageClasses = {Temi14UteCat.class})
 @EnableJpaRepositories(
-    entityManagerFactoryRef = "emiaEntityManagerFactory",
-    transactionManagerRef = "emiaTransactionManager")
+    entityManagerFactoryRef = "entityManagerFactory",
+    transactionManagerRef = "transactionManager")
 @RequiredArgsConstructor
 @PropertySource("classpath:services.properties")
-public class EmiaDbAppConf {
+public class DbConfiguration {
 
   private final Environment env;
 
@@ -46,7 +46,7 @@ public class EmiaDbAppConf {
 
   @Primary
   @Bean
-  public PlatformTransactionManager emiaTransactionManager(
+  public PlatformTransactionManager transactionManager(
       LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean) {
     return new JpaTransactionManager(
         Objects.requireNonNull(localContainerEntityManagerFactoryBean.getObject()));
@@ -54,7 +54,7 @@ public class EmiaDbAppConf {
 
   @Primary
   @Bean
-  public LocalContainerEntityManagerFactoryBean emiaEntityManagerFactory() {
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
     factory.setDataSource(emiaDataSource());
     factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());

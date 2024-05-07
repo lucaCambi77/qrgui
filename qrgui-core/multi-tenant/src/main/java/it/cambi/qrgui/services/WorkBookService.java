@@ -3,7 +3,6 @@ package it.cambi.qrgui.services;
 import static it.cambi.qrgui.util.Constants.YYYY_MM_DD;
 import static it.cambi.qrgui.util.Constants.YYYY_MM_DD_HH_MI_SS;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.model.UteQueDto;
 import it.cambi.qrgui.api.wrappedResponse.XWrappedResponse;
@@ -24,22 +23,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class WorkBookService {
-
-  private final AmazonS3 s3;
 
   @Value("${excel.path}")
   private String excelPath;
 
-  @Value("${amazon.aws.s3.host:http://127.0.0.1:4566}")
-  public String host;
-
-  @Value("${amazon.aws.s3.bucket.name:bucket}")
-  public String bucketName;
-
-  private static final String fileName = "workbook.xls";
+  private static final String fileName = "files/workbook.xls";
 
   public void createWorkBook(int pageSize, List<XWrappedResponse<UteQueDto, List<Object>>> listOut)
       throws IOException {
@@ -53,7 +46,7 @@ public class WorkBookService {
     for (XWrappedResponse<UteQueDto, List<Object>> response : listOut) {
       rowToStart =
           setWorkBookSheet(
-              pageSize, wb, response, host + "/" + bucketName + "/" + fileName, sheet, rowToStart);
+              pageSize, wb, response, "/" + fileName, sheet, rowToStart);
     }
 
     FileOutputStream fileOut = new FileOutputStream(localFilePath);
@@ -61,9 +54,7 @@ public class WorkBookService {
     fileOut.close();
     wb.close();
 
-    uploadToS3Bucket(bucketName, fileName, localFilePath);
-
-    new File(localFilePath).delete();
+    new File(localFilePath);
   }
 
   /** Creo il work book che contiene tutte le query eseguite */
@@ -175,10 +166,6 @@ public class WorkBookService {
     rowToStart++;
 
     return rowToStart;
-  }
-
-  public void uploadToS3Bucket(String bucket, String awsPath, String filePath) {
-    s3.putObject(bucket, awsPath, new File(filePath));
   }
 
   public static String cleanSheetBookName(String name) {

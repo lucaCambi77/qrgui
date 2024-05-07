@@ -21,10 +21,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
-/**
- * @param <T> Type of the Entity.
- * @param <I> Type of the Primary Key.
- */
 @Component
 public class Temi15Dao extends TemiGenericDao<Temi15UteQue, Temi15UteQueId>
     implements ITemi15Dao<Temi15UteQue, Temi15UteQueId> {

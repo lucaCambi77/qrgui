@@ -73,7 +73,7 @@ public class QueryService {
                   "Non è consentito l'uso dei commenti in quanto potrebbero alterare la formattazione della query"))
           .build();
 
-    if (null == json.getQuerySelectColumns() || json.getQuerySelectColumns().size() == 0)
+    if (null == json.getQuerySelectColumns() || json.getQuerySelectColumns().isEmpty())
       return responseQueryToJson.toBuilder()
           .success(false)
           .errorMessage(List.of("E' necessario indicare almeno una colonna di output "))
@@ -247,14 +247,16 @@ public class QueryService {
             .build();
 
       switch (attr.getParameter().getType()) {
-        case DATE -> finaleReplace =
-            finaleReplace.replace(
-                attr.getParameter().getName(),
-                "to_date('" + Constants.FAKE_DATE + "', 'YYYY/MM/DD HH24:MI:SS')");
-        case DATE_TRUNC -> finaleReplace =
-            finaleReplace.replace(
-                attr.getParameter().getName(),
-                "to_date('" + Constants.FAKE_DATE_TRUNC + "', 'YYYY/MM/DD')");
+        case DATE ->
+            finaleReplace =
+                finaleReplace.replace(
+                    attr.getParameter().getName(),
+                    "to_date('" + Constants.FAKE_DATE + "', 'YYYY/MM/DD HH24:MI:SS')");
+        case DATE_TRUNC ->
+            finaleReplace =
+                finaleReplace.replace(
+                    attr.getParameter().getName(),
+                    "to_date('" + Constants.FAKE_DATE_TRUNC + "', 'YYYY/MM/DD')");
         case NUMBER -> {
           if (attr.getOperator().toUpperCase().equals(WhereConditionOperator.IN.getName())) {
             finaleReplace = finaleReplace.replace(attr.getParameter().getName(), "(9, 6)");
@@ -298,7 +300,7 @@ public class QueryService {
    * Metodo per l'esecuzione della query. Vengono controllati i valori dei parametri e dei vincoli e
    * sostituiti i parametri
    *
-   * @param query
+   * @param json
    * @return
    * @throws IOException
    */
@@ -313,7 +315,7 @@ public class QueryService {
         requireParamError.add("Valore mancante per " + attr.getAlias());
     }
 
-    if (requireParamError.size() > 0)
+    if (!requireParamError.isEmpty())
       return responseString.toBuilder().success(false).errorMessage(requireParamError).build();
 
     /** Controllo dei vincoli */
@@ -401,22 +403,24 @@ public class QueryService {
 
     for (Attribute attr : json.getAttrs()) {
       switch (attr.getParameter().getType()) {
-        case DATE -> finaleReplace =
-            finaleReplace.replace(
-                attr.getParameter().getName(),
-                "to_date('"
-                    + DateUtils.getStringFromDate(
-                        new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS),
-                        Long.parseLong(attr.getParameter().getValue()))
-                    + "', 'YYYY/MM/DD HH24:MI:SS')");
-        case DATE_TRUNC -> finaleReplace =
-            finaleReplace.replace(
-                attr.getParameter().getName(),
-                "to_date('"
-                    + DateUtils.getStringFromDate(
-                        new SimpleDateFormat(YYYY_MM_DD),
-                        Long.parseLong(attr.getParameter().getValue()))
-                    + "', 'YYYY/MM/DD')");
+        case DATE ->
+            finaleReplace =
+                finaleReplace.replace(
+                    attr.getParameter().getName(),
+                    "to_date('"
+                        + DateUtils.getStringFromDate(
+                            new SimpleDateFormat(YYYY_MM_DD_HH_MI_SS),
+                            Long.parseLong(attr.getParameter().getValue()))
+                        + "', 'YYYY/MM/DD HH24:MI:SS')");
+        case DATE_TRUNC ->
+            finaleReplace =
+                finaleReplace.replace(
+                    attr.getParameter().getName(),
+                    "to_date('"
+                        + DateUtils.getStringFromDate(
+                            new SimpleDateFormat(YYYY_MM_DD),
+                            Long.parseLong(attr.getParameter().getValue()))
+                        + "', 'YYYY/MM/DD')");
         case NUMBER -> {
           if (attr.getOperator()
               .toUpperCase()

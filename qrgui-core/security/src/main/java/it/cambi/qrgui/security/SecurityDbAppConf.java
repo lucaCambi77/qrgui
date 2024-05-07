@@ -2,7 +2,7 @@ package it.cambi.qrgui.security;
 
 import it.cambi.qrgui.security.db.model.SecurityUser;
 import it.cambi.qrgui.security.jpa.repository.UserRepository;
-import it.cambi.qrgui.security.services.GuiUserDetailService;
+import it.cambi.qrgui.security.services.SecurityUserDetailService;
 import jakarta.persistence.EntityManagerFactory;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @Configuration
-@ComponentScan(basePackageClasses = {SecurityUser.class, GuiUserDetailService.class})
+@ComponentScan(basePackageClasses = {SecurityUser.class, SecurityUserDetailService.class})
 @EnableJpaRepositories(
     basePackageClasses = UserRepository.class,
     entityManagerFactoryRef = "securityEntityManagerFactory",

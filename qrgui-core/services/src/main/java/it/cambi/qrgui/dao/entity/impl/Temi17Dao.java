@@ -8,10 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * @param <T> Type of the Entity.
- * @param <I> Type of the Primary Key.
- */
 @Component
 public class Temi17Dao extends TemiGenericDao<Temi17UteRou, Temi17UteRouId>
     implements ITemi17Dao<Temi17UteRou, Temi17UteRouId> {

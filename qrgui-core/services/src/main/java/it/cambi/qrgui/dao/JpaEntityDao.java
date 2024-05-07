@@ -3,7 +3,6 @@ package it.cambi.qrgui.dao;
 import it.cambi.qrgui.dao.api.IEntityDao;
 import it.cambi.qrgui.util.QueryUtils;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
@@ -12,7 +11,7 @@ import java.util.List;
 
 /**
  * @param <T> Type of the Entity.
- * @param <I> Type of the Primary Key.
+ * @param <K> Type of the Primary Key.
  */
 public class JpaEntityDao<T, K> extends AbstractDao implements IEntityDao<T, K> {
 
@@ -70,38 +69,8 @@ public class JpaEntityDao<T, K> extends AbstractDao implements IEntityDao<T, K> 
         .getResultList();
   }
 
-  public T getEntityByCriteriaQuery(CriteriaQuery<T> criteria) {
-
-    try {
-      return getEntityManager().createQuery(criteria).getSingleResult();
-    } catch (NoResultException e) {
-
-      return null;
-    }
-  }
-
   public void deleteByEntityId(K id) {
     getEntityManager().remove(getEntityManager().find(getEntityClass(), id));
-  }
-
-  public Object getTupleByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber) {
-
-    try {
-      if (null == pageNumber)
-        return QueryUtils.getFromTupleToObject(
-            getEntityManager().createQuery(criteria).getSingleResult());
-
-      return QueryUtils.getFromTupleToObject(
-          getEntityManager()
-              .createQuery(criteria)
-              .setMaxResults(getPageSize())
-              .setFirstResult((pageNumber - 1) * getPageSize())
-              .getSingleResult());
-
-    } catch (NoResultException e) {
-
-      return null;
-    }
   }
 
   public List<Object> getTupleListByCriteriaQuery(

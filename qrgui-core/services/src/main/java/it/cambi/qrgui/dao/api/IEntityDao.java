@@ -12,8 +12,6 @@ public interface IEntityDao<T, K> {
 
   List<T> findAll(List<Order> orderList);
 
-  Long getSequence(String sequenceName);
-
   EntityManager getEntityManager();
 
   T merge(T entity);
@@ -22,11 +20,7 @@ public interface IEntityDao<T, K> {
 
   List<T> getEntityListByCriteriaQuery(CriteriaQuery<T> criteriaQuery, Integer pageNumber);
 
-  Object getTupleByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber);
-
   List<Object> getTupleListByCriteriaQuery(CriteriaQuery<Tuple> criteria, Integer pageNumber);
-
-  T getEntityByCriteriaQuery(CriteriaQuery<T> criteria);
 
   T getEntityByPrimaryKey(K primaryKey);
 

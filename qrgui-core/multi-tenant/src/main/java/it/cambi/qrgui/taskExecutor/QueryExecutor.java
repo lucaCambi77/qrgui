@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class QueryExecutor {
 
-  private final GenericRepository firstGenericDao;
+  private final GenericRepository genericRepository;
   private final QueryService queryService;
   private final WrappedResponse<QueryExecution> response = new WrappedResponse<>();
 
@@ -44,13 +44,14 @@ public class QueryExecutor {
     if (queryType == QueryType.COUNT) {
       execution =
           new QueryExecutionCountResponse(
-              firstGenericDao.executeQueryCount(queryStringResponse.getEntity()).intValue(), query);
+              genericRepository.executeQueryCount(queryStringResponse.getEntity()).intValue(),
+              query);
     } else {
       execution =
           new QueryExecutionListResponse(
               queryService.parseResultSet(
                   json,
-                  firstGenericDao.getByNativeQuery(
+                  genericRepository.getByNativeQuery(
                       queryStringResponse.getEntity(), page, pageSize)),
               query);
     }

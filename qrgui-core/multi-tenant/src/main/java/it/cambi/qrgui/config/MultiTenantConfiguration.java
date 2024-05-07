@@ -24,7 +24,9 @@ public class MultiTenantConfiguration {
   public DataSource dataSource() {
     URL url = this.getClass().getClassLoader().getResource("tenants");
 
-    if (url == null) throw new RuntimeException("Tenants directory 'tenants' do not exists");
+    if (url == null) {
+      throw new RuntimeException("Tenants directory 'tenants' do not exists");
+    }
 
     File[] files = Optional.of(new File(url.getPath())).map(File::listFiles).orElse(new File[] {});
 

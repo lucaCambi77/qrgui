@@ -11,10 +11,6 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
-/**
- * @param <T> Type of the Entity.
- * @param <I> Type of the Primary Key.
- */
 @Component
 public class Temi16Dao extends TemiGenericDao<Temi16QueCatAss, Temi16QueCatAssId>
     implements ITemi16Dao<Temi16QueCatAss, Temi16QueCatAssId> {
