@@ -12,7 +12,7 @@ import angular from 'angular';
 		$location, EmiaRestUtilityFactory, $q, UtilErrorsFactory,
 		ListUtilityFactory, $window, $http) {
 
-		var service: any = {};
+		const service: any = {};
 
 		service.GetUserProperties = GetUserProperties;
 
@@ -28,15 +28,15 @@ import angular from 'angular';
 			$http.defaults.headers.common['Authorization']
 				= 'Basic ' + token;
 
-			var data = {
+			const data = {
 				userName: input.username,
 				password: input.password,
 				locale: input.locale,
 				url: input.absUrl
-			}
+			};
 
-			var list = [EmiaRestUtilityFactory.GetDataBaseInfo(),
-			RestFactory.GetUserProperties(data)];
+			const list = [EmiaRestUtilityFactory.GetDataBaseInfo(),
+				RestFactory.GetUserProperties(data)];
 
 			$q
 				.all(list)
@@ -62,16 +62,16 @@ import angular from 'angular';
 
 						ListUtilityFactory.LoadCategoriesState(input);
 
-						var userData = {
+						const userData = {
 							userName: input.username,
 							authData: token
-						}
+						};
 
 						$window.sessionStorage.setItem(
 							'userData', JSON.stringify(userData)
 						);
 
-						var user = response[1].entity;
+						const user = response[1].entity;
 						$rootScope.ertaQrGuiUser = user;
 
 						$window.sessionStorage.setItem(

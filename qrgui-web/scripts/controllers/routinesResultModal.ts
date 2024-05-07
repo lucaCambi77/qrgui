@@ -25,9 +25,9 @@ angular
 
                 routineModal.areResultsVisibile = false;
 
-                for (var query in queries) {
+                for (const query in queries) {
 
-                    for (var attr in queries[query].json.attrs) {
+                    for (const attr in queries[query].json.attrs) {
 
                         /**
                          * Per gli attributi data aggiungo il popup per poi
