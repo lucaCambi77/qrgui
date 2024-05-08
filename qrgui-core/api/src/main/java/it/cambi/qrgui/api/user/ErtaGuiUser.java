@@ -9,7 +9,6 @@
 package it.cambi.qrgui.api.user;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -39,8 +38,6 @@ public class ErtaGuiUser {
   @Builder.Default Boolean isAdmin = false;
 
   String address;
-
-  Date requestDate = new Date();
 
   public boolean isAdmin() {
     return this.ertaQrGuiRoles.stream()

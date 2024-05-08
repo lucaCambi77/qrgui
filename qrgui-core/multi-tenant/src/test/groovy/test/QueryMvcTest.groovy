@@ -1,6 +1,6 @@
 package test
 
-import com.amazonaws.services.s3.AmazonS3
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.MultiTenantApplication
 import it.cambi.qrgui.api.model.UteQueDto
@@ -39,16 +39,12 @@ class QueryMvcTest extends Specification {
     DbService dbService = Mock(DbService)
 
     @SpringBean
-    AmazonS3 amazonS3 = Mock()
-
-    @SpringBean
     GenericQueryExecutorService queryTaskExecutorService = Mock(GenericQueryExecutorService);
 
     MockMvc mvc;
 
     def setup() {
         mvc = webAppContextSetup(context).build()
-        amazonS3 = Mock(AmazonS3)
     }
 
     def "should invoke checkQuery method given POST /query/check"() throws Exception {

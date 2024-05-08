@@ -1,6 +1,6 @@
 package test
 
-import com.amazonaws.services.s3.AmazonS3
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import it.cambi.qrgui.MultiTenantApplication
 import it.cambi.qrgui.config.MultiTenantConfiguration
@@ -35,16 +35,12 @@ class QueryIntegrationTest extends Specification {
     ObjectMapper mapper
 
     @SpringBean
-    AmazonS3 amazonS3 = Mock()
-
-    @SpringBean
     GenericQueryExecutorService queryTaskExecutorService = Mock()
 
     MockMvc mvc;
 
     def setup() {
         mvc = webAppContextSetup(context).build()
-        amazonS3 = Mock(AmazonS3)
         queryTaskExecutorService = Mock(GenericQueryExecutorService)
     }
 
