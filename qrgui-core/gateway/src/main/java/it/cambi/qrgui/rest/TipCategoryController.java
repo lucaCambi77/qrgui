@@ -22,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class TipCategoryResource extends BasicResource {
+public class TipCategoryController extends BasicController {
   private final RestTemplate restTemplate;
 
   @GetMapping

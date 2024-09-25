@@ -30,7 +30,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class QueryResource extends BasicResource {
+public class QueryController extends BasicController {
   private final RestTemplate restTemplate;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

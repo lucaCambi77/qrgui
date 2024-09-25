@@ -37,8 +37,6 @@ public class SecurityUser implements java.io.Serializable, UserDetails {
 
   private boolean active;
 
-  private String passwordConfirm;
-
   @Builder.Default private Set<UserRole> userRoles = new HashSet<>(0);
 
   @Id
@@ -115,14 +113,5 @@ public class SecurityUser implements java.io.Serializable, UserDetails {
   @Transient
   public boolean isEnabled() {
     return active;
-  }
-
-  @Transient
-  public String getPasswordConfirm() {
-    return passwordConfirm;
-  }
-
-  public void setPasswordConfirm(String passwordConfirm) {
-    this.passwordConfirm = passwordConfirm;
   }
 }

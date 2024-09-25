@@ -26,7 +26,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class QueryExecutorResource extends BasicResource {
+public class QueryExecutorController extends BasicController {
 
   private final RestTemplate restTemplate;
 

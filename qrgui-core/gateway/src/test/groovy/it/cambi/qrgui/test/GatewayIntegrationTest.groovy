@@ -7,6 +7,7 @@ import it.cambi.qrgui.api.model.QueCatAssDto
 import it.cambi.qrgui.api.model.QueCatAssId
 import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse
+import it.cambi.qrgui.client.CategoryFeignClient
 import it.cambi.qrgui.exception.AppControllerAdvice
 import it.cambi.qrgui.security.db.model.SecurityUser
 import org.spockframework.spring.SpringBean
@@ -29,12 +30,12 @@ import spock.lang.Specification
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA
 import static org.junit.jupiter.api.Assertions.assertTrue
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup
 
-@SpringBootTest(
-        classes = [RestApplication.class, TestConfiguration.class, AppControllerAdvice.class],
+@SpringBootTest(classes = [RestApplication.class, TestConfiguration.class, AppControllerAdvice.class],
         webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class GatewayIntegrationTest extends Specification {
@@ -44,6 +45,9 @@ class GatewayIntegrationTest extends Specification {
 
     @SpringBean
     private RestTemplate restTemplate = Mock()
+
+    @SpringBean
+    private CategoryFeignClient feign = Mock()
 
     @Autowired
     private ObjectMapper mapper;
@@ -62,13 +66,11 @@ class GatewayIntegrationTest extends Specification {
 
         when:
         mvc.perform(post("/emia/category").content("{}").contentType(MediaType.APPLICATION_JSON))
-                .andExpect(
-                        result -> assertTrue(result.getResolvedException() instanceof AccessDeniedException))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof AccessDeniedException))
                 .andExpect(status().isForbidden());
 
         then:
         0 * restTemplate.postForObject(servicesUrl + "category?tipCateg=" + R_FEPQRA, _, WrappedResponse.class)
-
     }
 
     @WithUserDetails(value = "admin@xxx.com")
@@ -77,12 +79,28 @@ class GatewayIntegrationTest extends Specification {
         CategoryDto categoryDto = CategoryDto.builder().cat(0).insCat(new Date()).build()
 
         when:
-        MockHttpServletResponse response = mvc.perform(post("/emia/category").content(mapper.writeValueAsString(categoryDto)).contentType(MediaType.APPLICATION_JSON))
+        MockHttpServletResponse response = mvc.perform(post("/emia/category")
+                .content(mapper.writeValueAsString(categoryDto)).contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
         then:
         response.status == HttpStatus.OK.value()
         1 * restTemplate.postForObject(servicesUrl + "category?tipCateg=" + R_FEPQRA, categoryDto, WrappedResponse.class) >> WrappedResponse.baseBuilder().entity(1).build()
+    }
+
+    @WithUserDetails(value = "admin@xxx.com")
+    def "Status is 200 when user has role permission GET category"() throws Exception {
+        given:
+        CategoryDto categoryDto = CategoryDto.builder().cat(0).insCat(new Date()).build()
+
+        when:
+        MockHttpServletResponse response = mvc.perform(get("/emia/category")
+                .content(mapper.writeValueAsString(categoryDto)).contentType(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
+
+        then:
+        response.status == HttpStatus.OK.value()
+        1 * feign.getCategory(List.of(R_FEPQRA)) >> WrappedResponse.baseBuilder().entity(1).build()
     }
 
     @WithUserDetails(value = "admin@xxx.com")

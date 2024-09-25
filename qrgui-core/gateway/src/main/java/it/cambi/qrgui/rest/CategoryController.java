@@ -8,6 +8,7 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 import it.cambi.qrgui.api.model.CategoryDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.client.CategoryFeignClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +29,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-public class CategoryResource extends BasicResource {
+public class CategoryController extends BasicController {
 
   private final RestTemplate restTemplate;
+  private final CategoryFeignClient categoryFeignClient;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + F_QRCG00 + "', '" + F_QRCG01 + "')")
@@ -37,22 +40,13 @@ public class CategoryResource extends BasicResource {
       Authentication authentication, HttpServletRequest sr) {
     log.info("... cerco tutte le categorie");
 
-    restTemplate.getForObject(
-        UriComponentsBuilder.fromHttpUrl(servicesUrl + "category")
-            .queryParam("tipCateg", authentication.getAuthorities())
-            .build()
-            .toString(),
-        WrappedResponse.class);
-
     return getResponse(
         sr,
         () ->
-            restTemplate.getForObject(
-                UriComponentsBuilder.fromHttpUrl(servicesUrl + "category")
-                    .queryParam("tipCateg", authentication.getAuthorities())
-                    .build()
-                    .toString(),
-                WrappedResponse.class));
+            categoryFeignClient.getCategory(
+                authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList()));
   }
 
   @PostMapping(

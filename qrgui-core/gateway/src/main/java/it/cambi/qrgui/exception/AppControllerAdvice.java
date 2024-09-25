@@ -1,6 +1,6 @@
 package it.cambi.qrgui.exception;
 
-import it.cambi.qrgui.rest.BasicResource;
+import it.cambi.qrgui.rest.BasicController;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class AppControllerAdvice extends BasicResource {
+public class AppControllerAdvice extends BasicController {
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -57,7 +57,7 @@ public class SecurityConfig {
 
       SecurityUser user =
           userService.save(
-              SecurityUser.builder().username("user@gmail.com").passwordConfirm("1234").build());
+              SecurityUser.builder().username("user@gmail.com").password("1234").build());
 
       userRoleRepository.save(
           UserRole.builder()

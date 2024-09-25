@@ -21,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class RoutineQueryResource extends BasicResource {
+public class RoutineQueryController extends BasicController {
 
   private final RestTemplate restTemplate;
 

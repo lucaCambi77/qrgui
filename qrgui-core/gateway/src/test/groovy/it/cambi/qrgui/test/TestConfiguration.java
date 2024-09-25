@@ -34,7 +34,7 @@ public class TestConfiguration {
 
       SecurityUser user =
           userService.save(
-              SecurityUser.builder().username("user@xxx.com").passwordConfirm("1234").build());
+              SecurityUser.builder().username("user@xxx.com").password("1234").build());
 
       userRoleRepository.save(
           UserRole.builder()
@@ -49,7 +49,7 @@ public class TestConfiguration {
 
       SecurityUser admin =
           userService.save(
-              SecurityUser.builder().username("admin@xxx.com").passwordConfirm("1234").build());
+              SecurityUser.builder().username("admin@xxx.com").password("1234").build());
 
       userRoleRepository.save(
           UserRole.builder()

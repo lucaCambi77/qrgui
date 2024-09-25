@@ -7,7 +7,7 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 import it.cambi.qrgui.api.user.ErtaGuiUser;
 import it.cambi.qrgui.api.user.ErtaQrGuiRoles;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.rest.BasicResource;
+import it.cambi.qrgui.rest.BasicController;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/userProperties")
 @Slf4j
 @RequiredArgsConstructor
-public class UserPropertiesResource extends BasicResource {
+public class UserPropertiesController extends BasicController {
 
   private final WrappedResponse<ErtaGuiUser> response = new WrappedResponse<>();
 

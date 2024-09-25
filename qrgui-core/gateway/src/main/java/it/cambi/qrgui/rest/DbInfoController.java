@@ -20,7 +20,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class DbInfoResource extends BasicResource {
+public class DbInfoController extends BasicController {
 
   private final RestTemplate restTemplate;
 

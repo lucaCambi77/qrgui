@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin(origins = "*")
 @Slf4j
-public abstract class BasicResource {
+public abstract class BasicController {
 
   @Value("${services.contextPath}")
   protected String servicesUrl;
