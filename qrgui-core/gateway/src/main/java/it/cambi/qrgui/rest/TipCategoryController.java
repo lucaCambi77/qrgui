@@ -6,12 +6,14 @@ import static it.cambi.qrgui.api.user.RolesFunctions.F_QRRE00;
 import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.client.FeignClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @RequiredArgsConstructor
 public class TipCategoryController extends BasicController {
-  private final RestTemplate restTemplate;
+  private final FeignClient feignClient;
 
   @GetMapping
   @PreAuthorize(
@@ -42,11 +44,9 @@ public class TipCategoryController extends BasicController {
     return getResponse(
         sr,
         () ->
-            restTemplate.getForObject(
-                UriComponentsBuilder.fromHttpUrl(servicesUrl + "anaTipCat")
-                    .queryParam("tipCateg", authentication.getAuthorities())
-                    .build()
-                    .toString(),
-                WrappedResponse.class));
+            feignClient.getTipCategory(
+                authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList()));
   }
 }

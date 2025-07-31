@@ -38,10 +38,10 @@ public class Temi14UteCat implements java.io.Serializable {
     this.cat = cat;
   }
 
-  public Temi14UteCat(int cat, Date insCat, Temi20AnaTipCat TEMI20AnaTipCat, String des) {
+  public Temi14UteCat(int cat, Date insCat, Temi20AnaTipCat temi20AnaTipCat, String des) {
     this.cat = cat;
     this.insCat = insCat;
-    this.Temi20AnaTipCat = TEMI20AnaTipCat;
+    this.Temi20AnaTipCat = temi20AnaTipCat;
     this.des = des;
   }
 

@@ -3,6 +3,8 @@ package it.cambi.qrgui.services.emia.impl;
 
 import it.cambi.qrgui.dao.entity.api.ITemi17Dao;
 import it.cambi.qrgui.dao.entity.api.ITemi18Dao;
+import it.cambi.qrgui.dto.Temi17UteRouDto;
+import it.cambi.qrgui.mapper.Temi17UteRouMapper;
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.model.Temi18RouQue;
@@ -32,16 +34,18 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
   private final ITemi18Dao<Temi18RouQue, Temi18RouQueId> queRoutineDao;
 
+  private final Temi17UteRouMapper mapper;
+
   /**
    * @param temi17
    * @return
    */
   @Transactional
   @Override
-  public Temi17UteRou merge(Temi17UteRou temi17) {
+  public Temi17UteRouDto merge(Temi17UteRou temi17) {
     if (null == temi17.getInsRou()) temi17.setInsRou(new Date());
 
-    return routineDao.merge(temi17);
+    return mapper.toDto(routineDao.merge(temi17));
   }
 
   /**
@@ -115,7 +119,7 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
 
   @Override
   @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-  public List<Temi17UteRou> findAll(List<String> functions) {
+  public List<Temi17UteRouDto> findAll(List<String> functions) {
 
     return Optional.of(functions)
         .map(
@@ -130,7 +134,9 @@ public class Temi17Service implements ITemi17Service<Temi17UteRou> {
               criteriaQuery.orderBy(
                   routineDao.getEntityManager().getCriteriaBuilder().asc(root.get("rou")));
 
-              return routineDao.getEntityListByCriteriaQuery(criteriaQuery, null);
+              return routineDao.getEntityListByCriteriaQuery(criteriaQuery, null).stream()
+                  .map(mapper::toDto)
+                  .toList();
             })
         .orElseGet(List::of);
   }

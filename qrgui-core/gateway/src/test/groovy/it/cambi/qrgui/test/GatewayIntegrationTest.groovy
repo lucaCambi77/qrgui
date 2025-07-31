@@ -7,7 +7,7 @@ import it.cambi.qrgui.api.model.QueCatAssDto
 import it.cambi.qrgui.api.model.QueCatAssId
 import it.cambi.qrgui.api.model.UteQueDto
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse
-import it.cambi.qrgui.client.CategoryFeignClient
+import it.cambi.qrgui.client.FeignClient
 import it.cambi.qrgui.exception.AppControllerAdvice
 import it.cambi.qrgui.security.db.model.SecurityUser
 import org.spockframework.spring.SpringBean
@@ -47,7 +47,7 @@ class GatewayIntegrationTest extends Specification {
     private RestTemplate restTemplate = Mock()
 
     @SpringBean
-    private CategoryFeignClient feign = Mock()
+    private FeignClient feign = Mock()
 
     @Autowired
     private ObjectMapper mapper;

@@ -35,7 +35,7 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
 
     Predicate predicateAnaTipCat = anaTipCatPath.in(functions);
 
-    if (null != functions && functions.size() > 0) criteriaTemi20.where(predicateAnaTipCat);
+    if (null != functions && !functions.isEmpty()) criteriaTemi20.where(predicateAnaTipCat);
 
     return getEntityListByCriteriaQuery(criteriaTemi20, null);
   }
@@ -56,11 +56,7 @@ public class Temi20Dao extends TemiGenericDao<Temi20AnaTipCat, String>
     String user =
         request.getUserPrincipal() == null ? "LocalHost" : request.getUserPrincipal().getName();
 
-    log.info(
-        "L'utente "
-            + user
-            + " ha visibilità delle seguenti categorie: "
-            + Arrays.toString(functions.toArray()));
+    log.info("L'utente {} ha visibilità delle seguenti categorie: {}", user, Arrays.toString(functions.toArray()));
 
     return functions;
   }

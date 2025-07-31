@@ -8,7 +8,7 @@ import static it.cambi.qrgui.api.user.RolesFunctions.R_FEPQRA;
 
 import it.cambi.qrgui.api.model.CategoryDto;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
-import it.cambi.qrgui.client.CategoryFeignClient;
+import it.cambi.qrgui.client.FeignClient;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class CategoryController extends BasicController {
 
   private final RestTemplate restTemplate;
-  private final CategoryFeignClient categoryFeignClient;
+  private final FeignClient feignClient;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("hasAnyAuthority('" + R_FEPQRA + "', '" + F_QRCG00 + "', '" + F_QRCG01 + "')")
@@ -43,7 +43,7 @@ public class CategoryController extends BasicController {
     return getResponse(
         sr,
         () ->
-            categoryFeignClient.getCategory(
+            feignClient.getCategory(
                 authentication.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList()));

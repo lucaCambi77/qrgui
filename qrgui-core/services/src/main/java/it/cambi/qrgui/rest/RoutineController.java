@@ -1,9 +1,7 @@
 package it.cambi.qrgui.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import it.cambi.qrgui.api.wrappedResponse.WrappedResponse;
+import it.cambi.qrgui.dto.Temi17UteRouDto;
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
 import it.cambi.qrgui.services.emia.api.ITemi17Service;
@@ -24,36 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RoutineController {
   private final ITemi17Service<Temi17UteRou> temi17Service;
-  private final ObjectMapper mapper;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public WrappedResponse<?> getRoutines(@RequestParam("tipCateg") List<String> functions)
-      throws JsonProcessingException {
+  public WrappedResponse<?> getRoutines(@RequestParam("tipCateg") List<String> functions) {
     log.info("... cerco tutte le routines");
 
-    List<Temi17UteRou> temi17UteRous = temi17Service.findAll(functions);
+    List<Temi17UteRouDto> temi17UteRous = temi17Service.findAll(functions);
 
-    return WrappedResponse.baseBuilder()
-        .entity(
-            mapper.readValue(
-                mapper.writeValueAsString(temi17UteRous),
-                new TypeReference<List<Temi17UteRou>>() {}))
-        .count(temi17UteRous.size())
-        .build();
+    return WrappedResponse.baseBuilder().entity(temi17UteRous).count(temi17UteRous.size()).build();
   }
 
   @PostMapping(
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  public WrappedResponse<?> postRoutine(@RequestBody Temi17UteRou temi17)
-      throws JsonProcessingException {
+  public WrappedResponse<?> postRoutine(@RequestBody Temi17UteRou temi17) {
     log.info("... creo una nuova routine");
 
-    return WrappedResponse.baseBuilder()
-        .entity(
-            mapper.readValue(
-                mapper.writeValueAsString(temi17Service.merge(temi17)), Temi17UteRou.class))
-        .build();
+    return WrappedResponse.baseBuilder().entity(temi17Service.merge(temi17)).build();
   }
 
   @PostMapping(

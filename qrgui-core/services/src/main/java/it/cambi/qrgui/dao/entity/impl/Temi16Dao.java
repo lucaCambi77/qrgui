@@ -30,7 +30,7 @@ public class Temi16Dao extends TemiGenericDao<Temi16QueCatAss, Temi16QueCatAssId
 
     Predicate predicateAnaTipCat = anaTipCatPath.in(functions);
 
-    if (null != functions && functions.size() > 0) criteriaTemi16.where(predicateAnaTipCat);
+    if (null != functions && !functions.isEmpty()) criteriaTemi16.where(predicateAnaTipCat);
 
     return getEntityListByCriteriaQuery(criteriaTemi16, null);
   }

@@ -1,13 +1,14 @@
 package it.cambi.qrgui.services.emia.api;
 
+import it.cambi.qrgui.dto.Temi17UteRouDto;
 import it.cambi.qrgui.model.Temi17UteRou;
 import it.cambi.qrgui.model.Temi17UteRouId;
 import java.util.List;
 
 public interface ITemi17Service<T> {
-  List<Temi17UteRou> findAll(List<String> functions);
+  List<Temi17UteRouDto> findAll(List<String> functions);
 
   void delete(Temi17UteRouId crou);
 
-  T merge(T temi17);
+  Temi17UteRouDto merge(T temi17);
 }

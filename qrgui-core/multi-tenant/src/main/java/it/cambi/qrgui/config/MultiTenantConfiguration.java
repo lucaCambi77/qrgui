@@ -20,6 +20,12 @@ public class MultiTenantConfiguration {
 
   private final String defaultTenant = "tenant_1";
 
+  /**
+   * Loads all the data sources in the /tenants folder. A request will then be able to understand
+   * which is the tenant by using the {@link TenantFilter}
+   *
+   * @return
+   */
   @Bean
   public DataSource dataSource() {
     URL url = this.getClass().getClassLoader().getResource("tenants");
